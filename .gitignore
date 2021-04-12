@@ -1,0 +1,6 @@
+# Directories
+Build/
+DerivedData/
+
+# Mac Files
+.DS_Store
