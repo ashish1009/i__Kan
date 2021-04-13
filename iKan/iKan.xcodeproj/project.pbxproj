@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B2028051262590D300BC7F39 /* Core.h in Headers */ = {isa = PBXBuildFile; fileRef = B2028050262590D300BC7F39 /* Core.h */; };
 		B2FE351026248C7700AFC236 /* iKan.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FE350F26248C7700AFC236 /* iKan.h */; };
 		B2FE351226249ECB00AFC236 /* PrefixHeader.pch in Headers */ = {isa = PBXBuildFile; fileRef = B2FE351126249ECB00AFC236 /* PrefixHeader.pch */; };
 		B2FE35152624B34000AFC236 /* Entrypoint.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FE35142624B34000AFC236 /* Entrypoint.h */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B2028050262590D300BC7F39 /* Core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
 		B2FE34F426248A4500AFC236 /* libiKan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiKan.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2FE350F26248C7700AFC236 /* iKan.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iKan.h; sourceTree = "<group>"; };
 		B2FE351126249ECB00AFC236 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 			children = (
 				B2FE351A2624B67B00AFC236 /* Application.cpp */,
 				B2FE351B2624B67B00AFC236 /* Application.h */,
+				B2028050262590D300BC7F39 /* Core.h */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -85,6 +88,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2028051262590D300BC7F39 /* Core.h in Headers */,
 				B2FE35152624B34000AFC236 /* Entrypoint.h in Headers */,
 				B2FE351D2624B67B00AFC236 /* Application.h in Headers */,
 				B2FE351226249ECB00AFC236 /* PrefixHeader.pch in Headers */,

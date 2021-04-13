@@ -38,7 +38,7 @@ private:
 // ******************************************************************************
 // Client should decide which Application should be created for game loop
 // ******************************************************************************
-std::unique_ptr<iKan::Application> iKan::CreateApplication()
+iKan::Scope<iKan::Application> iKan::CreateApplication()
 {
     return nullptr;
 }

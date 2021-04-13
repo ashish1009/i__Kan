@@ -28,6 +28,6 @@ namespace iKan {
     // defined in client side. This will retrun the main application instance on
     // which game loop is defined
     // ******************************************************************************
-    std::unique_ptr<Application> CreateApplication();
+    Scope<Application> CreateApplication();
 }
 
