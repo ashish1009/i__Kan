@@ -1,8 +1,8 @@
 // ******************************************************************************
 // File         : Entrypoint.h
 // Description  : Core Entry point defined in core. If this file is included in
-//               client side then there must not be any other entry point in the
-//               client code else entry point must be defined in client side.
+//                client side then there must not be any other entry point in the
+//                client code else entry point must be defined in client side.
 // Project      : iKan
 //
 // Created on   : 12/04/21.
