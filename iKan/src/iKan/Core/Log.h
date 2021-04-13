@@ -9,6 +9,7 @@
 #pragma once
 
 #include <spdlog/spdlog.h>
+#include <iKan/Core/Core.h>
 
 namespace iKan {
     

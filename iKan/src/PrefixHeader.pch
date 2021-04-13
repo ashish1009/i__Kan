@@ -10,6 +10,9 @@
 
 // C++ Headers
 #include <iostream>
+#include <memory>
+#include <string>
+#include <vector>
 
-// Core files
-#include <iKan/Core/Core.h>
+// Log files files
+#include <iKan/Core/Log.h>

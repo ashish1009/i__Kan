@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B20280622625E63400BC7F39 /* EditorLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B20280602625E63400BC7F39 /* EditorLayer.cpp */; };
 		B2FE350826248AF200AFC236 /* EditorApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2FE350726248AF200AFC236 /* EditorApp.cpp */; };
 		B2FE35182624B5CA00AFC236 /* libiKan.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2FE35172624B5CA00AFC236 /* libiKan.a */; };
 /* End PBXBuildFile section */
@@ -24,6 +25,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B20280602625E63400BC7F39 /* EditorLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorLayer.cpp; sourceTree = "<group>"; };
+		B20280612625E63400BC7F39 /* EditorLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditorLayer.h; sourceTree = "<group>"; };
 		B2FE350426248AF200AFC236 /* Editor */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Editor; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2FE350726248AF200AFC236 /* EditorApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorApp.cpp; sourceTree = "<group>"; };
 		B2FE35172624B5CA00AFC236 /* libiKan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libiKan.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -62,6 +65,8 @@
 			isa = PBXGroup;
 			children = (
 				B2FE350726248AF200AFC236 /* EditorApp.cpp */,
+				B20280602625E63400BC7F39 /* EditorLayer.cpp */,
+				B20280612625E63400BC7F39 /* EditorLayer.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -131,6 +136,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B20280622625E63400BC7F39 /* EditorLayer.cpp in Sources */,
 				B2FE350826248AF200AFC236 /* EditorApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

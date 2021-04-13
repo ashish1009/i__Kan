@@ -10,6 +10,9 @@
 		B2028051262590D300BC7F39 /* Core.h in Headers */ = {isa = PBXBuildFile; fileRef = B2028050262590D300BC7F39 /* Core.h */; };
 		B2028053262592DD00BC7F39 /* Log.h in Headers */ = {isa = PBXBuildFile; fileRef = B2028052262592DD00BC7F39 /* Log.h */; };
 		B20280562625934700BC7F39 /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B20280542625934700BC7F39 /* Log.cpp */; };
+		B202805B2625DCD200BC7F39 /* Layer.h in Headers */ = {isa = PBXBuildFile; fileRef = B20280592625DCD200BC7F39 /* Layer.h */; };
+		B202805E2625DF4900BC7F39 /* Layerstack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B202805C2625DF4900BC7F39 /* Layerstack.cpp */; };
+		B202805F2625DF4900BC7F39 /* Layerstack.h in Headers */ = {isa = PBXBuildFile; fileRef = B202805D2625DF4900BC7F39 /* Layerstack.h */; };
 		B2FE351026248C7700AFC236 /* iKan.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FE350F26248C7700AFC236 /* iKan.h */; };
 		B2FE351226249ECB00AFC236 /* PrefixHeader.pch in Headers */ = {isa = PBXBuildFile; fileRef = B2FE351126249ECB00AFC236 /* PrefixHeader.pch */; };
 		B2FE35152624B34000AFC236 /* Entrypoint.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FE35142624B34000AFC236 /* Entrypoint.h */; };
@@ -21,6 +24,9 @@
 		B2028050262590D300BC7F39 /* Core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
 		B2028052262592DD00BC7F39 /* Log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
 		B20280542625934700BC7F39 /* Log.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Log.cpp; sourceTree = "<group>"; };
+		B20280592625DCD200BC7F39 /* Layer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Layer.h; sourceTree = "<group>"; wrapsLines = 0; };
+		B202805C2625DF4900BC7F39 /* Layerstack.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Layerstack.cpp; sourceTree = "<group>"; };
+		B202805D2625DF4900BC7F39 /* Layerstack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Layerstack.h; sourceTree = "<group>"; };
 		B2FE34F426248A4500AFC236 /* libiKan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiKan.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2FE350F26248C7700AFC236 /* iKan.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iKan.h; sourceTree = "<group>"; };
 		B2FE351126249ECB00AFC236 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -83,6 +89,9 @@
 				B2028050262590D300BC7F39 /* Core.h */,
 				B2028052262592DD00BC7F39 /* Log.h */,
 				B20280542625934700BC7F39 /* Log.cpp */,
+				B20280592625DCD200BC7F39 /* Layer.h */,
+				B202805C2625DF4900BC7F39 /* Layerstack.cpp */,
+				B202805D2625DF4900BC7F39 /* Layerstack.h */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -97,9 +106,11 @@
 				B2028051262590D300BC7F39 /* Core.h in Headers */,
 				B2FE35152624B34000AFC236 /* Entrypoint.h in Headers */,
 				B2FE351D2624B67B00AFC236 /* Application.h in Headers */,
+				B202805B2625DCD200BC7F39 /* Layer.h in Headers */,
 				B2028053262592DD00BC7F39 /* Log.h in Headers */,
 				B2FE351226249ECB00AFC236 /* PrefixHeader.pch in Headers */,
 				B2FE351026248C7700AFC236 /* iKan.h in Headers */,
+				B202805F2625DF4900BC7F39 /* Layerstack.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,6 +172,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B20280562625934700BC7F39 /* Log.cpp in Sources */,
+				B202805E2625DF4900BC7F39 /* Layerstack.cpp in Sources */,
 				B2FE351C2624B67B00AFC236 /* Application.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

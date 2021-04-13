@@ -19,7 +19,7 @@ int main()
 {
     // initializing spd logger
     iKan::Log::Init();
-    IK_CORE_INFO("Initialized spd logger");
+    IK_CORE_INFO("main(), Initialized spd logger");
 
     // Application is created
     iKan::Scope<iKan::Application> app = iKan::CreateApplication();

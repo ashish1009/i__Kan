@@ -9,6 +9,8 @@
 #include <iKan.h>
 #include <iKan/Entrypoint.h>
 
+#include "EditorLayer.h"
+
 // ******************************************************************************
 // Client side Applicaiton. This will derive the ikan Application. Here different
 // layers can be pushed in which rendering can be performed
@@ -21,7 +23,10 @@ public:
     // ******************************************************************************
     EditorApp()
     {
-        
+        IK_INFO("Constructing Editor Application");
+
+        m_ActiveLayer = std::make_shared<EditorLayer>();
+        PushLayer(m_ActiveLayer);
     }
     
     // ******************************************************************************
@@ -29,10 +34,13 @@ public:
     // ******************************************************************************
     virtual ~EditorApp()
     {
+        IK_INFO("Destroying Editor Application");
         
+        PopLayer(m_ActiveLayer);
     }
     
 private:
+    std::shared_ptr<iKan::Layer> m_ActiveLayer;
 };
 
 // ******************************************************************************
@@ -40,5 +48,5 @@ private:
 // ******************************************************************************
 iKan::Scope<iKan::Application> iKan::CreateApplication()
 {
-    return nullptr;
+    return iKan::CreateScope<EditorApp>();
 }
