@@ -5,8 +5,10 @@
 //
 // Created on   : 13/04/21.
 // ******************************************************************************
-v
+
 #pragma once
+
+#include <iKan/Core/Log.h>
 
 // ******************************************************************************
 // Assertion API defined for iKan Engine
@@ -45,7 +47,7 @@ namespace iKan {
     }
 
     template<typename T>
-    using Ref = std::shaderd_ptr<T>;
+    using Ref = std::shared_ptr<T>;
     
     template<typename T, typename ... Args>
     constexpr Ref<T> CreateRef(Args&& ... args)

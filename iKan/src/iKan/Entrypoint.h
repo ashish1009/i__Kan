@@ -17,6 +17,10 @@ extern iKan::Scope<iKan::Application> iKan::CreateApplication();
 // ******************************************************************************
 int main()
 {
+    // initializing spd logger
+    iKan::Log::Init();
+    IK_CORE_INFO("Initialized spd logger");
+
     // Application is created
     iKan::Scope<iKan::Application> app = iKan::CreateApplication();
     return 0;
