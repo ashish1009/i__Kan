@@ -13,6 +13,10 @@
 		B202805B2625DCD200BC7F39 /* Layer.h in Headers */ = {isa = PBXBuildFile; fileRef = B20280592625DCD200BC7F39 /* Layer.h */; };
 		B202805E2625DF4900BC7F39 /* Layerstack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B202805C2625DF4900BC7F39 /* Layerstack.cpp */; };
 		B202805F2625DF4900BC7F39 /* Layerstack.h in Headers */ = {isa = PBXBuildFile; fileRef = B202805D2625DF4900BC7F39 /* Layerstack.h */; };
+		B20280652625F99A00BC7F39 /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B20280632625F99A00BC7F39 /* Window.cpp */; };
+		B20280662625F99A00BC7F39 /* Window.h in Headers */ = {isa = PBXBuildFile; fileRef = B20280642625F99A00BC7F39 /* Window.h */; };
+		B202806B2625FF1900BC7F39 /* MacWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B20280692625FF1900BC7F39 /* MacWindow.cpp */; };
+		B202806C2625FF1900BC7F39 /* MacWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = B202806A2625FF1900BC7F39 /* MacWindow.h */; };
 		B2FE351026248C7700AFC236 /* iKan.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FE350F26248C7700AFC236 /* iKan.h */; };
 		B2FE351226249ECB00AFC236 /* PrefixHeader.pch in Headers */ = {isa = PBXBuildFile; fileRef = B2FE351126249ECB00AFC236 /* PrefixHeader.pch */; };
 		B2FE35152624B34000AFC236 /* Entrypoint.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FE35142624B34000AFC236 /* Entrypoint.h */; };
@@ -27,6 +31,10 @@
 		B20280592625DCD200BC7F39 /* Layer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Layer.h; sourceTree = "<group>"; wrapsLines = 0; };
 		B202805C2625DF4900BC7F39 /* Layerstack.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Layerstack.cpp; sourceTree = "<group>"; };
 		B202805D2625DF4900BC7F39 /* Layerstack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Layerstack.h; sourceTree = "<group>"; };
+		B20280632625F99A00BC7F39 /* Window.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Window.cpp; sourceTree = "<group>"; };
+		B20280642625F99A00BC7F39 /* Window.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Window.h; sourceTree = "<group>"; };
+		B20280692625FF1900BC7F39 /* MacWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MacWindow.cpp; sourceTree = "<group>"; };
+		B202806A2625FF1900BC7F39 /* MacWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacWindow.h; sourceTree = "<group>"; };
 		B2FE34F426248A4500AFC236 /* libiKan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiKan.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2FE350F26248C7700AFC236 /* iKan.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iKan.h; sourceTree = "<group>"; };
 		B2FE351126249ECB00AFC236 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -46,6 +54,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B20280672625FEEE00BC7F39 /* Platform */ = {
+			isa = PBXGroup;
+			children = (
+				B20280682625FF0000BC7F39 /* MacOs */,
+			);
+			path = Platform;
+			sourceTree = "<group>";
+		};
+		B20280682625FF0000BC7F39 /* MacOs */ = {
+			isa = PBXGroup;
+			children = (
+				B20280692625FF1900BC7F39 /* MacWindow.cpp */,
+				B202806A2625FF1900BC7F39 /* MacWindow.h */,
+			);
+			path = MacOs;
+			sourceTree = "<group>";
+		};
 		B2FE34EB26248A4500AFC236 = {
 			isa = PBXGroup;
 			children = (
@@ -77,6 +102,7 @@
 			children = (
 				B2FE35142624B34000AFC236 /* Entrypoint.h */,
 				B2FE35192624B61A00AFC236 /* Core */,
+				B20280672625FEEE00BC7F39 /* Platform */,
 			);
 			path = iKan;
 			sourceTree = "<group>";
@@ -92,6 +118,8 @@
 				B20280592625DCD200BC7F39 /* Layer.h */,
 				B202805C2625DF4900BC7F39 /* Layerstack.cpp */,
 				B202805D2625DF4900BC7F39 /* Layerstack.h */,
+				B20280632625F99A00BC7F39 /* Window.cpp */,
+				B20280642625F99A00BC7F39 /* Window.h */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -103,11 +131,13 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B202806C2625FF1900BC7F39 /* MacWindow.h in Headers */,
 				B2028051262590D300BC7F39 /* Core.h in Headers */,
 				B2FE35152624B34000AFC236 /* Entrypoint.h in Headers */,
 				B2FE351D2624B67B00AFC236 /* Application.h in Headers */,
 				B202805B2625DCD200BC7F39 /* Layer.h in Headers */,
 				B2028053262592DD00BC7F39 /* Log.h in Headers */,
+				B20280662625F99A00BC7F39 /* Window.h in Headers */,
 				B2FE351226249ECB00AFC236 /* PrefixHeader.pch in Headers */,
 				B2FE351026248C7700AFC236 /* iKan.h in Headers */,
 				B202805F2625DF4900BC7F39 /* Layerstack.h in Headers */,
@@ -171,9 +201,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B202806B2625FF1900BC7F39 /* MacWindow.cpp in Sources */,
 				B20280562625934700BC7F39 /* Log.cpp in Sources */,
 				B202805E2625DF4900BC7F39 /* Layerstack.cpp in Sources */,
 				B2FE351C2624B67B00AFC236 /* Application.cpp in Sources */,
+				B20280652625F99A00BC7F39 /* Window.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,6 +336,7 @@
 					"$(inherited)",
 					IK_ENABLE_LOG,
 					IK_ENABLE_ASSERTION,
+					IK_PLATFORM_MAC,
 				);
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/src",
@@ -322,7 +355,10 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "${PROJECT_DIR}/src/PrefixHeader.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = IK_ENABLE_ASSERTION;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					IK_ENABLE_ASSERTION,
+					IK_PLATFORM_MAC,
+				);
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/src",
 					"${PROJECT_DIR}/vendor/spdlog/include",

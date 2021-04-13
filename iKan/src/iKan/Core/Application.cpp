@@ -13,10 +13,10 @@ namespace iKan {
     // ******************************************************************************
     // Application Constructor
     // ******************************************************************************
-    Application::Application()
+    Application::Application(const Application::Property& props)
     {
         IK_CORE_INFO("Constructing the application");
-        Init();
+        Init(props);
     }
     
     // ******************************************************************************
@@ -30,9 +30,12 @@ namespace iKan {
     // ******************************************************************************
     // Initialise the Application
     // ******************************************************************************
-    void Application::Init()
+    void Application::Init(const Application::Property& props)
     {
         IK_CORE_INFO("Initialising the application");
+        
+        // Creating Window from Applicaition
+        m_Window = Window::Create(Window::Property(props.Title, props.Width, props.Height));
     }
 
     // ******************************************************************************
