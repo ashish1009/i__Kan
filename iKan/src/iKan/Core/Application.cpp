@@ -9,13 +9,18 @@
 #include "Application.h"
 
 namespace iKan {
+    
+    Application* Application::s_Instance = nullptr;
 
     // ******************************************************************************
     // Application Constructor
     // ******************************************************************************
     Application::Application(const Application::Property& props)
     {
+        IK_CORE_ASSERT(!s_Instance, "Application already exists !!!");
         IK_CORE_INFO("Constructing the application");
+        
+        s_Instance = this;
         Init(props);
     }
     

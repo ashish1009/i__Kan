@@ -265,7 +265,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
-					IK_ENABLE_ASSERTION,
+					IK_ENABLE_ASSERT,
 					IK_ENABLE_LOG,
 				);
 				HEADER_SEARCH_PATHS = (
@@ -283,7 +283,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "${PROJECT_DIR}/../iKan/src/PrefixHeader.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = IK_ENABLE_ASSERTION;
+				GCC_PREPROCESSOR_DEFINITIONS = IK_ENABLE_ASSERT;
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/../iKan/src",
 					"${PROJECT_DIR}/../iKan/vendor/spdlog/include",

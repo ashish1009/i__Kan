@@ -49,6 +49,8 @@ namespace iKan {
         
         void PushLayer(Ref<Layer> layer) { m_Layerstack.PushLayer(layer); };
         void PopLayer(Ref<Layer> layer) { m_Layerstack.PopLayer(layer); };
+        
+        Application& Get() { return *s_Instance; }
 
     private:
         void PushOverlay(Ref<Layer> overlay) { m_Layerstack.PushOverlay(overlay); };
@@ -65,6 +67,8 @@ namespace iKan {
         Layerstack    m_Layerstack;
         
         bool m_IsRunning = true;
+        
+        static Application* s_Instance;
     };
     
     // ******************************************************************************
