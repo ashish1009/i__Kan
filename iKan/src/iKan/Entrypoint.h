@@ -23,5 +23,6 @@ int main()
 
     // Application is created
     iKan::Scope<iKan::Application> app = iKan::CreateApplication();
+    app->Run();
     return 0;
 }

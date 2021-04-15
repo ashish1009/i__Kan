@@ -17,6 +17,7 @@
 		B20280662625F99A00BC7F39 /* Window.h in Headers */ = {isa = PBXBuildFile; fileRef = B20280642625F99A00BC7F39 /* Window.h */; };
 		B202806B2625FF1900BC7F39 /* MacWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B20280692625FF1900BC7F39 /* MacWindow.cpp */; };
 		B202806C2625FF1900BC7F39 /* MacWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = B202806A2625FF1900BC7F39 /* MacWindow.h */; };
+		B25684C226274BFB0030D00D /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B25684C126274BFB0030D00D /* libglfw3.a */; };
 		B2FE351026248C7700AFC236 /* iKan.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FE350F26248C7700AFC236 /* iKan.h */; };
 		B2FE351226249ECB00AFC236 /* PrefixHeader.pch in Headers */ = {isa = PBXBuildFile; fileRef = B2FE351126249ECB00AFC236 /* PrefixHeader.pch */; };
 		B2FE35152624B34000AFC236 /* Entrypoint.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FE35142624B34000AFC236 /* Entrypoint.h */; };
@@ -35,6 +36,7 @@
 		B20280642625F99A00BC7F39 /* Window.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Window.h; sourceTree = "<group>"; };
 		B20280692625FF1900BC7F39 /* MacWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MacWindow.cpp; sourceTree = "<group>"; };
 		B202806A2625FF1900BC7F39 /* MacWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacWindow.h; sourceTree = "<group>"; };
+		B25684C126274BFB0030D00D /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = vendor/glfw/lib/libglfw3.a; sourceTree = "<group>"; };
 		B2FE34F426248A4500AFC236 /* libiKan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiKan.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2FE350F26248C7700AFC236 /* iKan.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iKan.h; sourceTree = "<group>"; };
 		B2FE351126249ECB00AFC236 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -48,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B25684C226274BFB0030D00D /* libglfw3.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,11 +74,20 @@
 			path = MacOs;
 			sourceTree = "<group>";
 		};
+		B25684C026274BFB0030D00D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B25684C126274BFB0030D00D /* libglfw3.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B2FE34EB26248A4500AFC236 = {
 			isa = PBXGroup;
 			children = (
 				B2FE350E26248C3F00AFC236 /* src */,
 				B2FE34F526248A4500AFC236 /* Products */,
+				B25684C026274BFB0030D00D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -341,6 +353,11 @@
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/src",
 					"${PROJECT_DIR}/vendor/spdlog/include",
+					"${PROJECT_DIR}/vendor/glfw/include",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/vendor/glfw/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -362,6 +379,11 @@
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/src",
 					"${PROJECT_DIR}/vendor/spdlog/include",
+					"${PROJECT_DIR}/vendor/glfw/include",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/vendor/glfw/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

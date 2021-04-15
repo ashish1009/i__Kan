@@ -10,6 +10,8 @@
 
 #include <iKan/Core/Window.h>
 
+#include <GLFW/glfw3.h>
+
 namespace iKan {
     
     // ******************************************************************************
@@ -25,9 +27,10 @@ namespace iKan {
         {
             std::string Title = "Mac Window";
             uint32_t    Width = 800, Height = 400;
+            bool        VSync = true;
             
-            Data(const std::string& title = "Mac Window", uint32_t width = 800, uint32_t height = 400)
-            : Title(title), Width(width), Height(height)
+            Data(const std::string& title = "Mac Window", uint32_t width = 800, uint32_t height = 400, bool vSync = true)
+            : Title(title), Width(width), Height(height), VSync(vSync)
             {
                 
             }
@@ -46,13 +49,18 @@ namespace iKan {
 
         virtual const std::string& GetTitle() const override { return m_Data.Title; }
         
-        virtual void* GetNativeWindow() override { return (void*)nullptr; }
+        virtual void SetVSync(bool enabled) override;
+        virtual void* GetNativeWindow() override { return (void*)m_Window; }
+        
+        virtual bool IsVSync() const override;
         
     private:
-        void Init(const Window::Property& prop);
+        void Init();
+        void SetCallBacks();
         
     private:
-        Data m_Data;
+        Data        m_Data;
+        GLFWwindow* m_Window;
     };
     
 }

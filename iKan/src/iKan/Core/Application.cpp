@@ -51,7 +51,7 @@ namespace iKan {
         IK_CORE_INFO("Entering Game loop");
         while (m_IsRunning)
         {
-            
+            m_Window->Update();
         }
     }
 

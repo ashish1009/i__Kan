@@ -34,9 +34,24 @@ path `${PROJECT_DIR}/../Editor/src/PrefixHeader.pch`
 ___________
 Link the libiKan.a in your project
 
+### Frameworks
+________________
+Add the following frameworks
+1. Cocoa.framework
+2. OpenGL.framework
+3. IOKit.framework
+
 ### Header Paths
 __________________
 ${PROJECT_DIR}/../iKan/src
+${PROJECT_DIR}/../iKan/vendor/spdlog/include
+
+### Preprocessors
+___________________
+Add the following preprocessors
+1 `IK_ENABLE_LOG` to enable logging
+2 `IK_ENABLE_ASSERT` to enable Trigger exception
+3 `IK_PLATFORM_MAC` for MAC Platform
 
 ### Application
 _______________
