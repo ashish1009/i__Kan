@@ -18,12 +18,29 @@
 		B202806B2625FF1900BC7F39 /* MacWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B20280692625FF1900BC7F39 /* MacWindow.cpp */; };
 		B202806C2625FF1900BC7F39 /* MacWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = B202806A2625FF1900BC7F39 /* MacWindow.h */; };
 		B25684C226274BFB0030D00D /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B25684C126274BFB0030D00D /* libglfw3.a */; };
+		B27FE30E2629E072000FD32D /* libGlad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B27FE30D2629E04A000FD32D /* libGlad.a */; };
+		B27FE3132629E153000FD32D /* OpenGLGraphicsContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B27FE3112629E153000FD32D /* OpenGLGraphicsContext.cpp */; };
+		B27FE3142629E153000FD32D /* OpenGLGraphicsContext.h in Headers */ = {isa = PBXBuildFile; fileRef = B27FE3122629E153000FD32D /* OpenGLGraphicsContext.h */; };
+		B27FE3172629E1D2000FD32D /* GraphicsContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B27FE3152629E1D2000FD32D /* GraphicsContext.cpp */; };
+		B27FE3182629E1D2000FD32D /* GraphicsContext.h in Headers */ = {isa = PBXBuildFile; fileRef = B27FE3162629E1D2000FD32D /* GraphicsContext.h */; };
+		B27FE31B2629E474000FD32D /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B27FE3192629E474000FD32D /* Renderer.cpp */; };
+		B27FE31C2629E474000FD32D /* Renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = B27FE31A2629E474000FD32D /* Renderer.h */; };
 		B2FE351026248C7700AFC236 /* iKan.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FE350F26248C7700AFC236 /* iKan.h */; };
 		B2FE351226249ECB00AFC236 /* PrefixHeader.pch in Headers */ = {isa = PBXBuildFile; fileRef = B2FE351126249ECB00AFC236 /* PrefixHeader.pch */; };
 		B2FE35152624B34000AFC236 /* Entrypoint.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FE35142624B34000AFC236 /* Entrypoint.h */; };
 		B2FE351C2624B67B00AFC236 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2FE351A2624B67B00AFC236 /* Application.cpp */; };
 		B2FE351D2624B67B00AFC236 /* Application.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FE351B2624B67B00AFC236 /* Application.h */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B27FE30C2629E04A000FD32D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B27FE3082629E04A000FD32D /* Glad.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B27FE2F72629DF84000FD32D;
+			remoteInfo = Glad;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		B2028050262590D300BC7F39 /* Core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
@@ -37,6 +54,13 @@
 		B20280692625FF1900BC7F39 /* MacWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MacWindow.cpp; sourceTree = "<group>"; };
 		B202806A2625FF1900BC7F39 /* MacWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacWindow.h; sourceTree = "<group>"; };
 		B25684C126274BFB0030D00D /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = vendor/glfw/lib/libglfw3.a; sourceTree = "<group>"; };
+		B27FE3082629E04A000FD32D /* Glad.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Glad.xcodeproj; path = vendor/Glad/Glad.xcodeproj; sourceTree = "<group>"; };
+		B27FE3112629E153000FD32D /* OpenGLGraphicsContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLGraphicsContext.cpp; sourceTree = "<group>"; };
+		B27FE3122629E153000FD32D /* OpenGLGraphicsContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGLGraphicsContext.h; sourceTree = "<group>"; };
+		B27FE3152629E1D2000FD32D /* GraphicsContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicsContext.cpp; sourceTree = "<group>"; };
+		B27FE3162629E1D2000FD32D /* GraphicsContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GraphicsContext.h; sourceTree = "<group>"; };
+		B27FE3192629E474000FD32D /* Renderer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Renderer.cpp; sourceTree = "<group>"; };
+		B27FE31A2629E474000FD32D /* Renderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
 		B2FE34F426248A4500AFC236 /* libiKan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiKan.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2FE350F26248C7700AFC236 /* iKan.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iKan.h; sourceTree = "<group>"; };
 		B2FE351126249ECB00AFC236 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -50,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B27FE30E2629E072000FD32D /* libGlad.a in Frameworks */,
 				B25684C226274BFB0030D00D /* libglfw3.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -60,6 +85,7 @@
 		B20280672625FEEE00BC7F39 /* Platform */ = {
 			isa = PBXGroup;
 			children = (
+				B27FE3102629E0BE000FD32D /* OpenGL */,
 				B20280682625FF0000BC7F39 /* MacOs */,
 			);
 			path = Platform;
@@ -74,6 +100,14 @@
 			path = MacOs;
 			sourceTree = "<group>";
 		};
+		B25458C5262899580053BD47 /* Dependency */ = {
+			isa = PBXGroup;
+			children = (
+				B27FE3082629E04A000FD32D /* Glad.xcodeproj */,
+			);
+			name = Dependency;
+			sourceTree = "<group>";
+		};
 		B25684C026274BFB0030D00D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -82,10 +116,39 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B27FE3092629E04A000FD32D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B27FE30D2629E04A000FD32D /* libGlad.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B27FE30F2629E0A3000FD32D /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				B27FE3152629E1D2000FD32D /* GraphicsContext.cpp */,
+				B27FE3162629E1D2000FD32D /* GraphicsContext.h */,
+				B27FE3192629E474000FD32D /* Renderer.cpp */,
+				B27FE31A2629E474000FD32D /* Renderer.h */,
+			);
+			path = Renderer;
+			sourceTree = "<group>";
+		};
+		B27FE3102629E0BE000FD32D /* OpenGL */ = {
+			isa = PBXGroup;
+			children = (
+				B27FE3112629E153000FD32D /* OpenGLGraphicsContext.cpp */,
+				B27FE3122629E153000FD32D /* OpenGLGraphicsContext.h */,
+			);
+			path = OpenGL;
+			sourceTree = "<group>";
+		};
 		B2FE34EB26248A4500AFC236 = {
 			isa = PBXGroup;
 			children = (
 				B2FE350E26248C3F00AFC236 /* src */,
+				B25458C5262899580053BD47 /* Dependency */,
 				B2FE34F526248A4500AFC236 /* Products */,
 				B25684C026274BFB0030D00D /* Frameworks */,
 			);
@@ -114,6 +177,7 @@
 			children = (
 				B2FE35142624B34000AFC236 /* Entrypoint.h */,
 				B2FE35192624B61A00AFC236 /* Core */,
+				B27FE30F2629E0A3000FD32D /* Renderer */,
 				B20280672625FEEE00BC7F39 /* Platform */,
 			);
 			path = iKan;
@@ -146,11 +210,14 @@
 				B202806C2625FF1900BC7F39 /* MacWindow.h in Headers */,
 				B2028051262590D300BC7F39 /* Core.h in Headers */,
 				B2FE35152624B34000AFC236 /* Entrypoint.h in Headers */,
+				B27FE3182629E1D2000FD32D /* GraphicsContext.h in Headers */,
 				B2FE351D2624B67B00AFC236 /* Application.h in Headers */,
+				B27FE31C2629E474000FD32D /* Renderer.h in Headers */,
 				B202805B2625DCD200BC7F39 /* Layer.h in Headers */,
 				B2028053262592DD00BC7F39 /* Log.h in Headers */,
 				B20280662625F99A00BC7F39 /* Window.h in Headers */,
 				B2FE351226249ECB00AFC236 /* PrefixHeader.pch in Headers */,
+				B27FE3142629E153000FD32D /* OpenGLGraphicsContext.h in Headers */,
 				B2FE351026248C7700AFC236 /* iKan.h in Headers */,
 				B202805F2625DF4900BC7F39 /* Layerstack.h in Headers */,
 			);
@@ -201,12 +268,28 @@
 			mainGroup = B2FE34EB26248A4500AFC236;
 			productRefGroup = B2FE34F526248A4500AFC236 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = B27FE3092629E04A000FD32D /* Products */;
+					ProjectRef = B27FE3082629E04A000FD32D /* Glad.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				B2FE34F326248A4500AFC236 /* iKan */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		B27FE30D2629E04A000FD32D /* libGlad.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libGlad.a;
+			remoteRef = B27FE30C2629E04A000FD32D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B2FE34F126248A4500AFC236 /* Sources */ = {
@@ -216,7 +299,10 @@
 				B202806B2625FF1900BC7F39 /* MacWindow.cpp in Sources */,
 				B20280562625934700BC7F39 /* Log.cpp in Sources */,
 				B202805E2625DF4900BC7F39 /* Layerstack.cpp in Sources */,
+				B27FE3132629E153000FD32D /* OpenGLGraphicsContext.cpp in Sources */,
+				B27FE31B2629E474000FD32D /* Renderer.cpp in Sources */,
 				B2FE351C2624B67B00AFC236 /* Application.cpp in Sources */,
+				B27FE3172629E1D2000FD32D /* GraphicsContext.cpp in Sources */,
 				B20280652625F99A00BC7F39 /* Window.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -354,6 +440,7 @@
 					"${PROJECT_DIR}/src",
 					"${PROJECT_DIR}/vendor/spdlog/include",
 					"${PROJECT_DIR}/vendor/glfw/include",
+					"${PROJECT_DIR}/vendor/Glad/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -380,6 +467,7 @@
 					"${PROJECT_DIR}/src",
 					"${PROJECT_DIR}/vendor/spdlog/include",
 					"${PROJECT_DIR}/vendor/glfw/include",
+					"${PROJECT_DIR}/vendor/Glad/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

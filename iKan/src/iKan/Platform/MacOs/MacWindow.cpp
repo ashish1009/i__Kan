@@ -61,7 +61,10 @@ namespace iKan {
             return;
         }
         IK_CORE_INFO("GLFW Window : {0} ({1}x{2}) created", m_Data.Title, m_Data.Width, m_Data.Height);
-        
+
+        // Creating Context according to API
+        m_Context = GraphicsContext::CreateContext(m_Window);
+
         // Set the pointer of GLFW Window
         glfwSetWindowUserPointer(m_Window, &m_Data);
     }
@@ -83,6 +86,7 @@ namespace iKan {
     // ******************************************************************************
     void MacWindow::Update()
     {
+        m_Context->SwapBuffers();
         glfwPollEvents();
     }
     

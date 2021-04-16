@@ -9,8 +9,7 @@
 #pragma once
 
 #include <iKan/Core/Window.h>
-
-#include <GLFW/glfw3.h>
+#include <iKan/Renderer/GraphicsContext.h>
 
 namespace iKan {
     
@@ -59,8 +58,9 @@ namespace iKan {
         void SetCallBacks();
         
     private:
-        Data        m_Data;
-        GLFWwindow* m_Window;
+        Data                    m_Data;
+        GLFWwindow*             m_Window;
+        Scope<GraphicsContext>  m_Context;
     };
     
 }
