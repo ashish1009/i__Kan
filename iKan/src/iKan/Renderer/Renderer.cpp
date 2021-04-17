@@ -10,7 +10,7 @@
 
 namespace iKan {
  
-    Renderer::API Renderer::s_API = Renderer::API::OpenGL;
+    Renderer::API Renderer::s_API = Renderer::API::None;
     
 }
     

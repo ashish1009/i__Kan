@@ -11,6 +11,8 @@
 #include <iKan/Core/Layerstack.h>
 #include <iKan/Core/Window.h>
 
+#include <iKan/Renderer/Renderer.h>
+
 namespace iKan {
     
     // ******************************************************************************
@@ -26,10 +28,17 @@ namespace iKan {
         struct Property
         {
             std::string Title = "iKan Engine";
-            uint32_t Width = Window::Property::DefaultWidth, Height = Window::Property::DefaultHeight;
             
-            Property(const std::string& title = "iKan", uint32_t width = Window::Property::DefaultWidth, uint32_t height = Window::Property::DefaultHeight)
-            : Title(title), Width(width), Height(height)
+            uint32_t Width  = Window::Property::DefaultWidth;
+            uint32_t Height = Window::Property::DefaultHeight;
+            
+            Renderer::API Api = Renderer::API::OpenGL;
+            
+            Property(const std::string& title = "iKan",
+                     uint32_t width = Window::Property::DefaultWidth,
+                     uint32_t height = Window::Property::DefaultHeight,
+                     Renderer::API api = Renderer::API::OpenGL)
+            : Title(title), Width(width), Height(height), Api(api)
             {
                 
             }
@@ -41,7 +50,6 @@ namespace iKan {
         Application(const Application::Property& props = Application::Property());
         virtual ~Application();
         
-        void Init(const Application::Property& props);
         void Run();
         void EventHandler();
         void ImguiRenderer();
@@ -53,6 +61,7 @@ namespace iKan {
         Application& Get() { return *s_Instance; }
 
     private:
+        void Init();
         void PushOverlay(Ref<Layer> overlay) { m_Layerstack.PushOverlay(overlay); };
         void PopOverlay(Ref<Layer> overlay) { m_Layerstack.PopOverlay(overlay); };
         
@@ -65,6 +74,7 @@ namespace iKan {
         // ******************************************************************************
         Scope<Window> m_Window;
         Layerstack    m_Layerstack;
+        Property      m_Property;
         
         bool m_IsRunning = true;
         

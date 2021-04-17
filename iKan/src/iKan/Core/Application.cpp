@@ -16,12 +16,13 @@ namespace iKan {
     // Application Constructor
     // ******************************************************************************
     Application::Application(const Application::Property& props)
+    : m_Property(props)
     {
         IK_CORE_ASSERT(!s_Instance, "Application already exists !!!");
         IK_CORE_INFO("Constructing the application");
         
         s_Instance = this;
-        Init(props);
+        Init();
     }
     
     // ******************************************************************************
@@ -35,12 +36,15 @@ namespace iKan {
     // ******************************************************************************
     // Initialise the Application
     // ******************************************************************************
-    void Application::Init(const Application::Property& props)
+    void Application::Init()
     {
         IK_CORE_INFO("Initialising the application");
+        // Setiing Renderer API for iKan Engine
+        // NOTE: This API should be set in very begining as Window creates context acc to the API
+        Renderer::SetAPI(m_Property.Api);
         
         // Creating Window from Applicaition
-        m_Window = Window::Create(Window::Property(props.Title, props.Width, props.Height));
+        m_Window = Window::Create(Window::Property(m_Property.Title, m_Property.Width, m_Property.Height));
     }
 
     // ******************************************************************************

@@ -74,6 +74,7 @@ public:
 // ******************************************************************************
 iKan::Scope<iKan::Application> iKan::CreateApplication()
 {
-    auto editorApp = iKan::CreateScope<EditorApp>(iKan::Application::Property("Editor", 800, 450 ));
+    auto appProp    = iKan::Application::Property("Editor", 800, 450, Renderer::API::OpenGL );
+    auto editorApp  = iKan::CreateScope<EditorApp>(appProp);
     return editorApp;
 }

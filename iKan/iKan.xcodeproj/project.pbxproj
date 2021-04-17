@@ -66,7 +66,7 @@
 		B2FE351126249ECB00AFC236 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		B2FE35142624B34000AFC236 /* Entrypoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Entrypoint.h; sourceTree = "<group>"; };
 		B2FE351A2624B67B00AFC236 /* Application.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Application.cpp; sourceTree = "<group>"; };
-		B2FE351B2624B67B00AFC236 /* Application.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Application.h; sourceTree = "<group>"; };
+		B2FE351B2624B67B00AFC236 /* Application.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Application.h; sourceTree = "<group>"; wrapsLines = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

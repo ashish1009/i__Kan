@@ -49,13 +49,18 @@ ${PROJECT_DIR}/../iKan/vendor/spdlog/include
 ### Preprocessors
 ___________________
 Add the following preprocessors
-1 `IK_ENABLE_LOG` to enable logging
-2 `IK_ENABLE_ASSERT` to enable Trigger exception
-3 `IK_PLATFORM_MAC` for MAC Platform
+1. `IK_ENABLE_LOG` to enable logging
+2. `IK_ENABLE_ASSERT` to enable Trigger exception
+3. `IK_PLATFORM_MAC` for MAC Platform
 
 ### Application
 _______________
-User defined Application need to be created at Client side which should be derived from `iKan::Application`.  In this application we can Push the user defined layer in the current application. Layers can be pushed in the application using shared pointer. `PushLayer(Ref<Layer>)` accepts `Ref<>` which is an alliase for `std::shared_ptr`. Multiple layers can be added in the application.  
+User defined Application need to be created at Client side which should be derived from `iKan::Application`. Base application should be initilized with `iKan::Application::Property` wuth the following parameters.
+1. string                             Title.
+2. uint32_t                         Width.
+3. uint32_t                         Height.
+4. iKan::Renderer::API       Api 
+This application we can Push the user defined layer in the current application. Layers can be pushed in the application using shared pointer. `PushLayer(Ref<Layer>)` accepts `Ref<>` which is an alliase for `std::shared_ptr`. Multiple layers can be added in the application.  
 
 ### Layer
 __________
