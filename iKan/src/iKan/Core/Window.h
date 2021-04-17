@@ -8,6 +8,8 @@
 
 #pragma once
 
+#include <iKan/Core/Events/Event.h>
+
 namespace iKan {
     
     // ******************************************************************************
@@ -37,6 +39,8 @@ namespace iKan {
         };
         
     public:
+        using EventCallbackFn = std::function<void(Event&)>;
+
         virtual ~Window() = default;
         
         virtual void Update() = 0;
@@ -49,6 +53,7 @@ namespace iKan {
 
         virtual void* GetNativeWindow() = 0;
         virtual void SetVSync(bool enabled) = 0;
+        virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
 
         virtual bool IsVSync() const = 0;
         

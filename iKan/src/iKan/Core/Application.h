@@ -51,7 +51,7 @@ namespace iKan {
         virtual ~Application();
         
         void Run();
-        void EventHandler();
+        void EventHandler(Event event);
         void ImguiRenderer();
         void Close();
         

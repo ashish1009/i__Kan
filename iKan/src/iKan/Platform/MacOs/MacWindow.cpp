@@ -8,6 +8,10 @@
 
 #include "MacWindow.h"
 
+#include <iKan/Core/Events/MouseEvent.h>
+#include <iKan/Core/Events/KeyEvent.h>
+#include <iKan/Core/Events/ApplicationEvent.h>
+
 namespace iKan {
     
     // ******************************************************************************
@@ -65,8 +69,111 @@ namespace iKan {
         // Creating Context according to API
         m_Context = GraphicsContext::CreateContext(m_Window);
 
-        // Set the pointer of GLFW Window
+        // Set the User defined pointer to GLFW Window, this pointer will be retrieved when
+        // an interrupt will be triggered
         glfwSetWindowUserPointer(m_Window, &m_Data);
+        
+        // Set GLFW Callbacks
+        SetCallBacks();
+    }
+    
+    // ******************************************************************************
+    // Restisters the functions that will be called then GLFW interrupt triggers
+    // last argument of each function calls in this funciton it the lamda that will
+    // be called when interrupt is triggered. So function arugument need to be used
+    // according to event
+    // ******************************************************************************
+    void MacWindow::SetCallBacks()
+    {
+        glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int32_t width, int32_t height)
+                                  {
+            MacWindow::Data& data = *(MacWindow::Data*)glfwGetWindowUserPointer(window);
+            
+            data.Width  = width;
+            data.Height = height;
+            
+            WindowResizeEvent event(width, height);
+            data.EventCallback(event);
+        });
+        
+        glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
+                                   {
+            MacWindow::Data& data = *(MacWindow::Data*)glfwGetWindowUserPointer(window);
+            WindowCloseEvent event;
+            data.EventCallback(event);
+        });
+        
+        glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int32_t key, int32_t scancode, int32_t action, int32_t mods)
+                           {
+            MacWindow::Data& data = *(MacWindow::Data*)glfwGetWindowUserPointer(window);
+
+            switch (action)
+            {
+                case GLFW_PRESS:
+                {
+                    KeyPressedEvent event(static_cast<KeyCode>(key), 0);
+                    data.EventCallback(event);
+                    break;
+                }
+                case GLFW_RELEASE:
+                {
+                    KeyReleasedEvent event(static_cast<KeyCode>(key));
+                    data.EventCallback(event);
+                    break;
+                }
+                case GLFW_REPEAT:
+                {
+                    KeyPressedEvent event(static_cast<KeyCode>(key), 1);
+                    data.EventCallback(event);
+                    break;
+                }
+            }
+        });
+        
+        glfwSetCharCallback(m_Window, [](GLFWwindow* window, uint32_t keycode)
+                            {
+            MacWindow::Data& data = *(MacWindow::Data*)glfwGetWindowUserPointer(window);
+
+            KeyTypedEvent event(static_cast<KeyCode>(keycode));
+            data.EventCallback(event);
+        });
+        
+        glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int32_t button, int32_t action, int32_t mods)
+                                   {
+            MacWindow::Data& data = *(MacWindow::Data*)glfwGetWindowUserPointer(window);
+
+            switch (action)
+            {
+                case GLFW_PRESS:
+                {
+                    MouseButtonPressedEvent event(static_cast<MouseCode>(button));
+                    data.EventCallback(event);
+                    break;
+                }
+                case GLFW_RELEASE:
+                {
+                    MouseButtonReleasedEvent event(static_cast<MouseCode>(button));
+                    data.EventCallback(event);
+                    break;
+                }
+            }
+        });
+        
+        glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset)
+                              {
+            MacWindow::Data& data = *(MacWindow::Data*)glfwGetWindowUserPointer(window);
+
+            MouseScrolledEvent event((float)xOffset, (float)yOffset);
+            data.EventCallback(event);
+        });
+        
+        glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos)
+                                 {
+            MacWindow::Data& data = *(MacWindow::Data*)glfwGetWindowUserPointer(window);
+
+            MouseMovedEvent event((float)xPos, (float)yPos);
+            data.EventCallback(event);
+        });
     }
     
     // ******************************************************************************

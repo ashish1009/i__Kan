@@ -28,11 +28,15 @@ namespace iKan {
             uint32_t    Width = 800, Height = 400;
             bool        VSync = true;
             
-            Data(const std::string& title = "Mac Window", uint32_t width = 800, uint32_t height = 400, bool vSync = true)
+            EventCallbackFn EventCallback;
+
+            Data(const std::string& title, uint32_t width, uint32_t height, bool vSync, EventCallbackFn EventCallback)
             : Title(title), Width(width), Height(height), VSync(vSync)
             {
                 
             }
+            
+            Data() = default;
             ~Data() = default;
         };
         
@@ -48,8 +52,9 @@ namespace iKan {
 
         virtual const std::string& GetTitle() const override { return m_Data.Title; }
         
-        virtual void SetVSync(bool enabled) override;
         virtual void* GetNativeWindow() override { return (void*)m_Window; }
+        virtual void SetVSync(bool enabled) override;
+        virtual void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; };
         
         virtual bool IsVSync() const override;
         

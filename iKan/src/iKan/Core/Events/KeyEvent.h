@@ -1,0 +1,85 @@
+// ******************************************************************************
+// File         : KeyEvent.h
+// Description  : Key Events to handle Key buttons
+// Projectt     : iKan : Core
+//
+// Created on   : 17/04/21.
+// ******************************************************************************
+
+#pragma once
+
+#include <iKan/Core/Events/Event.h>
+#include <iKan/Core/KeyCode.h>
+
+namespace iKan {
+    
+    // ******************************************************************************
+    // Key base event class
+    // ******************************************************************************
+    class KeyEvent : public Event
+    {
+    public:
+        virtual ~KeyEvent() = default;
+        KeyCode GetKeyCode() const { return m_Code; }
+        
+    protected:
+        KeyEvent(KeyCode code)
+        : m_Code(code)
+        {
+            
+        }
+        
+    protected:
+        KeyCode m_Code;
+    };
+
+    // ******************************************************************************
+    // Key Pressed Event class
+    // ******************************************************************************
+    class KeyPressedEvent : public KeyEvent
+    {
+    public:
+        virtual ~KeyPressedEvent() = default;
+        
+        KeyPressedEvent(KeyCode keycode, int32_t repeatCount)
+        : KeyEvent(keycode), m_RepeatCount(repeatCount)
+        {
+            
+        }
+        
+        int32_t GetRepeatCount() const { return m_RepeatCount; }
+
+    private:
+        int32_t m_RepeatCount;
+    };
+    
+    // ******************************************************************************
+    // Key Released event class
+    // ******************************************************************************
+    class KeyReleasedEvent : public KeyEvent
+    {
+    public:
+        virtual ~KeyReleasedEvent() = default;
+        
+        KeyReleasedEvent(KeyCode keycode)
+        : KeyEvent(keycode)
+        {
+            
+        }
+    };
+    
+    // ******************************************************************************
+    // Key typed Event class
+    // ******************************************************************************
+    class KeyTypedEvent : public KeyEvent
+    {
+    public:
+        virtual ~KeyTypedEvent() = default;
+        KeyTypedEvent(KeyCode keycode)
+        : KeyEvent(keycode)
+        {
+            
+        }
+    };
+
+}

@@ -45,6 +45,10 @@ namespace iKan {
         
         // Creating Window from Applicaition
         m_Window = Window::Create(Window::Property(m_Property.Title, m_Property.Width, m_Property.Height));
+        
+        // Register Application Event Handler to GLFW Window. Interrupt in GLFW Window decides the
+        // argiment for this function (which is event type) which should be derived from Base Event
+        m_Window->SetEventCallback(IK_BIND_EVENT_FN(Application::EventHandler));
     }
 
     // ******************************************************************************
@@ -60,9 +64,11 @@ namespace iKan {
     }
 
     // ******************************************************************************
-    // Handle event triggered from window
+    // Handle event triggered from window. Calls from GLFW interrupt, Base event is
+    // argument which can be dynamically insanciate according to interrupt triggered
+    // in GLFW Window.
     // ******************************************************************************
-    void Application::EventHandler()
+    void Application::EventHandler(Event event)
     {
 
     }
