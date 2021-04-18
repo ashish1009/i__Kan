@@ -60,7 +60,9 @@ namespace iKan {
         void PushLayer(Ref<Layer> layer) { m_Layerstack.PushLayer(layer); };
         void PopLayer(Ref<Layer> layer) { m_Layerstack.PopLayer(layer); };
         
-        Application& Get() { return *s_Instance; }
+        Window& GetWindow() { return *m_Window; }
+        
+        static Application& Get() { return *s_Instance; }
 
     private:
         void Init();

@@ -25,6 +25,8 @@
 		B27FE3182629E1D2000FD32D /* GraphicsContext.h in Headers */ = {isa = PBXBuildFile; fileRef = B27FE3162629E1D2000FD32D /* GraphicsContext.h */; };
 		B27FE31B2629E474000FD32D /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B27FE3192629E474000FD32D /* Renderer.cpp */; };
 		B27FE31C2629E474000FD32D /* Renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = B27FE31A2629E474000FD32D /* Renderer.h */; };
+		B28FE5BF262C87A500DC5E20 /* Input.h in Headers */ = {isa = PBXBuildFile; fileRef = B28FE5BE262C87A500DC5E20 /* Input.h */; };
+		B28FE5C3262C881700DC5E20 /* MacInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28FE5C1262C881700DC5E20 /* MacInput.cpp */; };
 		B2EAB338262B20FF003D7FE6 /* Event.h in Headers */ = {isa = PBXBuildFile; fileRef = B2EAB336262B20FF003D7FE6 /* Event.h */; };
 		B2EAB33B262B2311003D7FE6 /* ApplicationEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = B2EAB33A262B2311003D7FE6 /* ApplicationEvent.h */; };
 		B2EAB33D262B23AA003D7FE6 /* KeyEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = B2EAB33C262B23AA003D7FE6 /* KeyEvent.h */; };
@@ -67,6 +69,8 @@
 		B27FE3162629E1D2000FD32D /* GraphicsContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GraphicsContext.h; sourceTree = "<group>"; };
 		B27FE3192629E474000FD32D /* Renderer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Renderer.cpp; sourceTree = "<group>"; };
 		B27FE31A2629E474000FD32D /* Renderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
+		B28FE5BE262C87A500DC5E20 /* Input.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Input.h; sourceTree = "<group>"; };
+		B28FE5C1262C881700DC5E20 /* MacInput.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MacInput.cpp; sourceTree = "<group>"; };
 		B2EAB336262B20FF003D7FE6 /* Event.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		B2EAB33A262B2311003D7FE6 /* ApplicationEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApplicationEvent.h; sourceTree = "<group>"; };
 		B2EAB33C262B23AA003D7FE6 /* KeyEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyEvent.h; sourceTree = "<group>"; };
@@ -108,6 +112,7 @@
 			children = (
 				B20280692625FF1900BC7F39 /* MacWindow.cpp */,
 				B202806A2625FF1900BC7F39 /* MacWindow.h */,
+				B28FE5C1262C881700DC5E20 /* MacInput.cpp */,
 			);
 			path = MacOs;
 			sourceTree = "<group>";
@@ -222,6 +227,7 @@
 				B20280642625F99A00BC7F39 /* Window.h */,
 				B2EAB340262B265B003D7FE6 /* KeyCode.h */,
 				B2EAB341262B265B003D7FE6 /* MouseCode.h */,
+				B28FE5BE262C87A500DC5E20 /* Input.h */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -238,6 +244,7 @@
 				B2028051262590D300BC7F39 /* Core.h in Headers */,
 				B2FE35152624B34000AFC236 /* Entrypoint.h in Headers */,
 				B2EAB33F262B23F2003D7FE6 /* MouseEvent.h in Headers */,
+				B28FE5BF262C87A500DC5E20 /* Input.h in Headers */,
 				B27FE3182629E1D2000FD32D /* GraphicsContext.h in Headers */,
 				B2FE351D2624B67B00AFC236 /* Application.h in Headers */,
 				B27FE31C2629E474000FD32D /* Renderer.h in Headers */,
@@ -335,6 +342,7 @@
 				B27FE31B2629E474000FD32D /* Renderer.cpp in Sources */,
 				B2FE351C2624B67B00AFC236 /* Application.cpp in Sources */,
 				B27FE3172629E1D2000FD32D /* GraphicsContext.cpp in Sources */,
+				B28FE5C3262C881700DC5E20 /* MacInput.cpp in Sources */,
 				B20280652625F99A00BC7F39 /* Window.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
