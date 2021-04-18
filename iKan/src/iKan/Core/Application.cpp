@@ -56,11 +56,12 @@ namespace iKan {
     // ******************************************************************************
     void Application::Run()
     {
-        IK_CORE_INFO("Entering Game loop");
+        IK_CORE_INFO("-----------------------------     Entering Game loop   ---------------------------------");
         while (m_IsRunning)
         {
             m_Window->Update();
         }
+        IK_CORE_WARN("-----------------------------     Exiting Game loop    ---------------------------------");
     }
 
     // ******************************************************************************
@@ -68,9 +69,21 @@ namespace iKan {
     // argument which can be dynamically insanciate according to interrupt triggered
     // in GLFW Window.
     // ******************************************************************************
-    void Application::EventHandler(Event event)
+    void Application::EventHandler(Event& event)
     {
-
+        EventDispatcher dispather(event);
+        dispather.Dispatch<WindowCloseEvent>(IK_BIND_EVENT_FN(Application::OnWindowClose));
+    }
+    
+    // ******************************************************************************
+    // Application window close
+    // ******************************************************************************
+    bool Application::OnWindowClose(WindowCloseEvent& event)
+    {
+        IK_CORE_WARN("Application is closing");
+        
+        m_IsRunning = false;
+        return false;
     }
 
     // ******************************************************************************

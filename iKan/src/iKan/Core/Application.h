@@ -11,6 +11,8 @@
 #include <iKan/Core/Layerstack.h>
 #include <iKan/Core/Window.h>
 
+#include <iKan/Core/Events/ApplicationEvent.h>
+
 #include <iKan/Renderer/Renderer.h>
 
 namespace iKan {
@@ -35,9 +37,9 @@ namespace iKan {
             Renderer::API Api = Renderer::API::OpenGL;
             
             Property(const std::string& title = "iKan",
-                     uint32_t width = Window::Property::DefaultWidth,
-                     uint32_t height = Window::Property::DefaultHeight,
-                     Renderer::API api = Renderer::API::OpenGL)
+                     uint32_t width     = Window::Property::DefaultWidth,
+                     uint32_t height    = Window::Property::DefaultHeight,
+                     Renderer::API api  = Renderer::API::OpenGL)
             : Title(title), Width(width), Height(height), Api(api)
             {
                 
@@ -51,7 +53,7 @@ namespace iKan {
         virtual ~Application();
         
         void Run();
-        void EventHandler(Event event);
+        void EventHandler(Event& event);
         void ImguiRenderer();
         void Close();
         
@@ -64,6 +66,8 @@ namespace iKan {
         void Init();
         void PushOverlay(Ref<Layer> overlay) { m_Layerstack.PushOverlay(overlay); };
         void PopOverlay(Ref<Layer> overlay) { m_Layerstack.PopOverlay(overlay); };
+        
+        bool OnWindowClose(WindowCloseEvent& event);
         
     private:
         // ******************************************************************************

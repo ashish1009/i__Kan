@@ -40,7 +40,7 @@ namespace iKan {
     // ******************************************************************************
     void Layerstack::PopLayer(Ref<Layer> layer)
     {
-        IK_CORE_INFO("Pop the Client layer: '{0}', from the stack ", layer->GetName().c_str());
+        IK_CORE_WARN("Pop the Client layer: '{0}', from the stack ", layer->GetName().c_str());
 
         auto it = std::find(m_Layers.begin(), m_Layers.begin() + m_LayerInsertIndex, layer);
         if (it != m_Layers.begin() + m_LayerInsertIndex)
@@ -69,7 +69,7 @@ namespace iKan {
     // ******************************************************************************
     void Layerstack::PopOverlay(Ref<Layer> overlay)
     {
-        IK_CORE_INFO("Pop the Core layer: '{0}', from the stack ", overlay->GetName().c_str());
+        IK_CORE_WARN("Pop the Core layer: '{0}', from the stack ", overlay->GetName().c_str());
 
         auto it = std::find(m_Layers.begin() + m_LayerInsertIndex, m_Layers.end(), overlay);
         if (it != m_Layers.end())

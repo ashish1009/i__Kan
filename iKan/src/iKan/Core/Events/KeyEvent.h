@@ -48,6 +48,8 @@ namespace iKan {
         }
         
         int32_t GetRepeatCount() const { return m_RepeatCount; }
+        
+        EVENT_CLASS_TYPE(KeyPressed);
 
     private:
         int32_t m_RepeatCount;
@@ -66,6 +68,8 @@ namespace iKan {
         {
             
         }
+        
+        EVENT_CLASS_TYPE(KeyReleased);
     };
     
     // ******************************************************************************
@@ -75,11 +79,14 @@ namespace iKan {
     {
     public:
         virtual ~KeyTypedEvent() = default;
+        
         KeyTypedEvent(KeyCode keycode)
         : KeyEvent(keycode)
         {
             
         }
+        
+        EVENT_CLASS_TYPE(KeyTyped);
     };
 
 }

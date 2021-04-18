@@ -35,7 +35,7 @@ public:
     // ******************************************************************************
     virtual ~EditorApp()
     {
-        IK_INFO("Destroying Editor Application");
+        IK_WARN("Destroying Editor Application");
         
         PopLayer(m_ActiveLayer);
     }
@@ -65,7 +65,7 @@ public:
     // ******************************************************************************
     virtual ~MarioApp()
     {
-        IK_INFO("Destroying Mario Application");
+        IK_WARN("Destroying Mario Application");
     }
 };
 

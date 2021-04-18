@@ -103,6 +103,13 @@ namespace iKan {
             data.EventCallback(event);
         });
         
+        glfwSetWindowFocusCallback(m_Window, [](GLFWwindow* window, int icontified)
+                                   {
+            MacWindow::Data& data = *(MacWindow::Data*)glfwGetWindowUserPointer(window);
+            WindowFocusEvent event(icontified);
+            data.EventCallback(event);
+        });
+        
         glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int32_t key, int32_t scancode, int32_t action, int32_t mods)
                            {
             MacWindow::Data& data = *(MacWindow::Data*)glfwGetWindowUserPointer(window);
