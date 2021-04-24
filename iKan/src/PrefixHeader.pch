@@ -20,3 +20,6 @@
 
 // Log files files
 #include <iKan/Core/Log.h>
+
+// Imgui files
+#include <imgui.h>

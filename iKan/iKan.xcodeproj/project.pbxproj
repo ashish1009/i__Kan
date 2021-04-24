@@ -18,6 +18,10 @@
 		B202806B2625FF1900BC7F39 /* MacWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B20280692625FF1900BC7F39 /* MacWindow.cpp */; };
 		B202806C2625FF1900BC7F39 /* MacWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = B202806A2625FF1900BC7F39 /* MacWindow.h */; };
 		B2400F40263434F60051B868 /* TimeStep.h in Headers */ = {isa = PBXBuildFile; fileRef = B2400F3F263434F60051B868 /* TimeStep.h */; };
+		B240109E26343A8A0051B868 /* libImgui.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2400F572634396D0051B868 /* libImgui.a */; };
+		B24010A2263450200051B868 /* ImguiLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24010A0263450200051B868 /* ImguiLayer.cpp */; };
+		B24010A3263450200051B868 /* ImguiLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = B24010A1263450200051B868 /* ImguiLayer.h */; };
+		B24010A52634502E0051B868 /* ImguiBuild.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24010A42634502E0051B868 /* ImguiBuild.cpp */; };
 		B25684C226274BFB0030D00D /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B25684C126274BFB0030D00D /* libglfw3.a */; };
 		B27FE30E2629E072000FD32D /* libGlad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B27FE30D2629E04A000FD32D /* libGlad.a */; };
 		B27FE3132629E153000FD32D /* OpenGLGraphicsContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B27FE3112629E153000FD32D /* OpenGLGraphicsContext.cpp */; };
@@ -42,6 +46,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B2400F562634396D0051B868 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B2400F522634396C0051B868 /* Imgui.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B2400F4B2634396C0051B868;
+			remoteInfo = Imgui;
+		};
 		B27FE30C2629E04A000FD32D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B27FE3082629E04A000FD32D /* Glad.xcodeproj */;
@@ -63,6 +74,18 @@
 		B20280692625FF1900BC7F39 /* MacWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MacWindow.cpp; sourceTree = "<group>"; };
 		B202806A2625FF1900BC7F39 /* MacWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacWindow.h; sourceTree = "<group>"; wrapsLines = 0; };
 		B2400F3F263434F60051B868 /* TimeStep.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimeStep.h; sourceTree = "<group>"; };
+		B2400F522634396C0051B868 /* Imgui.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Imgui.xcodeproj; path = vendor/Imgui/Imgui.xcodeproj; sourceTree = "<group>"; };
+		B24010A0263450200051B868 /* ImguiLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ImguiLayer.cpp; sourceTree = "<group>"; };
+		B24010A1263450200051B868 /* ImguiLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImguiLayer.h; sourceTree = "<group>"; };
+		B24010A42634502E0051B868 /* ImguiBuild.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ImguiBuild.cpp; sourceTree = "<group>"; };
+		B24010A82634551B0051B868 /* Fonts.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fonts.otf; sourceTree = "<group>"; };
+		B24010AA2634551B0051B868 /* OpenSans-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Light.ttf"; sourceTree = "<group>"; };
+		B24010AB2634551B0051B868 /* OpenSans-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Italic.ttf"; sourceTree = "<group>"; };
+		B24010AC2634551B0051B868 /* OpenSans-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-ExtraBold.ttf"; sourceTree = "<group>"; };
+		B24010AD2634551B0051B868 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
+		B24010AE2634551B0051B868 /* LICENSE.webarchive */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = LICENSE.webarchive; sourceTree = "<group>"; };
+		B24010AF2634551B0051B868 /* OpenSans-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
+		B24010B02634551B0051B868 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		B25684C126274BFB0030D00D /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = vendor/glfw/lib/libglfw3.a; sourceTree = "<group>"; };
 		B27FE3082629E04A000FD32D /* Glad.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Glad.xcodeproj; path = vendor/Glad/Glad.xcodeproj; sourceTree = "<group>"; };
 		B27FE3112629E153000FD32D /* OpenGLGraphicsContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLGraphicsContext.cpp; sourceTree = "<group>"; };
@@ -92,6 +115,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B240109E26343A8A0051B868 /* libImgui.a in Frameworks */,
 				B27FE30E2629E072000FD32D /* libGlad.a in Frameworks */,
 				B25684C226274BFB0030D00D /* libglfw3.a in Frameworks */,
 			);
@@ -119,9 +143,59 @@
 			path = MacOs;
 			sourceTree = "<group>";
 		};
+		B2400F532634396C0051B868 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B2400F572634396D0051B868 /* libImgui.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B240109F26344FD90051B868 /* Imgui */ = {
+			isa = PBXGroup;
+			children = (
+				B24010A42634502E0051B868 /* ImguiBuild.cpp */,
+				B24010A0263450200051B868 /* ImguiLayer.cpp */,
+				B24010A1263450200051B868 /* ImguiLayer.h */,
+			);
+			path = Imgui;
+			sourceTree = "<group>";
+		};
+		B24010A62634551B0051B868 /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				B24010A72634551B0051B868 /* Fonts */,
+			);
+			path = Editor;
+			sourceTree = "<group>";
+		};
+		B24010A72634551B0051B868 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				B24010A82634551B0051B868 /* Fonts.otf */,
+				B24010A92634551B0051B868 /* OpenSans */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		B24010A92634551B0051B868 /* OpenSans */ = {
+			isa = PBXGroup;
+			children = (
+				B24010AA2634551B0051B868 /* OpenSans-Light.ttf */,
+				B24010AB2634551B0051B868 /* OpenSans-Italic.ttf */,
+				B24010AC2634551B0051B868 /* OpenSans-ExtraBold.ttf */,
+				B24010AD2634551B0051B868 /* OpenSans-Bold.ttf */,
+				B24010AE2634551B0051B868 /* LICENSE.webarchive */,
+				B24010AF2634551B0051B868 /* OpenSans-ExtraBoldItalic.ttf */,
+				B24010B02634551B0051B868 /* OpenSans-Regular.ttf */,
+			);
+			path = OpenSans;
+			sourceTree = "<group>";
+		};
 		B25458C5262899580053BD47 /* Dependency */ = {
 			isa = PBXGroup;
 			children = (
+				B2400F522634396C0051B868 /* Imgui.xcodeproj */,
 				B27FE3082629E04A000FD32D /* Glad.xcodeproj */,
 			);
 			name = Dependency;
@@ -208,7 +282,9 @@
 				B2FE35142624B34000AFC236 /* Entrypoint.h */,
 				B2FE35192624B61A00AFC236 /* Core */,
 				B27FE30F2629E0A3000FD32D /* Renderer */,
+				B240109F26344FD90051B868 /* Imgui */,
 				B20280672625FEEE00BC7F39 /* Platform */,
+				B24010A62634551B0051B868 /* Editor */,
 			);
 			path = iKan;
 			sourceTree = "<group>";
@@ -244,6 +320,7 @@
 			files = (
 				B202806C2625FF1900BC7F39 /* MacWindow.h in Headers */,
 				B2EAB33B262B2311003D7FE6 /* ApplicationEvent.h in Headers */,
+				B24010A3263450200051B868 /* ImguiLayer.h in Headers */,
 				B2028051262590D300BC7F39 /* Core.h in Headers */,
 				B2FE35152624B34000AFC236 /* Entrypoint.h in Headers */,
 				B2EAB33F262B23F2003D7FE6 /* MouseEvent.h in Headers */,
@@ -316,6 +393,10 @@
 					ProductGroup = B27FE3092629E04A000FD32D /* Products */;
 					ProjectRef = B27FE3082629E04A000FD32D /* Glad.xcodeproj */;
 				},
+				{
+					ProductGroup = B2400F532634396C0051B868 /* Products */;
+					ProjectRef = B2400F522634396C0051B868 /* Imgui.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -325,6 +406,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		B2400F572634396D0051B868 /* libImgui.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libImgui.a;
+			remoteRef = B2400F562634396D0051B868 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		B27FE30D2629E04A000FD32D /* libGlad.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -340,7 +428,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B202806B2625FF1900BC7F39 /* MacWindow.cpp in Sources */,
+				B24010A2263450200051B868 /* ImguiLayer.cpp in Sources */,
 				B20280562625934700BC7F39 /* Log.cpp in Sources */,
+				B24010A52634502E0051B868 /* ImguiBuild.cpp in Sources */,
 				B202805E2625DF4900BC7F39 /* Layerstack.cpp in Sources */,
 				B27FE3132629E153000FD32D /* OpenGLGraphicsContext.cpp in Sources */,
 				B27FE31B2629E474000FD32D /* Renderer.cpp in Sources */,
@@ -485,6 +575,7 @@
 					"${PROJECT_DIR}/vendor/spdlog/include",
 					"${PROJECT_DIR}/vendor/glfw/include",
 					"${PROJECT_DIR}/vendor/Glad/include",
+					"${PROJECT_DIR}/vendor/Imgui/src",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -512,6 +603,7 @@
 					"${PROJECT_DIR}/vendor/spdlog/include",
 					"${PROJECT_DIR}/vendor/glfw/include",
 					"${PROJECT_DIR}/vendor/Glad/include",
+					"${PROJECT_DIR}/vendor/Imgui/src",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

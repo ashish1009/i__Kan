@@ -30,7 +30,8 @@ namespace iKan {
         uint32_t GetHeight() const { return m_Height; }
         
         EVENT_CLASS_TYPE(WindowResize);
-                
+        EVENT_CLASS_CATEGORY(EventCategoryApplication)
+
     private:
         uint32_t m_Width, m_Height;
     };
@@ -45,6 +46,7 @@ namespace iKan {
         virtual ~WindowCloseEvent() = default;
 
         EVENT_CLASS_TYPE(WindowClose);
+        EVENT_CLASS_CATEGORY(EventCategoryApplication)
     };
     
     // ******************************************************************************
@@ -63,7 +65,8 @@ namespace iKan {
         bool GetIconified() const { return m_Iconified; }
         
         EVENT_CLASS_TYPE(WindowFocus);
-        
+        EVENT_CLASS_CATEGORY(EventCategoryApplication)
+
     private:
         // `GLFW_TRUE` if the window was iconified, or `GLFW_FALSE` if it was restored.
         // GLFW_TRUE is aliaced as true and GLFW_FALSE as false
@@ -80,6 +83,7 @@ namespace iKan {
         virtual ~WindowMovedEvent() = default;
     
         EVENT_CLASS_TYPE(WindowMoved);
+        EVENT_CLASS_CATEGORY(EventCategoryApplication)
     };
     
 

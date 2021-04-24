@@ -1,6 +1,6 @@
 // ******************************************************************************
 // File         : TimeStep.h
-// Project      : iKan
+// Project      : iKan : Core
 // Description  : Class to store the time in seconds, millisecons and microSeconds
 //
 // Created on   : 24/04/21.

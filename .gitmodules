@@ -4,3 +4,6 @@
 [submodule "iKan/vendor/glfw"]
 	path = iKan/vendor/glfw
 	url = https://github.com/ashish1009/glfw
+[submodule "iKan/vendor/imgui/src"]
+	path = iKan/vendor/imgui/src
+	url = https://github.com/ashish1009/imgui

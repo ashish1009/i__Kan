@@ -12,6 +12,7 @@
 #include <iKan/Core/Window.h>
 #include <iKan/Core/Events/ApplicationEvent.h>
 #include <iKan/Renderer/Renderer.h>
+#include <iKan/ImGui/ImguiLayer.h>
 
 namespace iKan {
     
@@ -76,11 +77,13 @@ namespace iKan {
         // Layers, as In Window Destructor we are TERMINATING the GLFW Window which might
         // have an GLFW Error while detaching few layers
         // ******************************************************************************
-        Scope<Window> m_Window;
-        Layerstack    m_Layerstack;
-        Property      m_Property;
-        Timestep      m_Timestep;
+        Scope<Window>   m_Window;
+        Ref<ImguiLayer> m_ImguiLayer;
         
+        Layerstack m_Layerstack;
+        Property   m_Property;
+        Timestep   m_Timestep;
+
         bool  m_IsRunning = true;
         float m_LastFrame = 0.0f;
 

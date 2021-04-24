@@ -31,7 +31,8 @@ namespace iKan {
         float GetY() const { return m_MouseY; }
         
         EVENT_CLASS_TYPE(MouseMoved);
-        
+        EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
+
     private:
         float m_MouseX, m_MouseY;
     };
@@ -54,6 +55,7 @@ namespace iKan {
         float GetYOffset() const { return m_YOffset; }
         
         EVENT_CLASS_TYPE(MouseScrolled);
+        EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
 
     private:
         float m_XOffset, m_YOffset;
@@ -68,6 +70,8 @@ namespace iKan {
         virtual ~MouseButtonEvent() = default;
         MouseCode GetMouseButton() const { return m_Button; }
         
+        EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput | EventCategoryMouseButton)
+
     protected:
         MouseButtonEvent(MouseCode button)
         : m_Button(button)

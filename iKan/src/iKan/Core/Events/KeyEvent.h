@@ -22,6 +22,8 @@ namespace iKan {
         virtual ~KeyEvent() = default;
         KeyCode GetKeyCode() const { return m_Code; }
         
+        EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
+
     protected:
         KeyEvent(KeyCode code)
         : m_Code(code)

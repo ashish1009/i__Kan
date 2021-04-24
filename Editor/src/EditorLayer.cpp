@@ -54,13 +54,13 @@ void EditorLayer::OnUpdate(Timestep ts)
 // ******************************************************************************
 void EditorLayer::OnImguiRender()
 {
-
+    
 }
 
 // ******************************************************************************
 // Scene Editor Events
 // ******************************************************************************
-void EditorLayer::OnEvent()
+void EditorLayer::OnEvent(Event& event)
 {
 
 }

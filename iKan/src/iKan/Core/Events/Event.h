@@ -14,6 +14,8 @@ namespace iKan {
 virtual EventType GetEventType() const override { return GetStaticType(); }                     \
 virtual const char* GetName() const override { return #type; }
 
+#define EVENT_CLASS_CATEGORY(category) virtual int32_t GetCategoryFlags() const override { return category; }
+
     enum class EventType
     {
         // Invalid type
@@ -30,6 +32,19 @@ virtual const char* GetName() const override { return #type; }
     };
     
     // ******************************************************************************
+    // event categories
+    // ******************************************************************************
+    enum EventCategory
+    {
+        None = 0,
+        EventCategoryApplication    = BIT(0),
+        EventCategoryInput          = BIT(1),
+        EventCategoryKeyboard       = BIT(2),
+        EventCategoryMouse          = BIT(3),
+        EventCategoryMouseButton    = BIT(4)
+    };
+    
+    // ******************************************************************************
     // Base class for all events, there must be a base class which can be sent via
     // applciatin Event arugment (common for all events)
     // ******************************************************************************
@@ -39,6 +54,12 @@ virtual const char* GetName() const override { return #type; }
         virtual ~Event() = default;
         virtual EventType GetEventType() const = 0;
         virtual const char* GetName() const = 0;
+        virtual int GetCategoryFlags() const = 0;
+
+        bool IsInCategory(EventCategory category)
+        {
+            return GetCategoryFlags() & category;
+        }
         
     public:
         bool Handled = false;

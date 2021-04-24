@@ -9,6 +9,7 @@
 #pragma once
 
 #include <iKan/Core/TimeStep.h>
+#include <iKan/Core/Events/Event.h>
 
 namespace iKan {
     
@@ -30,7 +31,7 @@ namespace iKan {
         virtual void OnUpdate(Timestep ts) {}
         virtual void OnImguiRender() {}
         virtual void OnDetach() {}
-        virtual void OnEvent() {}
+        virtual void OnEvent(Event& event) {}
         
         const std::string& GetName() const { return m_Name; }
 

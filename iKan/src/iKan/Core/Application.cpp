@@ -50,6 +50,10 @@ namespace iKan {
         // Register Application Event Handler to GLFW Window. Interrupt in GLFW Window decides the
         // argiment for this function (which is event type) which should be derived from Base Event
         m_Window->SetEventCallback(IK_BIND_EVENT_FN(Application::EventHandler));
+        
+        // Attaching the Imgui layer at the end
+        m_ImguiLayer = CreateRef<ImguiLayer>();
+        PushOverlay(m_ImguiLayer);
     }
 
     // ******************************************************************************
@@ -65,6 +69,9 @@ namespace iKan {
             {
                 layer->OnUpdate(m_Timestep);
             }
+            
+            // render Imgui Layer
+            ImguiRenderer();
 
             // Update the Window
             m_Window->Update();
@@ -86,6 +93,12 @@ namespace iKan {
     {
         EventDispatcher dispather(event);
         dispather.Dispatch<WindowCloseEvent>(IK_BIND_EVENT_FN(Application::OnWindowClose));
+        
+        // Events handling for all layers
+        for (auto it = m_Layerstack.rbegin(); it != m_Layerstack.rend(); it++)
+        {
+            (*it)->OnEvent(event);
+        }
     }
     
     // ******************************************************************************
@@ -104,7 +117,15 @@ namespace iKan {
     // ******************************************************************************
     void Application::ImguiRenderer()
     {
+        m_ImguiLayer->Begin();
 
+        // Rendering ImGui for all the layers
+        for (auto layer : m_Layerstack)
+        {
+            layer->OnImguiRender();
+        }
+        
+        m_ImguiLayer->End();
     }
 
     // ******************************************************************************
