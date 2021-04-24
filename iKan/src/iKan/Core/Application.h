@@ -12,7 +12,7 @@
 #include <iKan/Core/Window.h>
 #include <iKan/Core/Events/ApplicationEvent.h>
 #include <iKan/Renderer/Renderer.h>
-#include <iKan/ImGui/ImguiLayer.h>
+#include <iKan/Imgui/ImguiLayer.h>
 
 namespace iKan {
     

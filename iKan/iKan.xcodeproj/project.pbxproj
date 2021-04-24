@@ -576,6 +576,7 @@
 					"${PROJECT_DIR}/vendor/glfw/include",
 					"${PROJECT_DIR}/vendor/Glad/include",
 					"${PROJECT_DIR}/vendor/Imgui/src",
+					"${PROJECT_DIR}/vendor/glm",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -604,6 +605,7 @@
 					"${PROJECT_DIR}/vendor/glfw/include",
 					"${PROJECT_DIR}/vendor/Glad/include",
 					"${PROJECT_DIR}/vendor/Imgui/src",
+					"${PROJECT_DIR}/vendor/glm",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
