@@ -10,9 +10,7 @@
 
 #include <iKan/Core/Layerstack.h>
 #include <iKan/Core/Window.h>
-
 #include <iKan/Core/Events/ApplicationEvent.h>
-
 #include <iKan/Renderer/Renderer.h>
 
 namespace iKan {
@@ -81,9 +79,11 @@ namespace iKan {
         Scope<Window> m_Window;
         Layerstack    m_Layerstack;
         Property      m_Property;
+        Timestep      m_Timestep;
         
-        bool m_IsRunning = true;
-        
+        bool  m_IsRunning = true;
+        float m_LastFrame = 0.0f;
+
         static Application* s_Instance;
     };
     

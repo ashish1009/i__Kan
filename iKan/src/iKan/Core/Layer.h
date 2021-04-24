@@ -8,6 +8,8 @@
 
 #pragma once
 
+#include <iKan/Core/TimeStep.h>
+
 namespace iKan {
     
     // ******************************************************************************
@@ -25,7 +27,7 @@ namespace iKan {
         virtual ~Layer() = default;
         
         virtual void OnAttach() {}
-        virtual void OnUpdate() {}
+        virtual void OnUpdate(Timestep ts) {}
         virtual void OnImguiRender() {}
         virtual void OnDetach() {}
         virtual void OnEvent() {}

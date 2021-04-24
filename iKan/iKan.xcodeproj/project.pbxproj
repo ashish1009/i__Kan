@@ -17,6 +17,7 @@
 		B20280662625F99A00BC7F39 /* Window.h in Headers */ = {isa = PBXBuildFile; fileRef = B20280642625F99A00BC7F39 /* Window.h */; };
 		B202806B2625FF1900BC7F39 /* MacWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B20280692625FF1900BC7F39 /* MacWindow.cpp */; };
 		B202806C2625FF1900BC7F39 /* MacWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = B202806A2625FF1900BC7F39 /* MacWindow.h */; };
+		B2400F40263434F60051B868 /* TimeStep.h in Headers */ = {isa = PBXBuildFile; fileRef = B2400F3F263434F60051B868 /* TimeStep.h */; };
 		B25684C226274BFB0030D00D /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B25684C126274BFB0030D00D /* libglfw3.a */; };
 		B27FE30E2629E072000FD32D /* libGlad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B27FE30D2629E04A000FD32D /* libGlad.a */; };
 		B27FE3132629E153000FD32D /* OpenGLGraphicsContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B27FE3112629E153000FD32D /* OpenGLGraphicsContext.cpp */; };
@@ -61,6 +62,7 @@
 		B20280642625F99A00BC7F39 /* Window.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Window.h; sourceTree = "<group>"; };
 		B20280692625FF1900BC7F39 /* MacWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MacWindow.cpp; sourceTree = "<group>"; };
 		B202806A2625FF1900BC7F39 /* MacWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacWindow.h; sourceTree = "<group>"; wrapsLines = 0; };
+		B2400F3F263434F60051B868 /* TimeStep.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimeStep.h; sourceTree = "<group>"; };
 		B25684C126274BFB0030D00D /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = vendor/glfw/lib/libglfw3.a; sourceTree = "<group>"; };
 		B27FE3082629E04A000FD32D /* Glad.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Glad.xcodeproj; path = vendor/Glad/Glad.xcodeproj; sourceTree = "<group>"; };
 		B27FE3112629E153000FD32D /* OpenGLGraphicsContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLGraphicsContext.cpp; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 				B2EAB340262B265B003D7FE6 /* KeyCode.h */,
 				B2EAB341262B265B003D7FE6 /* MouseCode.h */,
 				B28FE5BE262C87A500DC5E20 /* Input.h */,
+				B2400F3F263434F60051B868 /* TimeStep.h */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -248,6 +251,7 @@
 				B27FE3182629E1D2000FD32D /* GraphicsContext.h in Headers */,
 				B2FE351D2624B67B00AFC236 /* Application.h in Headers */,
 				B27FE31C2629E474000FD32D /* Renderer.h in Headers */,
+				B2400F40263434F60051B868 /* TimeStep.h in Headers */,
 				B202805B2625DCD200BC7F39 /* Layer.h in Headers */,
 				B2028053262592DD00BC7F39 /* Log.h in Headers */,
 				B20280662625F99A00BC7F39 /* Window.h in Headers */,

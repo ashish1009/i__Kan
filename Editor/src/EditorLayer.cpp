@@ -44,7 +44,7 @@ void EditorLayer::OnDetach()
 // ******************************************************************************
 // Update Editor
 // ******************************************************************************
-void EditorLayer::OnUpdate()
+void EditorLayer::OnUpdate(Timestep ts)
 {
     
 }

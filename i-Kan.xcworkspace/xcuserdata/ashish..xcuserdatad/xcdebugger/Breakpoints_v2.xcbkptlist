@@ -14,8 +14,8 @@
             filePath = "iKan/src/iKan/Core/Application.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
             landmarkName = "Application::EventHandler(event)"
             landmarkType = "7">
          </BreakpointContent>

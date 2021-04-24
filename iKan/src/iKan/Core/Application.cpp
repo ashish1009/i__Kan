@@ -7,6 +7,7 @@
 // ******************************************************************************
 
 #include "Application.h"
+#include <GLFW/glfw3.h>
 
 namespace iKan {
     
@@ -59,7 +60,19 @@ namespace iKan {
         IK_CORE_INFO("-----------------------------     Entering Game loop   ---------------------------------");
         while (m_IsRunning)
         {
+            // Updating all the attached layer
+            for (Ref<Layer> layer : m_Layerstack)
+            {
+                layer->OnUpdate(m_Timestep);
+            }
+
+            // Update the Window
             m_Window->Update();
+            
+            // Update the GLFW Time and store in time step
+            float currentFrame = glfwGetTime();
+            m_Timestep         = currentFrame - m_LastFrame;
+            m_LastFrame        = currentFrame;
         }
         IK_CORE_WARN("-----------------------------     Exiting Game loop    ---------------------------------");
     }

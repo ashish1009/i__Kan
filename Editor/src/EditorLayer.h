@@ -21,6 +21,6 @@ public:
     virtual void OnAttach() override;
     virtual void OnDetach() override;
     virtual void OnEvent() override;
-    virtual void OnUpdate() override;
+    virtual void OnUpdate(Timestep ts) override;
     virtual void OnImguiRender() override;
 };
