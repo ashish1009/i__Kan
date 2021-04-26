@@ -17,6 +17,10 @@
 		B20280662625F99A00BC7F39 /* Window.h in Headers */ = {isa = PBXBuildFile; fileRef = B20280642625F99A00BC7F39 /* Window.h */; };
 		B202806B2625FF1900BC7F39 /* MacWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B20280692625FF1900BC7F39 /* MacWindow.cpp */; };
 		B202806C2625FF1900BC7F39 /* MacWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = B202806A2625FF1900BC7F39 /* MacWindow.h */; };
+		B227E5A32636DEB300DC3DFA /* Buffers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B227E5A12636DEB300DC3DFA /* Buffers.cpp */; };
+		B227E5A42636DEB300DC3DFA /* Buffers.h in Headers */ = {isa = PBXBuildFile; fileRef = B227E5A22636DEB300DC3DFA /* Buffers.h */; };
+		B227E5A92636F22B00DC3DFA /* OpenGLBuffers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B227E5A72636F22B00DC3DFA /* OpenGLBuffers.cpp */; };
+		B227E5AA2636F22B00DC3DFA /* OpenGLBuffers.h in Headers */ = {isa = PBXBuildFile; fileRef = B227E5A82636F22B00DC3DFA /* OpenGLBuffers.h */; };
 		B2400F40263434F60051B868 /* TimeStep.h in Headers */ = {isa = PBXBuildFile; fileRef = B2400F3F263434F60051B868 /* TimeStep.h */; };
 		B240109E26343A8A0051B868 /* libImgui.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2400F572634396D0051B868 /* libImgui.a */; };
 		B24010A2263450200051B868 /* ImguiLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24010A0263450200051B868 /* ImguiLayer.cpp */; };
@@ -73,6 +77,10 @@
 		B20280642625F99A00BC7F39 /* Window.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Window.h; sourceTree = "<group>"; };
 		B20280692625FF1900BC7F39 /* MacWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MacWindow.cpp; sourceTree = "<group>"; };
 		B202806A2625FF1900BC7F39 /* MacWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacWindow.h; sourceTree = "<group>"; wrapsLines = 0; };
+		B227E5A12636DEB300DC3DFA /* Buffers.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Buffers.cpp; sourceTree = "<group>"; };
+		B227E5A22636DEB300DC3DFA /* Buffers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Buffers.h; sourceTree = "<group>"; };
+		B227E5A72636F22B00DC3DFA /* OpenGLBuffers.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLBuffers.cpp; sourceTree = "<group>"; };
+		B227E5A82636F22B00DC3DFA /* OpenGLBuffers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGLBuffers.h; sourceTree = "<group>"; };
 		B2400F3F263434F60051B868 /* TimeStep.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimeStep.h; sourceTree = "<group>"; };
 		B2400F522634396C0051B868 /* Imgui.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Imgui.xcodeproj; path = vendor/Imgui/Imgui.xcodeproj; sourceTree = "<group>"; };
 		B24010A0263450200051B868 /* ImguiLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ImguiLayer.cpp; sourceTree = "<group>"; };
@@ -224,6 +232,8 @@
 				B27FE3162629E1D2000FD32D /* GraphicsContext.h */,
 				B27FE3192629E474000FD32D /* Renderer.cpp */,
 				B27FE31A2629E474000FD32D /* Renderer.h */,
+				B227E5A12636DEB300DC3DFA /* Buffers.cpp */,
+				B227E5A22636DEB300DC3DFA /* Buffers.h */,
 			);
 			path = Renderer;
 			sourceTree = "<group>";
@@ -233,6 +243,8 @@
 			children = (
 				B27FE3112629E153000FD32D /* OpenGLGraphicsContext.cpp */,
 				B27FE3122629E153000FD32D /* OpenGLGraphicsContext.h */,
+				B227E5A72636F22B00DC3DFA /* OpenGLBuffers.cpp */,
+				B227E5A82636F22B00DC3DFA /* OpenGLBuffers.h */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
@@ -319,6 +331,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B202806C2625FF1900BC7F39 /* MacWindow.h in Headers */,
+				B227E5AA2636F22B00DC3DFA /* OpenGLBuffers.h in Headers */,
 				B2EAB33B262B2311003D7FE6 /* ApplicationEvent.h in Headers */,
 				B24010A3263450200051B868 /* ImguiLayer.h in Headers */,
 				B2028051262590D300BC7F39 /* Core.h in Headers */,
@@ -328,6 +341,7 @@
 				B27FE3182629E1D2000FD32D /* GraphicsContext.h in Headers */,
 				B2FE351D2624B67B00AFC236 /* Application.h in Headers */,
 				B27FE31C2629E474000FD32D /* Renderer.h in Headers */,
+				B227E5A42636DEB300DC3DFA /* Buffers.h in Headers */,
 				B2400F40263434F60051B868 /* TimeStep.h in Headers */,
 				B202805B2625DCD200BC7F39 /* Layer.h in Headers */,
 				B2028053262592DD00BC7F39 /* Log.h in Headers */,
@@ -430,8 +444,10 @@
 				B202806B2625FF1900BC7F39 /* MacWindow.cpp in Sources */,
 				B24010A2263450200051B868 /* ImguiLayer.cpp in Sources */,
 				B20280562625934700BC7F39 /* Log.cpp in Sources */,
+				B227E5A92636F22B00DC3DFA /* OpenGLBuffers.cpp in Sources */,
 				B24010A52634502E0051B868 /* ImguiBuild.cpp in Sources */,
 				B202805E2625DF4900BC7F39 /* Layerstack.cpp in Sources */,
+				B227E5A32636DEB300DC3DFA /* Buffers.cpp in Sources */,
 				B27FE3132629E153000FD32D /* OpenGLGraphicsContext.cpp in Sources */,
 				B27FE31B2629E474000FD32D /* Renderer.cpp in Sources */,
 				B2FE351C2624B67B00AFC236 /* Application.cpp in Sources */,
