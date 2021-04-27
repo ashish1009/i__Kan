@@ -17,6 +17,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <fstream>
 
 // Log files files
 #include <iKan/Core/Log.h>
