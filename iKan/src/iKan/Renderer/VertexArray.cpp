@@ -3,7 +3,7 @@
 // Project      : iKan : Renderer
 // Description  : Creating Instance of vertex Array
 //
-//  Created by Ashish . on 27/04/21.
+// Created on   : 27/04/21.
 // ******************************************************************************
 
 #include "VertexArray.h"

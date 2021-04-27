@@ -3,7 +3,7 @@
 // Project      : iKan : Platform
 // Description  : Implementation of Open GL Vertex Array
 //
-//  Created by Ashish . on 27/04/21.
+// Created on   : 27/04/21.
 // ******************************************************************************
 
 #include "OpenGLVertexArray.h"

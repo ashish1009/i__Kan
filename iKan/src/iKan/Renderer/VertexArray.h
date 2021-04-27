@@ -3,7 +3,7 @@
 // Project      : iKan : Renderer
 // Description  : Interface class for vertex Array
 //
-//  Created by Ashish . on 27/04/21.
+// Created on   : 27/04/21.
 // ******************************************************************************
 
 #pragma once

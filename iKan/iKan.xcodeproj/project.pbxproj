@@ -25,6 +25,10 @@
 		B22FE6EB2638428000C1640B /* VertexArray.h in Headers */ = {isa = PBXBuildFile; fileRef = B22FE6E92638428000C1640B /* VertexArray.h */; };
 		B22FE6F02638431200C1640B /* OpenGLVertexArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22FE6EE2638431200C1640B /* OpenGLVertexArray.cpp */; };
 		B22FE6F12638431200C1640B /* OpenGLVertexArray.h in Headers */ = {isa = PBXBuildFile; fileRef = B22FE6EF2638431200C1640B /* OpenGLVertexArray.h */; };
+		B22FE6F82638473500C1640B /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22FE6F62638473500C1640B /* Texture.cpp */; };
+		B22FE6F92638473500C1640B /* Texture.h in Headers */ = {isa = PBXBuildFile; fileRef = B22FE6F72638473500C1640B /* Texture.h */; };
+		B22FE6FC2638482400C1640B /* OpenGLTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22FE6FA2638482400C1640B /* OpenGLTexture.cpp */; };
+		B22FE6FD2638482400C1640B /* OpenGLTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = B22FE6FB2638482400C1640B /* OpenGLTexture.h */; };
 		B2400F40263434F60051B868 /* TimeStep.h in Headers */ = {isa = PBXBuildFile; fileRef = B2400F3F263434F60051B868 /* TimeStep.h */; };
 		B240109E26343A8A0051B868 /* libImgui.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2400F572634396D0051B868 /* libImgui.a */; };
 		B24010A2263450200051B868 /* ImguiLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24010A0263450200051B868 /* ImguiLayer.cpp */; };
@@ -89,6 +93,10 @@
 		B22FE6E92638428000C1640B /* VertexArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VertexArray.h; sourceTree = "<group>"; };
 		B22FE6EE2638431200C1640B /* OpenGLVertexArray.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLVertexArray.cpp; sourceTree = "<group>"; };
 		B22FE6EF2638431200C1640B /* OpenGLVertexArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGLVertexArray.h; sourceTree = "<group>"; };
+		B22FE6F62638473500C1640B /* Texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Texture.cpp; sourceTree = "<group>"; };
+		B22FE6F72638473500C1640B /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture.h; sourceTree = "<group>"; };
+		B22FE6FA2638482400C1640B /* OpenGLTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLTexture.cpp; sourceTree = "<group>"; };
+		B22FE6FB2638482400C1640B /* OpenGLTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLTexture.h; sourceTree = "<group>"; };
 		B2400F3F263434F60051B868 /* TimeStep.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimeStep.h; sourceTree = "<group>"; };
 		B2400F522634396C0051B868 /* Imgui.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Imgui.xcodeproj; path = vendor/Imgui/Imgui.xcodeproj; sourceTree = "<group>"; };
 		B24010A0263450200051B868 /* ImguiLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ImguiLayer.cpp; sourceTree = "<group>"; };
@@ -244,6 +252,8 @@
 				B227E5A22636DEB300DC3DFA /* Buffers.h */,
 				B22FE6E82638428000C1640B /* VertexArray.cpp */,
 				B22FE6E92638428000C1640B /* VertexArray.h */,
+				B22FE6F62638473500C1640B /* Texture.cpp */,
+				B22FE6F72638473500C1640B /* Texture.h */,
 			);
 			path = Renderer;
 			sourceTree = "<group>";
@@ -257,6 +267,8 @@
 				B227E5A82636F22B00DC3DFA /* OpenGLBuffers.h */,
 				B22FE6EE2638431200C1640B /* OpenGLVertexArray.cpp */,
 				B22FE6EF2638431200C1640B /* OpenGLVertexArray.h */,
+				B22FE6FA2638482400C1640B /* OpenGLTexture.cpp */,
+				B22FE6FB2638482400C1640B /* OpenGLTexture.h */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
@@ -353,6 +365,7 @@
 				B28FE5BF262C87A500DC5E20 /* Input.h in Headers */,
 				B27FE3182629E1D2000FD32D /* GraphicsContext.h in Headers */,
 				B2FE351D2624B67B00AFC236 /* Application.h in Headers */,
+				B22FE6FD2638482400C1640B /* OpenGLTexture.h in Headers */,
 				B27FE31C2629E474000FD32D /* Renderer.h in Headers */,
 				B227E5A42636DEB300DC3DFA /* Buffers.h in Headers */,
 				B2400F40263434F60051B868 /* TimeStep.h in Headers */,
@@ -366,6 +379,7 @@
 				B27FE3142629E153000FD32D /* OpenGLGraphicsContext.h in Headers */,
 				B2FE351026248C7700AFC236 /* iKan.h in Headers */,
 				B202805F2625DF4900BC7F39 /* Layerstack.h in Headers */,
+				B22FE6F92638473500C1640B /* Texture.h in Headers */,
 				B2EAB338262B20FF003D7FE6 /* Event.h in Headers */,
 				B2EAB343262B265B003D7FE6 /* MouseCode.h in Headers */,
 			);
@@ -459,6 +473,7 @@
 				B24010A2263450200051B868 /* ImguiLayer.cpp in Sources */,
 				B22FE6F02638431200C1640B /* OpenGLVertexArray.cpp in Sources */,
 				B20280562625934700BC7F39 /* Log.cpp in Sources */,
+				B22FE6FC2638482400C1640B /* OpenGLTexture.cpp in Sources */,
 				B227E5A92636F22B00DC3DFA /* OpenGLBuffers.cpp in Sources */,
 				B24010A52634502E0051B868 /* ImguiBuild.cpp in Sources */,
 				B202805E2625DF4900BC7F39 /* Layerstack.cpp in Sources */,
@@ -468,6 +483,7 @@
 				B22FE6EA2638428000C1640B /* VertexArray.cpp in Sources */,
 				B2FE351C2624B67B00AFC236 /* Application.cpp in Sources */,
 				B27FE3172629E1D2000FD32D /* GraphicsContext.cpp in Sources */,
+				B22FE6F82638473500C1640B /* Texture.cpp in Sources */,
 				B28FE5C3262C881700DC5E20 /* MacInput.cpp in Sources */,
 				B20280652625F99A00BC7F39 /* Window.cpp in Sources */,
 			);
@@ -609,6 +625,7 @@
 					"${PROJECT_DIR}/vendor/Glad/include",
 					"${PROJECT_DIR}/vendor/Imgui/src",
 					"${PROJECT_DIR}/vendor/glm",
+					"${PROJECT_DIR}/vendor/stbimage",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -638,6 +655,7 @@
 					"${PROJECT_DIR}/vendor/Glad/include",
 					"${PROJECT_DIR}/vendor/Imgui/src",
 					"${PROJECT_DIR}/vendor/glm",
+					"${PROJECT_DIR}/vendor/stbimage",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
