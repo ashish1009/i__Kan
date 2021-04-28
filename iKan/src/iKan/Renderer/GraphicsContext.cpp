@@ -20,12 +20,12 @@ namespace iKan {
     {
         switch(Renderer::GetAPI())
         {
-            case Renderer::API::None:
+            case RendererAPI::API::None:
             {
                 IK_CORE_ASSERT(false, "Invalid Renderer API (None) which is not supported by iKan");
                 break;
             }
-            case Renderer::API::OpenGL:
+            case RendererAPI::API::OpenGL:
             {
                 IK_CORE_INFO("Creating Instance of Opne GL Graphics context");
                 return CreateScope<OpenGLGraphicsContext>(window);

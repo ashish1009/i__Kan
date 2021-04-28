@@ -19,8 +19,8 @@ namespace iKan {
     {
         switch (Renderer::GetAPI())
         {
-            case Renderer::API::None   : IK_CORE_ASSERT(false, "Render API not Supporting");
-            case Renderer::API::OpenGL : return CreateRef<OpenGLTexture>(path); break;
+            case RendererAPI::API::None   : IK_CORE_ASSERT(false, "Render API not Supporting");
+            case RendererAPI::API::OpenGL : return CreateRef<OpenGLTexture>(path); break;
         }
         IK_CORE_ASSERT(false, "Invalid Render API ");
         return nullptr;
@@ -33,8 +33,8 @@ namespace iKan {
     {
         switch (Renderer::GetAPI())
         {
-            case Renderer::API::None   : IK_CORE_ASSERT(false, "Render API not Supporting");
-            case Renderer::API::OpenGL : return CreateRef<OpenGLTexture>(width, height, data, size); break;
+            case RendererAPI::API::None   : IK_CORE_ASSERT(false, "Render API not Supporting");
+            case RendererAPI::API::OpenGL : return CreateRef<OpenGLTexture>(width, height, data, size); break;
         }
         IK_CORE_ASSERT(false, "Invalid Render API ");
         return nullptr;
@@ -69,8 +69,8 @@ namespace iKan {
     {
         switch (Renderer::GetAPI())
         {
-            case Renderer::API::None   : IK_CORE_ASSERT(false, "Render API not Supporting");
-            case Renderer::API::OpenGL : return CreateRef<OpenGLCubeMapTexture>(paths); break;
+            case RendererAPI::API::None   : IK_CORE_ASSERT(false, "Render API not Supporting");
+            case RendererAPI::API::OpenGL : return CreateRef<OpenGLCubeMapTexture>(paths); break;
         }
         IK_CORE_ASSERT(false, "Invalid Render API ");
         return nullptr;
@@ -83,8 +83,8 @@ namespace iKan {
     {
         switch (Renderer::GetAPI())
         {
-            case Renderer::API::None   : IK_CORE_ASSERT(false, "Render API not Supporting");
-            case Renderer::API::OpenGL : return CreateRef<OpenGLCubeMapTexture>(path); break;
+            case RendererAPI::API::None   : IK_CORE_ASSERT(false, "Render API not Supporting");
+            case RendererAPI::API::OpenGL : return CreateRef<OpenGLCubeMapTexture>(path); break;
         }
         IK_CORE_ASSERT(false, "Invalid Render API ");
         return nullptr;

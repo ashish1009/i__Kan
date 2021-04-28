@@ -42,6 +42,10 @@
 		B24010A2263450200051B868 /* ImguiLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24010A0263450200051B868 /* ImguiLayer.cpp */; };
 		B24010A3263450200051B868 /* ImguiLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = B24010A1263450200051B868 /* ImguiLayer.h */; };
 		B24010A52634502E0051B868 /* ImguiBuild.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24010A42634502E0051B868 /* ImguiBuild.cpp */; };
+		B249622A26397EE80091C915 /* RendererAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = B249622826397EE80091C915 /* RendererAPI.h */; };
+		B249622B26397EE80091C915 /* RendererAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B249622926397EE80091C915 /* RendererAPI.cpp */; };
+		B249622E26397FAC0091C915 /* OpenGlRendererAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B249622C26397FAC0091C915 /* OpenGlRendererAPI.cpp */; };
+		B249622F26397FAC0091C915 /* OpenGlRendererAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = B249622D26397FAC0091C915 /* OpenGlRendererAPI.h */; };
 		B25684C226274BFB0030D00D /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B25684C126274BFB0030D00D /* libglfw3.a */; };
 		B27FE30E2629E072000FD32D /* libGlad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B27FE30D2629E04A000FD32D /* libGlad.a */; };
 		B27FE3132629E153000FD32D /* OpenGLGraphicsContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B27FE3112629E153000FD32D /* OpenGLGraphicsContext.cpp */; };
@@ -126,6 +130,10 @@
 		B24010AE2634551B0051B868 /* LICENSE.webarchive */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = LICENSE.webarchive; sourceTree = "<group>"; };
 		B24010AF2634551B0051B868 /* OpenSans-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
 		B24010B02634551B0051B868 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
+		B249622826397EE80091C915 /* RendererAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RendererAPI.h; sourceTree = "<group>"; };
+		B249622926397EE80091C915 /* RendererAPI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RendererAPI.cpp; sourceTree = "<group>"; };
+		B249622C26397FAC0091C915 /* OpenGlRendererAPI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGlRendererAPI.cpp; sourceTree = "<group>"; };
+		B249622D26397FAC0091C915 /* OpenGlRendererAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGlRendererAPI.h; sourceTree = "<group>"; };
 		B25684C126274BFB0030D00D /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = vendor/glfw/lib/libglfw3.a; sourceTree = "<group>"; };
 		B27FE3082629E04A000FD32D /* Glad.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Glad.xcodeproj; path = vendor/Glad/Glad.xcodeproj; sourceTree = "<group>"; };
 		B27FE3112629E153000FD32D /* OpenGLGraphicsContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLGraphicsContext.cpp; sourceTree = "<group>"; };
@@ -260,10 +268,12 @@
 		B27FE30F2629E0A3000FD32D /* Renderer */ = {
 			isa = PBXGroup;
 			children = (
-				B27FE3152629E1D2000FD32D /* GraphicsContext.cpp */,
-				B27FE3162629E1D2000FD32D /* GraphicsContext.h */,
+				B249622926397EE80091C915 /* RendererAPI.cpp */,
+				B249622826397EE80091C915 /* RendererAPI.h */,
 				B27FE3192629E474000FD32D /* Renderer.cpp */,
 				B27FE31A2629E474000FD32D /* Renderer.h */,
+				B27FE3152629E1D2000FD32D /* GraphicsContext.cpp */,
+				B27FE3162629E1D2000FD32D /* GraphicsContext.h */,
 				B227E5A12636DEB300DC3DFA /* Buffers.cpp */,
 				B227E5A22636DEB300DC3DFA /* Buffers.h */,
 				B22FE6E82638428000C1640B /* VertexArray.cpp */,
@@ -281,6 +291,8 @@
 		B27FE3102629E0BE000FD32D /* OpenGL */ = {
 			isa = PBXGroup;
 			children = (
+				B249622C26397FAC0091C915 /* OpenGlRendererAPI.cpp */,
+				B249622D26397FAC0091C915 /* OpenGlRendererAPI.h */,
 				B27FE3112629E153000FD32D /* OpenGLGraphicsContext.cpp */,
 				B27FE3122629E153000FD32D /* OpenGLGraphicsContext.h */,
 				B227E5A72636F22B00DC3DFA /* OpenGLBuffers.cpp */,
@@ -381,8 +393,10 @@
 				B202806C2625FF1900BC7F39 /* MacWindow.h in Headers */,
 				B227E5AA2636F22B00DC3DFA /* OpenGLBuffers.h in Headers */,
 				B2EAB33B262B2311003D7FE6 /* ApplicationEvent.h in Headers */,
+				B249622F26397FAC0091C915 /* OpenGlRendererAPI.h in Headers */,
 				B24010A3263450200051B868 /* ImguiLayer.h in Headers */,
 				B2028051262590D300BC7F39 /* Core.h in Headers */,
+				B249622A26397EE80091C915 /* RendererAPI.h in Headers */,
 				B22FE6F12638431200C1640B /* OpenGLVertexArray.h in Headers */,
 				B2FE35152624B34000AFC236 /* Entrypoint.h in Headers */,
 				B2EAB33F262B23F2003D7FE6 /* MouseEvent.h in Headers */,
@@ -506,6 +520,7 @@
 				B24010A52634502E0051B868 /* ImguiBuild.cpp in Sources */,
 				B202805E2625DF4900BC7F39 /* Layerstack.cpp in Sources */,
 				B227E5A32636DEB300DC3DFA /* Buffers.cpp in Sources */,
+				B249622B26397EE80091C915 /* RendererAPI.cpp in Sources */,
 				B27FE3132629E153000FD32D /* OpenGLGraphicsContext.cpp in Sources */,
 				B22FE70126385C3B00C1640B /* Shader.cpp in Sources */,
 				B27FE31B2629E474000FD32D /* Renderer.cpp in Sources */,
@@ -515,6 +530,7 @@
 				B27FE3172629E1D2000FD32D /* GraphicsContext.cpp in Sources */,
 				B22FE70C26385EE600C1640B /* FrameBuffer.cpp in Sources */,
 				B22FE70826385ECE00C1640B /* OpenGLFrameBuffer.cpp in Sources */,
+				B249622E26397FAC0091C915 /* OpenGlRendererAPI.cpp in Sources */,
 				B22FE6F82638473500C1640B /* Texture.cpp in Sources */,
 				B28FE5C3262C881700DC5E20 /* MacInput.cpp in Sources */,
 				B20280652625F99A00BC7F39 /* Window.cpp in Sources */,

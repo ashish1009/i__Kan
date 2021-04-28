@@ -19,8 +19,8 @@ namespace iKan {
     {
         switch (Renderer::GetAPI())
         {
-            case Renderer::API::None   : IK_CORE_ASSERT(false, "Render API not Supporting");
-            case Renderer::API::OpenGL : return CreateRef<OpenGLVertexArray>(); break;
+            case RendererAPI::API::None   : IK_CORE_ASSERT(false, "Render API not Supporting");
+            case RendererAPI::API::OpenGL : return CreateRef<OpenGLVertexArray>(); break;
         }
         IK_CORE_ASSERT(false, "Invalid Render API ");
         return nullptr;

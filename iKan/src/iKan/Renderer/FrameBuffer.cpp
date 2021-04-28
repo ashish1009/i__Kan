@@ -19,8 +19,8 @@ namespace iKan {
     {
         switch (Renderer::GetAPI())
         {
-            case Renderer::API::None:    IK_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
-            case Renderer::API::OpenGL:  return CreateRef<OpenGLFrameBuffer>(spec);
+            case RendererAPI::API::None:    IK_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
+            case RendererAPI::API::OpenGL:  return CreateRef<OpenGLFrameBuffer>(spec);
         }
         IK_CORE_ASSERT(false, "Unknown RendererAPI!");
         return nullptr;

@@ -33,12 +33,12 @@ namespace iKan {
             uint32_t Width  = Window::Property::DefaultWidth;
             uint32_t Height = Window::Property::DefaultHeight;
             
-            Renderer::API Api = Renderer::API::OpenGL;
+            RendererAPI::API Api = RendererAPI::API::OpenGL;
             
             Property(const std::string& title = "iKan",
-                     uint32_t width     = Window::Property::DefaultWidth,
-                     uint32_t height    = Window::Property::DefaultHeight,
-                     Renderer::API api  = Renderer::API::OpenGL)
+                     uint32_t width        = Window::Property::DefaultWidth,
+                     uint32_t height       = Window::Property::DefaultHeight,
+                     RendererAPI::API api  = RendererAPI::API::OpenGL)
             : Title(title), Width(width), Height(height), Api(api)
             {
                 

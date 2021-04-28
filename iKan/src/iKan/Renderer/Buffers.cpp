@@ -19,8 +19,8 @@ namespace iKan {
     {
         switch (Renderer::GetAPI())
         {
-            case Renderer::API::None   : IK_CORE_ASSERT(false, "Render API not Supporting");
-            case Renderer::API::OpenGL : return CreateRef<OpenGLVertexBuffer>(size, data); break;
+            case RendererAPI::API::None   : IK_CORE_ASSERT(false, "Render API not Supporting");
+            case RendererAPI::API::OpenGL : return CreateRef<OpenGLVertexBuffer>(size, data); break;
         }
         IK_CORE_ASSERT(false, "Unknown RendererAPI!");
         return nullptr;
@@ -33,8 +33,8 @@ namespace iKan {
     {
         switch (Renderer::GetAPI())
         {
-            case Renderer::API::None:    IK_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
-            case Renderer::API::OpenGL:  return CreateRef<OpenGLVertexBuffer>(size);
+            case RendererAPI::API::None:    IK_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
+            case RendererAPI::API::OpenGL:  return CreateRef<OpenGLVertexBuffer>(size);
         }
         
         IK_CORE_ASSERT(false, "Unknown RendererAPI!");
@@ -48,8 +48,8 @@ namespace iKan {
     {
         switch (Renderer::GetAPI())
         {
-            case Renderer::API::None   : IK_CORE_ASSERT(false, "Render API not Supporting");
-            case Renderer::API::OpenGL : return CreateRef<OpenGLIndexBuffer>(size, data); break;
+            case RendererAPI::API::None   : IK_CORE_ASSERT(false, "Render API not Supporting");
+            case RendererAPI::API::OpenGL : return CreateRef<OpenGLIndexBuffer>(size, data); break;
         }
         IK_CORE_ASSERT(false, "Unknown RendererAPI!");
         return nullptr;
