@@ -11,7 +11,7 @@
 
 namespace iKan {
     
-    RendererAPI::API RendererAPI::s_API = RendererAPI::API::None;
+    RendererAPI::API RendererAPI::s_API = RendererAPI::API::OpenGL;
     
     // ******************************************************************************
     // Create instacne of Renderer API

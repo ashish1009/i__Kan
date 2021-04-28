@@ -23,4 +23,7 @@ public:
     virtual void OnEvent(Event& event) override;
     virtual void OnUpdate(Timestep ts) override;
     virtual void OnImguiRender() override;
+    
+private:
+    EditorCamera m_EditorCamera;
 };

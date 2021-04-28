@@ -12,7 +12,7 @@
 // EditorLayer Constructor
 // ******************************************************************************
 EditorLayer::EditorLayer()
-: Layer("Editor")
+: Layer("Editor"), m_EditorCamera(glm::radians(45.0f), 1800.0f/800.0f, 0.01f, 10000.0f)
 {
     IK_INFO("Editor layer created");
 }
@@ -46,7 +46,9 @@ void EditorLayer::OnDetach()
 // ******************************************************************************
 void EditorLayer::OnUpdate(Timestep ts)
 {
+    m_EditorCamera.OnUpdate(ts);
     
+    Renderer::Clear({ 0.1f, 0.1f, 0.1f, 1.0f });
 }
 
 // ******************************************************************************
@@ -62,5 +64,5 @@ void EditorLayer::OnImguiRender()
 // ******************************************************************************
 void EditorLayer::OnEvent(Event& event)
 {
-
+    m_EditorCamera.OnEvent(event);
 }

@@ -54,6 +54,9 @@ namespace iKan {
         // Attaching the Imgui layer at the end
         m_ImguiLayer = CreateRef<ImguiLayer>();
         PushOverlay(m_ImguiLayer);
+
+        // Initialising the renderers
+        Renderer::Init();
     }
 
     // ******************************************************************************

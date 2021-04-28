@@ -46,6 +46,9 @@
 		B249622B26397EE80091C915 /* RendererAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B249622926397EE80091C915 /* RendererAPI.cpp */; };
 		B249622E26397FAC0091C915 /* OpenGlRendererAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B249622C26397FAC0091C915 /* OpenGlRendererAPI.cpp */; };
 		B249622F26397FAC0091C915 /* OpenGlRendererAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = B249622D26397FAC0091C915 /* OpenGlRendererAPI.h */; };
+		B249623326399A140091C915 /* Camera.h in Headers */ = {isa = PBXBuildFile; fileRef = B249623126399A140091C915 /* Camera.h */; };
+		B249623626399AA50091C915 /* EditorCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = B249623426399AA40091C915 /* EditorCamera.h */; };
+		B249623726399AA50091C915 /* EditorCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B249623526399AA50091C915 /* EditorCamera.cpp */; };
 		B25684C226274BFB0030D00D /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B25684C126274BFB0030D00D /* libglfw3.a */; };
 		B27FE30E2629E072000FD32D /* libGlad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B27FE30D2629E04A000FD32D /* libGlad.a */; };
 		B27FE3132629E153000FD32D /* OpenGLGraphicsContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B27FE3112629E153000FD32D /* OpenGLGraphicsContext.cpp */; };
@@ -134,6 +137,9 @@
 		B249622926397EE80091C915 /* RendererAPI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RendererAPI.cpp; sourceTree = "<group>"; };
 		B249622C26397FAC0091C915 /* OpenGlRendererAPI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGlRendererAPI.cpp; sourceTree = "<group>"; };
 		B249622D26397FAC0091C915 /* OpenGlRendererAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGlRendererAPI.h; sourceTree = "<group>"; };
+		B249623126399A140091C915 /* Camera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
+		B249623426399AA40091C915 /* EditorCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorCamera.h; sourceTree = "<group>"; };
+		B249623526399AA50091C915 /* EditorCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorCamera.cpp; sourceTree = "<group>"; };
 		B25684C126274BFB0030D00D /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = vendor/glfw/lib/libglfw3.a; sourceTree = "<group>"; };
 		B27FE3082629E04A000FD32D /* Glad.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Glad.xcodeproj; path = vendor/Glad/Glad.xcodeproj; sourceTree = "<group>"; };
 		B27FE3112629E153000FD32D /* OpenGLGraphicsContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLGraphicsContext.cpp; sourceTree = "<group>"; };
@@ -212,6 +218,8 @@
 		B24010A62634551B0051B868 /* Editor */ = {
 			isa = PBXGroup;
 			children = (
+				B249623526399AA50091C915 /* EditorCamera.cpp */,
+				B249623426399AA40091C915 /* EditorCamera.h */,
 				B24010A72634551B0051B868 /* Fonts */,
 			);
 			path = Editor;
@@ -284,6 +292,7 @@
 				B22FE6FE26385C3B00C1640B /* Shader.h */,
 				B22FE70A26385EE600C1640B /* FrameBuffer.cpp */,
 				B22FE70B26385EE600C1640B /* FrameBuffer.h */,
+				B249623126399A140091C915 /* Camera.h */,
 			);
 			path = Renderer;
 			sourceTree = "<group>";
@@ -406,6 +415,7 @@
 				B2FE351D2624B67B00AFC236 /* Application.h in Headers */,
 				B22FE6FD2638482400C1640B /* OpenGLTexture.h in Headers */,
 				B22FE70426385C8A00C1640B /* OpenGLShader.h in Headers */,
+				B249623626399AA50091C915 /* EditorCamera.h in Headers */,
 				B27FE31C2629E474000FD32D /* Renderer.h in Headers */,
 				B227E5A42636DEB300DC3DFA /* Buffers.h in Headers */,
 				B22FE70926385ECE00C1640B /* OpenGLFrameBuffer.h in Headers */,
@@ -417,6 +427,7 @@
 				B2FE351226249ECB00AFC236 /* PrefixHeader.pch in Headers */,
 				B22FE6EB2638428000C1640B /* VertexArray.h in Headers */,
 				B2EAB33D262B23AA003D7FE6 /* KeyEvent.h in Headers */,
+				B249623326399A140091C915 /* Camera.h in Headers */,
 				B22FE70026385C3B00C1640B /* Shader.h in Headers */,
 				B27FE3142629E153000FD32D /* OpenGLGraphicsContext.h in Headers */,
 				B2FE351026248C7700AFC236 /* iKan.h in Headers */,
@@ -528,6 +539,7 @@
 				B22FE6EA2638428000C1640B /* VertexArray.cpp in Sources */,
 				B2FE351C2624B67B00AFC236 /* Application.cpp in Sources */,
 				B27FE3172629E1D2000FD32D /* GraphicsContext.cpp in Sources */,
+				B249623726399AA50091C915 /* EditorCamera.cpp in Sources */,
 				B22FE70C26385EE600C1640B /* FrameBuffer.cpp in Sources */,
 				B22FE70826385ECE00C1640B /* OpenGLFrameBuffer.cpp in Sources */,
 				B249622E26397FAC0091C915 /* OpenGlRendererAPI.cpp in Sources */,
