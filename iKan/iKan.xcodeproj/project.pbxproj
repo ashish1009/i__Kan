@@ -119,7 +119,7 @@
 		B22FE70B26385EE600C1640B /* FrameBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FrameBuffer.h; sourceTree = "<group>"; };
 		B2400F3F263434F60051B868 /* TimeStep.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimeStep.h; sourceTree = "<group>"; };
 		B2400F522634396C0051B868 /* Imgui.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Imgui.xcodeproj; path = vendor/Imgui/Imgui.xcodeproj; sourceTree = "<group>"; };
-		B24010A0263450200051B868 /* ImguiLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ImguiLayer.cpp; sourceTree = "<group>"; };
+		B24010A0263450200051B868 /* ImguiLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ImguiLayer.cpp; sourceTree = "<group>"; wrapsLines = 0; };
 		B24010A1263450200051B868 /* ImguiLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImguiLayer.h; sourceTree = "<group>"; };
 		B24010A42634502E0051B868 /* ImguiBuild.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ImguiBuild.cpp; sourceTree = "<group>"; };
 		B24010A82634551B0051B868 /* Fonts.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fonts.otf; sourceTree = "<group>"; };

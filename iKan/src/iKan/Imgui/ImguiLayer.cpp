@@ -27,12 +27,11 @@ namespace iKan {
         io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
-        
         // Store the Bold font as well
-        io.Fonts->AddFontFromFileTTF("../../Engine/src/iKan/Editor/Fonts/OpenSans/OpenSans-ExtraBold.ttf", 15.0f);
+        io.Fonts->AddFontFromFileTTF("../../../iKan/src/iKan/Editor/Fonts/OpenSans/OpenSans-ExtraBold.ttf", 15.0f);
         
         // Default font is Regular
-        io.FontDefault = io.Fonts->AddFontFromFileTTF("../../Engine/src/iKan/Editor/Fonts/OpenSans/OpenSans-Regular.ttf", 15.0f);
+        io.FontDefault = io.Fonts->AddFontFromFileTTF("../../../iKan/src/iKan/Editor/Fonts/OpenSans/OpenSans-Regular.ttf", 15.0f);
                 
         /* Setup Dear ImGui style */
         ImGui::StyleColorsDark();
