@@ -47,6 +47,7 @@ ${PROJECT_DIR}/../iKan/src
 ${PROJECT_DIR}/../iKan/vendor/spdlog/include
 ${PROJECT_DIR}/../iKan/vendor/glm
 ${PROJECT_DIR}/../iKan/vendor/imgui/src
+${PROJECT_DIR}/../iKan/vendor/EnTT/include
 
 ### Preprocessors
 ------------------------

@@ -30,5 +30,8 @@
 #include <iKan/Renderer/Texture.h>
 #include <iKan/Renderer/Camera.h>
 
-// Editor Files
+// Editor files
 #include <iKan/Editor/EditorCamera.h>
+
+// Scene files
+#include <iKan/Scene/Scene.h>

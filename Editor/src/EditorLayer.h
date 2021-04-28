@@ -26,4 +26,5 @@ public:
     
 private:
     EditorCamera m_EditorCamera;
+    Ref<Scene>   m_ActiveScene;
 };

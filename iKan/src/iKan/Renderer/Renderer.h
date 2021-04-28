@@ -25,10 +25,15 @@ namespace iKan {
         static void DrawIndexed(uint32_t count);
         static void Shutdown();
 
+        static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
+
         // NOTE: This API should be set before creating Windown instance as
         // Window creates context acc to the API
-        static void SetAPI(RendererAPI::API api) { RendererAPI::SetAPI(api); }
-        static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
+        static void SetAPI(RendererAPI::API api)
+        {
+            RendererAPI::SetAPI(api);
+            s_RendererAPI = RendererAPI::Create();
+        }
         
     private:
         static Scope<RendererAPI> s_RendererAPI;
