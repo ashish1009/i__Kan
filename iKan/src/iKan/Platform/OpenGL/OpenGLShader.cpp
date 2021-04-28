@@ -6,7 +6,7 @@
 // Created on   : 27/04/21.
 // ******************************************************************************
 
-#include <iKan/Platform/OpenGL/OpenGlShader.h>
+#include <iKan/Platform/OpenGL/OpenGLShader.h>
 #include <glad/glad.h>
 
 namespace iKan {

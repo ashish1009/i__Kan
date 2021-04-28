@@ -33,6 +33,10 @@
 		B22FE70126385C3B00C1640B /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22FE6FF26385C3B00C1640B /* Shader.cpp */; };
 		B22FE70426385C8A00C1640B /* OpenGLShader.h in Headers */ = {isa = PBXBuildFile; fileRef = B22FE70226385C8A00C1640B /* OpenGLShader.h */; };
 		B22FE70526385C8A00C1640B /* OpenGLShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22FE70326385C8A00C1640B /* OpenGLShader.cpp */; };
+		B22FE70826385ECE00C1640B /* OpenGLFrameBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22FE70626385ECE00C1640B /* OpenGLFrameBuffer.cpp */; };
+		B22FE70926385ECE00C1640B /* OpenGLFrameBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = B22FE70726385ECE00C1640B /* OpenGLFrameBuffer.h */; };
+		B22FE70C26385EE600C1640B /* FrameBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22FE70A26385EE600C1640B /* FrameBuffer.cpp */; };
+		B22FE70D26385EE600C1640B /* FrameBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = B22FE70B26385EE600C1640B /* FrameBuffer.h */; };
 		B2400F40263434F60051B868 /* TimeStep.h in Headers */ = {isa = PBXBuildFile; fileRef = B2400F3F263434F60051B868 /* TimeStep.h */; };
 		B240109E26343A8A0051B868 /* libImgui.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2400F572634396D0051B868 /* libImgui.a */; };
 		B24010A2263450200051B868 /* ImguiLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24010A0263450200051B868 /* ImguiLayer.cpp */; };
@@ -105,6 +109,10 @@
 		B22FE6FF26385C3B00C1640B /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
 		B22FE70226385C8A00C1640B /* OpenGLShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLShader.h; sourceTree = "<group>"; };
 		B22FE70326385C8A00C1640B /* OpenGLShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLShader.cpp; sourceTree = "<group>"; };
+		B22FE70626385ECE00C1640B /* OpenGLFrameBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLFrameBuffer.cpp; sourceTree = "<group>"; wrapsLines = 0; };
+		B22FE70726385ECE00C1640B /* OpenGLFrameBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLFrameBuffer.h; sourceTree = "<group>"; };
+		B22FE70A26385EE600C1640B /* FrameBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FrameBuffer.cpp; sourceTree = "<group>"; };
+		B22FE70B26385EE600C1640B /* FrameBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FrameBuffer.h; sourceTree = "<group>"; };
 		B2400F3F263434F60051B868 /* TimeStep.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimeStep.h; sourceTree = "<group>"; };
 		B2400F522634396C0051B868 /* Imgui.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Imgui.xcodeproj; path = vendor/Imgui/Imgui.xcodeproj; sourceTree = "<group>"; };
 		B24010A0263450200051B868 /* ImguiLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ImguiLayer.cpp; sourceTree = "<group>"; };
@@ -264,6 +272,8 @@
 				B22FE6F72638473500C1640B /* Texture.h */,
 				B22FE6FF26385C3B00C1640B /* Shader.cpp */,
 				B22FE6FE26385C3B00C1640B /* Shader.h */,
+				B22FE70A26385EE600C1640B /* FrameBuffer.cpp */,
+				B22FE70B26385EE600C1640B /* FrameBuffer.h */,
 			);
 			path = Renderer;
 			sourceTree = "<group>";
@@ -281,6 +291,8 @@
 				B22FE6FB2638482400C1640B /* OpenGLTexture.h */,
 				B22FE70326385C8A00C1640B /* OpenGLShader.cpp */,
 				B22FE70226385C8A00C1640B /* OpenGLShader.h */,
+				B22FE70626385ECE00C1640B /* OpenGLFrameBuffer.cpp */,
+				B22FE70726385ECE00C1640B /* OpenGLFrameBuffer.h */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
@@ -374,6 +386,7 @@
 				B22FE6F12638431200C1640B /* OpenGLVertexArray.h in Headers */,
 				B2FE35152624B34000AFC236 /* Entrypoint.h in Headers */,
 				B2EAB33F262B23F2003D7FE6 /* MouseEvent.h in Headers */,
+				B22FE70D26385EE600C1640B /* FrameBuffer.h in Headers */,
 				B28FE5BF262C87A500DC5E20 /* Input.h in Headers */,
 				B27FE3182629E1D2000FD32D /* GraphicsContext.h in Headers */,
 				B2FE351D2624B67B00AFC236 /* Application.h in Headers */,
@@ -381,6 +394,7 @@
 				B22FE70426385C8A00C1640B /* OpenGLShader.h in Headers */,
 				B27FE31C2629E474000FD32D /* Renderer.h in Headers */,
 				B227E5A42636DEB300DC3DFA /* Buffers.h in Headers */,
+				B22FE70926385ECE00C1640B /* OpenGLFrameBuffer.h in Headers */,
 				B2400F40263434F60051B868 /* TimeStep.h in Headers */,
 				B202805B2625DCD200BC7F39 /* Layer.h in Headers */,
 				B2028053262592DD00BC7F39 /* Log.h in Headers */,
@@ -499,6 +513,8 @@
 				B22FE6EA2638428000C1640B /* VertexArray.cpp in Sources */,
 				B2FE351C2624B67B00AFC236 /* Application.cpp in Sources */,
 				B27FE3172629E1D2000FD32D /* GraphicsContext.cpp in Sources */,
+				B22FE70C26385EE600C1640B /* FrameBuffer.cpp in Sources */,
+				B22FE70826385ECE00C1640B /* OpenGLFrameBuffer.cpp in Sources */,
 				B22FE6F82638473500C1640B /* Texture.cpp in Sources */,
 				B28FE5C3262C881700DC5E20 /* MacInput.cpp in Sources */,
 				B20280652625F99A00BC7F39 /* Window.cpp in Sources */,

@@ -6,7 +6,7 @@
 // Created on   : 27/04/21.
 // ******************************************************************************
 
-#include <iKan/Renderer/Texture.h>
+#include "Texture.h"
 #include <iKan/Renderer/Renderer.h>
 #include <iKan/Platform/OpenGL/OpenGLTexture.h>
 

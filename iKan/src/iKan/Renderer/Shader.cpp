@@ -6,7 +6,7 @@
 // Created on   : 27/04/21.
 // ******************************************************************************
 
-#include <iKan/Renderer/Shader.h>
+#include "Shader.h"
 #include <iKan/Renderer/Renderer.h>
 #include <iKan/Platform/OpenGL/OpenGLShader.h>
 
