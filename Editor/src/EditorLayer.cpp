@@ -15,6 +15,8 @@ EditorLayer::EditorLayer()
 : Layer("Editor"), m_EditorCamera(glm::radians(45.0f), 1800.0f/800.0f, 0.01f, 10000.0f)
 {
     IK_INFO("Editor layer created");
+    
+    m_ActiveScene = CreateRef<Scene>();
 }
 
 // ******************************************************************************

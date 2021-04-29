@@ -3,7 +3,7 @@
 // Project      : iKan : Scene
 // Description  : Class tp store and manage Scene
 //
-//  Created by Ashish . on 28/04/21.
+// Created on   : 28/04/21.
 // ******************************************************************************
 
 #include "Scene.h"

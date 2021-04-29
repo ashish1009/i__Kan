@@ -7,6 +7,7 @@
 // ******************************************************************************
 
 #include "Renderer.h"
+#include <iKan/Renderer/SceneRenderer.h>
 
 namespace iKan {
  
@@ -20,6 +21,7 @@ namespace iKan {
         IK_CORE_INFO("Initialising all Renderers");
         
         s_RendererAPI->Init();
+        SceneRenderer::Init();
     }
     
     // ******************************************************************************
@@ -60,7 +62,7 @@ namespace iKan {
     // ******************************************************************************
     void Renderer::Shutdown()
     {
-
+        SceneRenderer::Shutdown();
     }
     
 }

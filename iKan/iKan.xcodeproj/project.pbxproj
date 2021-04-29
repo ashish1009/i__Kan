@@ -54,6 +54,8 @@
 		B2496B552639A8AE0091C915 /* entt.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B24962412639A89C0091C915 /* entt.hpp */; };
 		B2496CB92639A8AF0091C915 /* stb_image.h in Headers */ = {isa = PBXBuildFile; fileRef = B249648B2639A89F0091C915 /* stb_image.h */; };
 		B2496CBA2639A8AF0091C915 /* stb_image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B249648C2639A89F0091C915 /* stb_image.cpp */; };
+		B2496F132639AA690091C915 /* SceneRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2496F112639AA690091C915 /* SceneRenderer.cpp */; };
+		B2496F142639AA690091C915 /* SceneRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = B2496F122639AA690091C915 /* SceneRenderer.h */; };
 		B25684C226274BFB0030D00D /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B25684C126274BFB0030D00D /* libglfw3.a */; };
 		B27FE30E2629E072000FD32D /* libGlad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B27FE30D2629E04A000FD32D /* libGlad.a */; };
 		B27FE3132629E153000FD32D /* OpenGLGraphicsContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B27FE3112629E153000FD32D /* OpenGLGraphicsContext.cpp */; };
@@ -151,6 +153,8 @@
 		B24962412639A89C0091C915 /* entt.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = entt.hpp; sourceTree = "<group>"; };
 		B249648B2639A89F0091C915 /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		B249648C2639A89F0091C915 /* stb_image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stb_image.cpp; sourceTree = "<group>"; };
+		B2496F112639AA690091C915 /* SceneRenderer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneRenderer.cpp; sourceTree = "<group>"; };
+		B2496F122639AA690091C915 /* SceneRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneRenderer.h; sourceTree = "<group>"; };
 		B25684C126274BFB0030D00D /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = vendor/glfw/lib/libglfw3.a; sourceTree = "<group>"; };
 		B27FE3082629E04A000FD32D /* Glad.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Glad.xcodeproj; path = vendor/Glad/Glad.xcodeproj; sourceTree = "<group>"; };
 		B27FE3112629E153000FD32D /* OpenGLGraphicsContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLGraphicsContext.cpp; sourceTree = "<group>"; };
@@ -161,6 +165,7 @@
 		B27FE31A2629E474000FD32D /* Renderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
 		B28FE5BE262C87A500DC5E20 /* Input.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Input.h; sourceTree = "<group>"; };
 		B28FE5C1262C881700DC5E20 /* MacInput.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MacInput.cpp; sourceTree = "<group>"; };
+		B2E1A03B263AC3CF00889B3F /* BatchRenderer2DShader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BatchRenderer2DShader.glsl; sourceTree = "<group>"; };
 		B2EAB336262B20FF003D7FE6 /* Event.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		B2EAB33A262B2311003D7FE6 /* ApplicationEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApplicationEvent.h; sourceTree = "<group>"; };
 		B2EAB33C262B23AA003D7FE6 /* KeyEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyEvent.h; sourceTree = "<group>"; };
@@ -331,6 +336,8 @@
 		B27FE30F2629E0A3000FD32D /* Renderer */ = {
 			isa = PBXGroup;
 			children = (
+				B2496F112639AA690091C915 /* SceneRenderer.cpp */,
+				B2496F122639AA690091C915 /* SceneRenderer.h */,
 				B249622926397EE80091C915 /* RendererAPI.cpp */,
 				B249622826397EE80091C915 /* RendererAPI.h */,
 				B27FE3192629E474000FD32D /* Renderer.cpp */,
@@ -373,6 +380,22 @@
 			path = OpenGL;
 			sourceTree = "<group>";
 		};
+		B2E1A039263AC3CF00889B3F /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				B2E1A03A263AC3CF00889B3F /* shaders */,
+			);
+			path = assets;
+			sourceTree = "<group>";
+		};
+		B2E1A03A263AC3CF00889B3F /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				B2E1A03B263AC3CF00889B3F /* BatchRenderer2DShader.glsl */,
+			);
+			path = shaders;
+			sourceTree = "<group>";
+		};
 		B2EAB334262B20F3003D7FE6 /* Events */ = {
 			isa = PBXGroup;
 			children = (
@@ -387,6 +410,7 @@
 		B2FE34EB26248A4500AFC236 = {
 			isa = PBXGroup;
 			children = (
+				B2E1A039263AC3CF00889B3F /* assets */,
 				B249623D2639A89C0091C915 /* vendor */,
 				B2FE350E26248C3F00AFC236 /* src */,
 				B25458C5262899580053BD47 /* Dependency */,
@@ -468,6 +492,7 @@
 				B2EAB33F262B23F2003D7FE6 /* MouseEvent.h in Headers */,
 				B22FE70D26385EE600C1640B /* FrameBuffer.h in Headers */,
 				B28FE5BF262C87A500DC5E20 /* Input.h in Headers */,
+				B2496F142639AA690091C915 /* SceneRenderer.h in Headers */,
 				B27FE3182629E1D2000FD32D /* GraphicsContext.h in Headers */,
 				B2FE351D2624B67B00AFC236 /* Application.h in Headers */,
 				B22FE6FD2638482400C1640B /* OpenGLTexture.h in Headers */,
@@ -606,6 +631,7 @@
 				B249622E26397FAC0091C915 /* OpenGlRendererAPI.cpp in Sources */,
 				B22FE6F82638473500C1640B /* Texture.cpp in Sources */,
 				B28FE5C3262C881700DC5E20 /* MacInput.cpp in Sources */,
+				B2496F132639AA690091C915 /* SceneRenderer.cpp in Sources */,
 				B249623B2639A7740091C915 /* Scene.cpp in Sources */,
 				B20280652625F99A00BC7F39 /* Window.cpp in Sources */,
 			);
