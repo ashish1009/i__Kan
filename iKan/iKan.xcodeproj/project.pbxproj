@@ -57,6 +57,7 @@
 		B2496F132639AA690091C915 /* SceneRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2496F112639AA690091C915 /* SceneRenderer.cpp */; };
 		B2496F142639AA690091C915 /* SceneRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = B2496F122639AA690091C915 /* SceneRenderer.h */; };
 		B25684C226274BFB0030D00D /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B25684C126274BFB0030D00D /* libglfw3.a */; };
+		B27B4D9D263ACA0D000AC7B5 /* Entity.h in Headers */ = {isa = PBXBuildFile; fileRef = B27B4D9C263ACA0D000AC7B5 /* Entity.h */; };
 		B27FE30E2629E072000FD32D /* libGlad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B27FE30D2629E04A000FD32D /* libGlad.a */; };
 		B27FE3132629E153000FD32D /* OpenGLGraphicsContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B27FE3112629E153000FD32D /* OpenGLGraphicsContext.cpp */; };
 		B27FE3142629E153000FD32D /* OpenGLGraphicsContext.h in Headers */ = {isa = PBXBuildFile; fileRef = B27FE3122629E153000FD32D /* OpenGLGraphicsContext.h */; };
@@ -156,6 +157,7 @@
 		B2496F112639AA690091C915 /* SceneRenderer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneRenderer.cpp; sourceTree = "<group>"; };
 		B2496F122639AA690091C915 /* SceneRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneRenderer.h; sourceTree = "<group>"; };
 		B25684C126274BFB0030D00D /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = vendor/glfw/lib/libglfw3.a; sourceTree = "<group>"; };
+		B27B4D9C263ACA0D000AC7B5 /* Entity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Entity.h; sourceTree = "<group>"; };
 		B27FE3082629E04A000FD32D /* Glad.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Glad.xcodeproj; path = vendor/Glad/Glad.xcodeproj; sourceTree = "<group>"; };
 		B27FE3112629E153000FD32D /* OpenGLGraphicsContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLGraphicsContext.cpp; sourceTree = "<group>"; };
 		B27FE3122629E153000FD32D /* OpenGLGraphicsContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGLGraphicsContext.h; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 			children = (
 				B24962392639A7740091C915 /* Scene.cpp */,
 				B249623A2639A7740091C915 /* Scene.h */,
+				B27B4D9C263ACA0D000AC7B5 /* Entity.h */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -512,6 +515,7 @@
 				B22FE6EB2638428000C1640B /* VertexArray.h in Headers */,
 				B2EAB33D262B23AA003D7FE6 /* KeyEvent.h in Headers */,
 				B249623326399A140091C915 /* Camera.h in Headers */,
+				B27B4D9D263ACA0D000AC7B5 /* Entity.h in Headers */,
 				B22FE70026385C3B00C1640B /* Shader.h in Headers */,
 				B27FE3142629E153000FD32D /* OpenGLGraphicsContext.h in Headers */,
 				B2FE351026248C7700AFC236 /* iKan.h in Headers */,

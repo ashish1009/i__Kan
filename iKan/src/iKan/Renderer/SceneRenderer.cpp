@@ -154,6 +154,7 @@ namespace iKan {
     void SceneRenderer::Shutdown()
     {
         IK_CORE_WARN("Shutting down the Scene Renderer");
+        delete s_Data;
     }
     
 }
