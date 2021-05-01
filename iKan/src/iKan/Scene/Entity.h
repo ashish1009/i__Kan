@@ -18,6 +18,8 @@ namespace iKan {
         Entity() = default;
         Entity(const Entity& other) = default;
         
+        ~Entity() = default;
+
         // ******************************************************************************
         // Entity constructure that takes entt and Scene pointer
         // ******************************************************************************
@@ -66,10 +68,9 @@ namespace iKan {
             IK_CORE_ASSERT(HasComponent<T>(), "Entity does not have component!");
             m_Scene->m_Registry.remove<T>(m_EntityHandle);
         }
-
-
-        ~Entity() = default;
         
+        operator entt::entity() const { return m_EntityHandle; }
+
     private:
         entt::entity m_EntityHandle{ entt::null };
         Scene*       m_Scene;

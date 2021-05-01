@@ -1,7 +1,8 @@
 // ******************************************************************************
 // File         : EditorCamera.h
 // Project      : iKan : Editor
-// Description  : Implementation of Editor camera to support 3D view
+// Description  : Implementation of Editor camera to support 3D view. This camera
+//                instance is needed for Edit the scene only
 //
 // Created on   : 28/04/21.
 // ******************************************************************************

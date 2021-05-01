@@ -61,6 +61,8 @@
 		B27B4DA1263AF8AA000AC7B5 /* Component.h in Headers */ = {isa = PBXBuildFile; fileRef = B27B4DA0263AF8AA000AC7B5 /* Component.h */; };
 		B27D6098263D3A3000954BB6 /* UUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B27D6094263D3A3000954BB6 /* UUID.cpp */; };
 		B27D6099263D3A3000954BB6 /* UUID.h in Headers */ = {isa = PBXBuildFile; fileRef = B27D6097263D3A3000954BB6 /* UUID.h */; };
+		B27D609C263D6B1A00954BB6 /* SceneCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B27D609A263D6B1A00954BB6 /* SceneCamera.cpp */; };
+		B27D609D263D6B1A00954BB6 /* SceneCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = B27D609B263D6B1A00954BB6 /* SceneCamera.h */; };
 		B27FE30E2629E072000FD32D /* libGlad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B27FE30D2629E04A000FD32D /* libGlad.a */; };
 		B27FE3132629E153000FD32D /* OpenGLGraphicsContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B27FE3112629E153000FD32D /* OpenGLGraphicsContext.cpp */; };
 		B27FE3142629E153000FD32D /* OpenGLGraphicsContext.h in Headers */ = {isa = PBXBuildFile; fileRef = B27FE3122629E153000FD32D /* OpenGLGraphicsContext.h */; };
@@ -151,7 +153,7 @@
 		B249623126399A140091C915 /* Camera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
 		B249623426399AA40091C915 /* EditorCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorCamera.h; sourceTree = "<group>"; };
 		B249623526399AA50091C915 /* EditorCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorCamera.cpp; sourceTree = "<group>"; };
-		B24962392639A7740091C915 /* Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Scene.cpp; sourceTree = "<group>"; };
+		B24962392639A7740091C915 /* Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Scene.cpp; sourceTree = "<group>"; wrapsLines = 0; };
 		B249623A2639A7740091C915 /* Scene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
 		B249623F2639A89C0091C915 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		B24962412639A89C0091C915 /* entt.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = entt.hpp; sourceTree = "<group>"; };
@@ -164,6 +166,8 @@
 		B27B4DA0263AF8AA000AC7B5 /* Component.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Component.h; sourceTree = "<group>"; };
 		B27D6094263D3A3000954BB6 /* UUID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UUID.cpp; sourceTree = "<group>"; };
 		B27D6097263D3A3000954BB6 /* UUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUID.h; sourceTree = "<group>"; };
+		B27D609A263D6B1A00954BB6 /* SceneCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneCamera.cpp; sourceTree = "<group>"; };
+		B27D609B263D6B1A00954BB6 /* SceneCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneCamera.h; sourceTree = "<group>"; };
 		B27FE3082629E04A000FD32D /* Glad.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Glad.xcodeproj; path = vendor/Glad/Glad.xcodeproj; sourceTree = "<group>"; };
 		B27FE3112629E153000FD32D /* OpenGLGraphicsContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLGraphicsContext.cpp; sourceTree = "<group>"; };
 		B27FE3122629E153000FD32D /* OpenGLGraphicsContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGLGraphicsContext.h; sourceTree = "<group>"; };
@@ -279,6 +283,8 @@
 				B249623A2639A7740091C915 /* Scene.h */,
 				B27B4D9C263ACA0D000AC7B5 /* Entity.h */,
 				B27B4DA0263AF8AA000AC7B5 /* Component.h */,
+				B27D609A263D6B1A00954BB6 /* SceneCamera.cpp */,
+				B27D609B263D6B1A00954BB6 /* SceneCamera.h */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -494,6 +500,7 @@
 			files = (
 				B27B4DA1263AF8AA000AC7B5 /* Component.h in Headers */,
 				B202806C2625FF1900BC7F39 /* MacWindow.h in Headers */,
+				B27D609D263D6B1A00954BB6 /* SceneCamera.h in Headers */,
 				B227E5AA2636F22B00DC3DFA /* OpenGLBuffers.h in Headers */,
 				B27D6099263D3A3000954BB6 /* UUID.h in Headers */,
 				B2EAB33B262B2311003D7FE6 /* ApplicationEvent.h in Headers */,
@@ -627,6 +634,7 @@
 				B22FE6F02638431200C1640B /* OpenGLVertexArray.cpp in Sources */,
 				B20280562625934700BC7F39 /* Log.cpp in Sources */,
 				B22FE6FC2638482400C1640B /* OpenGLTexture.cpp in Sources */,
+				B27D609C263D6B1A00954BB6 /* SceneCamera.cpp in Sources */,
 				B227E5A92636F22B00DC3DFA /* OpenGLBuffers.cpp in Sources */,
 				B24010A52634502E0051B868 /* ImguiBuild.cpp in Sources */,
 				B202805E2625DF4900BC7F39 /* Layerstack.cpp in Sources */,

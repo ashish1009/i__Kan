@@ -21,6 +21,7 @@ namespace iKan {
         ~Scene();
         
         Entity CreateEntity(const std::string& name = "Unknown Entity", UUID uuid = UUID());
+        void DestroyEntity(Entity entity);
         
     private:
         // Container that contain all the entities

@@ -37,13 +37,23 @@ namespace iKan {
         
         entity.AddComponent<IDComponent>(uuid);
         entity.AddComponent<TagComponent>(name);
-        
+        entity.AddComponent<TransformComponent>();
+
         IK_CORE_ASSERT((m_EntityIDMap.find(uuid) == m_EntityIDMap.end()), "Entity Already Added");
         m_EntityIDMap[uuid] = entity;
         
         IK_CORE_TRACE("Entity {0} with ID: {1} is created in the Active Scene", entity.GetComponent<TagComponent>().Tag.c_str(), entity.GetComponent<IDComponent>().ID);
         
         return entity;
+    }
+    
+    // ******************************************************************************
+    // Destroy Entity from Scene
+    // ******************************************************************************
+    void Scene::DestroyEntity(Entity entity)
+    {
+        IK_CORE_WARN("Destrying Entity '{0}' with ID {0} from the scene", entity.GetComponent<TagComponent>().Tag.c_str(), entity.GetComponent<IDComponent>().ID);
+        m_Registry.destroy(entity);
     }
 
 }
