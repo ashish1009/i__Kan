@@ -18,12 +18,12 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		B2FE350226248AF200AFC236 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = usr/share/man/man1;
+			dstSubfolderSpec = 6;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -33,6 +33,8 @@
 		B254585D2628930D0053BD47 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B25684C326274C090030D00D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		B25684C526274C0F0030D00D /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		B2782461263C30A6009BB380 /* libGlad.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libGlad.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B27B4DA2263B0033000AC7B5 /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = ../iKan/vendor/glfw/lib/libglfw3.a; sourceTree = "<group>"; };
 		B2FE350426248AF200AFC236 /* Editor */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Editor; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2FE350726248AF200AFC236 /* EditorApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorApp.cpp; sourceTree = "<group>"; };
 		B2FE35172624B5CA00AFC236 /* libiKan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libiKan.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,6 +85,8 @@
 		B2FE35162624B5CA00AFC236 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B2782461263C30A6009BB380 /* libGlad.a */,
+				B27B4DA2263B0033000AC7B5 /* libglfw3.a */,
 				B254585D2628930D0053BD47 /* OpenGL.framework */,
 				B25684C526274C0F0030D00D /* IOKit.framework */,
 				B25684C326274C090030D00D /* Cocoa.framework */,
@@ -287,6 +291,7 @@
 					"${PROJECT_DIR}/../iKan/vendor/glm",
 					"${PROJECT_DIR}/../iKan/vendor/EnTT/include",
 				);
+				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -306,6 +311,7 @@
 					"${PROJECT_DIR}/../iKan/vendor/glm",
 					"${PROJECT_DIR}/../iKan/vendor/EnTT/include",
 				);
+				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

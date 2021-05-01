@@ -58,6 +58,9 @@
 		B2496F142639AA690091C915 /* SceneRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = B2496F122639AA690091C915 /* SceneRenderer.h */; };
 		B25684C226274BFB0030D00D /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B25684C126274BFB0030D00D /* libglfw3.a */; };
 		B27B4D9D263ACA0D000AC7B5 /* Entity.h in Headers */ = {isa = PBXBuildFile; fileRef = B27B4D9C263ACA0D000AC7B5 /* Entity.h */; };
+		B27B4DA1263AF8AA000AC7B5 /* Component.h in Headers */ = {isa = PBXBuildFile; fileRef = B27B4DA0263AF8AA000AC7B5 /* Component.h */; };
+		B27D6098263D3A3000954BB6 /* UUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B27D6094263D3A3000954BB6 /* UUID.cpp */; };
+		B27D6099263D3A3000954BB6 /* UUID.h in Headers */ = {isa = PBXBuildFile; fileRef = B27D6097263D3A3000954BB6 /* UUID.h */; };
 		B27FE30E2629E072000FD32D /* libGlad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B27FE30D2629E04A000FD32D /* libGlad.a */; };
 		B27FE3132629E153000FD32D /* OpenGLGraphicsContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B27FE3112629E153000FD32D /* OpenGLGraphicsContext.cpp */; };
 		B27FE3142629E153000FD32D /* OpenGLGraphicsContext.h in Headers */ = {isa = PBXBuildFile; fileRef = B27FE3122629E153000FD32D /* OpenGLGraphicsContext.h */; };
@@ -158,6 +161,9 @@
 		B2496F122639AA690091C915 /* SceneRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneRenderer.h; sourceTree = "<group>"; };
 		B25684C126274BFB0030D00D /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = vendor/glfw/lib/libglfw3.a; sourceTree = "<group>"; };
 		B27B4D9C263ACA0D000AC7B5 /* Entity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Entity.h; sourceTree = "<group>"; };
+		B27B4DA0263AF8AA000AC7B5 /* Component.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Component.h; sourceTree = "<group>"; };
+		B27D6094263D3A3000954BB6 /* UUID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UUID.cpp; sourceTree = "<group>"; };
+		B27D6097263D3A3000954BB6 /* UUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUID.h; sourceTree = "<group>"; };
 		B27FE3082629E04A000FD32D /* Glad.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Glad.xcodeproj; path = vendor/Glad/Glad.xcodeproj; sourceTree = "<group>"; };
 		B27FE3112629E153000FD32D /* OpenGLGraphicsContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLGraphicsContext.cpp; sourceTree = "<group>"; };
 		B27FE3122629E153000FD32D /* OpenGLGraphicsContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGLGraphicsContext.h; sourceTree = "<group>"; };
@@ -272,6 +278,7 @@
 				B24962392639A7740091C915 /* Scene.cpp */,
 				B249623A2639A7740091C915 /* Scene.h */,
 				B27B4D9C263ACA0D000AC7B5 /* Entity.h */,
+				B27B4DA0263AF8AA000AC7B5 /* Component.h */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -472,6 +479,8 @@
 				B2EAB341262B265B003D7FE6 /* MouseCode.h */,
 				B28FE5BE262C87A500DC5E20 /* Input.h */,
 				B2400F3F263434F60051B868 /* TimeStep.h */,
+				B27D6094263D3A3000954BB6 /* UUID.cpp */,
+				B27D6097263D3A3000954BB6 /* UUID.h */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -483,8 +492,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B27B4DA1263AF8AA000AC7B5 /* Component.h in Headers */,
 				B202806C2625FF1900BC7F39 /* MacWindow.h in Headers */,
 				B227E5AA2636F22B00DC3DFA /* OpenGLBuffers.h in Headers */,
+				B27D6099263D3A3000954BB6 /* UUID.h in Headers */,
 				B2EAB33B262B2311003D7FE6 /* ApplicationEvent.h in Headers */,
 				B249622F26397FAC0091C915 /* OpenGlRendererAPI.h in Headers */,
 				B24010A3263450200051B868 /* ImguiLayer.h in Headers */,
@@ -623,6 +634,7 @@
 				B249622B26397EE80091C915 /* RendererAPI.cpp in Sources */,
 				B27FE3132629E153000FD32D /* OpenGLGraphicsContext.cpp in Sources */,
 				B22FE70126385C3B00C1640B /* Shader.cpp in Sources */,
+				B27D6098263D3A3000954BB6 /* UUID.cpp in Sources */,
 				B27FE31B2629E474000FD32D /* Renderer.cpp in Sources */,
 				B22FE70526385C8A00C1640B /* OpenGLShader.cpp in Sources */,
 				B22FE6EA2638428000C1640B /* VertexArray.cpp in Sources */,

@@ -9,18 +9,27 @@
 #pragma once
 
 #include <entt.hpp>
+#include <iKan/Core/UUID.h>
 
 namespace iKan {
     
+    class Entity;
     class Scene
     {
     public:
         Scene();
         ~Scene();
         
+        Entity CreateEntity(const std::string& name = "Unknown Entity", UUID uuid = UUID());
+        
     private:
-        /* Container that contain all the entities */
+        // Container that contain all the entities
         entt::registry m_Registry;
+        
+        // Store the map of Entityes present in the Scene with their UUID
+        std::unordered_map<UUID, Entity> m_EntityIDMap;
+        
+        friend class Entity;
     };
     
 }
