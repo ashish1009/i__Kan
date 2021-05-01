@@ -36,3 +36,4 @@
 // Scene files
 #include <iKan/Scene/Scene.h>
 #include <iKan/Scene/Entity.h>
+#include <iKan/Scene/Component.h>

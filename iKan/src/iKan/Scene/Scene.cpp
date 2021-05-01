@@ -9,6 +9,7 @@
 #include "Scene.h"
 #include <iKan/Scene/Entity.h>
 #include <iKan/Scene/Component.h>
+#include <iKan/Renderer/SceneRenderer.h>
 
 namespace iKan {
     
@@ -56,4 +57,30 @@ namespace iKan {
         m_Registry.destroy(entity);
     }
 
+    // ******************************************************************************
+    // Update Scene. Editor camera helps to  Edit the Scene
+    // ******************************************************************************
+    void Scene::OnUpdateEditor(Timestep ts, EditorCamera &editorCamera)
+    {
+        SceneRenderer::BeginScene(editorCamera);
+        auto spriteGroup = m_Registry.group<>(entt::get<TransformComponent, SpriteRendererComponent>);
+        for (auto entity : spriteGroup)
+        {
+            const auto [transform, sprite] = spriteGroup.get<TransformComponent, SpriteRendererComponent>(entity);
+            if (sprite.TextureComp)
+            {
+                SceneRenderer::DrawQuad(transform.GetTransform(), sprite.TextureComp, (int32_t)entity, sprite.TilingFactor, sprite.ColorComp);
+            }
+            else if (sprite.SubTexComp)
+            {
+                SceneRenderer::DrawQuad(transform.GetTransform(), sprite.SubTexComp, (int32_t)entity, sprite.TilingFactor, sprite.ColorComp);
+            }
+            else
+            {
+                SceneRenderer::DrawQuad(transform.GetTransform(), sprite.ColorComp, (int32_t)entity);
+            }
+        }
+        SceneRenderer::EndScene();
+    }
+    
 }

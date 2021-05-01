@@ -51,6 +51,8 @@ void EditorLayer::OnUpdate(Timestep ts)
     m_EditorCamera.OnUpdate(ts);
     
     Renderer::Clear({ 0.1f, 0.1f, 0.1f, 1.0f });
+    
+    m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 }
 
 // ******************************************************************************

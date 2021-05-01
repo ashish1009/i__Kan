@@ -9,7 +9,7 @@
 #include "SceneRenderer.h"
 #include <iKan/Renderer/VertexArray.h>
 #include <iKan/Renderer/Shader.h>
-#include <iKan/Renderer/Texture.h>
+#include <iKan/Renderer/Renderer.h>
 
 namespace iKan {
         
@@ -155,6 +155,160 @@ namespace iKan {
     {
         IK_CORE_WARN("Shutting down the Scene Renderer");
         delete s_Data;
+    }
+    
+    // ******************************************************************************
+    // Begin the 2D Scene
+    // ******************************************************************************
+    void SceneRenderer::BeginScene(const EditorCamera& camera)
+    {
+        glm::mat4 viewProj = camera.GetViewProjection();
+
+        s_Data->TextureShader->Bind();
+        s_Data->TextureShader->SetUniformMat4("u_ViewProjection", viewProj);
+
+        StartBatch();
+    }
+    
+    // ******************************************************************************
+    // Start the batch Renderer
+    // ******************************************************************************
+    void SceneRenderer::StartBatch()
+    {
+        s_Data->QuadIndexCount = 0;
+        s_Data->QuadVertexBufferPtr = s_Data->QuadVertexBufferBase;
+        
+        s_Data->TextureSlotIndex = 1;
+    }
+    
+    // ******************************************************************************
+    // End the 2D Scene
+    // ******************************************************************************
+    void SceneRenderer::EndScene()
+    {
+        Flush();
+    }
+    
+    // ******************************************************************************
+    // Flush the batch
+    // ******************************************************************************
+    void SceneRenderer::Flush()
+    {
+        // Nothing to draw
+        if (s_Data->QuadIndexCount == 0)
+        {
+            return;
+        }
+        
+        uint32_t dataSize = (uint32_t)((uint8_t*)s_Data->QuadVertexBufferPtr - (uint8_t*)s_Data->QuadVertexBufferBase);
+        s_Data->QuadVertexBuffer->SetData(s_Data->QuadVertexBufferBase, dataSize);
+        
+        // Bind textures
+        for (uint32_t i = 0; i < s_Data->TextureSlotIndex; i++)
+        {
+            s_Data->TextureSlots[i]->Bind(i);
+        }
+        
+        // Render the Scene
+        Renderer::DrawIndexed(s_Data->QuadVertexArray, s_Data->QuadIndexCount);
+    }
+    
+    // ******************************************************************************
+    // New batch
+    // ******************************************************************************
+    void SceneRenderer::NextBatch()
+    {
+        // if num Quad per Batch exceeds then Render the Scene and reset all parameters
+        EndScene();
+        
+        s_Data->QuadIndexCount = 0;
+        s_Data->QuadVertexBufferPtr = s_Data->QuadVertexBufferBase;
+        
+        s_Data->TextureSlotIndex = 1;
+    }
+    
+    // ******************************************************************************
+    // Draq Color Quad
+    // ******************************************************************************
+    void SceneRenderer::DrawQuad(const glm::mat4& transform, const glm::vec4& color, int32_t entID)
+    {
+        constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
+        DrawTextureQuad(transform, nullptr, entID, textureCoords);
+    }
+    
+    // ******************************************************************************
+    // Draq Texture Quad
+    // ******************************************************************************
+    void SceneRenderer::DrawQuad(const glm::mat4& transform, const Ref<Texture>& texture, int32_t entID, float tilingFactor, const glm::vec4& tintColor)
+    {
+        constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
+        DrawTextureQuad(transform, texture, entID, textureCoords, tilingFactor, tintColor);
+    }
+    
+    // ******************************************************************************
+    // Draq Subtexutre Quad
+    // ******************************************************************************
+    void SceneRenderer::DrawQuad(const glm::mat4& transform, const Ref<SubTexture>& subTexture, int32_t entID, float tilingFactor, const glm::vec4& tintColor)
+    {
+        const glm::vec2* textureCoords   = subTexture->GetTexCoord();
+        DrawTextureQuad(transform, subTexture->GetTeture(), entID, textureCoords, tilingFactor, tintColor);
+    }
+    
+    void SceneRenderer::DrawTextureQuad(const glm::mat4& transform, const Ref<Texture>& texture, int32_t entID, const glm::vec2* textureCoords, float tilingFactor, const glm::vec4& tintColor)
+    {
+        constexpr size_t quadVertexCount = 4;
+
+        // If number of indices increase in batch then start new batch
+        if (s_Data->QuadIndexCount >= RendererQuadData::MaxIndices)
+        {
+            IK_CORE_WARN("Starts the new batch as number of indices ({0}) increases in the previous batch", s_Data->QuadIndexCount);
+            NextBatch();
+        }
+        
+        float textureIndex = 0.0f;
+        if (texture)
+        {
+            // Find if texture is already loaded in current batch
+            for (int8_t i = 1; i < s_Data->TextureSlotIndex; i++)
+            {
+                if (*s_Data->TextureSlots[i] == *texture)
+                {
+                    // Found the current textue in the batch
+                    textureIndex = (float)i;
+                    break;
+                }
+            }
+            
+            // If current texture slot is not pre loaded then load the texture in proper slot
+            if (textureIndex == 0.0f)
+            {
+                // If number of slots increases max then start new batch
+                if (s_Data->TextureSlotIndex >= RendererQuadData::MaxTextureSlots)
+                {
+                    IK_CORE_WARN("Starts the new batch as number of texture slot ({0}) increases in the previous batch", s_Data->TextureSlotIndex);
+                    NextBatch();
+                }
+
+                // Loading the current texture in the first free slot slot
+                textureIndex = (float)s_Data->TextureSlotIndex;
+                s_Data->TextureSlots[s_Data->TextureSlotIndex] = texture;
+                s_Data->TextureSlotIndex++;
+            }
+        }
+        
+        for (size_t i = 0; i < quadVertexCount; i++)
+        {
+            s_Data->QuadVertexBufferPtr->Position     = transform * s_Data->QuadVertexPositions[i];
+            s_Data->QuadVertexBufferPtr->Color        = tintColor;
+            s_Data->QuadVertexBufferPtr->TexCoord     = textureCoords[i];
+            s_Data->QuadVertexBufferPtr->TexIndex     = textureIndex;
+            s_Data->QuadVertexBufferPtr->TilingFactor = tilingFactor;
+            s_Data->QuadVertexBufferPtr->ObjectID     = entID;
+            s_Data->QuadVertexBufferPtr++;
+        }
+        
+        s_Data->QuadIndexCount += 6;
+
     }
     
 }

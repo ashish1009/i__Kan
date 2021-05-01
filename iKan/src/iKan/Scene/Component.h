@@ -10,6 +10,7 @@
 
 #include <iKan/Core/UUID.h>
 #include <iKan/Scene/SceneCamera.h>
+#include <iKan/Renderer/Texture.h>
 
 namespace iKan {
     
@@ -92,6 +93,41 @@ namespace iKan {
         
         CameraComponent() = default;
         CameraComponent(const CameraComponent&) = default;
+    };
+    
+    // ******************************************************************************
+    // Stores the Sprite Component for Texture, Sprite and color
+    // ******************************************************************************
+    struct SpriteRendererComponent
+    {
+        glm::vec4       ColorComp   = glm::vec4(1.0f);
+        Ref<SubTexture> SubTexComp  = nullptr;
+        Ref<Texture>    TextureComp = nullptr;
+        
+        float TilingFactor = 1.0f;
+
+        ~SpriteRendererComponent() = default;
+
+        SpriteRendererComponent() = default;
+        SpriteRendererComponent(const SpriteRendererComponent&) = default;
+        
+        SpriteRendererComponent(const glm::vec4& color)
+        : ColorComp(color), SubTexComp(nullptr), TextureComp(nullptr)
+        {
+            
+        }
+        
+        SpriteRendererComponent(const Ref<SubTexture>& subtexture)
+        : ColorComp(glm::vec4(1.0f)), SubTexComp(subtexture), TextureComp(nullptr)
+        {
+            
+        }
+        
+        SpriteRendererComponent(const Ref<iKan::Texture>& texture)
+        : ColorComp(glm::vec4(1.0f)), SubTexComp(nullptr), TextureComp(texture)
+        {
+            
+        }
     };
     
 }

@@ -10,6 +10,8 @@
 
 #include <entt.hpp>
 #include <iKan/Core/UUID.h>
+#include <iKan/Editor/EditorCamera.h>
+#include <iKan/Core/TimeStep.h>
 
 namespace iKan {
     
@@ -22,6 +24,8 @@ namespace iKan {
         
         Entity CreateEntity(const std::string& name = "Unknown Entity", UUID uuid = UUID());
         void DestroyEntity(Entity entity);
+        
+        void OnUpdateEditor(Timestep ts, EditorCamera& camera);
         
     private:
         // Container that contain all the entities
