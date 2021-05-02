@@ -30,4 +30,6 @@ private:
 private:
     EditorCamera m_EditorCamera;
     Ref<Scene>   m_ActiveScene;
+    
+    Viewport& m_Viewport = Viewport::Get();
 };

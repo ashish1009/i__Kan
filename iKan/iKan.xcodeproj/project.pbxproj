@@ -76,6 +76,8 @@
 		B2A1C110263E78C200606017 /* ImguiAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = B2A1C10E263E78C200606017 /* ImguiAPI.h */; };
 		B2A1C115263E82E700606017 /* RendererStats.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2A1C113263E82E700606017 /* RendererStats.cpp */; };
 		B2A1C116263E82E700606017 /* RendererStats.h in Headers */ = {isa = PBXBuildFile; fileRef = B2A1C114263E82E700606017 /* RendererStats.h */; };
+		B2A1C119263E87DD00606017 /* Viewport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2A1C117263E87DD00606017 /* Viewport.cpp */; };
+		B2A1C11A263E87DD00606017 /* Viewport.h in Headers */ = {isa = PBXBuildFile; fileRef = B2A1C118263E87DD00606017 /* Viewport.h */; };
 		B2EAB338262B20FF003D7FE6 /* Event.h in Headers */ = {isa = PBXBuildFile; fileRef = B2EAB336262B20FF003D7FE6 /* Event.h */; };
 		B2EAB33B262B2311003D7FE6 /* ApplicationEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = B2EAB33A262B2311003D7FE6 /* ApplicationEvent.h */; };
 		B2EAB33D262B23AA003D7FE6 /* KeyEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = B2EAB33C262B23AA003D7FE6 /* KeyEvent.h */; };
@@ -185,6 +187,8 @@
 		B2A1C10E263E78C200606017 /* ImguiAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImguiAPI.h; sourceTree = "<group>"; };
 		B2A1C113263E82E700606017 /* RendererStats.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RendererStats.cpp; sourceTree = "<group>"; };
 		B2A1C114263E82E700606017 /* RendererStats.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RendererStats.h; sourceTree = "<group>"; };
+		B2A1C117263E87DD00606017 /* Viewport.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Viewport.cpp; sourceTree = "<group>"; };
+		B2A1C118263E87DD00606017 /* Viewport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Viewport.h; sourceTree = "<group>"; };
 		B2E1A03B263AC3CF00889B3F /* BatchRenderer2DShader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BatchRenderer2DShader.glsl; sourceTree = "<group>"; };
 		B2EAB336262B20FF003D7FE6 /* Event.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		B2EAB33A262B2311003D7FE6 /* ApplicationEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApplicationEvent.h; sourceTree = "<group>"; };
@@ -295,6 +299,8 @@
 				B27B4DA0263AF8AA000AC7B5 /* Component.h */,
 				B27D609A263D6B1A00954BB6 /* SceneCamera.cpp */,
 				B27D609B263D6B1A00954BB6 /* SceneCamera.h */,
+				B2A1C117263E87DD00606017 /* Viewport.cpp */,
+				B2A1C118263E87DD00606017 /* Viewport.h */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -517,6 +523,7 @@
 				B27D6099263D3A3000954BB6 /* UUID.h in Headers */,
 				B2EAB33B262B2311003D7FE6 /* ApplicationEvent.h in Headers */,
 				B249622F26397FAC0091C915 /* OpenGlRendererAPI.h in Headers */,
+				B2A1C11A263E87DD00606017 /* Viewport.h in Headers */,
 				B2A1C116263E82E700606017 /* RendererStats.h in Headers */,
 				B24010A3263450200051B868 /* ImguiLayer.h in Headers */,
 				B2028051262590D300BC7F39 /* Core.h in Headers */,
@@ -672,6 +679,7 @@
 				B22FE6F82638473500C1640B /* Texture.cpp in Sources */,
 				B28FE5C3262C881700DC5E20 /* MacInput.cpp in Sources */,
 				B2496F132639AA690091C915 /* SceneRenderer.cpp in Sources */,
+				B2A1C119263E87DD00606017 /* Viewport.cpp in Sources */,
 				B249623B2639A7740091C915 /* Scene.cpp in Sources */,
 				B20280652625F99A00BC7F39 /* Window.cpp in Sources */,
 			);

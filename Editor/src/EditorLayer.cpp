@@ -18,6 +18,19 @@ EditorLayer::EditorLayer()
     
     m_ActiveScene = CreateRef<Scene>();
     
+    // Frame buffer specifications
+    Framebuffer::Specification specs;
+    specs.Attachments = { Framebuffer::TextureSpecification::TextureFormat::RGBA8,
+                          Framebuffer::TextureSpecification::TextureFormat::DEPTH24STENCIL8,
+                          Framebuffer::TextureSpecification::TextureFormat::R32I};
+    
+    specs.Width       = Window::Property::DefaultWidth;
+    specs.Height      = Window::Property::DefaultHeight;
+    
+    // Creating instance for Frame buffer in viewport
+    m_Viewport.FrameBuffer = Framebuffer::Create(specs);
+
+    // Creating Temp Entity
     auto ent1 = m_ActiveScene->CreateEntity();
     ent1.GetComponent<TransformComponent>().Translation = glm::vec3(0.5, 0.0, 0.0);
     ent1.AddComponent<SpriteRendererComponent>(glm::vec4(1.0f));
@@ -53,12 +66,15 @@ void EditorLayer::OnDetach()
 void EditorLayer::OnUpdate(Timestep ts)
 {
     RendererStatistics::Reset();
-
     m_EditorCamera.OnUpdate(ts);
     
-    Renderer::Clear({ 0.1f, 0.1f, 0.1f, 1.0f });
-    
-    m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
+    m_Viewport.FrameBuffer->Bind();
+    {
+        Renderer::Clear({ 0.1f, 0.1f, 0.1f, 1.0f });
+        m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
+        m_Viewport.UpdateMousePos();
+    }
+    m_Viewport.FrameBuffer->Unbind();
 }
 
 // ******************************************************************************
@@ -73,6 +89,17 @@ void EditorLayer::OnImguiRender()
     ImGuiAPI::FrameRate();
     ImGuiAPI::RendererStats();
     ImGuiAPI::RendererVersion();
+    
+    // Viewport Update
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
+    ImGui::Begin("Viewport");
+    {
+        m_Viewport.OnUpdate();
+        m_Viewport.UpdateBounds();
+    }
+
+    ImGui::End(); // ImGui::Begin("Viewport");
+    ImGui::PopStyleVar(); // ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
     
     ImGuiAPI::EndDcocking();
 }

@@ -28,7 +28,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		B20280602625E63400BC7F39 /* EditorLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorLayer.cpp; sourceTree = "<group>"; };
+		B20280602625E63400BC7F39 /* EditorLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorLayer.cpp; sourceTree = "<group>"; wrapsLines = 0; };
 		B20280612625E63400BC7F39 /* EditorLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditorLayer.h; sourceTree = "<group>"; };
 		B254585D2628930D0053BD47 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B25684C326274C090030D00D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };

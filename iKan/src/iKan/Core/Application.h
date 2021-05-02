@@ -59,6 +59,7 @@ namespace iKan {
         void PushLayer(Ref<Layer> layer) { m_Layerstack.PushLayer(layer); };
         void PopLayer(Ref<Layer> layer) { m_Layerstack.PopLayer(layer); };
         
+        ImguiLayer* GetImGuiLayer() { return m_ImguiLayer.get(); }
         Window& GetWindow() { return *m_Window; }
         
         static Application& Get() { return *s_Instance; }
