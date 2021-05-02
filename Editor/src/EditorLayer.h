@@ -26,10 +26,22 @@ public:
     
 private:
     void ShowMenu();
+    void RendererStats();
     
 private:
-    EditorCamera m_EditorCamera;
-    Ref<Scene>   m_ActiveScene;
+    EditorCamera         m_EditorCamera;
+    Ref<Scene>           m_ActiveScene;
+    SceneHeirarchyPannel m_SceneHierarchyPannel;
     
     Viewport& m_Viewport = Viewport::Get();
+    
+    struct PropertyFlag
+    {
+        bool IsFrameRate           = true;
+        bool IsRendererStats       = true;
+        bool IsVendorType          = true;
+        bool IsSceneHeirarchypanel = true;
+    };
+    static PropertyFlag s_PropFlag;
+
 };

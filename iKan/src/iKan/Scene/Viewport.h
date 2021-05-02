@@ -37,6 +37,9 @@ namespace iKan {
         }
         
     public:
+        // Flag for the presence of Viewport
+        bool Present = true;
+        
         // Viewport focused or hovered
         bool Focused = false, Hovered = false;
         

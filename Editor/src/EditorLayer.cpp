@@ -8,6 +8,8 @@
 
 #include "EditorLayer.h"
 
+EditorLayer::PropertyFlag EditorLayer::s_PropFlag;
+
 // ******************************************************************************
 // EditorLayer Constructor
 // ******************************************************************************
@@ -29,6 +31,9 @@ EditorLayer::EditorLayer()
     
     // Creating instance for Frame buffer in viewport
     m_Viewport.FrameBuffer = Framebuffer::Create(specs);
+    
+    // Set the current Scene to scene hierarchy pannel
+    m_SceneHierarchyPannel.SetContext(m_ActiveScene);
 
     // Creating Temp Entity
     auto ent1 = m_ActiveScene->CreateEntity();
@@ -85,21 +90,27 @@ void EditorLayer::OnImguiRender()
     ImGuiAPI::StartDcocking();
     
     ShowMenu();
-    
-    ImGuiAPI::FrameRate();
-    ImGuiAPI::RendererStats();
-    ImGuiAPI::RendererVersion();
+    RendererStats();
+
+    // Render Scene Hierarchy pannel in imgui
+    if (s_PropFlag.IsSceneHeirarchypanel)
+    {
+        m_SceneHierarchyPannel.OnImguiender(&s_PropFlag.IsSceneHeirarchypanel);
+    }
     
     // Viewport Update
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
-    ImGui::Begin("Viewport");
+    if (m_Viewport.Present)
     {
-        m_Viewport.OnUpdate();
-        m_Viewport.UpdateBounds();
-    }
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
+        ImGui::Begin("Viewport", &m_Viewport.Present);
+        {
+            m_Viewport.OnUpdate();
+            m_Viewport.UpdateBounds();
+        }
 
-    ImGui::End(); // ImGui::Begin("Viewport");
-    ImGui::PopStyleVar(); // ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
+        ImGui::End(); // ImGui::Begin("Viewport");
+        ImGui::PopStyleVar(); // ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
+    }
     
     ImGuiAPI::EndDcocking();
 }
@@ -121,12 +132,42 @@ void EditorLayer::ShowMenu()
     {
         if (ImGui::BeginMenu("File"))
         {
-            if (ImGui::MenuItem("Exit"))
+            if (ImGui::MenuItem("Exit", "Cmd + Q"))
             {
                 Application::Get().Close();
             }
             ImGui::EndMenu(); // ImGui::BeginMenu("File")
         } // if (ImGui::BeginMenuBar())
+        
+        if (ImGui::BeginMenu("View"))
+        {
+            if (ImGui::MenuItem("Scene Heirarchy Panel", NULL, EditorLayer::s_PropFlag.IsSceneHeirarchypanel))
+            {
+                EditorLayer::s_PropFlag.IsSceneHeirarchypanel = !EditorLayer::s_PropFlag.IsSceneHeirarchypanel;
+            }
+
+            if (ImGui::MenuItem("Frame Rate", NULL, EditorLayer::s_PropFlag.IsFrameRate))
+            {
+                EditorLayer::s_PropFlag.IsFrameRate = !EditorLayer::s_PropFlag.IsFrameRate;
+            }
+
+            if (ImGui::MenuItem("Render Stats", NULL, EditorLayer::s_PropFlag.IsRendererStats))
+            {
+                EditorLayer::s_PropFlag.IsRendererStats = !EditorLayer::s_PropFlag.IsRendererStats;
+            }
+
+            if (ImGui::MenuItem("Vendor Types", NULL, EditorLayer::s_PropFlag.IsVendorType))
+            {
+                EditorLayer::s_PropFlag.IsVendorType = !EditorLayer::s_PropFlag.IsVendorType;
+            }
+            
+            if (ImGui::MenuItem("Viewport", NULL, m_Viewport.Present))
+            {
+                m_Viewport.Present = !m_Viewport.Present;
+            }
+            
+            ImGui::EndMenu(); // if (ImGui::BeginMenu("View"))
+        }
         
         if (ImGui::BeginMenu("Properties"))
         {
@@ -134,5 +175,27 @@ void EditorLayer::ShowMenu()
         } // if (ImGui::BeginMenu("Properties"))
         
         ImGui::EndMenuBar(); // ImGui::BeginMenuBar()
+    }
+}
+
+// ******************************************************************************
+// Show the renderer stats
+// ******************************************************************************
+void EditorLayer::RendererStats()
+{
+    ImGui::ShowDemoWindow();
+    if (EditorLayer::s_PropFlag.IsFrameRate)
+    {
+        ImGuiAPI::FrameRate(&EditorLayer::s_PropFlag.IsFrameRate);
+    }
+
+    if (EditorLayer::s_PropFlag.IsRendererStats)
+    {
+        ImGuiAPI::RendererStats(&EditorLayer::s_PropFlag.IsRendererStats);
+    }
+    
+    if (EditorLayer::s_PropFlag.IsVendorType)
+    {
+        ImGuiAPI::RendererVersion(&EditorLayer::s_PropFlag.IsVendorType);
     }
 }

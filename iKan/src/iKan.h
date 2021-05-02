@@ -33,6 +33,7 @@
 
 // Editor files
 #include <iKan/Editor/EditorCamera.h>
+#include <iKan/Editor/SceneHierarchyPannel.h>
 
 // Scene files
 #include <iKan/Scene/Scene.h>
