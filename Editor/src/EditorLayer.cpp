@@ -52,6 +52,8 @@ void EditorLayer::OnDetach()
 // ******************************************************************************
 void EditorLayer::OnUpdate(Timestep ts)
 {
+    RendererStatistics::Reset();
+
     m_EditorCamera.OnUpdate(ts);
     
     Renderer::Clear({ 0.1f, 0.1f, 0.1f, 1.0f });

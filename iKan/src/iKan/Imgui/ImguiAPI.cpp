@@ -8,6 +8,7 @@
 
 #include "ImguiAPI.h"
 #include <iKan/Renderer/RendererAPI.h>
+#include <iKan/Renderer/RendererStats.h>
 
 namespace iKan {
     
@@ -111,37 +112,36 @@ namespace iKan {
     }
     
     // ******************************************************************************
-    // renderer Stats
+    // Renderer Stats
     // ******************************************************************************
     void ImGuiAPI::RendererStats(bool *pIsOpen)
     {
-        //------------------------ Statistics -------------------------------------------------------------
-//        ImGui::Begin("Stats", pIsOpen);
-//
-//        ImGui::PushID("Renderer");
-//
-//        ImGui::Columns(4);
-//
-//        ImGui::SetColumnWidth(0, 120);
-//        ImGui::Text("Draw Calls : %d", RendererStatistics::DrawCalls);
-//        ImGui::NextColumn();
-//
-//        ImGui::SetColumnWidth(1, 140);
-//        ImGui::Text("Vertex Counts : %d", RendererStatistics::VertexCount);
-//        ImGui::NextColumn();
-//
-//        ImGui::SetColumnWidth(2, 140);
-//        ImGui::Text("Index Counts : %d", RendererStatistics::IndexCount);
-//        ImGui::NextColumn();
-//
-//        ImGui::SetColumnWidth(3, 120);
-//        ImGui::Text("Texture Counts : %d", RendererStatistics::TextureCount);
-//
-//        ImGui::Columns(1);
-//
-//        ImGui::PopID();
-//
-//        ImGui::End();
+        ImGui::Begin("Renderer Stats", pIsOpen);
+
+        ImGui::PushID("Renderer Stats");
+
+        ImGui::Columns(4);
+
+        ImGui::SetColumnWidth(0, 120);
+        ImGui::Text("Draw Calls : %d", RendererStatistics::DrawCalls);
+        ImGui::NextColumn();
+
+        ImGui::SetColumnWidth(1, 140);
+        ImGui::Text("Vertex Counts : %d", RendererStatistics::VertexCount);
+        ImGui::NextColumn();
+
+        ImGui::SetColumnWidth(2, 140);
+        ImGui::Text("Index Counts : %d", RendererStatistics::IndexCount);
+        ImGui::NextColumn();
+
+        ImGui::SetColumnWidth(3, 120);
+        ImGui::Text("Texture Counts : %d", RendererStatistics::TextureCount);
+
+        ImGui::Columns(1);
+
+        ImGui::PopID();
+
+        ImGui::End();
     }
     
 }

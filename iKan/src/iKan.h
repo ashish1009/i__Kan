@@ -23,6 +23,7 @@
 
 // Renderer files
 #include <iKan/Renderer/Renderer.h>
+#include <iKan/Renderer/RendererStats.h>
 #include <iKan/Renderer/Buffers.h>
 #include <iKan/Renderer/VertexArray.h>
 #include <iKan/Renderer/FrameBuffer.h>

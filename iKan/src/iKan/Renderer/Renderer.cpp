@@ -8,6 +8,7 @@
 
 #include "Renderer.h"
 #include <iKan/Renderer/SceneRenderer.h>
+#include <iKan/Renderer/RendererStats.h>
 
 namespace iKan {
  
@@ -46,6 +47,7 @@ namespace iKan {
     // ******************************************************************************
     void Renderer::DrawIndexed(uint32_t count)
     {
+        RendererStatistics::DrawCalls++;
         s_RendererAPI->DrawIndexed(count);
     }
     
@@ -54,6 +56,7 @@ namespace iKan {
     // ******************************************************************************
     void Renderer::DrawIndexed(const Ref<VertexArray> &vertexArray, uint32_t count)
     {
+        RendererStatistics::DrawCalls++;
         s_RendererAPI->DrawIndexed(vertexArray, count);
     }
     

@@ -10,6 +10,7 @@
 #include <iKan/Renderer/VertexArray.h>
 #include <iKan/Renderer/Shader.h>
 #include <iKan/Renderer/Renderer.h>
+#include <iKan/Renderer/RendererStats.h>
 
 namespace iKan {
         
@@ -206,6 +207,12 @@ namespace iKan {
         // Bind textures
         for (uint32_t i = 0; i < s_Data->TextureSlotIndex; i++)
         {
+            if (i > 0)
+            {
+                // Skipping i = 0 as 0 is slot for white texture
+                RendererStatistics::TextureCount++;
+            }
+
             s_Data->TextureSlots[i]->Bind(i);
         }
         
@@ -309,6 +316,8 @@ namespace iKan {
         
         s_Data->QuadIndexCount += 6;
 
+        RendererStatistics::VertexCount += 4;
+        RendererStatistics::IndexCount += 6;
     }
     
 }
