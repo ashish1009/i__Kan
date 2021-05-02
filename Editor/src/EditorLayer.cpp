@@ -18,6 +18,8 @@ EditorLayer::EditorLayer()
 {
     IK_INFO("Editor layer created");
     
+    ImGuiAPI::SetGreyThemeColors();
+    
     m_ActiveScene = CreateRef<Scene>();
     
     // Frame buffer specifications
