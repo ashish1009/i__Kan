@@ -25,6 +25,9 @@ public:
     virtual void OnImguiRender() override;
     
 private:
+    void ShowMenu();
+    
+private:
     EditorCamera m_EditorCamera;
     Ref<Scene>   m_ActiveScene;
 };

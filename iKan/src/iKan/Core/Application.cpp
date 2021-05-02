@@ -137,6 +137,7 @@ namespace iKan {
     void Application::Close()
     {
         IK_CORE_WARN("Application::Close(), Clossing the current application");
+        m_IsRunning = false;
     }
 
 }

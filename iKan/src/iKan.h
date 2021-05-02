@@ -37,3 +37,6 @@
 #include <iKan/Scene/Scene.h>
 #include <iKan/Scene/Entity.h>
 #include <iKan/Scene/Component.h>
+
+// Imgui Files
+#include <iKan/Imgui/ImguiAPI.h>

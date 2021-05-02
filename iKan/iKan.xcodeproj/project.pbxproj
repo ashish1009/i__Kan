@@ -72,6 +72,8 @@
 		B27FE31C2629E474000FD32D /* Renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = B27FE31A2629E474000FD32D /* Renderer.h */; };
 		B28FE5BF262C87A500DC5E20 /* Input.h in Headers */ = {isa = PBXBuildFile; fileRef = B28FE5BE262C87A500DC5E20 /* Input.h */; };
 		B28FE5C3262C881700DC5E20 /* MacInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28FE5C1262C881700DC5E20 /* MacInput.cpp */; };
+		B2A1C10F263E78C200606017 /* ImguiAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2A1C10D263E78C200606017 /* ImguiAPI.cpp */; };
+		B2A1C110263E78C200606017 /* ImguiAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = B2A1C10E263E78C200606017 /* ImguiAPI.h */; };
 		B2EAB338262B20FF003D7FE6 /* Event.h in Headers */ = {isa = PBXBuildFile; fileRef = B2EAB336262B20FF003D7FE6 /* Event.h */; };
 		B2EAB33B262B2311003D7FE6 /* ApplicationEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = B2EAB33A262B2311003D7FE6 /* ApplicationEvent.h */; };
 		B2EAB33D262B23AA003D7FE6 /* KeyEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = B2EAB33C262B23AA003D7FE6 /* KeyEvent.h */; };
@@ -177,6 +179,8 @@
 		B27FE31A2629E474000FD32D /* Renderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
 		B28FE5BE262C87A500DC5E20 /* Input.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Input.h; sourceTree = "<group>"; };
 		B28FE5C1262C881700DC5E20 /* MacInput.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MacInput.cpp; sourceTree = "<group>"; };
+		B2A1C10D263E78C200606017 /* ImguiAPI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ImguiAPI.cpp; sourceTree = "<group>"; };
+		B2A1C10E263E78C200606017 /* ImguiAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImguiAPI.h; sourceTree = "<group>"; };
 		B2E1A03B263AC3CF00889B3F /* BatchRenderer2DShader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BatchRenderer2DShader.glsl; sourceTree = "<group>"; };
 		B2EAB336262B20FF003D7FE6 /* Event.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		B2EAB33A262B2311003D7FE6 /* ApplicationEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApplicationEvent.h; sourceTree = "<group>"; };
@@ -239,6 +243,8 @@
 				B24010A42634502E0051B868 /* ImguiBuild.cpp */,
 				B24010A0263450200051B868 /* ImguiLayer.cpp */,
 				B24010A1263450200051B868 /* ImguiLayer.h */,
+				B2A1C10D263E78C200606017 /* ImguiAPI.cpp */,
+				B2A1C10E263E78C200606017 /* ImguiAPI.h */,
 			);
 			path = Imgui;
 			sourceTree = "<group>";
@@ -530,6 +536,7 @@
 				B20280662625F99A00BC7F39 /* Window.h in Headers */,
 				B2EAB342262B265B003D7FE6 /* KeyCode.h in Headers */,
 				B2FE351226249ECB00AFC236 /* PrefixHeader.pch in Headers */,
+				B2A1C110263E78C200606017 /* ImguiAPI.h in Headers */,
 				B22FE6EB2638428000C1640B /* VertexArray.h in Headers */,
 				B2EAB33D262B23AA003D7FE6 /* KeyEvent.h in Headers */,
 				B249623326399A140091C915 /* Camera.h in Headers */,
@@ -651,6 +658,7 @@
 				B249623726399AA50091C915 /* EditorCamera.cpp in Sources */,
 				B22FE70C26385EE600C1640B /* FrameBuffer.cpp in Sources */,
 				B22FE70826385ECE00C1640B /* OpenGLFrameBuffer.cpp in Sources */,
+				B2A1C10F263E78C200606017 /* ImguiAPI.cpp in Sources */,
 				B2496CBA2639A8AF0091C915 /* stb_image.cpp in Sources */,
 				B249622E26397FAC0091C915 /* OpenGlRendererAPI.cpp in Sources */,
 				B22FE6F82638473500C1640B /* Texture.cpp in Sources */,

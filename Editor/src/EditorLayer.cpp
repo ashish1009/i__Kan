@@ -17,6 +17,10 @@ EditorLayer::EditorLayer()
     IK_INFO("Editor layer created");
     
     m_ActiveScene = CreateRef<Scene>();
+    
+    auto ent1 = m_ActiveScene->CreateEntity();
+    ent1.GetComponent<TransformComponent>().Translation = glm::vec3(0.5, 0.0, 0.0);
+    ent1.AddComponent<SpriteRendererComponent>(glm::vec4(1.0f));
 }
 
 // ******************************************************************************
@@ -60,7 +64,15 @@ void EditorLayer::OnUpdate(Timestep ts)
 // ******************************************************************************
 void EditorLayer::OnImguiRender()
 {
+    ImGuiAPI::StartDcocking();
     
+    ShowMenu();
+    
+    ImGuiAPI::FrameRate();
+    ImGuiAPI::RendererStats();
+    ImGuiAPI::RendererVersion();
+    
+    ImGuiAPI::EndDcocking();
 }
 
 // ******************************************************************************
@@ -69,4 +81,29 @@ void EditorLayer::OnImguiRender()
 void EditorLayer::OnEvent(Event& event)
 {
     m_EditorCamera.OnEvent(event);
+}
+
+// ******************************************************************************
+// Menu for Imgui View port
+// ******************************************************************************
+void EditorLayer::ShowMenu()
+{
+    if (ImGui::BeginMenuBar())
+    {
+        if (ImGui::BeginMenu("File"))
+        {
+            if (ImGui::MenuItem("Exit"))
+            {
+                Application::Get().Close();
+            }
+            ImGui::EndMenu(); // ImGui::BeginMenu("File")
+        } // if (ImGui::BeginMenuBar())
+        
+        if (ImGui::BeginMenu("Properties"))
+        {
+            ImGui::EndMenu(); // ImGui::BeginMenu("Properties")
+        } // if (ImGui::BeginMenu("Properties"))
+        
+        ImGui::EndMenuBar(); // ImGui::BeginMenuBar()
+    }
 }
