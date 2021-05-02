@@ -36,7 +36,7 @@ EditorLayer::EditorLayer()
     m_SceneHierarchyPannel.SetContext(m_ActiveScene);
 
     // Creating Temp Entity
-    auto ent1 = m_ActiveScene->CreateEntity();
+    auto ent1 = m_ActiveScene->CreateEntity("Entity");
     ent1.GetComponent<TransformComponent>().Translation = glm::vec3(0.5, 0.0, 0.0);
     ent1.AddComponent<SpriteRendererComponent>(glm::vec4(1.0f));
 }

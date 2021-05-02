@@ -16,6 +16,7 @@
 namespace iKan {
     
     class Entity;
+    class SceneHeirarchyPannel;
     class Scene
     {
     public:
@@ -35,6 +36,7 @@ namespace iKan {
         std::unordered_map<UUID, Entity> m_EntityIDMap;
         
         friend class Entity;
+        friend class SceneHeirarchyPannel;
     };
     
 }

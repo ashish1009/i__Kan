@@ -24,16 +24,17 @@ namespace iKan {
         void SetContext(const Ref<Scene>& scene);
         void OnImguiender(bool* pIsOpen = nullptr);
 
-        void SetSelectedEntity(Entity entity) { m_SelectionContext = entity; }
-        Entity GetSelectedEntity() const { return m_SelectionContext; }
+        void SetSelectedEntity(Entity entity) { m_SelectedEntity = entity; }
+        Entity GetSelectedEntity() const { return m_SelectedEntity; }
         
     private:
         void DrawEntityNode(Entity entity);
         void DrawComponents(Entity entity);
+        void AddComponent();
 
     private:
         Ref<Scene> m_Context;
-        Entity m_SelectionContext;
+        Entity     m_SelectedEntity;
     };
     
 }

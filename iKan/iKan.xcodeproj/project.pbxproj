@@ -80,12 +80,14 @@
 		B2A1C11A263E87DD00606017 /* Viewport.h in Headers */ = {isa = PBXBuildFile; fileRef = B2A1C118263E87DD00606017 /* Viewport.h */; };
 		B2A1C11D263EAE6800606017 /* SceneHierarchyPannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2A1C11B263EAE6800606017 /* SceneHierarchyPannel.cpp */; };
 		B2A1C11E263EAE6800606017 /* SceneHierarchyPannel.h in Headers */ = {isa = PBXBuildFile; fileRef = B2A1C11C263EAE6800606017 /* SceneHierarchyPannel.h */; };
+		B2A1C120263EE4CA00606017 /* ScenePropertyGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = B2A1C11F263EE4CA00606017 /* ScenePropertyGrid.h */; };
 		B2EAB338262B20FF003D7FE6 /* Event.h in Headers */ = {isa = PBXBuildFile; fileRef = B2EAB336262B20FF003D7FE6 /* Event.h */; };
 		B2EAB33B262B2311003D7FE6 /* ApplicationEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = B2EAB33A262B2311003D7FE6 /* ApplicationEvent.h */; };
 		B2EAB33D262B23AA003D7FE6 /* KeyEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = B2EAB33C262B23AA003D7FE6 /* KeyEvent.h */; };
 		B2EAB33F262B23F2003D7FE6 /* MouseEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = B2EAB33E262B23F2003D7FE6 /* MouseEvent.h */; };
 		B2EAB342262B265B003D7FE6 /* KeyCode.h in Headers */ = {isa = PBXBuildFile; fileRef = B2EAB340262B265B003D7FE6 /* KeyCode.h */; };
 		B2EAB343262B265B003D7FE6 /* MouseCode.h in Headers */ = {isa = PBXBuildFile; fileRef = B2EAB341262B265B003D7FE6 /* MouseCode.h */; };
+		B2F0CBC5263EEDC100A289AA /* ScenePropertyGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F0CBC4263EEDC100A289AA /* ScenePropertyGrid.cpp */; };
 		B2FE351026248C7700AFC236 /* iKan.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FE350F26248C7700AFC236 /* iKan.h */; };
 		B2FE351226249ECB00AFC236 /* PrefixHeader.pch in Headers */ = {isa = PBXBuildFile; fileRef = B2FE351126249ECB00AFC236 /* PrefixHeader.pch */; };
 		B2FE35152624B34000AFC236 /* Entrypoint.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FE35142624B34000AFC236 /* Entrypoint.h */; };
@@ -191,8 +193,9 @@
 		B2A1C114263E82E700606017 /* RendererStats.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RendererStats.h; sourceTree = "<group>"; };
 		B2A1C117263E87DD00606017 /* Viewport.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Viewport.cpp; sourceTree = "<group>"; };
 		B2A1C118263E87DD00606017 /* Viewport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Viewport.h; sourceTree = "<group>"; };
-		B2A1C11B263EAE6800606017 /* SceneHierarchyPannel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneHierarchyPannel.cpp; sourceTree = "<group>"; };
+		B2A1C11B263EAE6800606017 /* SceneHierarchyPannel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneHierarchyPannel.cpp; sourceTree = "<group>"; wrapsLines = 0; };
 		B2A1C11C263EAE6800606017 /* SceneHierarchyPannel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneHierarchyPannel.h; sourceTree = "<group>"; };
+		B2A1C11F263EE4CA00606017 /* ScenePropertyGrid.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScenePropertyGrid.h; sourceTree = "<group>"; };
 		B2E1A03B263AC3CF00889B3F /* BatchRenderer2DShader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BatchRenderer2DShader.glsl; sourceTree = "<group>"; };
 		B2EAB336262B20FF003D7FE6 /* Event.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		B2EAB33A262B2311003D7FE6 /* ApplicationEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApplicationEvent.h; sourceTree = "<group>"; };
@@ -200,6 +203,7 @@
 		B2EAB33E262B23F2003D7FE6 /* MouseEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MouseEvent.h; sourceTree = "<group>"; };
 		B2EAB340262B265B003D7FE6 /* KeyCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyCode.h; sourceTree = "<group>"; };
 		B2EAB341262B265B003D7FE6 /* MouseCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseCode.h; sourceTree = "<group>"; };
+		B2F0CBC4263EEDC100A289AA /* ScenePropertyGrid.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ScenePropertyGrid.cpp; sourceTree = "<group>"; };
 		B2FE34F426248A4500AFC236 /* libiKan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiKan.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2FE350F26248C7700AFC236 /* iKan.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iKan.h; sourceTree = "<group>"; };
 		B2FE351126249ECB00AFC236 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -264,11 +268,13 @@
 		B24010A62634551B0051B868 /* Editor */ = {
 			isa = PBXGroup;
 			children = (
+				B24010A72634551B0051B868 /* Fonts */,
 				B249623526399AA50091C915 /* EditorCamera.cpp */,
 				B249623426399AA40091C915 /* EditorCamera.h */,
-				B24010A72634551B0051B868 /* Fonts */,
 				B2A1C11B263EAE6800606017 /* SceneHierarchyPannel.cpp */,
 				B2A1C11C263EAE6800606017 /* SceneHierarchyPannel.h */,
+				B2A1C11F263EE4CA00606017 /* ScenePropertyGrid.h */,
+				B2F0CBC4263EEDC100A289AA /* ScenePropertyGrid.cpp */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -541,6 +547,7 @@
 				B22FE70D26385EE600C1640B /* FrameBuffer.h in Headers */,
 				B28FE5BF262C87A500DC5E20 /* Input.h in Headers */,
 				B2496F142639AA690091C915 /* SceneRenderer.h in Headers */,
+				B2A1C120263EE4CA00606017 /* ScenePropertyGrid.h in Headers */,
 				B27FE3182629E1D2000FD32D /* GraphicsContext.h in Headers */,
 				B2FE351D2624B67B00AFC236 /* Application.h in Headers */,
 				B22FE6FD2638482400C1640B /* OpenGLTexture.h in Headers */,
@@ -674,6 +681,7 @@
 				B27FE31B2629E474000FD32D /* Renderer.cpp in Sources */,
 				B22FE70526385C8A00C1640B /* OpenGLShader.cpp in Sources */,
 				B2A1C115263E82E700606017 /* RendererStats.cpp in Sources */,
+				B2F0CBC5263EEDC100A289AA /* ScenePropertyGrid.cpp in Sources */,
 				B22FE6EA2638428000C1640B /* VertexArray.cpp in Sources */,
 				B2FE351C2624B67B00AFC236 /* Application.cpp in Sources */,
 				B27FE3172629E1D2000FD32D /* GraphicsContext.cpp in Sources */,

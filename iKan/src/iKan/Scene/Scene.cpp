@@ -39,6 +39,7 @@ namespace iKan {
         entity.AddComponent<IDComponent>(uuid);
         entity.AddComponent<TagComponent>(name);
         entity.AddComponent<TransformComponent>();
+        entity.AddComponent<SceneHierarchyPannelProp>(true);
 
         IK_CORE_ASSERT((m_EntityIDMap.find(uuid) == m_EntityIDMap.end()), "Entity Already Added");
         m_EntityIDMap[uuid] = entity;

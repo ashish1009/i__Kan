@@ -130,4 +130,25 @@ namespace iKan {
         }
     };
     
+    // ******************************************************************************
+    // Stores a flag to check if we want to show this entity on Scene Hierarchy
+    // Pannel
+    // ******************************************************************************
+    struct SceneHierarchyPannelProp
+    {
+        bool IsProp = true;
+
+        ~SceneHierarchyPannelProp() = default;
+
+        SceneHierarchyPannelProp() = default;
+        SceneHierarchyPannelProp(const SceneHierarchyPannelProp& other) = default;
+        
+        SceneHierarchyPannelProp(bool flag)
+        : IsProp(flag)
+        {
+            
+        }
+    };
+
+    
 }
