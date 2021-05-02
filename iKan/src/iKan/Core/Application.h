@@ -70,6 +70,7 @@ namespace iKan {
         void PopOverlay(Ref<Layer> overlay) { m_Layerstack.PopOverlay(overlay); };
         
         bool OnWindowClose(WindowCloseEvent& event);
+        bool OnWindowResize(WindowResizeEvent& event);
         
     private:
         // ******************************************************************************

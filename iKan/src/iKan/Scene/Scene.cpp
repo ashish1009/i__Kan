@@ -84,4 +84,23 @@ namespace iKan {
         SceneRenderer::EndScene();
     }
     
+    // ******************************************************************************
+    // Resize scene view port
+    // ******************************************************************************
+    void Scene::OnViewportResize(uint32_t width, uint32_t height)
+    {
+        IK_CORE_INFO("Scene Viewport resized to {0} x {1}", width, height);
+        m_ViewportWidth  = width;
+        m_ViewportHeight = height;
+        
+        // Resize our non-FixedAspectRatio cameras
+        auto view = m_Registry.view<CameraComponent>();
+        for (auto entity : view)
+        {
+            auto& cameraComponent = view.get<CameraComponent>(entity);
+            if (!cameraComponent.FixedAspectRatio)
+                cameraComponent.Camera.SetViewportSize(width, height);
+        }
+    }
+    
 }

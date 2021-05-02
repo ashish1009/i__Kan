@@ -17,9 +17,7 @@ EditorLayer::EditorLayer()
 : Layer("Editor"), m_EditorCamera(glm::radians(45.0f), 1800.0f/800.0f, 0.01f, 10000.0f)
 {
     IK_INFO("Editor layer created");
-    
-    ImGuiAPI::SetGreyThemeColors();
-    
+        
     m_ActiveScene = CreateRef<Scene>();
     
     // Frame buffer specifications
@@ -72,6 +70,16 @@ void EditorLayer::OnDetach()
 // ******************************************************************************
 void EditorLayer::OnUpdate(Timestep ts)
 {
+    // If resize the window call the update the Scene View port and Frame buffer should be resized
+    if (Framebuffer::Specification spec = m_Viewport.FrameBuffer->GetSpecification();
+        m_Viewport.Size.x > 0.0f && m_Viewport.Size.y > 0.0f && // zero sized framebuffer is invalid
+        (spec.Width != m_Viewport.Size.x || spec.Height != m_Viewport.Size.y))
+    {
+        m_Viewport.FrameBuffer->Resize((uint32_t)m_Viewport.Size.x, (uint32_t)m_Viewport.Size.y);
+        m_ActiveScene->OnViewportResize((uint32_t)m_Viewport.Size.x, (uint32_t)m_Viewport.Size.y);
+        m_EditorCamera.SetViewportSize((uint32_t)m_Viewport.Size.x, (uint32_t)m_Viewport.Size.y);
+    }
+
     RendererStatistics::Reset();
     m_EditorCamera.OnUpdate(ts);
     

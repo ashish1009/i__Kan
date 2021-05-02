@@ -7,6 +7,7 @@
 // ******************************************************************************
 
 #include "Application.h"
+#include <iKan/Imgui/ImguiAPI.h>
 #include <GLFW/glfw3.h>
 
 namespace iKan {
@@ -55,6 +56,8 @@ namespace iKan {
         m_ImguiLayer = CreateRef<ImguiLayer>();
         PushOverlay(m_ImguiLayer);
 
+        ImGuiAPI::SetGreyThemeColors();
+
         // Initialising the renderers
         Renderer::Init();
     }
@@ -96,7 +99,8 @@ namespace iKan {
     {
         EventDispatcher dispather(event);
         dispather.Dispatch<WindowCloseEvent>(IK_BIND_EVENT_FN(Application::OnWindowClose));
-        
+        dispather.Dispatch<WindowResizeEvent>(IK_BIND_EVENT_FN(Application::OnWindowResize));
+
         // Events handling for all layers
         for (auto it = m_Layerstack.rbegin(); it != m_Layerstack.rend(); it++)
         {
@@ -112,6 +116,17 @@ namespace iKan {
         IK_CORE_WARN("Application is closing");
         
         m_IsRunning = false;
+        return false;
+    }
+    
+    // ******************************************************************************
+    // Application window resize
+    // ******************************************************************************
+    bool Application::OnWindowResize(WindowResizeEvent& event)
+    {
+        IK_CORE_INFO("Window is resized to {0} x {1}", event.GetWidth(), event.GetHeight());
+
+        Renderer::SetViewport(event.GetWidth(),  event.GetHeight());
         return false;
     }
 

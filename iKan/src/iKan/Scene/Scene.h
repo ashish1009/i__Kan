@@ -27,6 +27,7 @@ namespace iKan {
         void DestroyEntity(Entity entity);
         
         void OnUpdateEditor(Timestep ts, EditorCamera& camera);
+        void OnViewportResize(uint32_t width, uint32_t height);
         
     private:
         // Container that contain all the entities
@@ -34,6 +35,8 @@ namespace iKan {
         
         // Store the map of Entityes present in the Scene with their UUID
         std::unordered_map<UUID, Entity> m_EntityIDMap;
+        
+        uint32_t m_ViewportWidth = 1280.0f, m_ViewportHeight = 720.0f;
         
         friend class Entity;
         friend class SceneHeirarchyPannel;
