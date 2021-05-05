@@ -1,9 +1,10 @@
 // ******************************************************************************
 // File         : ImguiLayer.h
-// Project      : iKan : Core
 // Description  : Implementation of Imgui Layer
+// Project      : iKan : Core
 //
-// Created on   : 24/04/21.
+// Created by Ashish on 24/04/21.
+// Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
 #pragma once

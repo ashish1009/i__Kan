@@ -1,9 +1,10 @@
 // ******************************************************************************
 // File         : Component.h
-// Project      : iKan : Scene
 // Description  : Structures of various components
+// Project      : iKan : Scene
 //
-// Created on   : 29/04/21.
+// Created by Ashish on 29/04/21.
+// Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
 #pragma once

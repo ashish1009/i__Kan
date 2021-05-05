@@ -1,9 +1,10 @@
 // ******************************************************************************
 // File         : SceneRenderer.h
-// Project      : iKan : Renderer
 // Description  : API Wrapper for rendering at Client
+// Project      : iKan : Renderer
 //
-// Created on   : 28/04/21.
+// Created by Ashish on 28/04/21.
+// Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
 #pragma once

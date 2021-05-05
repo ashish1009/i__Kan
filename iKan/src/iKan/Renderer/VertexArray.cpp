@@ -1,9 +1,10 @@
 // ******************************************************************************
 // File         : VertexArray.cpp
-// Project      : iKan : Renderer
 // Description  : Creating Instance of vertex Array
+// Project      : iKan : Renderer
 //
-// Created on   : 27/04/21.
+// Created by Ashish on 27/04/21.
+// Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
 #include "VertexArray.h"

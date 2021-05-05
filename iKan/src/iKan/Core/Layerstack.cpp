@@ -4,7 +4,8 @@
 //                a stack
 // Project      : iKan : Core
 //
-// Created on   : 13/04/21.
+// Created by Ashish on 13/04/21.
+// Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
 #include "Layerstack.h"

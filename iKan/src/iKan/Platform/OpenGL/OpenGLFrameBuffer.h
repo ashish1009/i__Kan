@@ -1,9 +1,10 @@
 // ******************************************************************************
 // File         : OpenGLFramebuffer.h
-// Project      : iKan : Platform
 // Description  : Implementation of Open GL Frame buffer
+// Project      : iKan : Platform
 //
-// Created on   : 27/04/21.
+// Created by Ashish on 27/04/21.
+// Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
 #pragma once

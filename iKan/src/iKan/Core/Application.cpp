@@ -3,7 +3,8 @@
 // Description  : Implentation of Core Application functionality
 // Project      : iKan : Core
 //
-// Created on   : 12/04/21.
+// Created by Ashish on 12/04/21.
+// Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
 #include "Application.h"

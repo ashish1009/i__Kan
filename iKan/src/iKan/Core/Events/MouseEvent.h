@@ -1,9 +1,10 @@
 // ******************************************************************************
 // File         : MouseEvent.h
 // Description  : Mouse Events to handle Mouse movements and button
-// Projectt     : iKan : Core
+// Projectt     : iKan : Core : Event
 //
-// Created on   : 17/04/21.
+// Created by Ashish on 17/04/21.
+// Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
 #pragma once

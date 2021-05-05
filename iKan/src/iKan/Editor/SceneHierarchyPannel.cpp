@@ -1,9 +1,10 @@
 // ******************************************************************************
 // File         : SceneHierarchyPannel.cpp
-// Project      : iKan
 // Description  : Class for having property pannel of each entity
+// Project      : iKan : Editor
 //
-// Created      : on 02/05/21.
+// Created by Ashish on 02/05/21.
+// Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
 #include "SceneHierarchyPannel.h"

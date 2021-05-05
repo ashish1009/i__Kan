@@ -1,9 +1,10 @@
 // ******************************************************************************
-// File         : main.cpp
+// File         : MarioApp.cpp
 // Project      : Mario
 // Descripyion  : Client side Application
 //
-// Created on   : 05/05/21.
+// Created by Ashish on 05/05/21.
+// Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
 #include <iKan.h>

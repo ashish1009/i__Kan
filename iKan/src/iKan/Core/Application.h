@@ -3,7 +3,8 @@
 // Description  : Core application class to store all the functionality of Engine
 // Project      : iKan : Core
 //
-//  Created on  : 12/04/21.
+// Created by Ashish on 12/04/21.
+// Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
 #pragma once

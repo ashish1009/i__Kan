@@ -12,6 +12,7 @@
 		758155022642D1FF0062AE00 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 758155012642D1FF0062AE00 /* Cocoa.framework */; };
 		758155042642D2070062AE00 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 758155032642D2070062AE00 /* IOKit.framework */; };
 		758155062642D20D0062AE00 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 758155052642D20C0062AE00 /* OpenGL.framework */; };
+		758155092642D9AC0062AE00 /* MarioLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 758155072642D9AC0062AE00 /* MarioLayer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,6 +34,8 @@
 		758155012642D1FF0062AE00 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		758155032642D2070062AE00 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		758155052642D20C0062AE00 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		758155072642D9AC0062AE00 /* MarioLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MarioLayer.cpp; sourceTree = "<group>"; };
+		758155082642D9AC0062AE00 /* MarioLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MarioLayer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +74,8 @@
 			isa = PBXGroup;
 			children = (
 				758154F72642D16B0062AE00 /* MarioApp.cpp */,
+				758155072642D9AC0062AE00 /* MarioLayer.cpp */,
+				758155082642D9AC0062AE00 /* MarioLayer.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -144,6 +149,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				758155092642D9AC0062AE00 /* MarioLayer.cpp in Sources */,
 				758154F82642D16B0062AE00 /* MarioApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

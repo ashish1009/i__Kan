@@ -1,9 +1,10 @@
 // ******************************************************************************
 // File         : Buffers.cpp
-// Project      : iKan : Renderer
 // Description  : Interface for Vertex and Index Buffer class
+// Project      : iKan : Renderer
 //
-// Created on   : 26/04/21.
+// Created by Ashish on 26/04/21.
+// Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
 #include "Buffers.h"

@@ -1,9 +1,10 @@
 // ******************************************************************************
 // File         : SceneCamera.h
-// Project      : iKan : Scene
 // Description  : Class for scene camera API
+// Project      : iKan : Scene
 //
-// Created on   : 01/05/21.
+// Created by Ashish on 01/05/21.
+// Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
 #pragma once

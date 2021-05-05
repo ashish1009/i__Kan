@@ -3,7 +3,8 @@
 // Description  : Input class for handling keyboard and mouse event
 // Project      : iKan : Core
 //
-// Created on   : 18/04/21.
+// Created by Ashish on 18/04/21.
+// Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
 #pragma once

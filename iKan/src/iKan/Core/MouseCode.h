@@ -3,7 +3,8 @@
 // Description  : Mouse Code for GLFW MAC
 // Project      : i-Kan : Core
 //
-// Created on   : 17/04/21.
+// Created by Ashish on 17/04/21.
+// Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
 #pragma once

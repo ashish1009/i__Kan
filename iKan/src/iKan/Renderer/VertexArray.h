@@ -1,9 +1,10 @@
 // ******************************************************************************
 // File         : VertexArray.h
-// Project      : iKan : Renderer
 // Description  : Interface class for vertex Array
+// Project      : iKan : Renderer
 //
-// Created on   : 27/04/21.
+// Created by Ashish on 27/04/21.
+// Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
 #pragma once

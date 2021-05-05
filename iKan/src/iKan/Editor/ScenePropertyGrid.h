@@ -1,9 +1,10 @@
 // ******************************************************************************
 // File         : ScenePropertyGrid.h
-// Project      : i-Kan : Scene
 // Description  : Funcions for Imgui porperty grid
+// Project      : i-Kan : Editor
 //
-// Created on   : 02/05/21.
+// Created by Ashish on 02/05/21.
+// Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
 #pragma once

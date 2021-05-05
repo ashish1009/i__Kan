@@ -1,9 +1,10 @@
 // ******************************************************************************
 // File         : Log.cpp
 // Description  : Implementation of Log wrapper for sp log
-// Project      : iKan
+// Project      : iKan : Core
 //
-//  Created by Ashish . on 13/04/21.
+// Created by Ashish on 13/04/21.
+// Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
 #include "Log.h"

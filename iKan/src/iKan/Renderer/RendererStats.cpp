@@ -1,9 +1,10 @@
 // ******************************************************************************
 // File         : RendererStats.cpp
-// Projecte     : iKan : Renderer
 // Description  : Store the statistics for Renderer
+// Projecte     : iKan : Renderer
 //
-// Created on   : 02/05/21.
+// Created by Ashish on 02/05/21.
+// Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
 #include "RendererStats.h"

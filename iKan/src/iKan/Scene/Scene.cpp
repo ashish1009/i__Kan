@@ -1,9 +1,10 @@
 // ******************************************************************************
 // File         : Scene.cpp
-// Project      : iKan : Scene
 // Description  : Class tp store and manage Scene
+// Project      : iKan : Scene
 //
-// Created on   : 28/04/21.
+// Created by Ashish on 28/04/21.
+// Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
 #include "Scene.h"

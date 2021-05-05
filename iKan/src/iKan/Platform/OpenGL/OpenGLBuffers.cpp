@@ -1,9 +1,10 @@
 // ******************************************************************************
 // File         : OpenGLBuffers.cpp
-// Project      : iKan : Plaftform
 // Description  : Implementation of Open GL Buffer class
+// Project      : iKan : Plaftform
 //
-// Created on   : 26/04/21.
+// Created by Ashish on 26/04/21.
+// Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
 #include "OpenGLBuffers.h"

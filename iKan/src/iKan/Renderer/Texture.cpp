@@ -1,9 +1,10 @@
 // ******************************************************************************
 // File         : Texture.cpp
-// Project      : i-Kan : Renderer
 // Description  : Instance creating for Texture class
+// Project      : i-Kan : Renderer
 //
-// Created on   : 27/04/21.
+// Created by Ashish on 27/04/21.
+// Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
 #include "Texture.h"

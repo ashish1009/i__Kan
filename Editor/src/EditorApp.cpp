@@ -3,7 +3,8 @@
 // Description  : Client side Application
 // Project      : Editor
 //
-// Created on   : 12/04/21.
+// Created by Ashish on 12/04/21.
+// Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
 #include <iKan.h>

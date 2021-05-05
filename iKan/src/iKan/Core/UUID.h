@@ -1,9 +1,10 @@
 // ******************************************************************************
 // File         : UUID.h
-// Project      : iKan : Core
 // Description  : Generates the Universal unique ID integer
+// Project      : iKan : Core
 //
-// Created on   : 01/05/21.
+// Created by Ashish on 01/05/21.
+// Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
 #pragma once

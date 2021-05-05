@@ -1,9 +1,10 @@
 // ******************************************************************************
 // File         : ImguiAPI.cpp
-// Project      : iKan : Imgui
 // Description  : Contains API that would be used for Imgui interface
+// Project      : iKan : Imgui
 //
-// Created on   : 02/05/21.
+// Created by Ashish on 02/05/21.
+// Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
 #include "ImguiAPI.h"
