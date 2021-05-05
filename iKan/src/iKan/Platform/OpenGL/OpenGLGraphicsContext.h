@@ -3,7 +3,8 @@
 // Description  : Open GL Graphics context class implementation
 // Project      : iKan : Platform
 //
-// Created on   : 16/04/21.
+// Created by Ashish on 16/04/21.
+// Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
 #pragma once
