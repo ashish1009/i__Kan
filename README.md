@@ -28,7 +28,7 @@ Set the C++ version to C++17
 ### Precompiled Header file
 -----------------------------------
 Add path for Precompiled header file (Prefix Header File) 
-path `${PROJECT_DIR}/../Editor/src/PrefixHeader.pch`
+path `${PROJECT_DIR}/../iKan/src/PrefixHeader.pch`
 
 ### Library
 --------------
@@ -46,7 +46,7 @@ Add the following frameworks
 ${PROJECT_DIR}/../iKan/src
 ${PROJECT_DIR}/../iKan/vendor/spdlog/include
 ${PROJECT_DIR}/../iKan/vendor/glm
-${PROJECT_DIR}/../iKan/vendor/imgui/src
+${PROJECT_DIR}/../iKan/vendor/imgui/Imgui
 ${PROJECT_DIR}/../iKan/vendor/EnTT/include
 
 ### Preprocessors
