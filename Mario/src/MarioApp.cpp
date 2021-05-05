@@ -10,6 +10,8 @@
 #include <iKan.h>
 #include <iKan/Entrypoint.h>
 
+#include "MarioLayer.h"
+
 // ******************************************************************************
 // Mario Applicaiton. This will derive the ikan Application. Here different
 // layers can be pushed in which rendering can be performed for Mario Game
@@ -24,6 +26,8 @@ public:
     : iKan::Application(props)
     {
         IK_INFO("Constructing Mario Application");
+        iKan::Ref<MarioLayer> marioLayer = iKan::CreateRef<MarioLayer>();
+        PushLayer(marioLayer);
     }
     
     // ******************************************************************************
