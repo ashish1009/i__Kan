@@ -25,7 +25,7 @@ MarioLayer::MarioLayer()
     Framebuffer::Specification specs;
     specs.Attachments = { Framebuffer::TextureSpecification::TextureFormat::RGBA8,
                           Framebuffer::TextureSpecification::TextureFormat::DEPTH24STENCIL8,
-                          Framebuffer::TextureSpecification::TextureFormat::R32I};
+                          Framebuffer::TextureSpecification::TextureFormat::R32I };
 
     specs.Width  = Window::Property::DefaultWidth;
     specs.Height = Window::Property::DefaultHeight;

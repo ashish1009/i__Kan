@@ -24,10 +24,10 @@ namespace iKan {
         std::vector<spdlog::sink_ptr> logSinks;
         logSinks.emplace_back(CreateRef<spdlog::sinks::stdout_color_sink_mt>());
         logSinks.emplace_back(CreateRef<spdlog::sinks::basic_file_sink_mt>("../../../Logs/iKan.log", true));
-        
-        logSinks[0]->set_pattern("%^[%T] [%-8l] [%-4n] : %v%$");
-        logSinks[1]->set_pattern("[%T] [%-8l] [%-4n] : %v");
-        
+
+        logSinks[0]->set_pattern("[%T:%e:%f] [%-8l] [%-4n] : %v");
+        logSinks[1]->set_pattern("[%T:%e:%f] [%-8l] [%-4n] : %v");
+
         s_CoreLogger = CreateRef<spdlog::logger>("iKAN", begin(logSinks), end(logSinks));
         spdlog::register_logger(s_CoreLogger);
         

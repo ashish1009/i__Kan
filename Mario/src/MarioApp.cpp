@@ -44,7 +44,7 @@ public:
 // ******************************************************************************
 iKan::Scope<iKan::Application> iKan::CreateApplication()
 {
-    auto appProp  = iKan::Application::Property("iKan Mario", 800, 450, RendererAPI::API::OpenGL );
+    auto appProp  = iKan::Application::Property("iKan Mario", 1360, 765, RendererAPI::API::OpenGL );
     auto marioApp = iKan::CreateScope<MarioApp>(appProp);
     return marioApp;
 }
