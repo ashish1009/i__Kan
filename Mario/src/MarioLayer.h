@@ -45,6 +45,7 @@ private:
         bool IsRendererStats       = true;
         bool IsVendorType          = true;
         bool IsSceneHeirarchypanel = true;
+        bool IsSettings            = true;
     };
     static PropertyFlag s_PropFlag;
 

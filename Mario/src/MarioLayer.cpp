@@ -8,6 +8,7 @@
 // ******************************************************************************
 
 #include "MarioLayer.h"
+#include "Background.h"
 
 MarioLayer::PropertyFlag MarioLayer::s_PropFlag;
 
@@ -81,7 +82,7 @@ void MarioLayer::OnUpdate(Timestep ts)
 
     m_Viewport.FrameBuffer->Bind();
     {
-        Renderer::Clear({ 0.1f, 0.1f, 0.1f, 1.0f });
+        Renderer::Clear(Mario::Background::s_BgColor);
         m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
         m_Viewport.UpdateMousePos();
     }
@@ -128,6 +129,14 @@ void MarioLayer::OnImguiRender()
     if (m_EditorCamera.IsImguiPannel)
     {
         m_EditorCamera.OnImguiRenderer();
+    }
+
+    // Show mario Setting in Imgui
+    if (MarioLayer::s_PropFlag.IsSettings)
+    {
+        ImGui::Begin("Setting", &MarioLayer::s_PropFlag.IsSettings);
+        Mario::Background::ImGuiRenderer();
+        ImGui::End();
     }
 
     ImGuiAPI::EndDcocking();
@@ -177,6 +186,11 @@ void MarioLayer::ShowMenu()
             if (ImGui::MenuItem("Vendor Types", nullptr, s_PropFlag.IsVendorType))
             {
                 s_PropFlag.IsVendorType = !s_PropFlag.IsVendorType;
+            }
+
+            if (ImGui::MenuItem("Mario Settings", nullptr, s_PropFlag.IsSettings))
+            {
+                s_PropFlag.IsSettings = !s_PropFlag.IsSettings;
             }
 
             if (ImGui::MenuItem("Editor Camera Imgui Pannel", nullptr, m_EditorCamera.IsImguiPannel))

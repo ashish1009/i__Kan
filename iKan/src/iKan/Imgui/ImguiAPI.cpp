@@ -144,6 +144,39 @@ namespace iKan {
 
         ImGui::End();
     }
+
+    // ******************************************************************************
+    // Color Edit
+    // ******************************************************************************
+    void ImGuiAPI::ColorEdit(glm::vec4& colorRef)
+    {
+        static ImVec4 color         = ImVec4(colorRef.r, colorRef.g, colorRef.b, colorRef.a);
+        static ImVec4 refColorValue = color;
+
+        static bool alphaPreview = true, alphaHalfPreview = true;
+        ImGui::Checkbox("Alpha", &alphaPreview);  ImGui::SameLine(); ImGui::Checkbox("Half Alpha", &alphaHalfPreview);
+        ImGuiColorEditFlags miscFlags = ImGuiColorEditFlags_PickerHueWheel | (alphaHalfPreview ? ImGuiColorEditFlags_AlphaPreviewHalf : (alphaPreview ? ImGuiColorEditFlags_AlphaPreview : 0));
+        if (alphaPreview || alphaHalfPreview) miscFlags |= ImGuiColorEditFlags_AlphaBar; else miscFlags |= ImGuiColorEditFlags_NoAlpha;
+
+        static bool sidePreview = true, refColor = false;
+        ImGui::Checkbox("Side Preview", &sidePreview);
+        if (sidePreview)
+        {
+            ImGui::SameLine();
+            ImGui::Checkbox("Ref Color", &refColor);
+            if (refColor)
+            {
+                ImGui::SameLine();
+                ImGui::ColorEdit4("##RefColor", &refColorValue.x, ImGuiColorEditFlags_NoInputs | miscFlags);
+            }
+        }
+        if (!sidePreview)
+            miscFlags |= ImGuiColorEditFlags_NoSidePreview;
+
+        ImGui::ColorPicker4("Back Ground##4", (float*)&color, miscFlags, refColor ? &refColorValue.x : NULL);
+
+        colorRef = { color.x, color.y, color.z, color.w };
+    }
     
     // ******************************************************************************
     // Grey theme

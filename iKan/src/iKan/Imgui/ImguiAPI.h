@@ -20,6 +20,8 @@ namespace iKan {
         static void RendererVersion(bool *pIsOpen = nullptr);
         static void FrameRate(bool *pIsOpen = nullptr);
         static void RendererStats(bool *pIsOpen = nullptr);
+
+        static void ColorEdit(glm::vec4& colorRef);
         
         static void SetGreyThemeColors();
     };

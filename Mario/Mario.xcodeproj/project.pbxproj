@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		755FC0592645A36100F670FA /* Background.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 755FC0572645A36100F670FA /* Background.cpp */; };
 		758154F82642D16B0062AE00 /* MarioApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 758154F72642D16B0062AE00 /* MarioApp.cpp */; };
 		758155002642D1FB0062AE00 /* libiKan.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 758154FF2642D1FB0062AE00 /* libiKan.a */; };
 		758155022642D1FF0062AE00 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 758155012642D1FF0062AE00 /* Cocoa.framework */; };
@@ -28,6 +29,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		755FC0572645A36100F670FA /* Background.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Background.cpp; sourceTree = "<group>"; };
+		755FC0582645A36100F670FA /* Background.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Background.h; sourceTree = "<group>"; };
 		758154F42642D16B0062AE00 /* Mario */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Mario; sourceTree = BUILT_PRODUCTS_DIR; };
 		758154F72642D16B0062AE00 /* MarioApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MarioApp.cpp; sourceTree = "<group>"; };
 		758154FF2642D1FB0062AE00 /* libiKan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libiKan.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -76,6 +79,8 @@
 				758154F72642D16B0062AE00 /* MarioApp.cpp */,
 				758155072642D9AC0062AE00 /* MarioLayer.cpp */,
 				758155082642D9AC0062AE00 /* MarioLayer.h */,
+				755FC0572645A36100F670FA /* Background.cpp */,
+				755FC0582645A36100F670FA /* Background.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -149,6 +154,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				755FC0592645A36100F670FA /* Background.cpp in Sources */,
 				758155092642D9AC0062AE00 /* MarioLayer.cpp in Sources */,
 				758154F82642D16B0062AE00 /* MarioApp.cpp in Sources */,
 			);
