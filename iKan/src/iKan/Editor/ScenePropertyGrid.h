@@ -21,9 +21,9 @@ namespace iKan {
     public:
         static bool String(const char* label, std::string& value, bool modifiable = true, bool error = false);
 
-        static bool Float(const char* label, float& value, bool* flag, float delta = 0.1f, float resetValue = 0.0f, float columnWidth = 100.0f);
-        static bool Float2(const char* label, glm::vec2& value, bool* flag, float delta = 0.1f, float resetValue = 0.0f, float columnWidth = 100.0f);
-        static bool Float3(const char* label, glm::vec3& value, bool* flag, float delta = 0.1f, float resetValue = 0.0f, float columnWidth = 100.0f );
+        static bool Float(const char* label, float& value, bool* checkboxFlag, float delta = 0.1f, float resetValue = 0.0f, float columnWidth = 100.0f);
+        static bool Float2(const char* label, glm::vec2& value, bool* checkboxFlag, float delta = 0.1f, float resetValue = 0.0f, float columnWidth = 100.0f);
+        static bool Float3(const char* label, glm::vec3& value, bool* checkboxFlag, float delta = 0.1f, float resetValue = 0.0f, float columnWidth = 100.0f );
 
         static bool CheckBox(const char* label, bool& value);
         

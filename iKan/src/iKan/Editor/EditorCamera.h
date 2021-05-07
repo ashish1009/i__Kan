@@ -50,6 +50,8 @@ namespace iKan {
         
         float GetPitch() const { return m_Pitch; }
         float GetYaw() const { return m_Yaw; }
+
+        void OnImguiRenderer();
         
     private:
         void UpdateProjectionMatrix() { m_Projection = glm::perspective(m_PerspectiveFOV, m_AspectRatio, m_PerspectiveNear, m_PerspectiveFar); } 
@@ -66,6 +68,9 @@ namespace iKan {
         std::pair<float, float> PanSpeed() const;
         float RotationSpeed() const;
         float ZoomSpeed() const;
+
+    public:
+        bool IsImguiPannel = true;
 
     private:
         float m_PerspectiveFOV  = glm::radians(45.0f);

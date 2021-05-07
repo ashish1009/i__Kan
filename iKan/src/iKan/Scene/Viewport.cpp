@@ -90,11 +90,11 @@ namespace iKan {
 
         ImGui::Columns(2);
 
-        ImGui::SetColumnWidth(0, 120);
+        ImGui::SetColumnWidth(0, 130);
         ImGui::Text("Width x Height ");
         ImGui::NextColumn();
 
-        ImGui::SetColumnWidth(1, 120);
+        ImGui::SetColumnWidth(1, 130);
         ImGui::Text("%d x %d", (int32_t)Width,  (int32_t)Height);
         ImGui::NextColumn();
 

@@ -124,6 +124,12 @@ void MarioLayer::OnImguiRender()
         m_Viewport.OnImguiRenderer();
     }
 
+    // Editor Camera Imgui Renderer
+    if (m_EditorCamera.IsImguiPannel)
+    {
+        m_EditorCamera.OnImguiRenderer();
+    }
+
     ImGuiAPI::EndDcocking();
 }
 
@@ -171,6 +177,11 @@ void MarioLayer::ShowMenu()
             if (ImGui::MenuItem("Vendor Types", nullptr, s_PropFlag.IsVendorType))
             {
                 s_PropFlag.IsVendorType = !s_PropFlag.IsVendorType;
+            }
+
+            if (ImGui::MenuItem("Editor Camera Imgui Pannel", nullptr, m_EditorCamera.IsImguiPannel))
+            {
+                m_EditorCamera.IsImguiPannel = !m_EditorCamera.IsImguiPannel;
             }
 
             if (ImGui::BeginMenu("Viewport"))

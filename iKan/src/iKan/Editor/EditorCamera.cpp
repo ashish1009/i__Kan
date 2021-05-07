@@ -9,6 +9,7 @@
 
 #include "EditorCamera.h"
 #include <iKan/Core/Input.h>
+#include <iKan/Editor/ScenePropertyGrid.h>
 
 namespace iKan {
     
@@ -208,5 +209,93 @@ namespace iKan {
     {
         return glm::quat(glm::vec3(-m_Pitch, -m_Yaw, 0.0f));
     }
+
+    // ******************************************************************************
+    // Reender Viewport Imgui pannel, if flag is true then render
+    // ******************************************************************************
+    void EditorCamera::OnImguiRenderer()
+    {
+        ImGui::Begin("Editor Camera Properties", &IsImguiPannel);
+        ImGui::PushID("Editor Camera Properties");
+
+        ImGui::Columns(2);
+
+        ImGui::SetColumnWidth(0, 100);
+        ImGui::Text("Distance");
+        ImGui::NextColumn();
+
+        ImGui::SetColumnWidth(1, 100);
+        ImGui::Text("%f", m_Distance);
+        ImGui::NextColumn();
+
+        ImGui::SetColumnWidth(0, 100);
+        ImGui::Text("pitch");
+        ImGui::NextColumn();
+
+        ImGui::SetColumnWidth(1, 100);
+        ImGui::Text("%f", m_Pitch);
+        ImGui::NextColumn();
+
+        ImGui::SetColumnWidth(0, 100);
+        ImGui::Text("Yaw");
+        ImGui::NextColumn();
+
+        ImGui::SetColumnWidth(1, 100);
+        ImGui::Text("%f", m_Yaw);
+        ImGui::NextColumn();
+
+        ImGui::Separator();
+
+        ImGui::Columns(2);
+
+        ImGui::SetColumnWidth(0, 100);
+        ImGui::Text("Near, Far");
+        ImGui::NextColumn();
+
+        ImGui::SetColumnWidth(1, 100);
+        ImGui::Text("%d, %d", (int32_t)m_PerspectiveNear, (int32_t)m_PerspectiveFar);
+        ImGui::NextColumn();
+
+        ImGui::Columns(2);
+
+        ImGui::SetColumnWidth(0, 100);
+        ImGui::Text("Aspect Ratio ");
+        ImGui::NextColumn();
+
+        ImGui::SetColumnWidth(1, 100);
+        ImGui::Text("%d : %d", m_ViewportWidth, m_ViewportHeight);
+        ImGui::NextColumn();
+
+        ImGui::Columns(2);
+
+        ImGui::SetColumnWidth(0, 100);
+        ImGui::Text("Position ");
+        ImGui::NextColumn();
+
+        ImGui::SetColumnWidth(1, 100);
+        ImGui::Text("%d : %d : %d", (int32_t)m_Position.x, (int32_t)m_Position.y, (int32_t)m_Position.z);
+        ImGui::NextColumn();
+
+        ImGui::Columns(2);
+
+        ImGui::SetColumnWidth(0, 100);
+        ImGui::Text("Rotation ");
+        ImGui::NextColumn();
+
+        ImGui::SetColumnWidth(1, 100);
+        ImGui::Text("%d : %d : %d", (uint32_t)m_Rotation.x, (uint32_t)m_Rotation.y, (uint32_t)m_Rotation.z);
+        ImGui::NextColumn();
+
+        ImGui::Separator();
+
+        PropertyGrid::Float("FOV", m_PerspectiveFOV, nullptr, 1.0f);
+        PropertyGrid::Float3("Focal Point", m_FocalPoint, nullptr, 0.25);
+
+        ImGui::Columns(1);
+
+        ImGui::PopID();
+        ImGui::End();
+    }
+
 
 }
