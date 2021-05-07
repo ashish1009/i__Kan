@@ -30,6 +30,8 @@ namespace iKan {
         
         virtual const std::vector<Ref<VertexBuffer>>& GetVertexBuffers() const override { return m_VertexBuffers; }
         virtual const Ref<IndexBuffer>& GetIndexBuffer() const override { return m_IndexBuffer; }
+
+        virtual uint32_t GetRendererID() const override { return m_RendererId; }
         
     private:
         uint32_t m_RendererId;

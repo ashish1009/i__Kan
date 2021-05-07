@@ -118,6 +118,12 @@ void MarioLayer::OnImguiRender()
         ImGui::PopStyleVar(); // ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
     }
 
+    // Viewport Imgui Renderer
+    if (m_Viewport.IsImguiPannel)
+    {
+        m_Viewport.OnImguiRenderer();
+    }
+
     ImGuiAPI::EndDcocking();
 }
 
@@ -147,31 +153,39 @@ void MarioLayer::ShowMenu()
 
         if (ImGui::BeginMenu("View"))
         {
-            if (ImGui::MenuItem("Scene Heirarchy Panel", NULL, s_PropFlag.IsSceneHeirarchypanel))
+            if (ImGui::MenuItem("Scene Heirarchy Panel", nullptr, s_PropFlag.IsSceneHeirarchypanel))
             {
                 s_PropFlag.IsSceneHeirarchypanel = !s_PropFlag.IsSceneHeirarchypanel;
             }
 
-            if (ImGui::MenuItem("Frame Rate", NULL, s_PropFlag.IsFrameRate))
+            if (ImGui::MenuItem("Frame Rate", nullptr, s_PropFlag.IsFrameRate))
             {
                 s_PropFlag.IsFrameRate = !s_PropFlag.IsFrameRate;
             }
 
-            if (ImGui::MenuItem("Render Stats", NULL, s_PropFlag.IsRendererStats))
+            if (ImGui::MenuItem("Render Stats", nullptr, s_PropFlag.IsRendererStats))
             {
                 s_PropFlag.IsRendererStats = !s_PropFlag.IsRendererStats;
             }
 
-            if (ImGui::MenuItem("Vendor Types", NULL, s_PropFlag.IsVendorType))
+            if (ImGui::MenuItem("Vendor Types", nullptr, s_PropFlag.IsVendorType))
             {
                 s_PropFlag.IsVendorType = !s_PropFlag.IsVendorType;
             }
 
-            if (ImGui::MenuItem("Viewport", NULL, m_Viewport.Present))
+            if (ImGui::BeginMenu("Viewport"))
             {
-                m_Viewport.Present = !m_Viewport.Present;
-            }
+                if (ImGui::MenuItem("Present", nullptr, m_Viewport.Present))
+                {
+                    m_Viewport.Present = !m_Viewport.Present;
+                }
 
+                if (ImGui::MenuItem("Imgui", nullptr, m_Viewport.IsImguiPannel))
+                {
+                    m_Viewport.IsImguiPannel = !m_Viewport.IsImguiPannel;
+                }
+                ImGui::EndMenu();
+            }
             ImGui::EndMenu(); // if (ImGui::BeginMenu("View"))
         }
 

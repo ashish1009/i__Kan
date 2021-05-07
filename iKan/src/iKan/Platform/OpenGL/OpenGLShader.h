@@ -43,6 +43,8 @@ namespace iKan {
         virtual void SetUniformFloat3(const std::string& name, const glm::vec3& value) override;
         virtual void SetUniformFloat4(const std::string& name, const glm::vec4& value) override;
 
+        virtual uint32_t GetRendererID() const override { return m_RendererId; }
+
     private:
         void Compile();
         int32_t GetUniformLocation(const std::string& name);

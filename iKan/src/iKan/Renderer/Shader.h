@@ -38,6 +38,8 @@ namespace iKan {
         virtual void SetUniformFloat4(const std::string& name, const glm::vec4& value) = 0;
         
         virtual void AddShaderReloadedCallback(const ShaderReloadedCallback& callback) = 0;
+
+        virtual uint32_t GetRendererID() const = 0;
         
         static Ref<Shader> Create(const std::string& vertexSrc, const std::string& fragmentSrc);
         static Ref<Shader> Create(const std::string& path);

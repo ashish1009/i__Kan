@@ -79,7 +79,7 @@ namespace iKan {
     // ******************************************************************************
     void OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer)
     {
-        IK_CORE_INFO("Storing the Vertex Buffer into Vertex Array");
+        IK_CORE_INFO("Storing the Vertex Buffer with ID: {0} into Vertex Array of ID: {1}", vertexBuffer->GetRendererID(), this->GetRendererID());
 
         glBindVertexArray(m_RendererId);
         m_VertexBuffers.push_back(vertexBuffer);
@@ -152,7 +152,7 @@ namespace iKan {
     // ******************************************************************************
     void OpenGLVertexArray::SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer)
     {
-        IK_CORE_INFO("Setting up the Index Buffer into Vertex Array");
+        IK_CORE_INFO("Setting up the Index Buffer with ID: {0} into Vertex Array of ID: {1}", indexBuffer->GetRendererID(), this->GetRendererID());
 
         glBindVertexArray(m_RendererId);
         indexBuffer->Bind();

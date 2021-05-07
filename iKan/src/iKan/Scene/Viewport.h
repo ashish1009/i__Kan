@@ -30,7 +30,8 @@ namespace iKan {
         void UpdateBounds();
         void OnUpdate();
         void UpdateMousePos();
-        
+        void OnImguiRenderer();
+
         static Viewport& Get()
         {
             static Viewport viewport;
@@ -60,6 +61,9 @@ namespace iKan {
         ImVec2 CursorPos;
         
         Ref<Framebuffer> FrameBuffer;
+
+        // Flag for Imgui pannel
+        bool IsImguiPannel = true;
     };
     
 }

@@ -64,5 +64,84 @@ namespace iKan {
         MousePosY = (int32_t)my;
     }
     
-    
+    // ******************************************************************************
+    // Reender Viewport Imgui pannel, if flag is true then render
+    // ******************************************************************************
+    void Viewport::OnImguiRenderer()
+    {
+        ImGui::Begin("Viewport Properties", &IsImguiPannel);
+        ImGui::PushID("Viewport Properties");
+
+        ImGui::Columns(3);
+
+        ImGui::SetColumnWidth(0, 80);
+        ImGui::Text("Present : %d", Present);
+        ImGui::NextColumn();
+
+        ImGui::SetColumnWidth(1, 80);
+        ImGui::Text("Focused : %d", Focused);
+        ImGui::NextColumn();
+
+        ImGui::SetColumnWidth(2, 80);
+        ImGui::Text("Hovered : %d", Hovered);
+        ImGui::NextColumn();
+
+        ImGui::Separator();
+
+        ImGui::Columns(2);
+
+        ImGui::SetColumnWidth(0, 120);
+        ImGui::Text("Width x Height ");
+        ImGui::NextColumn();
+
+        ImGui::SetColumnWidth(1, 120);
+        ImGui::Text("%d x %d", (int32_t)Width,  (int32_t)Height);
+        ImGui::NextColumn();
+
+        ImGui::Columns(2);
+
+        ImGui::SetColumnWidth(0, 130);
+        ImGui::Text("Size ");
+        ImGui::NextColumn();
+
+        ImGui::SetColumnWidth(1, 130);
+        ImGui::Text("%d x %d", (int32_t)Size.x, (int32_t)Size.y);
+        ImGui::NextColumn();
+
+        ImGui::Columns(2);
+
+        ImGui::SetColumnWidth(0, 130);
+        ImGui::Text("Top Left Position ");
+        ImGui::NextColumn();
+
+        ImGui::SetColumnWidth(1, 130);
+        ImGui::Text("%d x %d", (int32_t)Bounds[0].x, (int32_t)Bounds[0].y);
+        ImGui::NextColumn();
+
+        ImGui::Columns(2);
+
+        ImGui::SetColumnWidth(0, 130);
+        ImGui::Text("Bottom Right Position ");
+        ImGui::NextColumn();
+
+        ImGui::SetColumnWidth(1, 130);
+        ImGui::Text("%d x %d", (int32_t)Bounds[1].x, (int32_t)Bounds[1].y);
+        ImGui::NextColumn();
+
+        ImGui::Columns(2);
+
+        ImGui::SetColumnWidth(0, 130);
+        ImGui::Text("Mouse Position ");
+        ImGui::NextColumn();
+
+        ImGui::SetColumnWidth(1, 130);
+        ImGui::Text("%d x %d", MousePosX, MousePosY);
+        ImGui::NextColumn();
+
+        ImGui::Columns(1);
+
+        ImGui::PopID();
+        ImGui::End();
+    }
+
 }

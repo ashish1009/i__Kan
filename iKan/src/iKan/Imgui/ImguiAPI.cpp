@@ -83,11 +83,11 @@ namespace iKan {
         
         ImGui::Columns(3);
 
-        ImGui::SetColumnWidth(0, 110);
+        ImGui::SetColumnWidth(0, 100);
         ImGui::Text("Vendor : %s", caps.Vendor.c_str());
         ImGui::NextColumn();
         
-        ImGui::SetColumnWidth(1, 220);
+        ImGui::SetColumnWidth(1, 210);
         ImGui::Text("Renderer : %s", caps.Renderer.c_str());
         ImGui::NextColumn();
 
@@ -123,15 +123,15 @@ namespace iKan {
 
         ImGui::Columns(4);
 
-        ImGui::SetColumnWidth(0, 120);
+        ImGui::SetColumnWidth(0, 100);
         ImGui::Text("Draw Calls : %d", RendererStatistics::DrawCalls);
         ImGui::NextColumn();
 
-        ImGui::SetColumnWidth(1, 140);
+        ImGui::SetColumnWidth(1, 120);
         ImGui::Text("Vertex Counts : %d", RendererStatistics::VertexCount);
         ImGui::NextColumn();
 
-        ImGui::SetColumnWidth(2, 140);
+        ImGui::SetColumnWidth(2, 120);
         ImGui::Text("Index Counts : %d", RendererStatistics::IndexCount);
         ImGui::NextColumn();
 

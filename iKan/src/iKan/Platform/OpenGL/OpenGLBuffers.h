@@ -30,6 +30,8 @@ namespace iKan {
 
         virtual void AddLayout(const BufferLayout& layout) override { m_Layout = layout; }
         virtual const BufferLayout& GetLayout() const override { return m_Layout; }
+
+        virtual uint32_t GetRendererID() const override { return m_RendererId; }
         
     private:
         uint32_t     m_RendererId;
@@ -49,6 +51,7 @@ namespace iKan {
         virtual void Unbind() const override;
         
         virtual uint32_t GetCount() const override { return m_Count; }
+        virtual uint32_t GetRendererID() const override { return m_RendererId; }
         
     private:
         uint32_t m_RendererId;

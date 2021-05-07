@@ -27,7 +27,7 @@ namespace iKan {
         // ******************************************************************************
         static void CreateTextures(uint32_t* outID, uint32_t count)
         {
-            IK_CORE_INFO("OpenGL Frame buffer texture created with count {0}", count);
+            IK_CORE_INFO("OpenGL Frame buffer texture attachment created with count {0}", count);
 
             glGenTextures(count, outID);
         }
@@ -276,7 +276,7 @@ namespace iKan {
     // ******************************************************************************
     void OpenGLFrameBuffer::Resize(uint32_t width, uint32_t height)
     {
-        IK_CORE_INFO("Resozing the Framebuffer");
+        IK_CORE_INFO("Resizing the Framebuffer");
 
         m_Specifications.Width = width;
         m_Specifications.Height = height;
