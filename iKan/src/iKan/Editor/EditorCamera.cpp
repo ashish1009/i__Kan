@@ -286,10 +286,19 @@ namespace iKan {
         ImGui::Text("%d : %d : %d", (uint32_t)m_Rotation.x, (uint32_t)m_Rotation.y, (uint32_t)m_Rotation.z);
         ImGui::NextColumn();
 
+        ImGui::Columns(2);
+
+        ImGui::SetColumnWidth(0, 100);
+        ImGui::Text("Focal Point ");
+        ImGui::NextColumn();
+
+        ImGui::SetColumnWidth(1, 100);
+        ImGui::Text("%d : %d : %d", (uint32_t)m_FocalPoint.x, (uint32_t)m_FocalPoint.y, (uint32_t)m_FocalPoint.z);
+        ImGui::NextColumn();
+
         ImGui::Separator();
 
         PropertyGrid::Float("FOV", m_PerspectiveFOV, nullptr, 1.0f);
-        PropertyGrid::Float3("Focal Point", m_FocalPoint, nullptr, 0.25);
 
         ImGui::Columns(1);
 
