@@ -24,6 +24,9 @@ namespace Mario {
         static void CreateEntities(Ref<Scene>& scene);
         static void ImGuiRenderer();
 
+    private:
+        static void Init();
+
     public:
         static glm::vec4 s_BgColor;
     };

@@ -31,6 +31,42 @@
 /* Begin PBXFileReference section */
 		755FC0572645A36100F670FA /* Background.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Background.cpp; sourceTree = "<group>"; };
 		755FC0582645A36100F670FA /* Background.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Background.h; sourceTree = "<group>"; };
+		755FC05D2645ACC400F670FA /* main_theme.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = main_theme.ogg; sourceTree = "<group>"; };
+		755FC05E2645ACC400F670FA /* flagpole.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = flagpole.wav; sourceTree = "<group>"; };
+		755FC05F2645ACC400F670FA /* invincible.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = invincible.ogg; sourceTree = "<group>"; };
+		755FC0602645ACC400F670FA /* main_theme_sped_up.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = main_theme_sped_up.ogg; sourceTree = "<group>"; };
+		755FC0612645ACC400F670FA /* __init__.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = __init__.py; sourceTree = "<group>"; };
+		755FC0622645ACC400F670FA /* out_of_time.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = out_of_time.wav; sourceTree = "<group>"; };
+		755FC0632645ACC400F670FA /* stage_clear.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = stage_clear.wav; sourceTree = "<group>"; };
+		755FC0642645ACC400F670FA /* game_over.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = game_over.ogg; sourceTree = "<group>"; };
+		755FC0652645ACC400F670FA /* death.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = death.wav; sourceTree = "<group>"; };
+		755FC0662645ACC400F670FA /* world_clear.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = world_clear.wav; sourceTree = "<group>"; };
+		755FC0682645ACC400F670FA /* text_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = text_images.png; sourceTree = "<group>"; };
+		755FC0692645ACC400F670FA /* Enemies.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Enemies.png; sourceTree = "<group>"; };
+		755FC06A2645ACC400F670FA /* UnderGround.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UnderGround.png; sourceTree = "<group>"; };
+		755FC06B2645ACC400F670FA /* Items.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Items.png; sourceTree = "<group>"; };
+		755FC06C2645ACC400F670FA /* Tile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tile.png; sourceTree = "<group>"; };
+		755FC06E2645ACC400F670FA /* Tile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tile.png; sourceTree = "<group>"; };
+		755FC06F2645ACC400F670FA /* Bricks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Bricks.png; sourceTree = "<group>"; };
+		755FC0702645ACC400F670FA /* Level1_.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Level1_.png; sourceTree = "<group>"; };
+		755FC0712645ACC400F670FA /* StartScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = StartScreen.png; sourceTree = "<group>"; };
+		755FC0722645ACC400F670FA /* Player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Player.png; sourceTree = "<group>"; };
+		755FC0742645ACC400F670FA /* Mario.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Mario.ttf; sourceTree = "<group>"; };
+		755FC0762645ACC400F670FA /* stomp.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = stomp.ogg; sourceTree = "<group>"; };
+		755FC0772645ACC400F670FA /* bump.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = bump.ogg; sourceTree = "<group>"; };
+		755FC0782645ACC400F670FA /* powerup_appears.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = powerup_appears.ogg; sourceTree = "<group>"; };
+		755FC0792645ACC400F670FA /* one_up.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = one_up.ogg; sourceTree = "<group>"; };
+		755FC07A2645ACC400F670FA /* powerup.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = powerup.ogg; sourceTree = "<group>"; };
+		755FC07B2645ACC400F670FA /* count_down.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = count_down.ogg; sourceTree = "<group>"; };
+		755FC07C2645ACC400F670FA /* main_theme_sped_up.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = main_theme_sped_up.ogg; sourceTree = "<group>"; };
+		755FC07D2645ACC400F670FA /* __init__.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = __init__.py; sourceTree = "<group>"; };
+		755FC07E2645ACC400F670FA /* big_jump.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = big_jump.ogg; sourceTree = "<group>"; };
+		755FC07F2645ACC400F670FA /* coin.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = coin.ogg; sourceTree = "<group>"; };
+		755FC0802645ACC400F670FA /* small_jump.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = small_jump.ogg; sourceTree = "<group>"; };
+		755FC0812645ACC400F670FA /* pipe.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = pipe.ogg; sourceTree = "<group>"; };
+		755FC0822645ACC400F670FA /* fireball.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = fireball.ogg; sourceTree = "<group>"; };
+		755FC0832645ACC400F670FA /* kick.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = kick.ogg; sourceTree = "<group>"; };
+		755FC0842645ACC400F670FA /* brick_smash.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = brick_smash.ogg; sourceTree = "<group>"; };
 		758154F42642D16B0062AE00 /* Mario */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Mario; sourceTree = BUILT_PRODUCTS_DIR; };
 		758154F72642D16B0062AE00 /* MarioApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MarioApp.cpp; sourceTree = "<group>"; };
 		758154FF2642D1FB0062AE00 /* libiKan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libiKan.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,9 +92,101 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		755FC05A2645ACC400F670FA /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				755FC05B2645ACC400F670FA /* Resources */,
+			);
+			path = assets;
+			sourceTree = "<group>";
+		};
+		755FC05B2645ACC400F670FA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				755FC05C2645ACC400F670FA /* Music */,
+				755FC0672645ACC400F670FA /* Graphics */,
+				755FC0732645ACC400F670FA /* Fonts */,
+				755FC0752645ACC400F670FA /* Sound */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		755FC05C2645ACC400F670FA /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				755FC05D2645ACC400F670FA /* main_theme.ogg */,
+				755FC05E2645ACC400F670FA /* flagpole.wav */,
+				755FC05F2645ACC400F670FA /* invincible.ogg */,
+				755FC0602645ACC400F670FA /* main_theme_sped_up.ogg */,
+				755FC0612645ACC400F670FA /* __init__.py */,
+				755FC0622645ACC400F670FA /* out_of_time.wav */,
+				755FC0632645ACC400F670FA /* stage_clear.wav */,
+				755FC0642645ACC400F670FA /* game_over.ogg */,
+				755FC0652645ACC400F670FA /* death.wav */,
+				755FC0662645ACC400F670FA /* world_clear.wav */,
+			);
+			path = Music;
+			sourceTree = "<group>";
+		};
+		755FC0672645ACC400F670FA /* Graphics */ = {
+			isa = PBXGroup;
+			children = (
+				755FC0682645ACC400F670FA /* text_images.png */,
+				755FC0692645ACC400F670FA /* Enemies.png */,
+				755FC06A2645ACC400F670FA /* UnderGround.png */,
+				755FC06B2645ACC400F670FA /* Items.png */,
+				755FC06C2645ACC400F670FA /* Tile.png */,
+				755FC06D2645ACC400F670FA /* StartScreen */,
+				755FC06F2645ACC400F670FA /* Bricks.png */,
+				755FC0702645ACC400F670FA /* Level1_.png */,
+				755FC0712645ACC400F670FA /* StartScreen.png */,
+				755FC0722645ACC400F670FA /* Player.png */,
+			);
+			path = Graphics;
+			sourceTree = "<group>";
+		};
+		755FC06D2645ACC400F670FA /* StartScreen */ = {
+			isa = PBXGroup;
+			children = (
+				755FC06E2645ACC400F670FA /* Tile.png */,
+			);
+			path = StartScreen;
+			sourceTree = "<group>";
+		};
+		755FC0732645ACC400F670FA /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				755FC0742645ACC400F670FA /* Mario.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		755FC0752645ACC400F670FA /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+				755FC0762645ACC400F670FA /* stomp.ogg */,
+				755FC0772645ACC400F670FA /* bump.ogg */,
+				755FC0782645ACC400F670FA /* powerup_appears.ogg */,
+				755FC0792645ACC400F670FA /* one_up.ogg */,
+				755FC07A2645ACC400F670FA /* powerup.ogg */,
+				755FC07B2645ACC400F670FA /* count_down.ogg */,
+				755FC07C2645ACC400F670FA /* main_theme_sped_up.ogg */,
+				755FC07D2645ACC400F670FA /* __init__.py */,
+				755FC07E2645ACC400F670FA /* big_jump.ogg */,
+				755FC07F2645ACC400F670FA /* coin.ogg */,
+				755FC0802645ACC400F670FA /* small_jump.ogg */,
+				755FC0812645ACC400F670FA /* pipe.ogg */,
+				755FC0822645ACC400F670FA /* fireball.ogg */,
+				755FC0832645ACC400F670FA /* kick.ogg */,
+				755FC0842645ACC400F670FA /* brick_smash.ogg */,
+			);
+			path = Sound;
+			sourceTree = "<group>";
+		};
 		758154EB2642D16A0062AE00 = {
 			isa = PBXGroup;
 			children = (
+				755FC05A2645ACC400F670FA /* assets */,
 				758154F62642D16B0062AE00 /* src */,
 				758154F52642D16B0062AE00 /* Products */,
 				758154FE2642D1FB0062AE00 /* Frameworks */,

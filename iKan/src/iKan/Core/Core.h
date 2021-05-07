@@ -19,14 +19,14 @@
 if (!x)                                                         \
 {                                                               \
     IK_CORE_CRITICAL("Assertion Failed {0}", __VA_ARGS__);      \
-    assert(!x); \
+    assert(x); \
 }
 
 #define IK_ASSERT(x, ...)                                       \
 if (!x)                                                         \
 {                                                               \
     IK_CRITICAL("Assertion Failed {0}", __VA_ARGS__);           \
-    assert(!x); \
+    assert(x); \
 }
 
 #else

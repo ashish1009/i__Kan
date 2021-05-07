@@ -52,6 +52,8 @@ MarioLayer::~MarioLayer()
 void MarioLayer::OnAttach()
 {
     IK_INFO("Attaching {0} Layer to Application", GetName().c_str());
+
+    Mario::Background::CreateEntities(m_ActiveScene);
 }
 
 // ******************************************************************************

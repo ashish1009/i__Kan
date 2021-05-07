@@ -122,6 +122,18 @@ void EditorLayer::OnImguiRender()
         ImGui::End(); // ImGui::Begin("Viewport");
         ImGui::PopStyleVar(); // ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
     }
+
+    // Viewport Imgui Renderer
+    if (m_Viewport.IsImguiPannel)
+    {
+        m_Viewport.OnImguiRenderer();
+    }
+
+    // Editor Camera Imgui Renderer
+    if (m_EditorCamera.IsImguiPannel)
+    {
+        m_EditorCamera.OnImguiRenderer();
+    }
     
     ImGuiAPI::EndDcocking();
 }
@@ -172,11 +184,24 @@ void EditorLayer::ShowMenu()
                 EditorLayer::s_PropFlag.IsVendorType = !EditorLayer::s_PropFlag.IsVendorType;
             }
             
-            if (ImGui::MenuItem("Viewport", NULL, m_Viewport.Present))
+            if (ImGui::MenuItem("Editor Camera Imgui Pannel", nullptr, m_EditorCamera.IsImguiPannel))
             {
-                m_Viewport.Present = !m_Viewport.Present;
+                m_EditorCamera.IsImguiPannel = !m_EditorCamera.IsImguiPannel;
             }
-            
+
+            if (ImGui::BeginMenu("Viewport"))
+            {
+                if (ImGui::MenuItem("Present", nullptr, m_Viewport.Present))
+                {
+                    m_Viewport.Present = !m_Viewport.Present;
+                }
+
+                if (ImGui::MenuItem("Imgui", nullptr, m_Viewport.IsImguiPannel))
+                {
+                    m_Viewport.IsImguiPannel = !m_Viewport.IsImguiPannel;
+                }
+                ImGui::EndMenu();
+            }
             ImGui::EndMenu(); // if (ImGui::BeginMenu("View"))
         }
         
