@@ -61,6 +61,48 @@ namespace Mario {
     ;
 
     // ******************************************************************************
+    // Get entity name from Char code
+    // ******************************************************************************
+    static std::string GetEntityNameFromChar(char type)
+    {
+        switch(type)
+        {
+            case 'G' : return "Ground"; break;
+
+            case '|' : return "Castel Brick";        break;
+            case 'o' : return "Castel Gate";         break;
+            case 'u' : return "castel Gate Domb";    break;
+            case '.' : return "Castel Domb";         break;
+            case 'l' : return "Castel Windlow Left"; break;
+            case 'r' : return "Castel Window Right"; break;
+
+            case 'S' : return "Steps";     break;
+            case '-' : return "Bridge";    break;
+            case '!' : return "Pipe Base"; break;
+            case 'Y' : return "Pipe";      break;
+            case 'X' : return "Bricks";    break;
+            case 'B' : return "Bonus";     break;
+
+            case '<' : return "Grass <"; break;
+            case 'v' : return "Grass";   break;
+            case '>' : return "Grass >"; break;
+
+            case '(' : return "Cloud ("; break;
+            case '^' : return "Cloud";   break;
+            case ')' : return "Cloud )"; break;
+
+            case '}' : return "Grass ";       break;
+            case '{' : return "Grass Forest"; break;
+            case '*' : return "Grass *";      break;
+            case '1' : return "Grass 1";      break;
+            case '2' : return "Grass 2";      break;
+            case '3' : return "Grass 3";      break;
+        }
+        IK_ASSERT(false, "Invalid Type");
+        return "";
+    }
+
+    // ******************************************************************************
     // Background data storage
     // ******************************************************************************
     struct BgData
@@ -108,16 +150,35 @@ namespace Mario {
         Init();
 
         // Extract the map width. MAP Width should be same for each New line string
-        size_t mapWidth     = s_MapTiles.find_first_of('0') + 1;
-        uint32_t mapHeight  = static_cast<uint32_t>(strlen(s_MapTiles.c_str())) / mapWidth;
+        size_t mapWidth    = s_MapTiles.find_first_of('0') + 1;
+        uint32_t mapHeight = static_cast<uint32_t>(strlen(s_MapTiles.c_str())) / mapWidth;
 
         // Creating entity for each tiles
         IK_INFO("Creating Entity for each tiles");
         for (uint32_t y = 0; y < mapHeight; y++)
         {
-            
-        }
+            for (uint32_t x = 0; x < mapWidth; x++)
+            {
+                if (char tileType = s_MapTiles[x + y * mapWidth]; s_Data.TileMap.find(tileType) != s_Data.TileMap.end())
+                {
+                    auto entity = s_Data.EntityVectorMap[tileType].emplace_back(scene->CreateEntity(GetEntityNameFromChar(tileType)));
 
+                    if (s_Data.TileMap[tileType].IsRigid)
+                    {
+                        entity.AddComponent<BoxCollider2DComponent>();
+                    }
+                    entity.GetComponent<SceneHierarchyPannelProp>().IsProp = false;
+
+                    auto spriteEntity = entity.AddComponent<SpriteRendererComponent>(s_Data.TileMap[tileType].SubTexture);
+                    auto spriteSize   = spriteEntity.SubTexComp->GetSpriteSize();
+
+                    auto& tc = entity.GetComponent<TransformComponent>();
+
+                    tc.Translation = { x, (mapHeight / 2.0f) - y, 0.0f };
+                    tc.Scale       = { spriteSize.x, spriteSize.y , 0.0f};
+                } //if (char tileType = s_MapTiles[x + y * mapWidth]; s_TextureMap.find(tileType) != s_TextureMap.end())
+            } // for (uint32_t x = 0; x < mapWidth; x++)
+        } // for (uint32_t y = 0; y < mapHeight; y++)
     }
 
     // ******************************************************************************

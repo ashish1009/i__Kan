@@ -151,5 +151,23 @@ namespace iKan {
         }
     };
 
-    
+    // ******************************************************************************
+    // 2D Box colloider compoennt. If added them 2D box is Rigid
+    // ******************************************************************************
+    struct BoxCollider2DComponent
+    {
+        bool IsRigid = true;
+
+        ~BoxCollider2DComponent() = default;
+
+        BoxCollider2DComponent() = default;
+        BoxCollider2DComponent(const BoxCollider2DComponent& other) = default;
+
+        BoxCollider2DComponent(bool flag)
+        : IsRigid(flag)
+        {
+
+        }
+    };
+
 }

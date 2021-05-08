@@ -19,33 +19,6 @@ MarioLayer::MarioLayer()
 : Layer("Mario")
 {
     IK_INFO("{0} Layer created", GetName().c_str());
-
-    m_ActiveScene = CreateRef<Scene>();
-
-    // Frame buffer specifications
-    Framebuffer::Specification specs;
-    specs.Attachments = { Framebuffer::TextureSpecification::TextureFormat::RGBA8,
-                          Framebuffer::TextureSpecification::TextureFormat::DEPTH24STENCIL8,
-                          Framebuffer::TextureSpecification::TextureFormat::R32I };
-
-    specs.Width  = Window::Property::DefaultWidth;
-    specs.Height = Window::Property::DefaultHeight;
-
-    // Creating instance for Frame buffer in viewport
-    m_Viewport.FrameBuffer = Framebuffer::Create(specs);
-
-    // Set the current Scene to scene hierarchy pannel
-    m_SceneHierarchyPannel.SetContext(m_ActiveScene);
-
-    // Setup the Camera Entity
-    m_CameraEntity        = m_ActiveScene->CreateEntity("Camera");
-    auto& cameraComponent = m_CameraEntity.AddComponent<CameraComponent>();
-    cameraComponent.Camera.SetProjectionType(SceneCamera::ProjectionType::Orthographic);
-
-    // Creating Temp Entity
-    auto ent1 = m_ActiveScene->CreateEntity("Entity");
-    ent1.GetComponent<TransformComponent>().Translation = glm::vec3(0.5, 0.0, 0.0);
-    ent1.AddComponent<SpriteRendererComponent>(glm::vec4(1.0f));
 }
 
 // ******************************************************************************
@@ -63,6 +36,33 @@ void MarioLayer::OnAttach()
 {
     IK_INFO("Attaching {0} Layer to Application", GetName().c_str());
 
+    m_ActiveScene = CreateRef<Scene>();
+
+    // Frame buffer specifications
+    Framebuffer::Specification specs;
+    specs.Attachments = { Framebuffer::TextureSpecification::TextureFormat::RGBA8,
+        Framebuffer::TextureSpecification::TextureFormat::DEPTH24STENCIL8,
+        Framebuffer::TextureSpecification::TextureFormat::R32I };
+
+    specs.Width  = Window::Property::DefaultWidth;
+    specs.Height = Window::Property::DefaultHeight;
+
+    // Creating instance for Frame buffer in viewport
+    m_Viewport.FrameBuffer = Framebuffer::Create(specs);
+
+    // Set the current Scene to scene hierarchy pannel
+    m_SceneHierarchyPannel.SetContext(m_ActiveScene);
+
+    // Setup the Camera Entity
+    m_CameraEntity        = m_ActiveScene->CreateEntity("Camera");
+    auto& cameraComponent = m_CameraEntity.AddComponent<CameraComponent>();
+    cameraComponent.Camera.SetProjectionType(SceneCamera::ProjectionType::Orthographic);
+    cameraComponent.Camera.SetOrthographicSize(18.0f);
+
+    auto& cameraPositionX = m_CameraEntity.GetComponent<TransformComponent>().Translation.x;
+    cameraPositionX = 10.0f;
+
+    // Creating Entities for background tiles
     Mario::Background::CreateEntities(m_ActiveScene);
 }
 
