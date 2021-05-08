@@ -84,6 +84,67 @@ namespace iKan {
         }
         SceneRenderer::EndScene();
     }
+
+    // ******************************************************************************
+    // Update runtime Scene
+    // ******************************************************************************
+    void Scene::OnUpdateRuntime(Timestep ts)
+    {
+        Camera* mainCamera = nullptr;
+        glm::mat4 cameraTransform;
+        if (Entity cameraEntity = GetMainCameraEntity();
+            cameraEntity!= Entity(entt::null, nullptr))
+        {
+            mainCamera      = &cameraEntity.GetComponent<CameraComponent>().Camera;
+            cameraTransform = cameraEntity.GetComponent<TransformComponent>().GetTransform();
+        }
+
+        // Renderer
+        if (mainCamera)
+        {
+            SceneRenderer::BeginScene(*mainCamera, cameraTransform);
+            auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+            for (auto entity : group)
+            {
+                const auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+                if (sprite.TextureComp)
+                {
+                    SceneRenderer::DrawQuad(transform.GetTransform(), sprite.TextureComp, (int32_t)entity, sprite.TilingFactor, sprite.ColorComp);
+                }
+                else if (sprite.SubTexComp)
+                {
+                    SceneRenderer::DrawQuad(transform.GetTransform(), sprite.SubTexComp, (int32_t)entity, sprite.TilingFactor, sprite.ColorComp);
+                }
+                else
+                {
+                    SceneRenderer::DrawQuad(transform.GetTransform(), sprite.ColorComp, (int32_t)entity);
+                }
+            }
+            SceneRenderer::EndScene();
+        }
+        else
+        {
+            // TODO: Should it be assert or Warning
+            // IK_CORE_WARN("No Camera is Binded to the Scene or any one of themis not set to primary !!! ");
+        }
+    }
+
+    // ******************************************************************************
+    // get the canera component. First camera component which is found to be Primary
+    // ******************************************************************************
+    Entity Scene::GetMainCameraEntity()
+    {
+        auto view = m_Registry.view<CameraComponent>();
+        for (auto entity : view)
+        {
+            auto& comp = view.get<CameraComponent>(entity);
+            if (comp.Primary)
+            {
+                return { entity, this };
+            }
+        }
+        return {};
+    }
     
     // ******************************************************************************
     // Resize scene view port

@@ -171,6 +171,20 @@ namespace iKan {
 
         StartBatch();
     }
+
+    // ******************************************************************************
+    // Begin the 2D Scene
+    // ******************************************************************************
+    void SceneRenderer::BeginScene(const Camera& camera, const glm::mat4& transform)
+    {
+        // Upload Camera View Projection Matris to shader
+        glm::mat4 viewProj = camera.GetProjection() * glm::inverse(transform);
+
+        s_Data->TextureShader->Bind();
+        s_Data->TextureShader->SetUniformMat4("u_ViewProjection", viewProj);
+
+        StartBatch();
+    }
     
     // ******************************************************************************
     // Start the batch Renderer

@@ -23,6 +23,7 @@ namespace iKan {
         static void SetShaader(const std::string &path);
         
         static void BeginScene(const EditorCamera& camera);
+        static void BeginScene(const Camera& camera, const glm::mat4& transform);
         static void EndScene();
         
         // Primitives

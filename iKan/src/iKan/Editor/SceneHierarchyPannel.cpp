@@ -242,7 +242,7 @@ namespace iKan {
                 const char* currentProjectionType = projectionTypeSTring[(int32_t)camera.GetProjectionType()];
                 if (ImGui::BeginCombo("##Projection", currentProjectionType))
                 {
-                    for (int i = 0; i < projectionTypeSTring.size(); i++)
+                    for (int32_t i = 0; i < projectionTypeSTring.size(); i++)
                     {
                         bool bIsSelected = currentProjectionType == projectionTypeSTring[i];
                         if (ImGui::Selectable(projectionTypeSTring[i], bIsSelected))
@@ -343,7 +343,7 @@ namespace iKan {
                 const std::vector<const char*> availabelTextureString = { "checkerboard", "container", "grass", "marble", "matrix", "metal", "smile", "window", "wood" };
                 if (ImGui::BeginCombo("##Type", currentTexture.c_str()))
                 {
-                    for (int i = 0; i < availabelTextureString.size(); i++)
+                    for (int32_t i = 0; i < availabelTextureString.size(); i++)
                     {
                         bool bIsSelected = currentTexture == availabelTextureString[i];
                         if (ImGui::Selectable(availabelTextureString[i], bIsSelected))

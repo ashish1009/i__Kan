@@ -33,9 +33,9 @@ private:
     void RendererStats();
     
 private:
-    EditorCamera         m_EditorCamera;
     Ref<Scene>           m_ActiveScene;
     SceneHeirarchyPannel m_SceneHierarchyPannel;
+    Entity               m_CameraEntity;
     
     Viewport& m_Viewport = Viewport::Get();
     

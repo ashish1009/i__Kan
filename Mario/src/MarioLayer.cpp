@@ -16,7 +16,7 @@ MarioLayer::PropertyFlag MarioLayer::s_PropFlag;
 // MarioLayer Constructor
 // ******************************************************************************
 MarioLayer::MarioLayer()
-: Layer("Mario"), m_EditorCamera(glm::radians(45.0f), 1800.0f/800.0f, 0.01f, 10000.0f)
+: Layer("Mario")
 {
     IK_INFO("{0} Layer created", GetName().c_str());
 
@@ -36,6 +36,11 @@ MarioLayer::MarioLayer()
 
     // Set the current Scene to scene hierarchy pannel
     m_SceneHierarchyPannel.SetContext(m_ActiveScene);
+
+    // Setup the Camera Entity
+    m_CameraEntity        = m_ActiveScene->CreateEntity("Camera");
+    auto& cameraComponent = m_CameraEntity.AddComponent<CameraComponent>();
+    cameraComponent.Camera.SetProjectionType(SceneCamera::ProjectionType::Orthographic);
 }
 
 // ******************************************************************************
@@ -76,16 +81,15 @@ void MarioLayer::OnUpdate(Timestep ts)
     {
         m_Viewport.FrameBuffer->Resize((uint32_t)m_Viewport.Size.x, (uint32_t)m_Viewport.Size.y);
         m_ActiveScene->OnViewportResize((uint32_t)m_Viewport.Size.x, (uint32_t)m_Viewport.Size.y);
-        m_EditorCamera.SetViewportSize((uint32_t)m_Viewport.Size.x, (uint32_t)m_Viewport.Size.y);
-    }
+   }
 
     RendererStatistics::Reset();
-    m_EditorCamera.OnUpdate(ts);
 
     m_Viewport.FrameBuffer->Bind();
     {
         Renderer::Clear(Mario::Background::s_BgColor);
-        m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
+        m_ActiveScene->OnUpdateRuntime(ts);
+
         m_Viewport.UpdateMousePos();
     }
     m_Viewport.FrameBuffer->Unbind();
@@ -127,12 +131,6 @@ void MarioLayer::OnImguiRender()
         m_Viewport.OnImguiRenderer();
     }
 
-    // Editor Camera Imgui Renderer
-    if (m_EditorCamera.IsImguiPannel)
-    {
-        m_EditorCamera.OnImguiRenderer();
-    }
-
     // Show mario Setting in Imgui
     if (MarioLayer::s_PropFlag.IsSettings)
     {
@@ -149,7 +147,7 @@ void MarioLayer::OnImguiRender()
 // ******************************************************************************
 void MarioLayer::OnEvent(Event& event)
 {
-    m_EditorCamera.OnEvent(event);
+
 }
 
 // ******************************************************************************
@@ -193,11 +191,6 @@ void MarioLayer::ShowMenu()
             if (ImGui::MenuItem("Mario Settings", nullptr, s_PropFlag.IsSettings))
             {
                 s_PropFlag.IsSettings = !s_PropFlag.IsSettings;
-            }
-
-            if (ImGui::MenuItem("Editor Camera Imgui Pannel", nullptr, m_EditorCamera.IsImguiPannel))
-            {
-                m_EditorCamera.IsImguiPannel = !m_EditorCamera.IsImguiPannel;
             }
 
             if (ImGui::BeginMenu("Viewport"))
