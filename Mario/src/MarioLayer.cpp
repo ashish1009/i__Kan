@@ -41,6 +41,11 @@ MarioLayer::MarioLayer()
     m_CameraEntity        = m_ActiveScene->CreateEntity("Camera");
     auto& cameraComponent = m_CameraEntity.AddComponent<CameraComponent>();
     cameraComponent.Camera.SetProjectionType(SceneCamera::ProjectionType::Orthographic);
+
+    // Creating Temp Entity
+    auto ent1 = m_ActiveScene->CreateEntity("Entity");
+    ent1.GetComponent<TransformComponent>().Translation = glm::vec3(0.5, 0.0, 0.0);
+    ent1.AddComponent<SpriteRendererComponent>(glm::vec4(1.0f));
 }
 
 // ******************************************************************************

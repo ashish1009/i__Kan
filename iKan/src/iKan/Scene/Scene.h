@@ -31,7 +31,9 @@ namespace iKan {
         void OnViewportResize(uint32_t width, uint32_t height);
         void OnUpdateRuntime(Timestep ts);
 
+    private:
         Entity GetMainCameraEntity();
+        void RenderSpriteComponent();
 
     private:
         // Container that contain all the entities

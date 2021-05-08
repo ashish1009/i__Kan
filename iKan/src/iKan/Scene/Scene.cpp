@@ -65,23 +65,7 @@ namespace iKan {
     void Scene::OnUpdateEditor(Timestep ts, EditorCamera &editorCamera)
     {
         SceneRenderer::BeginScene(editorCamera);
-        auto spriteGroup = m_Registry.group<>(entt::get<TransformComponent, SpriteRendererComponent>);
-        for (auto entity : spriteGroup)
-        {
-            const auto [transform, sprite] = spriteGroup.get<TransformComponent, SpriteRendererComponent>(entity);
-            if (sprite.TextureComp)
-            {
-                SceneRenderer::DrawQuad(transform.GetTransform(), sprite.TextureComp, (int32_t)entity, sprite.TilingFactor, sprite.ColorComp);
-            }
-            else if (sprite.SubTexComp)
-            {
-                SceneRenderer::DrawQuad(transform.GetTransform(), sprite.SubTexComp, (int32_t)entity, sprite.TilingFactor, sprite.ColorComp);
-            }
-            else
-            {
-                SceneRenderer::DrawQuad(transform.GetTransform(), sprite.ColorComp, (int32_t)entity);
-            }
-        }
+        RenderSpriteComponent();
         SceneRenderer::EndScene();
     }
 
@@ -97,35 +81,40 @@ namespace iKan {
         {
             mainCamera      = &cameraEntity.GetComponent<CameraComponent>().Camera;
             cameraTransform = cameraEntity.GetComponent<TransformComponent>().GetTransform();
-        }
 
-        // Renderer
-        if (mainCamera)
-        {
             SceneRenderer::BeginScene(*mainCamera, cameraTransform);
-            auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
-            for (auto entity : group)
-            {
-                const auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-                if (sprite.TextureComp)
-                {
-                    SceneRenderer::DrawQuad(transform.GetTransform(), sprite.TextureComp, (int32_t)entity, sprite.TilingFactor, sprite.ColorComp);
-                }
-                else if (sprite.SubTexComp)
-                {
-                    SceneRenderer::DrawQuad(transform.GetTransform(), sprite.SubTexComp, (int32_t)entity, sprite.TilingFactor, sprite.ColorComp);
-                }
-                else
-                {
-                    SceneRenderer::DrawQuad(transform.GetTransform(), sprite.ColorComp, (int32_t)entity);
-                }
-            }
+            RenderSpriteComponent();
             SceneRenderer::EndScene();
         }
         else
         {
             // TODO: Should it be assert or Warning
-            // IK_CORE_WARN("No Camera is Binded to the Scene or any one of themis not set to primary !!! ");
+             IK_CORE_WARN("No Camera is Binded to the Scene or none of them is set to primary !!! ");
+        }
+    }
+
+    // ******************************************************************************
+    // Internal intermediate function to call renderer for each sub component of
+    // sprite component
+    // ******************************************************************************
+    void Scene::RenderSpriteComponent()
+    {
+        auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+        for (auto entity : group)
+        {
+            const auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+            if (sprite.TextureComp)
+            {
+                SceneRenderer::DrawQuad(transform.GetTransform(), sprite.TextureComp, (int32_t)entity, sprite.TilingFactor, sprite.ColorComp);
+            }
+            else if (sprite.SubTexComp)
+            {
+                SceneRenderer::DrawQuad(transform.GetTransform(), sprite.SubTexComp, (int32_t)entity, sprite.TilingFactor, sprite.ColorComp);
+            }
+            else
+            {
+                SceneRenderer::DrawQuad(transform.GetTransform(), sprite.ColorComp, (int32_t)entity);
+            }
         }
     }
 
