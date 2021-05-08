@@ -26,6 +26,7 @@ namespace Mario {
 
     private:
         static void Init();
+        static void ImgButtons(const char name);
 
     public:
         static glm::vec4 s_BgColor;

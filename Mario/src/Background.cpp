@@ -103,6 +103,20 @@ namespace Mario {
     }
 
     // ******************************************************************************
+    // Chnage the subtexture for each tiles in vector
+    // ******************************************************************************
+    static void ChangeEntitiesSubtex(const std::vector<Entity>& entityVector, const Ref<SubTexture>& subTex)
+    {
+        for (auto entity : entityVector)
+        {
+            if (auto &subTexComp = entity.GetComponent<SpriteRendererComponent>().SubTexComp)
+            {
+                subTexComp = subTex;
+            }
+        }
+    }
+
+    // ******************************************************************************
     // Background data storage
     // ******************************************************************************
     struct BgData
@@ -189,6 +203,78 @@ namespace Mario {
         if (ImGui::TreeNode("Background Color"))
         {
             ImGuiAPI::ColorEdit(s_BgColor);
+            ImGui::TreePop();
+        }
+        if (ImGui::TreeNode("Tiles"))
+        {
+            ImgButtons('G'); // Ground
+            ImgButtons('X'); // Bricks
+            ImgButtons('B'); // Bonus
+            ImgButtons('S'); // Steps
+            ImgButtons('-'); // Bridge
+            ImgButtons('Y'); // Pipe
+            ImgButtons('v'); // Grass
+            ImgButtons('^'); // Clouds
+            ImgButtons('{'); // Forest
+
+            ImGui::TreePop();
+        }
+    }
+
+    // ******************************************************************************
+    // Imgui interface for chnaging tiles image using buttons
+    // ******************************************************************************
+    void Background::ImgButtons(const char name)
+    {
+        if (ImGui::TreeNode(GetEntityNameFromChar(name).c_str()))
+        {
+            ImTextureID myTexId = (ImTextureID)((size_t)s_Data.Texture->GetRendererID());
+            float myTexW = (float)s_Data.Texture->GetWidth();
+            float myTexH = (float)s_Data.Texture->GetHeight();
+
+            int32_t i = 0;
+            for (auto subTex : s_Data.SubTextureVectorMap[name])
+            {
+                ImGui::PushID(i);
+
+                auto coords = subTex->GetCoords();
+                glm::vec2 uv1 = { (coords.x + 1) * 16.0f, coords.y * 16.0f };
+                glm::vec2 uv0 = { coords.x * 16.0f, (coords.y + 1) * 16.0f };
+                if (ImGui::ImageButton(myTexId, ImVec2(32.0f, 32.0f), ImVec2(uv0.x / myTexW, uv0.y / myTexH), ImVec2(uv1.x / myTexW, uv1.y / myTexH), 0))
+                {
+                    ChangeEntitiesSubtex(s_Data.EntityVectorMap[name], subTex);
+
+                    if (name == 'Y')
+                    {
+                        ChangeEntitiesSubtex(s_Data.EntityVectorMap['!'], s_Data.SubTextureVectorMap['!'][i]);
+                    }
+
+                    else if (name == 'v')
+                    {
+                        ChangeEntitiesSubtex(s_Data.EntityVectorMap['<'], s_Data.SubTextureVectorMap['<'][i]);
+                        ChangeEntitiesSubtex(s_Data.EntityVectorMap['>'], s_Data.SubTextureVectorMap['>'][i]);
+                    }
+
+                    else if (name == '^')
+                    {
+                        ChangeEntitiesSubtex(s_Data.EntityVectorMap[')'], s_Data.SubTextureVectorMap[')'][i]);
+                        ChangeEntitiesSubtex(s_Data.EntityVectorMap['('], s_Data.SubTextureVectorMap['('][i]);
+                    }
+
+                    else if (name == '{')
+                    {
+                        ChangeEntitiesSubtex(s_Data.EntityVectorMap['*'], s_Data.SubTextureVectorMap['*'][i]);
+                        ChangeEntitiesSubtex(s_Data.EntityVectorMap['}'], s_Data.SubTextureVectorMap['}'][i]);
+                        ChangeEntitiesSubtex(s_Data.EntityVectorMap['1'], s_Data.SubTextureVectorMap['1'][i]);
+                        ChangeEntitiesSubtex(s_Data.EntityVectorMap['2'], s_Data.SubTextureVectorMap['2'][i]);
+                        ChangeEntitiesSubtex(s_Data.EntityVectorMap['3'], s_Data.SubTextureVectorMap['3'][i]);
+                    }
+                }
+                ImGui::PopID();
+                ImGui::SameLine();
+                i++;
+            }
+            ImGui::NewLine();
             ImGui::TreePop();
         }
     }
