@@ -28,15 +28,10 @@ public:
 private:
     void ShowMenu();
     void RendererStats();
-    void UpdateHoveredEntity();
-    void PrintHoveredEntity();
-
-    bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
 
 private:
     EditorCamera         m_EditorCamera;
     Ref<Scene>           m_ActiveScene;
-    Entity               m_HoveredEntity;
     SceneHeirarchyPannel m_SceneHierarchyPannel;
     
     Viewport& m_Viewport = Viewport::Get();

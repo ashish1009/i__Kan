@@ -10,6 +10,7 @@
 #pragma once
 
 #include <iKan/Renderer/FrameBuffer.h>
+#include <iKan/Scene/Entity.h>
 
 namespace iKan {
     
@@ -17,20 +18,24 @@ namespace iKan {
     {
     private:
         Viewport() = default;
-    
+        bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
+
     public:
         ~Viewport() = default;
-        
+
         Viewport(const Viewport& other) = delete;
         Viewport(Viewport&& other) = delete;
-        
+
         Viewport& operator =(const Viewport& other) = delete;
         Viewport& operator =(Viewport&& other) = delete;
-        
+
+        void OnUpdate(Ref<Scene>& activeScene);
+        void OnUpdateImGui();
         void UpdateBounds();
-        void OnUpdate();
         void UpdateMousePos();
         void OnImguiRenderer();
+        void UpdateHoveredEntity(Ref<Scene>& activeScene);
+        void OnEvent(Event& event);
 
         static Viewport& Get()
         {
@@ -45,6 +50,9 @@ namespace iKan {
         // Viewport focused or hovered
         bool Focused = false, Hovered = false;
         
+        // Flag for Imgui pannel
+        bool IsImguiPannel = true;
+
         // Dimentsion of Viewport. Height of viewport is including the Title Tab height too
         float Width  = 0.0f, Height = 0.0f;
         
@@ -57,13 +65,19 @@ namespace iKan {
         // position of Top left and Bottom right edges with respect to screen
         // 0 -> Top left, 1 -> bottom right
         glm::vec2 Bounds[2];
-        
+
+        // Cursorn position of View port. Not the mouse pos
         ImVec2 CursorPos;
-        
+
+        // Frame buffer to render scene
         Ref<Framebuffer> FrameBuffer;
 
-        // Flag for Imgui pannel
-        bool IsImguiPannel = true;
+        // Entity hovered by mouse position
+        Entity HoveredEntity;
+
+        // Selected entity in the viewport
+        Entity SelectedEntity;
+
     };
     
 }

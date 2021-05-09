@@ -9,6 +9,9 @@
 
 #include "Viewport.h"
 #include <iKan/Core/Application.h>
+#include <iKan/Core/Input.h>
+#include <iKan/Scene/Component.h>
+#include <iKan/Editor/ScenePropertyGrid.h>
 
 namespace iKan {
     
@@ -31,7 +34,7 @@ namespace iKan {
     // ******************************************************************************
     // Update the Viewport
     // ******************************************************************************
-    void Viewport::OnUpdate()
+    void Viewport::OnUpdateImGui()
     {
         CursorPos = ImGui::GetCursorPos();
 
@@ -44,6 +47,17 @@ namespace iKan {
         
         size_t textureID = FrameBuffer->GetColorAttachmentRendererID();
         ImGui::Image((void*)textureID, ImVec2{ Size.x, Size.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+
+        UpdateBounds();
+    }
+
+    // ******************************************************************************
+    // Update mouse position of viewport
+    // ******************************************************************************
+    void Viewport::OnUpdate(Ref<Scene>& activeScene)
+    {
+        UpdateMousePos();
+        UpdateHoveredEntity(activeScene);
     }
     
     // ******************************************************************************
@@ -62,6 +76,42 @@ namespace iKan {
 
         MousePosX = (int32_t)mx;
         MousePosY = (int32_t)my;
+    }
+
+    // ******************************************************************************
+    // Update the Hovered entity in the view port
+    // ******************************************************************************
+    void Viewport::UpdateHoveredEntity(Ref<Scene>& activeScene)
+    {
+        if (MousePosX >= 0 && MousePosY >= 0 && MousePosX <= Width && MousePosY <= Height )
+        {
+            int32_t ID = activeScene->GetEntityIdFromPixels(MousePosX, MousePosY);
+            HoveredEntity = (ID >= activeScene->GetNumEntities()) ? Entity() : Entity((entt::entity)ID, activeScene.get());
+        }
+    }
+
+    // ******************************************************************************
+    // Scene Editor Events
+    // ******************************************************************************
+    void Viewport::OnEvent(Event& event)
+    {
+        EventDispatcher dispatcher(event);
+        dispatcher.Dispatch<MouseButtonPressedEvent>(IK_BIND_EVENT_FN(Viewport::OnMouseButtonPressed));
+    }
+
+    // ******************************************************************************
+    // Mouse button press event
+    // ******************************************************************************
+    bool Viewport::OnMouseButtonPressed(MouseButtonPressedEvent& e)
+    {
+        if (e.GetMouseButton() == MouseCode::ButtonLeft && !Input::IsKeyPressed(KeyCode::LeftAlt))
+        {
+            if (MousePosX >= 0 && MousePosY >= 0 && MousePosX <= Width && MousePosY <= Height )
+            {
+                SelectedEntity = HoveredEntity;
+            }
+        }
+        return false;
     }
     
     // ******************************************************************************
@@ -139,6 +189,20 @@ namespace iKan {
         ImGui::NextColumn();
 
         ImGui::Columns(1);
+
+        ImGui::Separator();
+
+        std::string entityName = "NULL";
+        if ((entt::entity)HoveredEntity != entt::null)
+        {
+            entityName = HoveredEntity.GetComponent<TagComponent>().Tag;
+
+            ImGui::Text("Hovered Entity");
+            PropertyGrid::String("Entity ID", (uint32_t)HoveredEntity);
+            PropertyGrid::String("Unique ID", (uint32_t)HoveredEntity.GetComponent<IDComponent>().ID);
+            PropertyGrid::String("Entity Name", entityName, false);
+            ImGui::Separator();
+        }
 
         ImGui::PopID();
         ImGui::End();

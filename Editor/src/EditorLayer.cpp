@@ -89,22 +89,9 @@ void EditorLayer::OnUpdate(Timestep ts)
         Renderer::Clear({ 0.1f, 0.1f, 0.1f, 1.0f });
         m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 
-        m_Viewport.UpdateMousePos();
-        UpdateHoveredEntity();
+        m_Viewport.OnUpdate(m_ActiveScene);
     }
     m_Viewport.FrameBuffer->Unbind();
-}
-
-// ******************************************************************************
-// ******************************************************************************
-void EditorLayer::UpdateHoveredEntity()
-{
-    if (m_Viewport.MousePosX >= 0 && m_Viewport.MousePosY >= 0 && m_Viewport.MousePosX <= m_Viewport.Width && m_Viewport.MousePosY <= m_Viewport.Height )
-    {
-        int32_t ID = m_ActiveScene->GetEntityIdFromPixels(m_Viewport.MousePosX, m_Viewport.MousePosY);
-        // TODO:: remove entt::entity
-        m_HoveredEntity = (ID >= m_ActiveScene->GetNumEntities()) ? Entity() : Entity((entt::entity)ID, m_ActiveScene.get());
-    }
 }
 
 // ******************************************************************************
@@ -117,7 +104,7 @@ void EditorLayer::OnImguiRender()
     ShowMenu();
     RendererStats();
 
-    PrintHoveredEntity();
+    m_SceneHierarchyPannel.SetSelectedEntity(m_Viewport.SelectedEntity);
 
     // Render Scene Hierarchy pannel in imgui
     if (s_PropFlag.IsSceneHeirarchypanel)
@@ -131,8 +118,7 @@ void EditorLayer::OnImguiRender()
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         ImGui::Begin("Viewport", &m_Viewport.Present);
         {
-            m_Viewport.OnUpdate();
-            m_Viewport.UpdateBounds();
+            m_Viewport.OnUpdateImGui();
         }
 
         ImGui::End(); // ImGui::Begin("Viewport");
@@ -160,42 +146,7 @@ void EditorLayer::OnImguiRender()
 void EditorLayer::OnEvent(Event& event)
 {
     m_EditorCamera.OnEvent(event);
-
-    EventDispatcher dispatcher(event);
-    dispatcher.Dispatch<MouseButtonPressedEvent>(IK_BIND_EVENT_FN(EditorLayer::OnMouseButtonPressed));
-}
-
-// ******************************************************************************
-// Mouse button press event
-// ******************************************************************************
-bool EditorLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e)
-{
-    if (e.GetMouseButton() == MouseCode::ButtonLeft && !Input::IsKeyPressed(KeyCode::LeftAlt))
-    {
-        if (m_Viewport.MousePosX >= 0 && m_Viewport.MousePosY >= 0 && m_Viewport.MousePosX <= m_Viewport.Width && m_Viewport.MousePosY <= m_Viewport.Height )
-        {
-            m_SceneHierarchyPannel.SetSelectedEntity(m_HoveredEntity);
-        }
-    }
-    return false;
-}
-
-// ******************************************************************************
-// Prinitng Hovered Entity in Imgui Window
-// ******************************************************************************
-void EditorLayer::PrintHoveredEntity()
-{
-    ImGui::Begin("Hovered Entity");
-    std::string entityName = "NULL";
-    if ((entt::entity)m_HoveredEntity != entt::null)
-    {
-        entityName = m_HoveredEntity.GetComponent<TagComponent>().Tag;
-
-        PropertyGrid::String("Entity ID", (uint32_t)m_HoveredEntity);
-        PropertyGrid::String("Unique ID", (uint32_t)m_HoveredEntity.GetComponent<IDComponent>().ID);
-        PropertyGrid::String("Entity Name", entityName, false);
-    }
-    ImGui::End();
+    m_Viewport.OnEvent(event);
 }
 
 // ******************************************************************************
