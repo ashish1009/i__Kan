@@ -31,11 +31,16 @@ namespace iKan {
         void OnViewportResize(uint32_t width, uint32_t height);
         void OnUpdateRuntime(Timestep ts);
 
+        int32_t GetEntityIdFromPixels(int32_t mx, int32_t my);
+        uint32_t GetNumEntities() const { return m_NumEntities; }
+
     private:
         Entity GetMainCameraEntity();
         void RenderSpriteComponent();
 
     private:
+        uint32_t m_NumEntities = 0;
+
         // Container that contain all the entities
         entt::registry m_Registry;
         

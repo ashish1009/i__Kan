@@ -12,6 +12,8 @@
 #include <iKan/Scene/Component.h>
 #include <iKan/Renderer/SceneRenderer.h>
 
+#include <glad/glad.h>
+
 namespace iKan {
     
     // ******************************************************************************
@@ -46,6 +48,7 @@ namespace iKan {
         m_EntityIDMap[uuid] = entity;
         
         IK_CORE_TRACE("Entity {0} with ID: {1} is created in the Active Scene", entity.GetComponent<TagComponent>().Tag.c_str(), entity.GetComponent<IDComponent>().ID);
+        IK_CORE_TRACE("Number of entities Added in Scene : {0}", m_NumEntities++);
         
         return entity;
     }
@@ -57,6 +60,21 @@ namespace iKan {
     {
         IK_CORE_WARN("Destrying Entity '{0}' with ID {0} from the scene", entity.GetComponent<TagComponent>().Tag.c_str(), entity.GetComponent<IDComponent>().ID);
         m_Registry.destroy(entity);
+    }
+
+    // ******************************************************************************
+    // Get the pixel from scene
+    // mx -> Mouse position X
+    // my -> Mouse position Y
+    // ******************************************************************************
+    int32_t Scene::GetEntityIdFromPixels(int32_t mx, int32_t my)
+    {
+        glReadBuffer(GL_COLOR_ATTACHMENT1);
+
+        int32_t pixelData = -1;
+        glReadPixels(mx, my, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
+
+        return pixelData;
     }
 
     // ******************************************************************************

@@ -13,7 +13,20 @@
 // Wrapper for imgui interface for various operations
 // ******************************************************************************
 namespace iKan {
-    
+
+    // ******************************************************************************
+    // Read and write the Number as String. Value can not be modified
+    // ******************************************************************************
+    bool PropertyGrid::String(const char* label, uint32_t value, bool error)
+    {
+        std::string idStr;
+        std::stringstream ss;
+        ss << value;
+        ss >> idStr;
+
+        return String(label, idStr, false);
+    }
+
     // ******************************************************************************
     // Read and write the String. Modify the value
     // if Modifiable is true then we can modify the value
@@ -34,7 +47,7 @@ namespace iKan {
         std::string UIContextId = "##" + (std::string)label;
         
         // To make string Red in case error flag is true
-        if (error || !modifiable)
+        if (error)
         {
             ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.9f, 0.2f, 0.2f, 1.0f));
         }
@@ -54,7 +67,7 @@ namespace iKan {
         }
         
         // Pop red color if error is enabled
-        if (error || !modifiable)
+        if (error)
         {
             ImGui::PopStyleColor();
         }

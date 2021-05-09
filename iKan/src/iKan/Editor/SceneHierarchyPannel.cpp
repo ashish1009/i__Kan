@@ -184,13 +184,7 @@ namespace iKan {
         if (entity.HasComponent<IDComponent>())
         {
             const auto& Id = entity.GetComponent<IDComponent>().ID;
-            
-            std::string idStr;
-            std::stringstream ss;
-            ss << Id;
-            ss >> idStr;
-            
-            PropertyGrid::String("ID", idStr, false);
+            PropertyGrid::String("ID", (uint32_t )Id);
             ImGui::Separator();
         }
         
