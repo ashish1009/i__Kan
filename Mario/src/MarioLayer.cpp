@@ -86,7 +86,7 @@ void MarioLayer::OnUpdate(Timestep ts)
     {
         m_Viewport.FrameBuffer->Resize((uint32_t)m_Viewport.Size.x, (uint32_t)m_Viewport.Size.y);
         m_ActiveScene->OnViewportResize((uint32_t)m_Viewport.Size.x, (uint32_t)m_Viewport.Size.y);
-   }
+    }
 
     RendererStatistics::Reset();
 
@@ -95,7 +95,7 @@ void MarioLayer::OnUpdate(Timestep ts)
         Renderer::Clear(Mario::Background::s_BgColor);
         m_ActiveScene->OnUpdateRuntime(ts);
 
-        m_Viewport.UpdateMousePos();
+        m_Viewport.OnUpdate(m_ActiveScene);
     }
     m_Viewport.FrameBuffer->Unbind();
 }
@@ -122,8 +122,7 @@ void MarioLayer::OnImguiRender()
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         ImGui::Begin("Viewport", &m_Viewport.Present);
         {
-            m_Viewport.OnUpdate();
-            m_Viewport.UpdateBounds();
+            m_Viewport.OnUpdateImGui();
         }
 
         ImGui::End(); // ImGui::Begin("Viewport");

@@ -29,12 +29,18 @@ namespace Mario {
      Y : Pipe Head
      X : Bricks
      B : Bonus
-     ( : Cloud Left
-     ^ : Cloud
-     ) : Cloud Right
-     < : Grass Left
-     v : Grass
-     > : Grass Right
+     ( : Cloud (
+     ^ : Cloud ^
+     ) : Cloud )
+     < : Grass <
+     v : Grass v
+     > : Grass >
+     { : Forest {
+     } : Forest }
+     * : Forest *
+     1 : Forest 1
+     2 : Forest 2
+     3 : Forest 3
      ********************************************************************************/
     // TODO: For now making number of row even to make position of y integral
     static std::string s_MapTiles =
@@ -83,20 +89,20 @@ namespace Mario {
             case 'X' : return "Bricks";    break;
             case 'B' : return "Bonus";     break;
 
-            case '<' : return "Grass <"; break;
-            case 'v' : return "Grass";   break;
-            case '>' : return "Grass >"; break;
+            case '<' : return "Grass <";   break;
+            case 'v' : return "Grass v";   break;
+            case '>' : return "Grass >>";  break;
 
-            case '(' : return "Cloud ("; break;
-            case '^' : return "Cloud";   break;
-            case ')' : return "Cloud )"; break;
+            case '(' : return "Cloud (";    break;
+            case '^' : return "Cloud ^";    break;
+            case ')' : return "Cloud )>";   break;
 
-            case '}' : return "Grass ";       break;
-            case '{' : return "Grass Forest"; break;
-            case '*' : return "Grass *";      break;
-            case '1' : return "Grass 1";      break;
-            case '2' : return "Grass 2";      break;
-            case '3' : return "Grass 3";      break;
+            case '}' : return "Grass }";    break;
+            case '{' : return "Grass {";    break;
+            case '*' : return "Grass *";    break;
+            case '1' : return "Grass 1";    break;
+            case '2' : return "Grass 2";    break;
+            case '3' : return "Grass 3";    break;
         }
         IK_ASSERT(false, "Invalid Type");
         return "";
