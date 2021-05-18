@@ -110,6 +110,10 @@ namespace iKan {
             {
                 SelectedEntity = HoveredEntity;
             }
+            else
+            {
+                SelectedEntity = {};
+            }
         }
         return false;
     }

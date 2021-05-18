@@ -57,7 +57,7 @@ namespace Mario {
     "                                                                                                                                                                                                                                                                                                              ...........   0"
     "                                                                                                                                                                                                                                                                                                              |||||||||||   0"
     "                                                                                                                                                                                                                                                                                                              |l|u|r|u|l|   0"
-    "                                             XBXBX              XBXXXXBX                           S           XXXXX               B                                           B    B    B                                                          XBXBX                                                     |||o|||o|||   0"
+    "       XBXB                                  XBXBX              XBXXXXBX                           S           XXXXX               B                                           B    B    B                                                          XBXBX                                                     |||o|||o|||   0"
     "                                                                                Y                 SS                                                                                                                          S  S                                                       S                  ............... 0"
     "                 *                                                              !                SSS                                                   S                                                 Y                   SS  SS                                                     SS                  ||||||||||||||| 0"
     "                {1}                                       Y                     !               SSSS                               Y                  SS        *                                        !                  SSS  SSS       *          Y                                SSS                  |u||u||u||u||u| 0"
@@ -156,7 +156,7 @@ namespace Mario {
     };
     static BgData s_Data;
 
-    glm::vec4 Background::s_BgColor = { 0.3f, 0.1f, 0.6f, 1.0f };
+    glm::vec4 Background::s_BgColor = { 0.3f, 0.4f, 0.6f, 1.0f };
 
     // ******************************************************************************
     // Initialize the background tiles and creat entities

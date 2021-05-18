@@ -51,7 +51,7 @@ namespace iKan {
         bool Focused = false, Hovered = false;
         
         // Flag for Imgui pannel
-        bool IsImguiPannel = false;
+        bool IsImguiPannel = true;
 
         // Dimentsion of Viewport. Height of viewport is including the Title Tab height too
         float Width  = 0.0f, Height = 0.0f;

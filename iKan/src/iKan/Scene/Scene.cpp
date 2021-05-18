@@ -10,6 +10,7 @@
 #include "Scene.h"
 #include <iKan/Scene/Entity.h>
 #include <iKan/Scene/Component.h>
+#include <iKan/Scene/Viewport.h>
 #include <iKan/Renderer/SceneRenderer.h>
 
 #include <glad/glad.h>
@@ -171,5 +172,50 @@ namespace iKan {
                 cameraComponent.Camera.SetViewportSize(width, height);
         }
     }
-    
+
+    // ******************************************************************************
+    // Resize scene view port
+    // ******************************************************************************
+    int32_t Scene::OnBoxColloider(Entity& currEntity)
+    {
+//        const Viewport& viewport      = Viewport::Get();
+//        const glm::vec2& viewportSize = viewport.Size;
+//
+//        Entity cameraEntity = GetMainCameraEntity();
+//        if (cameraEntity == Entity(entt::null, nullptr))
+//        {
+//            return -1;
+//        }
+//        const auto& cameraPos = cameraEntity.GetComponent<TransformComponent>().Translation * 16.0f;
+//        const auto& tc     = currEntity.GetComponent<TransformComponent>();
+//        const auto& cePosM  = tc.Translation * 16.0f;
+//        const auto& viewportSizeMod = glm::vec3(viewportSize.x, viewportSize.y / 2.0f, 0.0f);
+//        const auto& ceSize = tc.Scale * 16.0f;
+//
+//        const auto& cePos = cePosM + cameraPos + viewportSizeMod;
+//
+//        float yPixel    = cePos.y - ceSize.y/2;
+//        float pixelSize = 1.0f / 16.0f;
+//        while (yPixel < cePos.y + ceSize.y/2)
+//        {
+//            IK_CORE_INFO("{0}", yPixel);
+//            yPixel ++;
+//        }
+//        auto group = m_Registry.group<>(entt::get<TransformComponent, BoxCollider2DComponent>);
+//        for (auto entity : group)
+//        {
+//            if (currEntity == entity)
+//            {
+//                continue;
+//            }
+//
+//            const auto [transform, boxColl] = group.get<TransformComponent, BoxCollider2DComponent>(entity);
+//            if (boxColl.IsRigid)
+//            {
+//                
+//            }
+//        }
+        return 0;
+    }
+
 }

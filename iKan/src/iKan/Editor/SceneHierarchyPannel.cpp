@@ -90,6 +90,9 @@ namespace iKan {
     {
         ImGui::Begin("Scene Hierarchy", pIsOpen);
         {
+            PropertyGrid::String("Number of Entities in Scene", m_Context->GetNumEntities());
+            ImGui::Separator();
+            
             m_Context->m_Registry.each([&](auto entityID)
             {
                 // We are creating a local entity but it is containibg the same entity handle
@@ -194,6 +197,16 @@ namespace iKan {
             PropertyGrid::String("Tag", tag);
             ImGui::Separator();
         }
+
+        std::string IsRigitString;
+        if (entity.HasComponent<BoxCollider2DComponent>())
+        {
+            auto& IsRigid = entity.GetComponent<BoxCollider2DComponent>().IsRigid;
+            IsRigitString = (IsRigid ? "True": "False");
+        }
+        PropertyGrid::String("Is RigiD", IsRigitString , false);
+        ImGui::Separator();
+
         ImGui::SameLine();
         
         ImGui::PushItemWidth(-1);

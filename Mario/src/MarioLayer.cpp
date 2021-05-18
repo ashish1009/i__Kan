@@ -60,10 +60,22 @@ void MarioLayer::OnAttach()
     cameraComponent.Camera.SetOrthographicSize(18.0f);
 
     auto& cameraPositionX = m_CameraEntity.GetComponent<TransformComponent>().Translation.x;
-    cameraPositionX = 10.0f;
+    cameraPositionX = 18.0f;
 
     // Creating Entities for background tiles
     Mario::Background::CreateEntities(m_ActiveScene);
+
+    // Creating Temp Entity
+    ent1 = m_ActiveScene->CreateEntity("Entity");
+    ent1.GetComponent<TransformComponent>().Translation = glm::vec3(8.5, 0.0, 0.0);
+    ent1.AddComponent<SpriteRendererComponent>(glm::vec4(1.0f));
+    ent1.AddComponent<BoxCollider2DComponent>();
+
+    // Creating Temp Entity
+    ent2 = m_ActiveScene->CreateEntity("Entity");
+    ent2.GetComponent<TransformComponent>().Translation = glm::vec3(-0.5, 0.0, 0.0);
+    ent2.AddComponent<SpriteRendererComponent>(glm::vec4(1.0f));
+    ent2.AddComponent<BoxCollider2DComponent>();
 }
 
 // ******************************************************************************
@@ -90,6 +102,11 @@ void MarioLayer::OnUpdate(Timestep ts)
 
     RendererStatistics::Reset();
 
+    if (m_Viewport.SelectedEntity != Entity(entt::null, nullptr))
+    {
+        m_SceneHierarchyPannel.SetSelectedEntity(m_Viewport.SelectedEntity);
+    }
+
     m_Viewport.FrameBuffer->Bind();
     {
         Renderer::Clear(Mario::Background::s_BgColor);
@@ -98,6 +115,30 @@ void MarioLayer::OnUpdate(Timestep ts)
         m_Viewport.OnUpdate(m_ActiveScene);
     }
     m_Viewport.FrameBuffer->Unbind();
+
+    m_ActiveScene->OnBoxColloider(ent1);
+
+    if (m_Viewport.Focused)
+    {
+        auto& pos = ent1.GetComponent<TransformComponent>().Translation;
+        float speed = 3 * ts;
+        if (Input::IsKeyPressed(KeyCode::Left))
+        {
+            pos.x -= speed;
+        }
+        if (Input::IsKeyPressed(KeyCode::Right))
+        {
+            pos.x += speed;
+        }
+        if (Input::IsKeyPressed(KeyCode::Up))
+        {
+            pos.x += speed;
+        }
+        if (Input::IsKeyPressed(KeyCode::Down))
+        {
+            pos.x -= speed;
+        }
+    }
 }
 
 // ******************************************************************************
@@ -151,7 +192,7 @@ void MarioLayer::OnImguiRender()
 // ******************************************************************************
 void MarioLayer::OnEvent(Event& event)
 {
-
+    m_Viewport.OnEvent(event);
 }
 
 // ******************************************************************************

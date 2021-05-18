@@ -21,6 +21,15 @@ namespace iKan {
     class Scene
     {
     public:
+        enum class BoxCollisionClass
+        {
+            Right   = BIT(0),
+            Left    = BIT(1),
+            Up      = BIT(2),
+            Down    = BIT(3)
+        };
+
+    public:
         Scene();
         ~Scene();
         
@@ -33,6 +42,7 @@ namespace iKan {
 
         int32_t GetEntityIdFromPixels(int32_t mx, int32_t my);
         uint32_t GetNumEntities() const { return m_NumEntities; }
+        int32_t OnBoxColloider(Entity& currEntity);
 
     private:
         Entity GetMainCameraEntity();
