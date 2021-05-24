@@ -122,22 +122,22 @@ void MarioLayer::OnUpdate(Timestep ts)
         float speed = 3 * ts;
         if (Input::IsKeyPressed(KeyCode::Left))
         {
-            if (1 != m_ActiveScene->OnBoxColloider(ent1, -speed))
+            if (!((int32_t)Scene::BoxCollisionSide::Left & m_ActiveScene->OnBoxColloider(ent1, -speed)))
                 pos.x -= speed;
         }
         if (Input::IsKeyPressed(KeyCode::Right))
         {
-            if (1 != m_ActiveScene->OnBoxColloider(ent1, speed))
+            if (!((int32_t)Scene::BoxCollisionSide::Right & m_ActiveScene->OnBoxColloider(ent1, speed)))
                 pos.x += speed;
         }
         if (Input::IsKeyPressed(KeyCode::Up))
         {
-            if (1 != m_ActiveScene->OnBoxColloider(ent1, speed))
+            if (!((int32_t)Scene::BoxCollisionSide::Up & m_ActiveScene->OnBoxColloider(ent1, speed)))
                 pos.y += speed;
         }
         if (Input::IsKeyPressed(KeyCode::Down))
         {
-            if (1 != m_ActiveScene->OnBoxColloider(ent1, -speed))
+            if (!((int32_t)Scene::BoxCollisionSide::Down & m_ActiveScene->OnBoxColloider(ent1, -speed)))
                 pos.y -= speed;
         }
     }

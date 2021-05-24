@@ -178,6 +178,7 @@ namespace iKan {
     // ******************************************************************************
     int32_t Scene::OnBoxColloider(Entity& currEntity, float speed)
     {
+        int32_t result = 0;
         const auto& ceTc   = currEntity.GetComponent<TransformComponent>();
         const auto& cePos  = ceTc.Translation;
         const auto& ceSize = ceTc.Scale;
@@ -202,8 +203,7 @@ namespace iKan {
                     if (cePos.x + speed < entPos.x + entSize.x &&
                         cePos.x + speed + ceSize.x > entPos.x)
                     {
-                        IK_CORE_INFO("Collision {0}", cePos.x);
-                        return 1;
+                        result |= ((speed > 0) ? (int32_t)BoxCollisionSide::Right : (int32_t)BoxCollisionSide::Left);
                     }
                 }
 
@@ -213,13 +213,12 @@ namespace iKan {
                     if (cePos.y + speed < entPos.y + entSize.y &&
                         cePos.y + speed + ceSize.y > entPos.y)
                     {
-                        IK_CORE_INFO("Collision YYY {0}", cePos.x);
-                        return 1;
+                        result |= ((speed > 0) ? (int32_t)BoxCollisionSide::Up : (int32_t)BoxCollisionSide::Down);
                     }
                 }
             }
         }
-        return 0;
+        return result;
     }
 
 }
