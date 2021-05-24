@@ -141,7 +141,7 @@ namespace iKan {
         // Rendering ImGui for all the layers
         for (auto layer : m_Layerstack)
         {
-            layer->OnImguiRender();
+            layer->OnImguiRender(m_Timestep);
         }
         
         m_ImguiLayer->End();

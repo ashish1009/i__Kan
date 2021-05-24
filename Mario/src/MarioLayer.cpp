@@ -116,27 +116,34 @@ void MarioLayer::OnUpdate(Timestep ts)
     }
     m_Viewport.FrameBuffer->Unbind();
 
-    m_ActiveScene->OnBoxColloider(ent1);
-
     if (m_Viewport.Focused)
     {
         auto& pos = ent1.GetComponent<TransformComponent>().Translation;
         float speed = 3 * ts;
         if (Input::IsKeyPressed(KeyCode::Left))
         {
-            pos.x -= speed;
+            if (1 != m_ActiveScene->OnBoxColloider(ent1, speed))
+            {
+                IK_CORE_INFO("Input : {0}", pos.x);
+                pos.x -= speed;
+            }
+//            else
+//                pos.x += speed;
         }
         if (Input::IsKeyPressed(KeyCode::Right))
         {
+            if (1 != m_ActiveScene->OnBoxColloider(ent1, speed))
             pos.x += speed;
         }
         if (Input::IsKeyPressed(KeyCode::Up))
         {
-            pos.x += speed;
+            if (1 != m_ActiveScene->OnBoxColloider(ent1, speed))
+            pos.y += speed;
         }
         if (Input::IsKeyPressed(KeyCode::Down))
         {
-            pos.x -= speed;
+            if (1 != m_ActiveScene->OnBoxColloider(ent1, speed))
+            pos.y -= speed;
         }
     }
 }
@@ -144,12 +151,12 @@ void MarioLayer::OnUpdate(Timestep ts)
 // ******************************************************************************
 // Imgui Render for Scene Editor
 // ******************************************************************************
-void MarioLayer::OnImguiRender()
+void MarioLayer::OnImguiRender(Timestep ts)
 {
     ImGuiAPI::StartDcocking();
 
     ShowMenu();
-    RendererStats();
+    RendererStats(ts);
 
     // Render Scene Hierarchy pannel in imgui
     if (s_PropFlag.IsSceneHeirarchypanel)
@@ -266,11 +273,11 @@ void MarioLayer::ShowMenu()
 // ******************************************************************************
 // Show the renderer stats
 // ******************************************************************************
-void MarioLayer::RendererStats()
+void MarioLayer::RendererStats(Timestep ts)
 {
     if (s_PropFlag.IsFrameRate)
     {
-        ImGuiAPI::FrameRate(&s_PropFlag.IsFrameRate);
+        ImGuiAPI::FrameRate(ts, &s_PropFlag.IsFrameRate);
     }
 
     if (s_PropFlag.IsRendererStats)

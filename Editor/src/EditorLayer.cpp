@@ -97,7 +97,7 @@ void EditorLayer::OnUpdate(Timestep ts)
 // ******************************************************************************
 // Imgui Render for Scene Editor
 // ******************************************************************************
-void EditorLayer::OnImguiRender()
+void EditorLayer::OnImguiRender(Timestep ts)
 {
     ImGuiAPI::StartDcocking();
     
@@ -220,12 +220,11 @@ void EditorLayer::ShowMenu()
 // ******************************************************************************
 // Show the renderer stats
 // ******************************************************************************
-void EditorLayer::RendererStats()
+void EditorLayer::RendererStats(Timestep ts)
 {
-    ImGui::ShowDemoWindow();
     if (EditorLayer::s_PropFlag.IsFrameRate)
     {
-        ImGuiAPI::FrameRate(&EditorLayer::s_PropFlag.IsFrameRate);
+        ImGuiAPI::FrameRate(ts, &EditorLayer::s_PropFlag.IsFrameRate);
     }
 
     if (EditorLayer::s_PropFlag.IsRendererStats)

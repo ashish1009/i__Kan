@@ -176,45 +176,36 @@ namespace iKan {
     // ******************************************************************************
     // Resize scene view port
     // ******************************************************************************
-    int32_t Scene::OnBoxColloider(Entity& currEntity)
+    int32_t Scene::OnBoxColloider(Entity& currEntity, float speed)
     {
-//        const Viewport& viewport      = Viewport::Get();
-//        const glm::vec2& viewportSize = viewport.Size;
-//
-//        Entity cameraEntity = GetMainCameraEntity();
-//        if (cameraEntity == Entity(entt::null, nullptr))
-//        {
-//            return -1;
-//        }
-//        const auto& cameraPos = cameraEntity.GetComponent<TransformComponent>().Translation * 16.0f;
-//        const auto& tc     = currEntity.GetComponent<TransformComponent>();
-//        const auto& cePosM  = tc.Translation * 16.0f;
-//        const auto& viewportSizeMod = glm::vec3(viewportSize.x, viewportSize.y / 2.0f, 0.0f);
-//        const auto& ceSize = tc.Scale * 16.0f;
-//
-//        const auto& cePos = cePosM + cameraPos + viewportSizeMod;
-//
-//        float yPixel    = cePos.y - ceSize.y/2;
-//        float pixelSize = 1.0f / 16.0f;
-//        while (yPixel < cePos.y + ceSize.y/2)
-//        {
-//            IK_CORE_INFO("{0}", yPixel);
-//            yPixel ++;
-//        }
-//        auto group = m_Registry.group<>(entt::get<TransformComponent, BoxCollider2DComponent>);
-//        for (auto entity : group)
-//        {
-//            if (currEntity == entity)
-//            {
-//                continue;
-//            }
-//
-//            const auto [transform, boxColl] = group.get<TransformComponent, BoxCollider2DComponent>(entity);
-//            if (boxColl.IsRigid)
-//            {
-//                
-//            }
-//        }
+        const auto& ceTc   = currEntity.GetComponent<TransformComponent>();
+        const auto& cePos  = ceTc.Translation;
+        const auto& ceSize = ceTc.Scale;
+
+        auto group = m_Registry.group<>(entt::get<TransformComponent, BoxCollider2DComponent>);
+        for (auto entity : group)
+        {
+            if (currEntity == entity)
+            {
+                continue;
+            }
+
+            const auto [transform, boxColl] = group.get<TransformComponent, BoxCollider2DComponent>(entity);
+            if (boxColl.IsRigid)
+            {
+                const auto& entPos  = transform.Translation;
+                const auto& entSize = transform.Scale;
+
+                if (cePos.x < entPos.x + entSize.x &&
+                    cePos.x + ceSize.x > entPos.x  &&
+                    cePos.y < entPos.y + entSize.y &&
+                    cePos.y + ceSize.y > entPos.y)
+                {
+                    IK_CORE_INFO("Collision {0}", cePos.x);
+                    return 1;
+                }
+            }
+        }
         return 0;
     }
 

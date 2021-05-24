@@ -105,10 +105,26 @@ namespace iKan {
     // ******************************************************************************
     // Frame Rate
     // ******************************************************************************
-    void ImGuiAPI::FrameRate(bool *pIsOpen)
+    void ImGuiAPI::FrameRate(float ts, bool *pIsOpen)
     {
         ImGui::Begin("Frame Rate", pIsOpen);
+
+        ImGui::PushID("Frame Rate");
+
+        ImGui::Columns(2);
+
+        ImGui::SetColumnWidth(0, 170);
         ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+        ImGui::NextColumn();
+
+        ImGui::SetColumnWidth(1, 210);
+        ImGui::Text("Time step : %f", ts);
+        ImGui::NextColumn();
+
+        ImGui::Columns(1);
+
+        ImGui::PopID();
+
         ImGui::End();
     }
     

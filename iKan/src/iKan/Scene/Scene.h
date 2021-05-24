@@ -42,7 +42,7 @@ namespace iKan {
 
         int32_t GetEntityIdFromPixels(int32_t mx, int32_t my);
         uint32_t GetNumEntities() const { return m_NumEntities; }
-        int32_t OnBoxColloider(Entity& currEntity);
+        int32_t OnBoxColloider(Entity& currEntity, float speed);
 
     private:
         Entity GetMainCameraEntity();

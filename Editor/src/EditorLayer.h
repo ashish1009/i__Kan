@@ -23,11 +23,11 @@ public:
     virtual void OnDetach() override;
     virtual void OnEvent(Event& event) override;
     virtual void OnUpdate(Timestep ts) override;
-    virtual void OnImguiRender() override;
+    virtual void OnImguiRender(Timestep ts) override;
     
 private:
     void ShowMenu();
-    void RendererStats();
+    void RendererStats(Timestep ts);
 
 private:
     EditorCamera         m_EditorCamera;

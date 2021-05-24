@@ -30,7 +30,7 @@ namespace iKan {
         
         virtual void OnAttach() {}
         virtual void OnUpdate(Timestep ts) {}
-        virtual void OnImguiRender() {}
+        virtual void OnImguiRender(Timestep ts) {}
         virtual void OnDetach() {}
         virtual void OnEvent(Event& event) {}
         
