@@ -196,13 +196,26 @@ namespace iKan {
                 const auto& entPos  = transform.Translation;
                 const auto& entSize = transform.Scale;
 
-                if (cePos.x < entPos.x + entSize.x &&
-                    cePos.x + ceSize.x > entPos.x  &&
-                    cePos.y < entPos.y + entSize.y &&
+                if (cePos.y < entPos.y + entSize.y &&
                     cePos.y + ceSize.y > entPos.y)
                 {
-                    IK_CORE_INFO("Collision {0}", cePos.x);
-                    return 1;
+                    if (cePos.x + speed < entPos.x + entSize.x &&
+                        cePos.x + speed + ceSize.x > entPos.x)
+                    {
+                        IK_CORE_INFO("Collision {0}", cePos.x);
+                        return 1;
+                    }
+                }
+
+                if (cePos.x < entPos.x + entSize.x &&
+                    cePos.x + ceSize.x > entPos.x)
+                {
+                    if (cePos.y + speed < entPos.y + entSize.y &&
+                        cePos.y + speed + ceSize.y > entPos.y)
+                    {
+                        IK_CORE_INFO("Collision YYY {0}", cePos.x);
+                        return 1;
+                    }
                 }
             }
         }
