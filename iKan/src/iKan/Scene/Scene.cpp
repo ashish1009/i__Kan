@@ -178,28 +178,42 @@ namespace iKan {
     // ******************************************************************************
     int32_t Scene::OnBoxColloider(Entity& currEntity, float speed)
     {
+        // Store the side of collisions as bit mask (check BoxCollisionSide enum for bit representation)
         int32_t result = 0;
+
+        // Current (Moving) Entity Property (Position and Size)
         const auto& ceTc   = currEntity.GetComponent<TransformComponent>();
         const auto& cePos  = ceTc.Translation;
         const auto& ceSize = ceTc.Scale;
 
-        auto group = m_Registry.group<>(entt::get<TransformComponent, BoxCollider2DComponent>);
-        for (auto entity : group)
+        // Traverse entire Entities to get Box colloider entity one by one
+        auto view = m_Registry.view<BoxCollider2DComponent>();
+        for (auto entity : view)
         {
             if (currEntity == entity)
             {
+                // no operation for same enitity
                 continue;
             }
 
-            const auto [transform, boxColl] = group.get<TransformComponent, BoxCollider2DComponent>(entity);
+            // Extract iKan Entity from entt::entity
+            Entity e = { entity, this };
+
+            // Coilloider entity (still or moving) property (Size and position)
+            auto& transform = e.GetComponent<TransformComponent>();
+            auto& boxColl   = e.GetComponent<BoxCollider2DComponent>();
+
+            // If coilloider is rigid
             if (boxColl.IsRigid)
             {
                 const auto& entPos  = transform.Translation;
                 const auto& entSize = transform.Scale;
 
+                // if aligned in same y - Axis
                 if (cePos.y < entPos.y + entSize.y &&
                     cePos.y + ceSize.y > entPos.y)
                 {
+                    // If alligned in same x - axis
                     if (cePos.x + speed < entPos.x + entSize.x &&
                         cePos.x + speed + ceSize.x > entPos.x)
                     {
@@ -207,9 +221,11 @@ namespace iKan {
                     }
                 }
 
+                // if aligned in same x - Axis
                 if (cePos.x < entPos.x + entSize.x &&
                     cePos.x + ceSize.x > entPos.x)
                 {
+                    // if aligned in same y - Axis
                     if (cePos.y + speed < entPos.y + entSize.y &&
                         cePos.y + speed + ceSize.y > entPos.y)
                     {
