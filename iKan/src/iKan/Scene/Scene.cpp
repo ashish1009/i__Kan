@@ -206,14 +206,19 @@ namespace iKan {
             // If coilloider is rigid
             if (boxColl.IsRigid)
             {
-                const auto& entPos  = transform.Translation;
                 const auto& entSize = transform.Scale;
+
+                // Modifying the position ot entity because, in case of Entity Size greater than 1
+                // then its actual position would be in middle, but we need to assume it at the left
+                // edge of Entity in both x and y axis, so we subtract the Half of the difference of
+                // Entity size to 1 (1 because position of entity of size 1 is always at edge)
+                const auto& entPos  = transform.Translation - (entSize - 1.0f) / 2.0f;
 
                 // if aligned in same y - Axis
                 if (cePos.y < entPos.y + entSize.y &&
                     cePos.y + ceSize.y > entPos.y)
                 {
-                    // If alligned in same x - axis
+                    // If alligned in same x - A  xis
                     if (cePos.x + speed < entPos.x + entSize.x &&
                         cePos.x + speed + ceSize.x > entPos.x)
                     {

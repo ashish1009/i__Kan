@@ -48,8 +48,5 @@ private:
         bool IsSettings            = true;
     };
     static PropertyFlag s_PropFlag;
-
-    Entity ent1, ent2;
-
 };
 

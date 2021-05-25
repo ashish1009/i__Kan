@@ -10,6 +10,8 @@
 #include "MarioLayer.h"
 #include "Background.h"
 
+static Entity ent1;
+
 MarioLayer::PropertyFlag MarioLayer::s_PropFlag;
 
 // ******************************************************************************
@@ -70,12 +72,6 @@ void MarioLayer::OnAttach()
     ent1.GetComponent<TransformComponent>().Translation = glm::vec3(8.5, 0.0, 0.0);
     ent1.AddComponent<SpriteRendererComponent>(glm::vec4(1.0f));
     ent1.AddComponent<BoxCollider2DComponent>();
-
-    // Creating Temp Entity
-    ent2 = m_ActiveScene->CreateEntity("Entity");
-    ent2.GetComponent<TransformComponent>().Translation = glm::vec3(-0.5, 0.0, 0.0);
-    ent2.AddComponent<SpriteRendererComponent>(glm::vec4(1.0f));
-    ent2.AddComponent<BoxCollider2DComponent>();
 }
 
 // ******************************************************************************
