@@ -146,6 +146,8 @@ void MarioLayer::OnImguiRender(Timestep ts)
 {
     ImGuiAPI::StartDcocking();
 
+    ImGui::ShowDemoWindow();
+
     ShowMenu();
     RendererStats(ts);
 

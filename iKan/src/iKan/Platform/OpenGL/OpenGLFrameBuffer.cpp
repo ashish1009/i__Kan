@@ -12,7 +12,7 @@
 
 namespace iKan {
 
-    namespace Utils {
+    namespace FbUtils {
 
         // ******************************************************************************
         // Get the Open GL Texture target with number of samples
@@ -146,7 +146,7 @@ namespace iKan {
 
         for (auto attachment : m_Specifications.Attachments.TextureFormats)
         {
-            if (!Utils::IsDepthFormat(attachment.Format))
+            if (!FbUtils::IsDepthFormat(attachment.Format))
             {
                 m_ColorAttachmentSpecifications.emplace_back(attachment);
             }
@@ -197,11 +197,11 @@ namespace iKan {
         if (m_ColorAttachmentSpecifications.size())
         {
             m_ColorAttachments.resize(m_ColorAttachmentSpecifications.size());
-            Utils::CreateTextures(m_ColorAttachments.data(), (uint32_t)m_ColorAttachments.size());
+            FbUtils::CreateTextures(m_ColorAttachments.data(), (uint32_t)m_ColorAttachments.size());
 
             for (size_t i = 0; i < m_ColorAttachments.size(); i++)
             {
-                Utils::BindTexture(multisample, m_ColorAttachments[i]);
+                FbUtils::BindTexture(multisample, m_ColorAttachments[i]);
                 switch (m_ColorAttachmentSpecifications[i].Format)
                 {
                     case Framebuffer::TextureSpecification::TextureFormat::None:
@@ -209,11 +209,11 @@ namespace iKan {
                         break;
 
                     case Framebuffer::TextureSpecification::TextureFormat::RGBA8:
-                        Utils::AttachColorTexture(m_ColorAttachments[i], m_Specifications.Samples, GL_RGBA8, m_Specifications.Width, m_Specifications.Height, (uint32_t)i);
+                        FbUtils::AttachColorTexture(m_ColorAttachments[i], m_Specifications.Samples, GL_RGBA8, m_Specifications.Width, m_Specifications.Height, (uint32_t)i);
                         break;
 
                     case Framebuffer::TextureSpecification::TextureFormat::R32I:
-                        Utils::AttachIDTexture(m_ColorAttachments[i], m_Specifications.Samples, GL_R32I, GL_COLOR_ATTACHMENT1, m_Specifications.Width, m_Specifications.Height);
+                        FbUtils::AttachIDTexture(m_ColorAttachments[i], m_Specifications.Samples, GL_R32I, GL_COLOR_ATTACHMENT1, m_Specifications.Width, m_Specifications.Height);
                         break;
                 }
             }
@@ -221,8 +221,8 @@ namespace iKan {
 
         if (m_DepthAttachmentSpecification.Format != Framebuffer::TextureSpecification::TextureFormat::None)
         {
-            Utils::CreateTextures(&m_DepthAttachment, 1);
-            Utils::BindTexture(multisample, m_DepthAttachment);
+            FbUtils::CreateTextures(&m_DepthAttachment, 1);
+            FbUtils::BindTexture(multisample, m_DepthAttachment);
             switch (m_DepthAttachmentSpecification.Format)
             {
                 case Framebuffer::TextureSpecification::TextureFormat::None:
@@ -232,7 +232,7 @@ namespace iKan {
 
                 case Framebuffer::TextureSpecification::TextureFormat::DEPTH24STENCIL8:
                     // TODO: IT WAS "GL_DEPTH_STENCIL_ATTACHMENT" but was not working
-                    Utils::AttachDepthTexture(m_DepthAttachment, m_Specifications.Samples, GL_DEPTH24_STENCIL8, GL_DEPTH_ATTACHMENT, m_Specifications.Width, m_Specifications.Height);
+                    FbUtils::AttachDepthTexture(m_DepthAttachment, m_Specifications.Samples, GL_DEPTH24_STENCIL8, GL_DEPTH_ATTACHMENT, m_Specifications.Width, m_Specifications.Height);
                     break;
             }
         }

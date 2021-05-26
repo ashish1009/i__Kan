@@ -17,21 +17,22 @@ namespace iKan {
     // ******************************************************************************
     // Read and write the Number as String. Value can not be modified
     // ******************************************************************************
-    bool PropertyGrid::String(const char* label, uint32_t value, bool error)
+    bool PropertyGrid::String(const char* label, uint32_t value, const char* hint, bool modifiable, bool error)
     {
         std::string idStr;
         std::stringstream ss;
         ss << value;
         ss >> idStr;
 
-        return String(label, idStr, false);
+        return String(label, idStr, " ",false); // No need to add any hint as this is non modifiable
     }
 
     // ******************************************************************************
     // Read and write the String. Modify the value
     // if Modifiable is true then we can modify the value
+    // Hint will be printed to String path
     // ******************************************************************************
-    bool PropertyGrid::String(const char* label, std::string& value, bool modifiable, bool error)
+    bool PropertyGrid::String(const char* label, std::string& value, const char* hint, bool modifiable, bool error)
     {
         bool modified = false;
         
@@ -55,7 +56,7 @@ namespace iKan {
         if (modifiable)
         {
             // Take input text from User in Property pannel. that will be name(Tag) of Selected Entity
-            if (ImGui::InputText(UIContextId.c_str(), buffer, 256))
+            if (ImGui::InputTextWithHint(UIContextId.c_str(), hint, buffer, IM_ARRAYSIZE(buffer)))
             {
                 value    = buffer;
                 modified = true;

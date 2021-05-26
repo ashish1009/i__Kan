@@ -49,13 +49,7 @@ namespace iKan {
         m_Source            = PreprocessFile(source);
         
         // Extract the name
-        auto lastSlash = path.find_last_of("/\\");
-        lastSlash      = lastSlash == std::string::npos ? 0 : lastSlash + 1;
-        
-        auto lastDot = path.find_last_of('.');
-        auto count   = lastDot == std::string::npos ? path.size() - lastSlash : lastDot - lastSlash;
-        
-        m_Name = path.substr(lastSlash, count);
+        m_Name = Utils::GetNameFromFilePath(path);
         
         Compile();
     }

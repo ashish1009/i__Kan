@@ -163,8 +163,11 @@ namespace Mario {
     // ******************************************************************************
     void Background::CreateEntities(Ref<Scene>& scene)
     {
+        auto& sceneData = scene->GetDataRef();
+        std::unordered_map<std::string, Ref<Texture>> textureMap = sceneData.TextureMap;
+
         // Texture tile
-        s_Data.Texture = Texture::Create("../../../Mario/assets/Resources/Graphics/Tile.png");
+        s_Data.Texture = scene->AddTextureToScene("../../../Mario/assets/Resources/Graphics/MarioTile.png");
 
         // Initialise the tiles and map
         Init();

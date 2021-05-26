@@ -32,6 +32,57 @@ namespace iKan {
     {
         IK_CORE_WARN("Destroying Scene instance");
     }
+
+    // ******************************************************************************
+    // Add the texture to Texture map in Scene data. Also extract the name of texture
+    // ******************************************************************************
+    Ref<Texture> Scene::AddTextureToScene(const std::string& texturePath)
+    {
+        Ref<Texture> texture = Texture::Create(texturePath);
+        m_Data.TextureMap[Utils::GetNameFromFilePath(texturePath)] = texture;
+        return texture;
+    }
+
+    // ******************************************************************************
+    // Imgui renderer for Scene
+    // NOTE : Imgui::Begin and Imgui::End should be taken care at the place where it
+    // is getting called
+    // ******************************************************************************
+    void Scene::OnImguiRenderer()
+    {
+        if (m_Data.TextureMap.empty())
+        {
+            return;
+        }
+        ImGui::Columns(2);
+        ImGui::Text("Available Textures");
+        ImGui::NextColumn();
+        ImGui::PushItemWidth(-1);
+
+        std::string currentTexture = "Available Textures";
+        if (ImGui::BeginCombo("##Type", currentTexture.c_str()))
+        {
+            for (auto texture : m_Data.TextureMap)
+            {
+                bool bIsSelected = currentTexture == texture.first;
+                if (ImGui::Selectable(texture.first.c_str(), bIsSelected))
+                {
+                    currentTexture = texture.first;
+                }
+
+                if (bIsSelected)
+                {
+                    ImGui::SetItemDefaultFocus();
+                }
+            }
+            ImGui::EndCombo();
+        }
+        ImGui::PopItemWidth();
+        ImGui::NextColumn();
+        ImGui::Columns(1);
+
+        ImGui::Separator();
+    }
     
     // ******************************************************************************
     // Create Entity in Scene with UUID

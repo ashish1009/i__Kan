@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		750AA8E1265D52140031A3E0 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 750AA8DF265D52140031A3E0 /* Utils.cpp */; };
+		750AA8E2265D52140031A3E0 /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 750AA8E0265D52140031A3E0 /* Utils.h */; };
 		B2028051262590D300BC7F39 /* Core.h in Headers */ = {isa = PBXBuildFile; fileRef = B2028050262590D300BC7F39 /* Core.h */; };
 		B2028053262592DD00BC7F39 /* Log.h in Headers */ = {isa = PBXBuildFile; fileRef = B2028052262592DD00BC7F39 /* Log.h */; };
 		B20280562625934700BC7F39 /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B20280542625934700BC7F39 /* Log.cpp */; };
@@ -113,6 +115,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		750AA8DF265D52140031A3E0 /* Utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
+		750AA8E0265D52140031A3E0 /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		B2028050262590D300BC7F39 /* Core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
 		B2028052262592DD00BC7F39 /* Log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
 		B20280542625934700BC7F39 /* Log.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Log.cpp; sourceTree = "<group>"; };
@@ -503,6 +507,8 @@
 				B2EAB334262B20F3003D7FE6 /* Events */,
 				B2FE351A2624B67B00AFC236 /* Application.cpp */,
 				B2FE351B2624B67B00AFC236 /* Application.h */,
+				750AA8DF265D52140031A3E0 /* Utils.cpp */,
+				750AA8E0265D52140031A3E0 /* Utils.h */,
 				B2028050262590D300BC7F39 /* Core.h */,
 				B2028052262592DD00BC7F39 /* Log.h */,
 				B20280542625934700BC7F39 /* Log.cpp */,
@@ -546,6 +552,7 @@
 				B2EAB33F262B23F2003D7FE6 /* MouseEvent.h in Headers */,
 				B22FE70D26385EE600C1640B /* FrameBuffer.h in Headers */,
 				B28FE5BF262C87A500DC5E20 /* Input.h in Headers */,
+				750AA8E2265D52140031A3E0 /* Utils.h in Headers */,
 				B2496F142639AA690091C915 /* SceneRenderer.h in Headers */,
 				B2A1C120263EE4CA00606017 /* ScenePropertyGrid.h in Headers */,
 				B27FE3182629E1D2000FD32D /* GraphicsContext.h in Headers */,
@@ -687,6 +694,7 @@
 				B27FE3172629E1D2000FD32D /* GraphicsContext.cpp in Sources */,
 				B249623726399AA50091C915 /* EditorCamera.cpp in Sources */,
 				B22FE70C26385EE600C1640B /* FrameBuffer.cpp in Sources */,
+				750AA8E1265D52140031A3E0 /* Utils.cpp in Sources */,
 				B22FE70826385ECE00C1640B /* OpenGLFrameBuffer.cpp in Sources */,
 				B2A1C10F263E78C200606017 /* ImguiAPI.cpp in Sources */,
 				B2496CBA2639A8AF0091C915 /* stb_image.cpp in Sources */,

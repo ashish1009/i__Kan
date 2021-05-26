@@ -204,7 +204,7 @@ namespace iKan {
             ImGui::Text("Hovered Entity");
             PropertyGrid::String("Entity ID", (uint32_t)HoveredEntity);
             PropertyGrid::String("Unique ID", (uint32_t)HoveredEntity.GetComponent<IDComponent>().ID);
-            PropertyGrid::String("Entity Name", entityName, false);
+            PropertyGrid::String("Entity Name", entityName, "", false); // No need to add any Hint in non modifiable string
             ImGui::Separator();
         }
 

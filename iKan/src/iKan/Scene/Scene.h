@@ -11,8 +11,9 @@
 
 #include <entt.hpp>
 #include <iKan/Core/UUID.h>
-#include <iKan/Editor/EditorCamera.h>
 #include <iKan/Core/TimeStep.h>
+#include <iKan/Editor/EditorCamera.h>
+#include <iKan/Renderer/Texture.h>
 
 namespace iKan {
     
@@ -29,6 +30,16 @@ namespace iKan {
             Down    = BIT(3)
         };
 
+        struct Data
+        {
+            Data() = default;
+            ~Data() = default;
+
+            // vector of Textures that are present in the Scene
+            // These textures might be used as Sprite as well
+            std::unordered_map<std::string, Ref<Texture>> TextureMap;
+        };
+
     public:
         Scene();
         ~Scene();
@@ -39,11 +50,15 @@ namespace iKan {
         void OnUpdateEditor(Timestep ts, EditorCamera& camera);
         void OnViewportResize(uint32_t width, uint32_t height);
         void OnUpdateRuntime(Timestep ts);
+        void OnImguiRenderer();
 
         int32_t GetEntityIdFromPixels(int32_t mx, int32_t my);
+        int32_t OnBoxColloider(Entity& currEntity, float speed);
         uint32_t GetNumEntities() const { return m_NumEntities; }
 
-        int32_t OnBoxColloider(Entity& currEntity, float speed);
+        Data& GetDataRef() { return m_Data; }
+
+        Ref<Texture> AddTextureToScene(const std::string& texturePath);
 
     private:
         Entity GetMainCameraEntity();
@@ -58,6 +73,9 @@ namespace iKan {
 
         // Store the map of Entityes present in the Scene with their UUID
         std::unordered_map<UUID, Entity> m_EntityIDMap;
+
+        // Instacne for Scene Data
+        Data m_Data;
         
         friend class Entity;
         friend class SceneHeirarchyPannel;
