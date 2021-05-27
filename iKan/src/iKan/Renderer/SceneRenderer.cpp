@@ -255,7 +255,7 @@ namespace iKan {
     void SceneRenderer::DrawQuad(const glm::mat4& transform, const glm::vec4& color, int32_t entID)
     {
         constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
-        DrawTextureQuad(transform, nullptr, entID, textureCoords);
+        DrawTextureQuad(transform, nullptr, entID, textureCoords, 1.0f, color);
     }
     
     // ******************************************************************************

@@ -17,14 +17,14 @@ namespace iKan {
     // ******************************************************************************
     // Read and write the Number as String. Value can not be modified
     // ******************************************************************************
-    bool PropertyGrid::String(const char* label, uint32_t value, const char* hint, bool modifiable, bool error)
+    bool PropertyGrid::String(const char* label, uint32_t value, float columnWidth, const char* hint, bool modifiable, bool error)
     {
         std::string idStr;
         std::stringstream ss;
         ss << value;
         ss >> idStr;
 
-        return String(label, idStr, " ",false); // No need to add any hint as this is non modifiable
+        return String(label, idStr, columnWidth, " ",false); // No need to add any hint as this is non modifiable
     }
 
     // ******************************************************************************
@@ -32,11 +32,13 @@ namespace iKan {
     // if Modifiable is true then we can modify the value
     // Hint will be printed to String path
     // ******************************************************************************
-    bool PropertyGrid::String(const char* label, std::string& value, const char* hint, bool modifiable, bool error)
+    bool PropertyGrid::String(const char* label, std::string& value, float columnWidth, const char* hint, bool modifiable, bool error)
     {
         bool modified = false;
         
         ImGui::Columns(2);
+        ImGui::SetColumnWidth(0, columnWidth);
+
         ImGui::Text(label);
         ImGui::NextColumn();
         ImGui::PushItemWidth(-1);
@@ -344,11 +346,12 @@ namespace iKan {
     // ******************************************************************************
     // Checkbox
     // ******************************************************************************
-    bool PropertyGrid::CheckBox(const char* label, bool& value)
+    bool PropertyGrid::CheckBox(const char* label, bool& value, float columnWidth)
     {
         bool modified = false;
         
         ImGui::Columns(2);
+        ImGui::SetColumnWidth(0, columnWidth);
 
         ImGui::Text(label);
         ImGui::NextColumn();

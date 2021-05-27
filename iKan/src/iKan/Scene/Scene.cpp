@@ -50,38 +50,7 @@ namespace iKan {
     // ******************************************************************************
     void Scene::OnImguiRenderer()
     {
-        if (m_Data.TextureMap.empty())
-        {
-            return;
-        }
-        ImGui::Columns(2);
-        ImGui::Text("Available Textures");
-        ImGui::NextColumn();
-        ImGui::PushItemWidth(-1);
 
-        std::string currentTexture = "Available Textures";
-        if (ImGui::BeginCombo("##Type", currentTexture.c_str()))
-        {
-            for (auto texture : m_Data.TextureMap)
-            {
-                bool bIsSelected = currentTexture == texture.first;
-                if (ImGui::Selectable(texture.first.c_str(), bIsSelected))
-                {
-                    currentTexture = texture.first;
-                }
-
-                if (bIsSelected)
-                {
-                    ImGui::SetItemDefaultFocus();
-                }
-            }
-            ImGui::EndCombo();
-        }
-        ImGui::PopItemWidth();
-        ImGui::NextColumn();
-        ImGui::Columns(1);
-
-        ImGui::Separator();
     }
     
     // ******************************************************************************

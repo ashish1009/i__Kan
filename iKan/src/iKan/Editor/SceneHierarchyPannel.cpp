@@ -90,7 +90,7 @@ namespace iKan {
     {
         ImGui::Begin("Scene Hierarchy", pIsOpen);
         {
-            PropertyGrid::String("Number of Entities in Scene", m_Context->GetNumEntities());
+            PropertyGrid::String("Number of Entities in Scene", m_Context->GetNumEntities(), 200);
             ImGui::Separator();
 
             m_Context->OnImguiRenderer();
@@ -189,14 +189,14 @@ namespace iKan {
         if (entity.HasComponent<IDComponent>())
         {
             const auto& Id = entity.GetComponent<IDComponent>().ID;
-            PropertyGrid::String("ID", (uint32_t )Id);
+            PropertyGrid::String("ID", (uint32_t )Id, 200.0f);
             ImGui::Separator();
         }
         
         if (entity.HasComponent<TagComponent>())
         {
             auto& tag = entity.GetComponent<TagComponent>().Tag;
-            PropertyGrid::String("Tag", tag);
+            PropertyGrid::String("Tag", tag, 200.0f);
             ImGui::Separator();
         }
 
@@ -206,7 +206,7 @@ namespace iKan {
             auto& IsRigid = entity.GetComponent<BoxCollider2DComponent>().IsRigid;
             IsRigitString = (IsRigid ? "Yes": "No");
         }
-        PropertyGrid::String("Is RigiD", IsRigitString, " ", false); // No need to add any hind as string in non modifyiable String
+        PropertyGrid::String("Is RigiD", IsRigitString, 200.0f, " ", false); // No need to add any hind as string in non modifyiable String
         ImGui::Separator();
 
         ImGui::SameLine();
@@ -238,7 +238,7 @@ namespace iKan {
                                        {
             auto& camera = cc.Camera;
             
-            PropertyGrid::CheckBox("Primary", cc.Primary);
+            PropertyGrid::CheckBox("Primary", cc.Primary, 100);
             ImGui::Separator();
 
             {
@@ -308,36 +308,73 @@ namespace iKan {
                                                {
             // Change the color of the Entity
             ImGui::ColorEdit4("Color", glm::value_ptr(src.ColorComp));
+
+            // Upload New Texture Texture
+            static std::string newTexturePath;
+            if (ImGui::Button("Upload Texture") && newTexturePath != "")
+            {
+                // If texture is already created then delete the texture
+                // (if shared with other entity then reduce the counter)
+                if (src.TextureComp)
+                {
+                    src.TextureComp.reset();
+                }
+                src.TextureComp = Texture::Create(newTexturePath);
+            }
+            ImGui::SameLine();
+            PropertyGrid::String("", newTexturePath, 110.0f, "Enter Texture path here (Path should be absolute)");
             ImGui::Separator();
 
-            // Chnage the tiling Factor of the enitty
-            if (src.TextureComp || src.SubTexComp)
-            {
-                PropertyGrid::CounterF("Tiling Factor", src.TilingFactor);
-                ImGui::Separator();
-            }
-
-            // Load the New Texture
-            static std::string filePath;
             if (src.TextureComp)
             {
-                filePath = src.TextureComp->GetfilePath();
+                // Open the Texture component
+                ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
 
-                PropertyGrid::String("Texture Upload", filePath, "Enter Texture path here (Path should be absolute)");
-                if (ImGui::Button("Open"))
+                ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 1, 1 });
+                float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y;
+
+                static ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_Selected | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap;
+                bool opened = ImGui::TreeNodeEx((void*)99298273, flags, "Texture Component");
+                ImGui::PopStyleVar();
+
+                ImGui::SameLine(contentRegionAvailable.x - lineHeight * 0.5f);
+                if (ImGui::Button("+", ImVec2{ lineHeight, lineHeight }))
                 {
-                    src.TextureComp = Texture::Create(filePath);
+                    ImGui::OpenPopup("TextureSetting");
                 }
-            }
-            else if (src.SubTexComp)
-            {
-                filePath = src.SubTexComp->GetTeture()->GetfilePath();
-            }
-            else
-            {
-                filePath = "";
-            }
-            
+
+                // Texture Settings
+                if (ImGui::BeginPopup("TextureSetting"))
+                {
+                    if (ImGui::MenuItem("Remove texture"))
+                    {
+                        // If texture is already created then delete the texture
+                        // (if shared with other entity then reduce the counter)
+                        if (src.TextureComp)
+                        {
+                            src.TextureComp.reset();
+                        }
+                        src.TextureComp = nullptr;
+                    }
+                    ImGui::EndPopup();
+                }
+
+                if (opened)
+                {
+                    // Print the current texture path
+                    std::string texturePath = src.TextureComp->GetfilePath();
+                    PropertyGrid::String("Texture path", texturePath, 100.0f, "", false);
+
+                    // Chnage the tiling Factor of the enitty
+                    if (src.TextureComp != nullptr)
+                    {
+                        PropertyGrid::CounterF("Tiling Factor", src.TilingFactor);
+                        ImGui::Separator();
+                    }
+                    ImGui::TreePop();
+                }
+            } // if (src.TextureComp)
+
         });
         
     }

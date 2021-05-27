@@ -26,7 +26,8 @@ namespace iKan {
         
         stbi_uc* data = nullptr;
         data = stbi_load(path.c_str(), &width, &height, &channel, 0);
-        IK_CORE_ASSERT(data, "Failed to load stbi Image");
+        IK_CORE_CRITICAL("Failed to load stbi Image {0}", path.c_str());
+//        IK_CORE_ASSERT(data, "Failed to load stbi Image");
         
         m_Width   = width;
         m_Height  = height;
