@@ -26,41 +26,49 @@ namespace iKan {
         
         stbi_uc* data = nullptr;
         data = stbi_load(path.c_str(), &width, &height, &channel, 0);
-        IK_CORE_CRITICAL("Failed to load stbi Image {0}", path.c_str());
+        if (!data)
+        {
+            IK_CORE_CRITICAL("Failed to load stbi Image {0}", path.c_str());
+        }
 //        IK_CORE_ASSERT(data, "Failed to load stbi Image");
-        
-        m_Width   = width;
-        m_Height  = height;
-        m_Channel = channel;
-                
-        if (4 == m_Channel)
-        {
-            m_InternalFormat = GL_RGBA8;
-            m_DataFormat     = GL_RGBA;
-        }
-        else if (3 == channel)
-        {
-            m_InternalFormat = GL_RGB8;
-            m_DataFormat     = GL_RGB;
-        }
+
         else
         {
-            IK_CORE_ASSERT(false, "Invalid Format ");
-        }
-        
-        glGenTextures(1, &m_RendererId);
-        glBindTexture(GL_TEXTURE_2D, m_RendererId);
-        
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        
-        glTexImage2D(GL_TEXTURE_2D, 0, m_InternalFormat, m_Width, m_Height, 0, m_DataFormat, GL_UNSIGNED_BYTE, data);
-        
-        if (data)
-        {
-            stbi_image_free(data);
+            m_Uploaded = true;
+
+            m_Width   = width;
+            m_Height  = height;
+            m_Channel = channel;
+
+            if (4 == m_Channel)
+            {
+                m_InternalFormat = GL_RGBA8;
+                m_DataFormat     = GL_RGBA;
+            }
+            else if (3 == channel)
+            {
+                m_InternalFormat = GL_RGB8;
+                m_DataFormat     = GL_RGB;
+            }
+            else
+            {
+                IK_CORE_ASSERT(false, "Invalid Format ");
+            }
+
+            glGenTextures(1, &m_RendererId);
+            glBindTexture(GL_TEXTURE_2D, m_RendererId);
+
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+            glTexImage2D(GL_TEXTURE_2D, 0, m_InternalFormat, m_Width, m_Height, 0, m_DataFormat, GL_UNSIGNED_BYTE, data);
+
+            if (data)
+            {
+                stbi_image_free(data);
+            }
         }
     }
     

@@ -320,6 +320,12 @@ namespace iKan {
                     src.TextureComp.reset();
                 }
                 src.TextureComp = Texture::Create(newTexturePath);
+
+                // If texture is uploaded with invalid path So delete the texture
+                if (!src.TextureComp->Uploaded())
+                {
+                    src.TextureComp.reset();
+                }
             }
             ImGui::SameLine();
             PropertyGrid::String("", newTexturePath, 110.0f, "Enter Texture path here (Path should be absolute)");
@@ -359,6 +365,7 @@ namespace iKan {
                     ImGui::EndPopup();
                 }
 
+                // If texture component is opened
                 if (opened)
                 {
                     // Print the current texture path

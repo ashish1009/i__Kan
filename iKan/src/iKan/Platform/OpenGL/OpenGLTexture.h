@@ -24,6 +24,8 @@ namespace iKan {
         OpenGLTexture(uint32_t width, uint32_t height, void* data, uint32_t size);
         
         virtual ~OpenGLTexture();
+
+        virtual bool Uploaded() const override { return m_Uploaded; }
         
         virtual uint32_t GetWidth() const override { return m_Width;  }
         virtual uint32_t GetHeight() const override { return m_Height; }
@@ -40,6 +42,8 @@ namespace iKan {
         }
         
     private:
+        bool m_Uploaded = false;
+
         uint32_t m_RendererId;
         uint32_t m_Width, m_Height, m_Channel;
         GLenum m_InternalFormat = GL_RGBA8, m_DataFormat = GL_RGBA;
