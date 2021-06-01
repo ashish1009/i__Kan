@@ -273,7 +273,7 @@ namespace iKan {
     void SceneRenderer::DrawQuad(const glm::mat4& transform, const Ref<SubTexture>& subTexture, int32_t entID, float tilingFactor, const glm::vec4& tintColor)
     {
         const glm::vec2* textureCoords   = subTexture->GetTexCoord();
-        DrawTextureQuad(transform, subTexture->GetTeture(), entID, textureCoords, tilingFactor, tintColor);
+        DrawTextureQuad(transform, subTexture->GetTexture(), entID, textureCoords, tilingFactor, tintColor);
     }
     
     void SceneRenderer::DrawTextureQuad(const glm::mat4& transform, const Ref<Texture>& texture, int32_t entID, const glm::vec2* textureCoords, float tilingFactor, const glm::vec4& tintColor)

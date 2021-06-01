@@ -331,7 +331,7 @@ namespace iKan {
             PropertyGrid::String("", newTexturePath, 110.0f, "Enter Texture path here (Path should be absolute)");
             ImGui::Separator();
 
-            if (src.TextureComp)
+            if (src.TextureComp || src.SubTexComp)
             {
                 // Open the Texture component
                 ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
@@ -340,17 +340,20 @@ namespace iKan {
                 float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y;
 
                 static ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_Selected | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap;
-                bool opened = ImGui::TreeNodeEx((void*)99298273, flags, "Texture Component");
+
+                std::string treeNodeString = (src.TextureComp) ? "Texture Component" : "Sub Texture Compinent";
+
+                bool opened = ImGui::TreeNodeEx((void*)99298273, flags, treeNodeString.c_str());
                 ImGui::PopStyleVar();
 
                 ImGui::SameLine(contentRegionAvailable.x - lineHeight * 0.5f);
                 if (ImGui::Button("+", ImVec2{ lineHeight, lineHeight }))
                 {
-                    ImGui::OpenPopup("TextureSetting");
+                    ImGui::OpenPopup(treeNodeString.c_str());
                 }
-
+//                /Users/ashish/iKan/Github/iKan/Mario/assets/Resources/Graphics/MarioTile.png
                 // Texture Settings
-                if (ImGui::BeginPopup("TextureSetting"))
+                if (ImGui::BeginPopup(treeNodeString.c_str()))
                 {
                     if (ImGui::MenuItem("Remove texture"))
                     {
@@ -361,25 +364,82 @@ namespace iKan {
                             src.TextureComp.reset();
                         }
                         src.TextureComp = nullptr;
+
+                        // If texture is already created then delete the texture
+                        // (if shared with other entity then reduce the counter)
+                        if (src.SubTexComp)
+                        {
+                            src.SubTexComp.reset();
+                        }
+                        src.SubTexComp = nullptr;
+                    }
+
+                    if (!src.SubTexComp && src.TextureComp)
+                    {
+                        if (ImGui::MenuItem("Add Subtexture"))
+                        {
+                            // Add the subtexture component
+                            src.SubTexComp = SubTexture::CreateFromCoords(src.TextureComp, glm::vec2(1.0f));
+
+                            // If texture is already created then delete the texture
+                            // (if shared with other entity then reduce the counter)
+                            if (src.TextureComp)
+                            {
+                                src.TextureComp.reset();
+                            }
+                            src.TextureComp = nullptr;
+                        }
                     }
                     ImGui::EndPopup();
-                }
+                } // if (ImGui::BeginPopup("treeNodeString.c_str()"))
 
                 // If texture component is opened
                 if (opened)
                 {
                     // Print the current texture path
-                    std::string texturePath = src.TextureComp->GetfilePath();
+                    std::string texturePath;
+                    if (src.TextureComp)
+                    {
+                        texturePath = src.TextureComp->GetfilePath();
+                    }
+                    if (src.SubTexComp)
+                    {
+                        texturePath = src.SubTexComp->GetTexture()->GetfilePath();
+                    }
                     PropertyGrid::String("Texture path", texturePath, 100.0f, "", false);
+                    ImGui::Separator();
 
-                    // Chnage the tiling Factor of the enitty
+                    // From here Component specific prperties
+
+                    // Chnage the tiling Factor of the enitty if Texture component is present
                     if (src.TextureComp != nullptr)
                     {
                         PropertyGrid::CounterF("Tiling Factor", src.TilingFactor);
                         ImGui::Separator();
                     }
+
+                    // Chnage the Subtexture properties
+                    if (src.SubTexComp != nullptr)
+                    {
+                        glm::vec2& coords     = src.SubTexComp->GetCoords();
+                        glm::vec2& spriteSize = src.SubTexComp->GetSpriteSize();
+                        glm::vec2& cellSize   = src.SubTexComp->GetCellSize();
+
+                        static Ref<Texture> texture = src.SubTexComp->GetTexture();
+
+                        bool modCoord      = PropertyGrid::Float2("Coordinates", coords, nullptr);
+                        bool modSpriteSize = PropertyGrid::Float2("Sprite Size", spriteSize, nullptr);
+                        bool modCellSize   = PropertyGrid::Float2("Cell Size", cellSize, nullptr);
+
+                        if (modCoord || modSpriteSize || modCellSize)
+                        {
+                            src.SubTexComp = SubTexture::CreateFromCoords(texture, coords, spriteSize, cellSize);
+                        }
+                        ImGui::Separator();
+                    }
+
                     ImGui::TreePop();
-                }
+                } // if (opened)
             } // if (src.TextureComp)
 
         });

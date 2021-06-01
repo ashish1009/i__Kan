@@ -62,6 +62,20 @@ namespace iKan {
         glm::vec2 max = { ((coords.x + spriteSize.x) * cellSize.x) / texture->GetWidth(), ((coords.y + spriteSize.y) * cellSize.y) / texture->GetHeight() };
         return CreateRef<SubTexture>(texture, min, max, spriteSize, cellSize, coords);
     }
+
+    // ******************************************************************************
+    // Update the subtexture if any of the property gets changed
+    // ******************************************************************************
+    void SubTexture::UpdateTexcoords()
+    {
+        glm::vec2 min = { (m_Coords.x * m_CellSize.x) / m_Texture->GetWidth(), (m_Coords.y * m_CellSize.y) / m_Texture->GetHeight() };
+        glm::vec2 max = { ((m_Coords.x + m_SpriteSize.x) * m_CellSize.x) / m_Texture->GetWidth(), ((m_Coords.y + m_SpriteSize.y) * m_CellSize.y) / m_Texture->GetHeight() };
+
+        m_TexCoord[0] = {min.x, min.y};
+        m_TexCoord[1] = {max.x, min.y};
+        m_TexCoord[2] = {max.x, max.y};
+        m_TexCoord[3] = {min.x, max.y};
+    }
     
     // ******************************************************************************
     // Creating Cubemap
