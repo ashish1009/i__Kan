@@ -351,7 +351,7 @@ namespace iKan {
                 {
                     ImGui::OpenPopup(treeNodeString.c_str());
                 }
-//                /Users/ashish/iKan/Github/iKan/Mario/assets/Resources/Graphics/MarioTile.png
+
                 // Texture Settings
                 if (ImGui::BeginPopup(treeNodeString.c_str()))
                 {
@@ -421,11 +421,56 @@ namespace iKan {
                     // Chnage the Subtexture properties
                     if (src.SubTexComp != nullptr)
                     {
+                        // Subtexture property
                         glm::vec2& coords     = src.SubTexComp->GetCoords();
                         glm::vec2& spriteSize = src.SubTexComp->GetSpriteSize();
                         glm::vec2& cellSize   = src.SubTexComp->GetCellSize();
 
                         static Ref<Texture> texture = src.SubTexComp->GetTexture();
+
+                        // Sprite texture
+                        ImGuiIO& io = ImGui::GetIO();
+                        ImGui::TextWrapped("Texture Sprite");
+
+                        size_t texId    = src.SubTexComp->GetTexture()->GetRendererID();
+                        float texWidth  = (float)src.SubTexComp->GetTexture()->GetWidth();
+                        float texHeight = (float)src.SubTexComp->GetTexture()->GetHeight();
+
+                        ImGui::Text("%.0fx%.0f", texWidth, texHeight);
+                        ImGui::Image((void*)texId, ImVec2(texWidth, texHeight), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1.0f,1.0f,1.0f,1.0f), ImVec4(1.0f,1.0f,1.0f,0.5f));
+
+                        ImVec2 pos = ImGui::GetCursorScreenPos();
+                        if (ImGui::IsItemHovered())
+                        {
+                            ImGui::BeginTooltip();
+
+                            float regionFixedX = spriteSize.x * cellSize.x;
+                            float regionFixedY = spriteSize.y * cellSize.y;
+
+                            float regionX = io.MousePos.x - pos.x - regionFixedX * 0.5f;
+                            if (regionX < 0.0f)
+                                regionX = 0.0f;
+
+                            else if (regionX > texWidth - regionFixedX)
+                                regionX = texWidth - regionFixedX;
+
+                            float regionY = pos.y - io.MousePos.y - regionFixedY * 0.5f;
+                            if (regionY < 0.0f)
+                                regionY = 0.0f;
+
+                            else if (regionY > texHeight - regionFixedY)
+                                regionY = texHeight - regionFixedY;
+
+                            float zoom = 6.0f;
+                            ImGui::Text("Min: (%.2f, %.2f)", regionX, regionY);
+                            ImGui::Text("Max: (%.2f, %.2f)", regionX + regionFixedX, regionY + regionFixedX);
+
+                            ImVec2 uv0 = ImVec2((regionX) / texWidth, (regionY + regionFixedY) / texHeight);
+                            ImVec2 uv1 = ImVec2((regionX + regionFixedX) / texWidth, (regionY) / texHeight);
+
+                            ImGui::Image((void*)texId, ImVec2(regionFixedX * zoom, regionFixedY * zoom), uv0, uv1, ImVec4(1.0f, 1.0f, 1.0f, 1.0f), ImVec4(1.0f, 1.0f, 1.0f, 0.5f));
+                            ImGui::EndTooltip();
+                        }
 
                         bool modCoord      = PropertyGrid::Float2("Coordinates", coords, nullptr);
                         bool modSpriteSize = PropertyGrid::Float2("Sprite Size", spriteSize, nullptr);
