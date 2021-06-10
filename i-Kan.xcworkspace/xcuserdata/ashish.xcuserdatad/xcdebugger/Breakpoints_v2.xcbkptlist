@@ -14,8 +14,8 @@
             filePath = "iKan/src/iKan/Editor/SceneHierarchyPannel.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "476"
-            endingLineNumber = "476"
+            startingLineNumber = "478"
+            endingLineNumber = "478"
             landmarkName = "SceneHeirarchyPannel::DrawComponents(entity)"
             landmarkType = "7">
          </BreakpointContent>
@@ -30,8 +30,8 @@
             filePath = "iKan/src/iKan/Editor/SceneHierarchyPannel.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "479"
-            endingLineNumber = "479"
+            startingLineNumber = "481"
+            endingLineNumber = "481"
             landmarkName = "SceneHeirarchyPannel::DrawComponents(entity)"
             landmarkType = "7">
          </BreakpointContent>
