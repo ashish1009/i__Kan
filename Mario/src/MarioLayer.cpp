@@ -10,8 +10,6 @@
 #include "MarioLayer.h"
 #include "Background.h"
 
-static Entity ent1, ent2;
-
 MarioLayer::PropertyFlag MarioLayer::s_PropFlag;
 
 // ******************************************************************************
@@ -66,18 +64,6 @@ void MarioLayer::OnAttach()
 
     // Creating Entities for background tiles
     Mario::Background::CreateEntities(m_ActiveScene);
-
-    // Creating Temp Entity
-    ent1 = m_ActiveScene->CreateEntity("Entity");
-    ent1.GetComponent<TransformComponent>().Translation = glm::vec3(8.5, 0.0, 0.0);
-    ent1.AddComponent<SpriteRendererComponent>(glm::vec4(1.0f));
-    ent1.AddComponent<BoxCollider2DComponent>();
-
-    ent1 = m_ActiveScene->CreateEntity("Entity 2");
-    ent1.GetComponent<TransformComponent>().Translation = glm::vec3(0.5, 0.0, 0.0);
-    ent1.AddComponent<SpriteRendererComponent>(Texture::Create("/Users/ashish/iKan/Github/iKan/iKan/assets/resources/texture/DefaultTexture.png"));
-    ent1.AddComponent<BoxCollider2DComponent>();
-
 }
 
 // ******************************************************************************

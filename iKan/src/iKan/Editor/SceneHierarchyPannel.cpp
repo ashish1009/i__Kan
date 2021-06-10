@@ -200,14 +200,12 @@ namespace iKan {
             ImGui::Separator();
         }
 
-        std::string IsRigitString;
         if (entity.HasComponent<BoxCollider2DComponent>())
         {
-            auto& IsRigid = entity.GetComponent<BoxCollider2DComponent>().IsRigid;
-            IsRigitString = (IsRigid ? "Yes": "No");
+            auto& isRigid = entity.GetComponent<BoxCollider2DComponent>().IsRigid;
+            PropertyGrid::CheckBox("Is Rigid", isRigid, 200.0f);
+            ImGui::Separator();
         }
-        PropertyGrid::String("Is RigiD", IsRigitString, 200.0f, " ", false); // No need to add any hind as string in non modifyiable String
-        ImGui::Separator();
 
         ImGui::SameLine();
         

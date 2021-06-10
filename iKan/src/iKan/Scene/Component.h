@@ -156,7 +156,7 @@ namespace iKan {
     // ******************************************************************************
     struct BoxCollider2DComponent
     {
-        bool IsRigid = true;
+        bool IsRigid = false;
 
         ~BoxCollider2DComponent() = default;
 
