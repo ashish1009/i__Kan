@@ -430,13 +430,15 @@ namespace iKan {
 
                         // Sprite texture
                         ImGuiIO& io = ImGui::GetIO();
-                        ImGui::TextWrapped("Texture Sprite");
+                        ImGui::TextWrapped("Texture Sprite: Hover the mouse over the Sprite, Click ion the Tile to add the tile in selected Entity (Note: Change the Zoom value below)");
+
+                        static float zoom = 6.0f;
+                        PropertyGrid::Float("Zoom", zoom, nullptr);
 
                         size_t texId    = src.SubTexComp->GetTexture()->GetRendererID();
                         float texWidth  = (float)src.SubTexComp->GetTexture()->GetWidth();
                         float texHeight = (float)src.SubTexComp->GetTexture()->GetHeight();
 
-                        ImGui::Text("%.0fx%.0f", texWidth, texHeight);
                         ImGui::Image((void*)texId, ImVec2(texWidth, texHeight), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1.0f,1.0f,1.0f,1.0f), ImVec4(1.0f,1.0f,1.0f,0.5f));
 
                         ImVec2 pos = ImGui::GetCursorScreenPos();
@@ -461,7 +463,6 @@ namespace iKan {
                             else if (regionY > texHeight - regionFixedY)
                                 regionY = texHeight - regionFixedY;
 
-                            float zoom = 6.0f;
                             ImGui::Text("Min: (%.2f, %.2f)", regionX, regionY);
                             ImGui::Text("Max: (%.2f, %.2f)", regionX + regionFixedX, regionY + regionFixedX);
 
@@ -469,6 +470,14 @@ namespace iKan {
                             ImVec2 uv1 = ImVec2((regionX + regionFixedX) / texWidth, (regionY) / texHeight);
 
                             ImGui::Image((void*)texId, ImVec2(regionFixedX * zoom, regionFixedY * zoom), uv0, uv1, ImVec4(1.0f, 1.0f, 1.0f, 1.0f), ImVec4(1.0f, 1.0f, 1.0f, 0.5f));
+
+                            if (ImGui::IsMouseClicked(0))
+                            {
+                                coords.x = (((regionX + regionFixedX)) / cellSize.x) - 1;
+                                coords.y = (((regionY + regionFixedX)) / cellSize.y) - 1;
+
+                                src.SubTexComp = SubTexture::CreateFromCoords(texture, coords, spriteSize, cellSize);
+                            }
                             ImGui::EndTooltip();
                         }
 
