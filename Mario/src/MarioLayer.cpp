@@ -103,32 +103,6 @@ void MarioLayer::OnUpdate(Timestep ts)
         m_Viewport.OnUpdate(m_ActiveScene);
     }
     m_Viewport.FrameBuffer->Unbind();
-
-    if (m_Viewport.Focused)
-    {
-        auto& pos = ent1.GetComponent<TransformComponent>().Translation;
-        float speed = 3 * ts;
-        if (Input::IsKeyPressed(KeyCode::Left))
-        {
-            if (!((int32_t)Scene::BoxCollisionSide::Left & m_ActiveScene->OnBoxColloider(ent1, -speed)))
-                pos.x -= speed;
-        }
-        if (Input::IsKeyPressed(KeyCode::Right))
-        {
-            if (!((int32_t)Scene::BoxCollisionSide::Right & m_ActiveScene->OnBoxColloider(ent1, speed)))
-                pos.x += speed;
-        }
-        if (Input::IsKeyPressed(KeyCode::Up))
-        {
-            if (!((int32_t)Scene::BoxCollisionSide::Up & m_ActiveScene->OnBoxColloider(ent1, speed)))
-                pos.y += speed;
-        }
-        if (Input::IsKeyPressed(KeyCode::Down))
-        {
-            if (!((int32_t)Scene::BoxCollisionSide::Down & m_ActiveScene->OnBoxColloider(ent1, -speed)))
-                pos.y -= speed;
-        }
-    }
 }
 
 // ******************************************************************************
