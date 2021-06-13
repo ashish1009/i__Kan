@@ -10,6 +10,8 @@
 #include "MarioLayer.h"
 #include "Background.h"
 
+using namespace Mario;
+
 MarioLayer::PropertyFlag MarioLayer::s_PropFlag;
 
 // ******************************************************************************
@@ -26,6 +28,7 @@ MarioLayer::MarioLayer()
 // ******************************************************************************
 MarioLayer::~MarioLayer()
 {
+    Player::Destroy();
     IK_WARN("{0} Layer destroyed", GetName().c_str());
 }
 

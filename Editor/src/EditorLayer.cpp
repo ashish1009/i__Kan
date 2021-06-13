@@ -102,7 +102,7 @@ void EditorLayer::OnImguiRender(Timestep ts)
     ImGuiAPI::StartDcocking();
     
     ShowMenu();
-    RendererStats();
+    RendererStats(ts);
 
     m_SceneHierarchyPannel.SetSelectedEntity(m_Viewport.SelectedEntity);
 

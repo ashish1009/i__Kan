@@ -8,3 +8,27 @@
 // ******************************************************************************
 
 #include "Player.h"
+
+namespace Mario {
+
+    Player* Player::s_Instance = nullptr;
+
+    // ******************************************************************************
+    // Player Constructor
+    // ******************************************************************************
+    Player::Player()
+    {
+        IK_ASSERT(!s_Instance, "Duplicate player instance ceation attempt");
+        
+        IK_INFO("Mario Player Constructor called");
+    }
+
+    // ******************************************************************************
+    // Player Destructor
+    // ******************************************************************************
+    Player::~Player()
+    {
+        IK_WARN("Mario Player Destructor called");
+    }
+
+}

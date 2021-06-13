@@ -10,6 +10,7 @@
 #pragma once
 
 #include <iKan.h>
+#include "Player.h"
 
 using namespace iKan;
 
@@ -36,6 +37,8 @@ private:
     Ref<Scene>           m_ActiveScene;
     SceneHeirarchyPannel m_SceneHierarchyPannel;
     Entity               m_CameraEntity;
+
+//    Mario::Player&       m_Player = Mario::Player::Create();
     
     Viewport& m_Viewport = Viewport::Get();
     
