@@ -107,6 +107,67 @@ namespace iKan {
         
         float TilingFactor = 1.0f;
 
+        // ******************************************************************************
+        // Upload new texture and reset the subtexture component
+        // ******************************************************************************
+        Ref<Texture> UploadTexture(const Ref<Texture>& texture)
+        {
+            // If texture is already created then delete the texture
+            // (if shared with other entity then reduce the counter)
+            if (TextureComp)
+            {
+                TextureComp.reset();
+            }
+
+            // If component is subtexture then overrite it with texture
+            if (SubTexComp)
+            {
+                SubTexComp.reset();
+            }
+
+            SubTexComp  = nullptr;
+            TextureComp = texture;
+
+            // If texture is uploaded with invalid path So delete the texture
+            if (!TextureComp->Uploaded())
+            {
+                TextureComp.reset();
+            }
+
+            return TextureComp;
+        }
+
+        // ******************************************************************************
+        // Upload new texture and reset the subtexture component
+        // ******************************************************************************
+        Ref<Texture> UploadTexture(const std::string& path)
+        {
+            UploadTexture(Texture::Create(path));
+            return TextureComp;
+        }
+
+        // ******************************************************************************
+        // Upload new texture and reset the subtexture component
+        // ******************************************************************************
+        void ResetAllComponents()
+        {
+            // If texture is already created then delete the texture
+            // (if shared with other entity then reduce the counter)
+            if (TextureComp)
+            {
+                TextureComp.reset();
+            }
+            TextureComp = nullptr;
+
+            // If texture is already created then delete the texture
+            // (if shared with other entity then reduce the counter)
+            if (SubTexComp)
+            {
+                SubTexComp.reset();
+            }
+            SubTexComp = nullptr;
+        }
+
         ~SpriteRendererComponent() = default;
 
         SpriteRendererComponent() = default;

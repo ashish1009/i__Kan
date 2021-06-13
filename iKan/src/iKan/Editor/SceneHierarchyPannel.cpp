@@ -314,30 +314,12 @@ namespace iKan {
 
             if (ImGui::Button("Upload Texture") && newTexturePath != "")
             {
-                // If texture is already created then delete the texture
-                // (if shared with other entity then reduce the counter)
-                if (src.TextureComp)
-                {
-                    src.TextureComp.reset();
-                }
-
-                // If component is subtexture then overrite it with texture
-                if (src.SubTexComp)
-                {
-                    src.SubTexComp.reset();
-                }
-
-                src.SubTexComp  = nullptr;
-                src.TextureComp = m_Context->AddTextureToScene(newTexturePath);
-
-                // If texture is uploaded with invalid path So delete the texture
-                if (!src.TextureComp->Uploaded())
-                {
-                    src.TextureComp.reset();
-                }
+                src.UploadTexture(m_Context->AddTextureToScene(newTexturePath));
             }
-
+            
             ImGui::SameLine();
+
+            // Select the texture from already uploaded textures
             const auto& textureMap = m_Context->GetDataRef().TextureMap;
             const char* currentTextureSelected = "Select Texture";
             if (ImGui::BeginCombo("##Texture", currentTextureSelected))
@@ -348,29 +330,7 @@ namespace iKan {
                     if (ImGui::Selectable(texMap.first.c_str(), bIsSelected))
                     {
                         currentTextureSelected = texMap.first.c_str();
-
-                        // If texture is already created then delete the texture
-                        // (if shared with other entity then reduce the counter)
-                        if (src.TextureComp)
-                        {
-                            src.TextureComp.reset();
-                        }
-
-                        // If component is subtexture then overrite it with texture
-                        if (src.SubTexComp)
-                        {
-                            src.SubTexComp.reset();
-                        }
-
-                        src.SubTexComp  = nullptr;
-                        src.TextureComp = texMap.second;
-
-                        // If texture is uploaded with invalid path So delete the texture
-                        if (!src.TextureComp->Uploaded())
-                        {
-                            src.TextureComp.reset();
-                        }
-
+                        src.UploadTexture(texMap.second);
                     }
 
                     if (bIsSelected)
@@ -409,21 +369,7 @@ namespace iKan {
                 {
                     if (ImGui::MenuItem("Remove texture"))
                     {
-                        // If texture is already created then delete the texture
-                        // (if shared with other entity then reduce the counter)
-                        if (src.TextureComp)
-                        {
-                            src.TextureComp.reset();
-                        }
-                        src.TextureComp = nullptr;
-
-                        // If texture is already created then delete the texture
-                        // (if shared with other entity then reduce the counter)
-                        if (src.SubTexComp)
-                        {
-                            src.SubTexComp.reset();
-                        }
-                        src.SubTexComp = nullptr;
+                        src.ResetAllComponents();
                     }
 
                     if (!src.SubTexComp && src.TextureComp)
