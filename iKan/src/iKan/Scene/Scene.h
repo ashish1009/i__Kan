@@ -35,9 +35,15 @@ namespace iKan {
             Data() = default;
             ~Data() = default;
 
+            uint32_t NumEntities = 0;
+            uint32_t ViewportWidth = 1280.0f, ViewportHeight = 720.0f;
+
             // vector of Textures that are present in the Scene
             // These textures might be used as Sprite as well
             std::unordered_map<std::string, Ref<Texture>> TextureMap;
+
+            // Store the map of Entityes present in the Scene with their UUID
+            std::unordered_map<UUID, Entity> EntityIDMap;
         };
 
     public:
@@ -54,7 +60,7 @@ namespace iKan {
 
         int32_t GetEntityIdFromPixels(int32_t mx, int32_t my);
         int32_t OnBoxColloider(Entity& currEntity, float speed);
-        uint32_t GetNumEntities() const { return m_NumEntities; }
+        uint32_t GetNumEntities() const { return m_Data.NumEntities; }
 
         Data& GetDataRef() { return m_Data; }
 
@@ -65,14 +71,8 @@ namespace iKan {
         void RenderSpriteComponent();
 
     private:
-        uint32_t m_NumEntities = 0;
-        uint32_t m_ViewportWidth = 1280.0f, m_ViewportHeight = 720.0f;
-
         // Container that contain all the entities
         entt::registry m_Registry;
-
-        // Store the map of Entityes present in the Scene with their UUID
-        std::unordered_map<UUID, Entity> m_EntityIDMap;
 
         // Instacne for Scene Data
         Data m_Data;

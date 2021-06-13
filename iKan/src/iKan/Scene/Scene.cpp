@@ -50,7 +50,7 @@ namespace iKan {
     // ******************************************************************************
     void Scene::OnImguiRenderer()
     {
-
+        
     }
     
     // ******************************************************************************
@@ -66,11 +66,11 @@ namespace iKan {
         entity.AddComponent<SceneHierarchyPannelProp>(true);
         entity.AddComponent<BoxCollider2DComponent>(false);
 
-        IK_CORE_ASSERT((m_EntityIDMap.find(uuid) == m_EntityIDMap.end()), "Entity Already Added");
-        m_EntityIDMap[uuid] = entity;
+        IK_CORE_ASSERT((m_Data.EntityIDMap.find(uuid) == m_Data.EntityIDMap.end()), "Entity Already Added");
+        m_Data.EntityIDMap[uuid] = entity;
         
         IK_CORE_TRACE("Entity {0} with ID: {1} is created in the Active Scene", entity.GetComponent<TagComponent>().Tag.c_str(), entity.GetComponent<IDComponent>().ID);
-        IK_CORE_TRACE("Number of entities Added in Scene : {0}", m_NumEntities++);
+        IK_CORE_TRACE("Number of entities Added in Scene : {0}", m_Data.NumEntities++);
         
         return entity;
     }
@@ -181,8 +181,8 @@ namespace iKan {
     void Scene::OnViewportResize(uint32_t width, uint32_t height)
     {
         IK_CORE_INFO("Scene Viewport resized to {0} x {1}", width, height);
-        m_ViewportWidth  = width;
-        m_ViewportHeight = height;
+        m_Data.ViewportWidth  = width;
+        m_Data.ViewportHeight = height;
         
         // Resize our non-FixedAspectRatio cameras
         auto view = m_Registry.view<CameraComponent>();

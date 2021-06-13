@@ -90,10 +90,10 @@ namespace iKan {
     {
         ImGui::Begin("Scene Hierarchy", pIsOpen);
         {
+            m_Context->OnImguiRenderer();
+
             PropertyGrid::String("Number of Entities in Scene", m_Context->GetNumEntities(), 200);
             ImGui::Separator();
-
-            m_Context->OnImguiRenderer();
             
             m_Context->m_Registry.each([&](auto entityID)
             {
@@ -302,7 +302,7 @@ namespace iKan {
             }
         });
         
-        DrawComponent<SpriteRendererComponent>("Sprite Renderer", entity, [](auto& src)
+        DrawComponent<SpriteRendererComponent>("Sprite Renderer", entity, [this](auto& src)
                                                {
             // Change the color of the Entity
             ImGui::ColorEdit4("Color", glm::value_ptr(src.ColorComp));
@@ -317,7 +317,15 @@ namespace iKan {
                 {
                     src.TextureComp.reset();
                 }
-                src.TextureComp = Texture::Create(newTexturePath);
+
+                // If component is subtexture then overrite it with texture
+                if (src.SubTexComp)
+                {
+                    src.SubTexComp.reset();
+                }
+
+                src.SubTexComp  = nullptr;
+                src.TextureComp = m_Context->AddTextureToScene(newTexturePath);
 
                 // If texture is uploaded with invalid path So delete the texture
                 if (!src.TextureComp->Uploaded())
@@ -424,8 +432,6 @@ namespace iKan {
                         glm::vec2& spriteSize = src.SubTexComp->GetSpriteSize();
                         glm::vec2& cellSize   = src.SubTexComp->GetCellSize();
 
-                        static Ref<Texture> texture = src.SubTexComp->GetTexture();
-
                         // Sprite texture
                         ImGui::TextWrapped("Texture Sprite: Hover the mouse over the Sprite, Click ion the Tile to add the tile in selected Entity (Note: Change the Zoom value below)");
                         if (ImGui::TreeNode("Images"))
@@ -476,7 +482,7 @@ namespace iKan {
                                     coords.x = (((regionX + regionFixedX)) / cellSize.x) - 1;
                                     coords.y = (((regionY + regionFixedX)) / cellSize.y) - 1;
 
-                                    src.SubTexComp = SubTexture::CreateFromCoords(texture, coords, spriteSize, cellSize);
+                                    src.SubTexComp = SubTexture::CreateFromCoords(src.SubTexComp->GetTexture(), coords, spriteSize, cellSize);
                                 }
                                 ImGui::EndTooltip();
                             }
@@ -490,7 +496,7 @@ namespace iKan {
 
                         if (modCoord || modSpriteSize || modCellSize)
                         {
-                            src.SubTexComp = SubTexture::CreateFromCoords(texture, coords, spriteSize, cellSize);
+                            src.SubTexComp = SubTexture::CreateFromCoords(src.SubTexComp->GetTexture(), coords, spriteSize, cellSize);
                         }
                         ImGui::Separator();
                     }
