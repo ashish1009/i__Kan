@@ -306,9 +306,12 @@ namespace iKan {
                                                {
             // Change the color of the Entity
             ImGui::ColorEdit4("Color", glm::value_ptr(src.ColorComp));
+            ImGui::Separator();
 
             // Upload New Texture Texture
             static std::string newTexturePath;
+            PropertyGrid::String("", newTexturePath, 0.0f, 500.0f, " Enter Texture path here (path should be absolute), or \n Select already uploaded textures from below drop box", true, true, 2);
+
             if (ImGui::Button("Upload Texture") && newTexturePath != "")
             {
                 // If texture is already created then delete the texture
@@ -333,8 +336,51 @@ namespace iKan {
                     src.TextureComp.reset();
                 }
             }
+
             ImGui::SameLine();
-            PropertyGrid::String("", newTexturePath, 110.0f, "Enter Texture path here (Path should be absolute)");
+            const auto& textureMap = m_Context->GetDataRef().TextureMap;
+            const char* currentTextureSelected = "Select Texture";
+            if (ImGui::BeginCombo("##Texture", currentTextureSelected))
+            {
+                for (auto texMap : textureMap)
+                {
+                    bool bIsSelected = currentTextureSelected == texMap.first.c_str();
+                    if (ImGui::Selectable(texMap.first.c_str(), bIsSelected))
+                    {
+                        currentTextureSelected = texMap.first.c_str();
+
+                        // If texture is already created then delete the texture
+                        // (if shared with other entity then reduce the counter)
+                        if (src.TextureComp)
+                        {
+                            src.TextureComp.reset();
+                        }
+
+                        // If component is subtexture then overrite it with texture
+                        if (src.SubTexComp)
+                        {
+                            src.SubTexComp.reset();
+                        }
+
+                        src.SubTexComp  = nullptr;
+                        src.TextureComp = texMap.second;
+
+                        // If texture is uploaded with invalid path So delete the texture
+                        if (!src.TextureComp->Uploaded())
+                        {
+                            src.TextureComp.reset();
+                        }
+
+                    }
+
+                    if (bIsSelected)
+                    {
+                        ImGui::SetItemDefaultFocus();
+                    }
+                }
+                ImGui::EndCombo();
+            }
+
             ImGui::Separator();
 
             if (src.TextureComp || src.SubTexComp)
@@ -412,7 +458,7 @@ namespace iKan {
                     {
                         texturePath = src.SubTexComp->GetTexture()->GetfilePath();
                     }
-                    PropertyGrid::String("Texture path", texturePath, 100.0f, "", false);
+                    PropertyGrid::String("Texture path", texturePath, 100.0f, 300.0f, "", false);
                     ImGui::Separator();
 
                     // From here Component specific prperties

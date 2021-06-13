@@ -17,22 +17,24 @@ namespace iKan {
     // ******************************************************************************
     // Read and write the Number as String. Value can not be modified
     // ******************************************************************************
-    bool PropertyGrid::String(const char* label, uint32_t value, float columnWidth, const char* hint, bool modifiable, bool error)
+    bool PropertyGrid::String(const char* label, uint32_t value, float columnWidth, float column2Width, const char* hint, bool modifiable, bool multiple, int numLines, bool error)
     {
         std::string idStr;
         std::stringstream ss;
         ss << value;
         ss >> idStr;
 
-        return String(label, idStr, columnWidth, " ",false); // No need to add any hint as this is non modifiable
+        return String(label, idStr, columnWidth, column2Width, " ", false, multiple, numLines); // No need to add any hint as this is non modifiable
     }
 
     // ******************************************************************************
     // Read and write the String. Modify the value
     // if Modifiable is true then we can modify the value
     // Hint will be printed to String path
+    // Multiple : flag to check multiple lines needed in strimg
+    // numlines : if multiple line supported then number of rows
     // ******************************************************************************
-    bool PropertyGrid::String(const char* label, std::string& value, float columnWidth, const char* hint, bool modifiable, bool error)
+    bool PropertyGrid::String(const char* label, std::string& value, float columnWidth, float column2Width, const char* hint, bool modifiable, bool multiple, int numLines, bool error)
     {
         bool modified = false;
         
@@ -41,6 +43,8 @@ namespace iKan {
 
         ImGui::Text(label);
         ImGui::NextColumn();
+
+        ImGui::SetColumnWidth(1, column2Width);
         ImGui::PushItemWidth(-1);
         
         // Copy the Name of entity to buffer that will be dumy text in property pannel
@@ -58,10 +62,21 @@ namespace iKan {
         if (modifiable)
         {
             // Take input text from User in Property pannel. that will be name(Tag) of Selected Entity
-            if (ImGui::InputTextWithHint(UIContextId.c_str(), hint, buffer, IM_ARRAYSIZE(buffer)))
+            if (multiple)
             {
-                value    = buffer;
-                modified = true;
+                if (ImGui::InputTextEx(UIContextId.c_str(), hint, buffer, IM_ARRAYSIZE(buffer), ImVec2(column2Width, numLines * 20.0f), ImGuiInputTextFlags_Multiline))
+                {
+                    value    = buffer;
+                    modified = true;
+                }
+            }
+            else
+            {
+                if (ImGui::InputTextWithHint(UIContextId.c_str(), hint, buffer, IM_ARRAYSIZE(buffer)))
+                {
+                    value    = buffer;
+                    modified = true;
+                }
             }
         }
         else
@@ -374,23 +389,7 @@ namespace iKan {
     // ******************************************************************************
     void PropertyGrid::CounterI(const std::string& name, uint32_t& counter)
     {
-        ImGui::Text(name.c_str());
-        ImGui::SameLine();
-        
-        // Arrow buttons with Repeater
-        float spacing = ImGui::GetStyle().ItemInnerSpacing.x;
-        
-        ImGui::PushButtonRepeat(true);
-        if (ImGui::ArrowButton("##left", ImGuiDir_Left))
-            counter--;
-        
-        ImGui::SameLine(0.0f, spacing);
-        if (ImGui::ArrowButton("##right", ImGuiDir_Right))
-            counter++;
-        
-        ImGui::PopButtonRepeat();
-        ImGui::SameLine();
-        ImGui::Text("%d", counter);
+        ImGui::InputInt(name.c_str(), (int32_t*)&counter);
     }
 
     // ******************************************************************************
