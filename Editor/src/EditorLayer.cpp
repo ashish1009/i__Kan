@@ -104,7 +104,10 @@ void EditorLayer::OnImguiRender(Timestep ts)
     ShowMenu();
     RendererStats(ts);
 
-    m_SceneHierarchyPannel.SetSelectedEntity(m_Viewport.SelectedEntity);
+    if (m_Viewport.SelectedEntity != Entity(entt::null, nullptr))
+    {
+        m_SceneHierarchyPannel.SetSelectedEntity(m_Viewport.SelectedEntity);
+    }
 
     // Render Scene Hierarchy pannel in imgui
     if (s_PropFlag.IsSceneHeirarchypanel)
