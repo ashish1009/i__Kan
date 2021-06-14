@@ -33,8 +33,9 @@ namespace iKan {
         void OnUpdateImGui();
         void UpdateBounds();
         void UpdateMousePos();
-        void OnImguiRenderer();
+        void OnImguiRenderer(Timestep ts);
         void UpdateHoveredEntity(Ref<Scene>& activeScene);
+        void ViewMenu();
         void OnEvent(Event& event);
 
         static Viewport& Get()
@@ -42,16 +43,27 @@ namespace iKan {
             static Viewport viewport;
             return viewport;
         }
+
+    private:
+        void RendererStats(Timestep ts);
         
     public:
-        // Flag for the presence of Viewport
-        bool Present = true;
-        
+        struct PropFlag
+        {
+            bool IsFrameRate     = true;
+            bool IsRendererStats = true;
+            bool IsVendorType    = true;
+
+            // Flag for the presence of Viewport
+            bool Present = true;
+
+            // Flag for Imgui pannel
+            bool IsImguiPannel = true;
+        };
+        PropFlag Flags;
+
         // Viewport focused or hovered
         bool Focused = false, Hovered = false;
-        
-        // Flag for Imgui pannel
-        bool IsImguiPannel = true;
 
         // Dimentsion of Viewport. Height of viewport is including the Title Tab height too
         float Width  = 0.0f, Height = 0.0f;

@@ -12,6 +12,7 @@
 #include <iKan/Core/Input.h>
 #include <iKan/Scene/Component.h>
 #include <iKan/Editor/ScenePropertyGrid.h>
+#include <iKan/Imgui/ImguiAPI.h>
 
 namespace iKan {
     
@@ -37,11 +38,11 @@ namespace iKan {
     void Viewport::OnUpdateImGui()
     {
         // If viewport is not present then return
-        if (!Present)
+        if (!Flags.Present)
             return;
 
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
-        ImGui::Begin("Viewport", &Present);
+        ImGui::Begin("Viewport", &Flags.Present);
         {
             CursorPos = ImGui::GetCursorPos();
 
@@ -132,19 +133,19 @@ namespace iKan {
     // ******************************************************************************
     // Reender Viewport Imgui pannel, if flag is true then render
     // ******************************************************************************
-    void Viewport::OnImguiRenderer()
+    void Viewport::OnImguiRenderer(Timestep ts)
     {
         // No Imgui renderer if flag is false
-        if (!IsImguiPannel)
+        if (!Flags.IsImguiPannel)
             return;
 
-        ImGui::Begin("Viewport Properties", &IsImguiPannel);
+        ImGui::Begin("Viewport Properties", &Flags.IsImguiPannel);
         ImGui::PushID("Viewport Properties");
 
         ImGui::Columns(3);
 
         ImGui::SetColumnWidth(0, 80);
-        ImGui::Text("Present : %d", Present);
+        ImGui::Text("Present : %d", Flags.Present);
         ImGui::NextColumn();
 
         ImGui::SetColumnWidth(1, 80);
@@ -225,6 +226,67 @@ namespace iKan {
 
         ImGui::PopID();
         ImGui::End();
+
+        RendererStats(ts);
+    }
+
+    // ******************************************************************************
+    // Show the renderer stats
+    // ******************************************************************************
+    void Viewport::RendererStats(Timestep ts)
+    {
+        if (Flags.IsFrameRate)
+        {
+            ImGuiAPI::FrameRate(ts, &Flags.IsFrameRate);
+        }
+
+        if (Flags.IsRendererStats)
+        {
+            ImGuiAPI::RendererStats(&Flags.IsRendererStats);
+        }
+
+        if (Flags.IsVendorType)
+        {
+            ImGuiAPI::RendererVersion(&Flags.IsVendorType);
+        }
+    }
+
+    // ******************************************************************************
+    // View menu for view port
+    // NOTE: this should be called between Imgui::BeginMenue and ImGui::EndMenue();
+    // ******************************************************************************
+    void Viewport::ViewMenu()
+    {
+        ImGui::Separator();
+
+        if (ImGui::MenuItem("Frame Rate", nullptr, Flags.IsFrameRate))
+        {
+            Flags.IsFrameRate = !Flags.IsFrameRate;
+        }
+
+        if (ImGui::MenuItem("Render Stats", nullptr, Flags.IsRendererStats))
+        {
+            Flags.IsRendererStats = !Flags.IsRendererStats;
+        }
+
+        if (ImGui::MenuItem("Vendor Types", nullptr, Flags.IsVendorType))
+        {
+            Flags.IsVendorType = !Flags.IsVendorType;
+        }
+
+        ImGui::Separator();
+
+        if (ImGui::MenuItem("Renderer Viewport", nullptr, Flags.Present))
+        {
+            Flags.Present = !Flags.Present;
+        }
+
+        if (ImGui::MenuItem("Imgui", nullptr, Flags.IsImguiPannel))
+        {
+            Flags.IsImguiPannel = !Flags.IsImguiPannel;
+        }
+
+        ImGui::Separator();
     }
 
 }

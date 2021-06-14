@@ -118,8 +118,7 @@ void MarioLayer::OnImguiRender(Timestep ts)
     ImGui::ShowDemoWindow();
 
     ShowMenu();
-    RendererStats(ts);
-
+    
     // Render Scene Hierarchy pannel in imgui
     m_SceneHierarchyPannel.OnImguiender(&m_SceneHierarchyPannel.isSceneHeirarchypanel);
 
@@ -127,7 +126,7 @@ void MarioLayer::OnImguiRender(Timestep ts)
     m_Viewport.OnUpdateImGui();
 
     // Viewport Imgui Renderer
-    m_Viewport.OnImguiRenderer();
+    m_Viewport.OnImguiRenderer(ts);
 
     // Show mario Setting in Imgui
     if (MarioLayer::s_PropFlag.IsSettings)
@@ -171,39 +170,12 @@ void MarioLayer::ShowMenu()
                 m_SceneHierarchyPannel.isSceneHeirarchypanel = !m_SceneHierarchyPannel.isSceneHeirarchypanel;
             }
 
-            if (ImGui::MenuItem("Frame Rate", nullptr, s_PropFlag.IsFrameRate))
-            {
-                s_PropFlag.IsFrameRate = !s_PropFlag.IsFrameRate;
-            }
-
-            if (ImGui::MenuItem("Render Stats", nullptr, s_PropFlag.IsRendererStats))
-            {
-                s_PropFlag.IsRendererStats = !s_PropFlag.IsRendererStats;
-            }
-
-            if (ImGui::MenuItem("Vendor Types", nullptr, s_PropFlag.IsVendorType))
-            {
-                s_PropFlag.IsVendorType = !s_PropFlag.IsVendorType;
-            }
-
             if (ImGui::MenuItem("Mario Settings", nullptr, s_PropFlag.IsSettings))
             {
                 s_PropFlag.IsSettings = !s_PropFlag.IsSettings;
             }
+            m_Viewport.ViewMenu();
 
-            if (ImGui::BeginMenu("Viewport"))
-            {
-                if (ImGui::MenuItem("Present", nullptr, m_Viewport.Present))
-                {
-                    m_Viewport.Present = !m_Viewport.Present;
-                }
-
-                if (ImGui::MenuItem("Imgui", nullptr, m_Viewport.IsImguiPannel))
-                {
-                    m_Viewport.IsImguiPannel = !m_Viewport.IsImguiPannel;
-                }
-                ImGui::EndMenu();
-            }
             ImGui::EndMenu(); // if (ImGui::BeginMenu("View"))
         }
 
@@ -213,26 +185,5 @@ void MarioLayer::ShowMenu()
         } // if (ImGui::BeginMenu("Properties"))
 
         ImGui::EndMenuBar(); // ImGui::BeginMenuBar()
-    }
-}
-
-// ******************************************************************************
-// Show the renderer stats
-// ******************************************************************************
-void MarioLayer::RendererStats(Timestep ts)
-{
-    if (s_PropFlag.IsFrameRate)
-    {
-        ImGuiAPI::FrameRate(ts, &s_PropFlag.IsFrameRate);
-    }
-
-    if (s_PropFlag.IsRendererStats)
-    {
-        ImGuiAPI::RendererStats(&s_PropFlag.IsRendererStats);
-    }
-
-    if (s_PropFlag.IsVendorType)
-    {
-        ImGuiAPI::RendererVersion(&s_PropFlag.IsVendorType);
     }
 }

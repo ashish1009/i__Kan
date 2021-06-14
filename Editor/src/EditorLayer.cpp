@@ -82,6 +82,11 @@ void EditorLayer::OnUpdate(Timestep ts)
 
     RendererStatistics::Reset();
 
+    if (m_Viewport.SelectedEntity != Entity(entt::null, nullptr))
+    {
+        m_SceneHierarchyPannel.SetSelectedEntity(m_Viewport.SelectedEntity);
+    }
+
     m_Viewport.FrameBuffer->Bind();
     {
         Renderer::Clear({ 0.1f, 0.1f, 0.1f, 1.0f });
@@ -102,16 +107,8 @@ void EditorLayer::OnImguiRender(Timestep ts)
     ShowMenu();
     RendererStats(ts);
 
-    if (m_Viewport.SelectedEntity != Entity(entt::null, nullptr))
-    {
-        m_SceneHierarchyPannel.SetSelectedEntity(m_Viewport.SelectedEntity);
-    }
-
     // Render Scene Hierarchy pannel in imgui
-    if (s_PropFlag.IsSceneHeirarchypanel)
-    {
-        m_SceneHierarchyPannel.OnImguiender(&s_PropFlag.IsSceneHeirarchypanel);
-    }
+    m_SceneHierarchyPannel.OnImguiender(&s_PropFlag.IsSceneHeirarchypanel);
     
     // Viewport Update
     m_Viewport.OnUpdateImGui();
