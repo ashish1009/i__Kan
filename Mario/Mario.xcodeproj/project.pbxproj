@@ -78,6 +78,7 @@
 		758155052642D20C0062AE00 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		758155072642D9AC0062AE00 /* MarioLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MarioLayer.cpp; sourceTree = "<group>"; };
 		758155082642D9AC0062AE00 /* MarioLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MarioLayer.h; sourceTree = "<group>"; };
+		7589D5042677623500EB43D9 /* libyaml.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libyaml.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,6 +222,7 @@
 		758154FE2642D1FB0062AE00 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7589D5042677623500EB43D9 /* libyaml.a */,
 				758155052642D20C0062AE00 /* OpenGL.framework */,
 				758155032642D2070062AE00 /* IOKit.framework */,
 				758155012642D1FF0062AE00 /* Cocoa.framework */,

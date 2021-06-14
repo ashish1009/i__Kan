@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		750AA8E1265D52140031A3E0 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 750AA8DF265D52140031A3E0 /* Utils.cpp */; };
 		750AA8E2265D52140031A3E0 /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 750AA8E0265D52140031A3E0 /* Utils.h */; };
+		7589D501267758DD00EB43D9 /* SceneSerializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7589D4FF267758DD00EB43D9 /* SceneSerializer.cpp */; };
+		7589D502267758DD00EB43D9 /* SceneSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7589D500267758DD00EB43D9 /* SceneSerializer.h */; };
+		7589D5032677622500EB43D9 /* libyaml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7589D2402677574300EB43D9 /* libyaml.a */; };
 		B2028051262590D300BC7F39 /* Core.h in Headers */ = {isa = PBXBuildFile; fileRef = B2028050262590D300BC7F39 /* Core.h */; };
 		B2028053262592DD00BC7F39 /* Log.h in Headers */ = {isa = PBXBuildFile; fileRef = B2028052262592DD00BC7F39 /* Log.h */; };
 		B20280562625934700BC7F39 /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B20280542625934700BC7F39 /* Log.cpp */; };
@@ -98,11 +101,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		7589D229267756BB00EB43D9 /* PBXContainerItemProxy */ = {
+		7589D23F2677574300EB43D9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 7589D223267756BA00EB43D9 /* yaml.xcodeproj */;
+			containerPortal = 7589D23B2677574200EB43D9 /* yaml.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 7589D21C267756BA00EB43D9;
+			remoteGlobalIDString = 7589D2342677574200EB43D9;
 			remoteInfo = yaml;
 		};
 		B2400F562634396D0051B868 /* PBXContainerItemProxy */ = {
@@ -124,7 +127,9 @@
 /* Begin PBXFileReference section */
 		750AA8DF265D52140031A3E0 /* Utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
 		750AA8E0265D52140031A3E0 /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
-		7589D223267756BA00EB43D9 /* yaml.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = yaml.xcodeproj; path = vendor/Imgui/yaml/yaml.xcodeproj; sourceTree = "<group>"; };
+		7589D23B2677574200EB43D9 /* yaml.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = yaml.xcodeproj; path = vendor/yaml/yaml.xcodeproj; sourceTree = "<group>"; };
+		7589D4FF267758DD00EB43D9 /* SceneSerializer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneSerializer.cpp; sourceTree = "<group>"; };
+		7589D500267758DD00EB43D9 /* SceneSerializer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneSerializer.h; sourceTree = "<group>"; };
 		B2028050262590D300BC7F39 /* Core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
 		B2028052262592DD00BC7F39 /* Log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
 		B20280542625934700BC7F39 /* Log.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Log.cpp; sourceTree = "<group>"; };
@@ -229,6 +234,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7589D5032677622500EB43D9 /* libyaml.a in Frameworks */,
 				B240109E26343A8A0051B868 /* libImgui.a in Frameworks */,
 				B27FE30E2629E072000FD32D /* libGlad.a in Frameworks */,
 				B25684C226274BFB0030D00D /* libglfw3.a in Frameworks */,
@@ -238,10 +244,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7589D224267756BA00EB43D9 /* Products */ = {
+		7589D23C2677574200EB43D9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7589D22A267756BB00EB43D9 /* libyaml.a */,
+				7589D2402677574300EB43D9 /* libyaml.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -333,6 +339,8 @@
 				B27D609B263D6B1A00954BB6 /* SceneCamera.h */,
 				B2A1C117263E87DD00606017 /* Viewport.cpp */,
 				B2A1C118263E87DD00606017 /* Viewport.h */,
+				7589D4FF267758DD00EB43D9 /* SceneSerializer.cpp */,
+				7589D500267758DD00EB43D9 /* SceneSerializer.h */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -375,7 +383,7 @@
 		B25458C5262899580053BD47 /* Dependency */ = {
 			isa = PBXGroup;
 			children = (
-				7589D223267756BA00EB43D9 /* yaml.xcodeproj */,
+				7589D23B2677574200EB43D9 /* yaml.xcodeproj */,
 				B2400F522634396C0051B868 /* Imgui.xcodeproj */,
 				B27FE3082629E04A000FD32D /* Glad.xcodeproj */,
 			);
@@ -580,6 +588,7 @@
 				B249623626399AA50091C915 /* EditorCamera.h in Headers */,
 				B27FE31C2629E474000FD32D /* Renderer.h in Headers */,
 				B227E5A42636DEB300DC3DFA /* Buffers.h in Headers */,
+				7589D502267758DD00EB43D9 /* SceneSerializer.h in Headers */,
 				B22FE70926385ECE00C1640B /* OpenGLFrameBuffer.h in Headers */,
 				B2400F40263434F60051B868 /* TimeStep.h in Headers */,
 				B202805B2625DCD200BC7F39 /* Layer.h in Headers */,
@@ -659,8 +668,8 @@
 					ProjectRef = B2400F522634396C0051B868 /* Imgui.xcodeproj */;
 				},
 				{
-					ProductGroup = 7589D224267756BA00EB43D9 /* Products */;
-					ProjectRef = 7589D223267756BA00EB43D9 /* yaml.xcodeproj */;
+					ProductGroup = 7589D23C2677574200EB43D9 /* Products */;
+					ProjectRef = 7589D23B2677574200EB43D9 /* yaml.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -671,11 +680,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		7589D22A267756BB00EB43D9 /* libyaml.a */ = {
+		7589D2402677574300EB43D9 /* libyaml.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libyaml.a;
-			remoteRef = 7589D229267756BB00EB43D9 /* PBXContainerItemProxy */;
+			remoteRef = 7589D23F2677574300EB43D9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		B2400F572634396D0051B868 /* libImgui.a */ = {
@@ -731,6 +740,7 @@
 				B22FE6F82638473500C1640B /* Texture.cpp in Sources */,
 				B28FE5C3262C881700DC5E20 /* MacInput.cpp in Sources */,
 				B2496F132639AA690091C915 /* SceneRenderer.cpp in Sources */,
+				7589D501267758DD00EB43D9 /* SceneSerializer.cpp in Sources */,
 				B2A1C119263E87DD00606017 /* Viewport.cpp in Sources */,
 				B249623B2639A7740091C915 /* Scene.cpp in Sources */,
 				B20280652625F99A00BC7F39 /* Window.cpp in Sources */,
@@ -875,6 +885,7 @@
 					"${PROJECT_DIR}/vendor/glm",
 					"${PROJECT_DIR}/vendor/stbimage",
 					"${PROJECT_DIR}/vendor/EnTT/include",
+					"${PROJECT_DIR}/vendor/yaml/yaml/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -910,6 +921,7 @@
 					"${PROJECT_DIR}/vendor/glm",
 					"${PROJECT_DIR}/vendor/stbimage",
 					"${PROJECT_DIR}/vendor/EnTT/include",
+					"${PROJECT_DIR}/vendor/yaml/yaml/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

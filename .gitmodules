@@ -10,3 +10,6 @@
 [submodule "iKan/vendor/Imgui/Imgui"]
 	path = iKan/vendor/Imgui/Imgui
 	url = https://github.com/ashish1009/imgui
+[submodule "iKan/vendor/yaml/Git"]
+	path = iKan/vendor/yaml/Git
+	url = https://github.com/ashish1009/yaml-cpp
