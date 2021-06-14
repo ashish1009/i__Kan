@@ -119,6 +119,20 @@ namespace iKan {
                 {
                     m_Context->CreateEntity("Empty Entity");
                 }
+                if (m_Context->GetEditorCamera())
+                {
+                    if (ImGui::MenuItem("Remove Editor Camera"))
+                    {
+                        m_Context->DeleteEditorCamera();
+                    }
+                }
+                else
+                {
+                    if (ImGui::MenuItem("Add Editor Camera"))
+                    {
+                        m_Context->SetEditorCamera();
+                    }
+                }
                 ImGui::EndPopup();
             }
         }

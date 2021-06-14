@@ -62,7 +62,8 @@ namespace iKan {
         void OnUpdateRuntime(Timestep ts);
         void OnImguiRenderer();
 
-        void SetEditorCamera(float fov, float aspectRatio, float near, float far);
+        void DeleteEditorCamera();
+        void SetEditorCamera(float fov = glm::radians(45.0f), float aspectRatio = 1800.0f/800.0f, float near = 0.01f, float far = 10000.0f);
 
         int32_t GetEntityIdFromPixels(int32_t mx, int32_t my);
         int32_t OnBoxColloider(Entity& currEntity, float speed);

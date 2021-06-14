@@ -34,6 +34,14 @@ namespace iKan {
         UpdateProjectionMatrix();
         UpdateCameraView();
     }
+
+    // ******************************************************************************
+    // Editor camera Destructor
+    // ******************************************************************************
+    EditorCamera::~EditorCamera()
+    {
+        IK_CORE_WARN("Editor Camera destroyed...");
+    }
     
     // ******************************************************************************
     // Set Camera view port

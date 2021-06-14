@@ -23,7 +23,7 @@ namespace iKan {
     {
     public:
         EditorCamera() = default;
-        virtual ~EditorCamera() = default;
+        virtual ~EditorCamera();
         
         EditorCamera(float fov, float aspectRatio, float near, float far);
         

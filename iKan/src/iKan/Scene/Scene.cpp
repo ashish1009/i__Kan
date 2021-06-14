@@ -44,11 +44,30 @@ namespace iKan {
     }
 
     // ******************************************************************************
+    // Delete the Editor camera from the scene
+    // ******************************************************************************
+    void Scene::DeleteEditorCamera()
+    {
+        if (m_Data.EditorCamera)
+        {
+            m_Data.EditorCamera.reset();
+            m_Data.EditorCamera = nullptr;
+        }
+    }
+
+    // ******************************************************************************
     // Add the Editor camera to the scene
     // ******************************************************************************
     void Scene::SetEditorCamera(float fov, float aspectRatio, float near, float far)
     {
-        m_Data.EditorCamera = CreateRef<iKan::EditorCamera>(fov, aspectRatio, near, far);
+        if (!m_Data.EditorCamera)
+        {
+            m_Data.EditorCamera = CreateRef<iKan::EditorCamera>(fov, aspectRatio, near, far);
+        }
+        else
+        {
+            IK_CORE_WARN("Editor camera already added to Active Scene");
+        }
     }
 
     // ******************************************************************************

@@ -21,9 +21,6 @@ EditorLayer::EditorLayer()
         
     m_ActiveScene = CreateRef<Scene>();
 
-    // Set the Editor Camera
-    m_ActiveScene->SetEditorCamera(glm::radians(45.0f), 1800.0f/800.0f, 0.01f, 10000.0f);
-    
     // Frame buffer specifications
     Framebuffer::Specification specs;
     specs.Attachments = { Framebuffer::TextureSpecification::TextureFormat::RGBA8,
