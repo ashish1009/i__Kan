@@ -36,6 +36,6 @@ private:
     void ShowMenu();
 
 private:
-    Ref<Scene>           m_ActiveScene;
+    Ref<Scene> m_ActiveScene;
 };
 

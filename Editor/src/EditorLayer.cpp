@@ -116,14 +116,7 @@ void EditorLayer::OnImguiRender(Timestep ts)
     // Viewport Update
     if (m_Viewport.Present)
     {
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
-        ImGui::Begin("Viewport", &m_Viewport.Present);
-        {
-            m_Viewport.OnUpdateImGui();
-        }
-
-        ImGui::End(); // ImGui::Begin("Viewport");
-        ImGui::PopStyleVar(); // ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
+        m_Viewport.OnUpdateImGui();
     }
 
     // Viewport Imgui Renderer

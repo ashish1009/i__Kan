@@ -36,19 +36,26 @@ namespace iKan {
     // ******************************************************************************
     void Viewport::OnUpdateImGui()
     {
-        CursorPos = ImGui::GetCursorPos();
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
+        ImGui::Begin("Viewport", &Present);
+        {
+            CursorPos = ImGui::GetCursorPos();
 
-        Focused = ImGui::IsWindowFocused();
-        Hovered = ImGui::IsWindowHovered();
-        Application::Get().GetImGuiLayer()->BlockEvents(!Focused && !Hovered);
+            Focused = ImGui::IsWindowFocused();
+            Hovered = ImGui::IsWindowHovered();
+            Application::Get().GetImGuiLayer()->BlockEvents(!Focused && !Hovered);
 
-        ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-        Size = { viewportPanelSize.x, viewportPanelSize.y };
-        
-        size_t textureID = FrameBuffer->GetColorAttachmentRendererID();
-        ImGui::Image((void*)textureID, ImVec2{ Size.x, Size.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+            ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
+            Size = { viewportPanelSize.x, viewportPanelSize.y };
 
-        UpdateBounds();
+            size_t textureID = FrameBuffer->GetColorAttachmentRendererID();
+            ImGui::Image((void*)textureID, ImVec2{ Size.x, Size.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+
+            UpdateBounds();
+        }
+
+        ImGui::End(); // ImGui::Begin("Viewport");
+        ImGui::PopStyleVar(); // ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
     }
 
     // ******************************************************************************
