@@ -114,16 +114,10 @@ void EditorLayer::OnImguiRender(Timestep ts)
     }
     
     // Viewport Update
-    if (m_Viewport.Present)
-    {
-        m_Viewport.OnUpdateImGui();
-    }
+    m_Viewport.OnUpdateImGui();
 
     // Viewport Imgui Renderer
-    if (m_Viewport.IsImguiPannel)
-    {
-        m_Viewport.OnImguiRenderer();
-    }
+    m_Viewport.OnImguiRenderer();
     
     ImGuiAPI::EndDcocking();
 }

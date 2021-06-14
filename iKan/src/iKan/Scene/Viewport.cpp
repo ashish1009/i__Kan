@@ -36,6 +36,10 @@ namespace iKan {
     // ******************************************************************************
     void Viewport::OnUpdateImGui()
     {
+        // If viewport is not present then return
+        if (!Present)
+            return;
+
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         ImGui::Begin("Viewport", &Present);
         {
@@ -130,6 +134,10 @@ namespace iKan {
     // ******************************************************************************
     void Viewport::OnImguiRenderer()
     {
+        // No Imgui renderer if flag is false
+        if (!IsImguiPannel)
+            return;
+
         ImGui::Begin("Viewport Properties", &IsImguiPannel);
         ImGui::PushID("Viewport Properties");
 

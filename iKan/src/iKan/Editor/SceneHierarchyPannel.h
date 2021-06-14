@@ -27,6 +27,9 @@ namespace iKan {
 
         void SetSelectedEntity(Entity entity) { m_SelectedEntity = entity; }
         Entity GetSelectedEntity() const { return m_SelectedEntity; }
+
+    public:
+        bool isSceneHeirarchypanel = true;
         
     private:
         void DrawEntityNode(Entity entity);

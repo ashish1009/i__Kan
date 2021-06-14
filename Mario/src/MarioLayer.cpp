@@ -121,22 +121,13 @@ void MarioLayer::OnImguiRender(Timestep ts)
     RendererStats(ts);
 
     // Render Scene Hierarchy pannel in imgui
-    if (s_PropFlag.IsSceneHeirarchypanel)
-    {
-        m_SceneHierarchyPannel.OnImguiender(&s_PropFlag.IsSceneHeirarchypanel);
-    }
+    m_SceneHierarchyPannel.OnImguiender(&m_SceneHierarchyPannel.isSceneHeirarchypanel);
 
     // Viewport Update
-    if (m_Viewport.Present)
-    {
-        m_Viewport.OnUpdateImGui();
-    }
+    m_Viewport.OnUpdateImGui();
 
     // Viewport Imgui Renderer
-    if (m_Viewport.IsImguiPannel)
-    {
-        m_Viewport.OnImguiRenderer();
-    }
+    m_Viewport.OnImguiRenderer();
 
     // Show mario Setting in Imgui
     if (MarioLayer::s_PropFlag.IsSettings)
@@ -175,9 +166,9 @@ void MarioLayer::ShowMenu()
 
         if (ImGui::BeginMenu("View"))
         {
-            if (ImGui::MenuItem("Scene Heirarchy Panel", nullptr, s_PropFlag.IsSceneHeirarchypanel))
+            if (ImGui::MenuItem("Scene Heirarchy Panel", nullptr, m_SceneHierarchyPannel.isSceneHeirarchypanel))
             {
-                s_PropFlag.IsSceneHeirarchypanel = !s_PropFlag.IsSceneHeirarchypanel;
+                m_SceneHierarchyPannel.isSceneHeirarchypanel = !m_SceneHierarchyPannel.isSceneHeirarchypanel;
             }
 
             if (ImGui::MenuItem("Frame Rate", nullptr, s_PropFlag.IsFrameRate))
