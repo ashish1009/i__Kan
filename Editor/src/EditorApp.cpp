@@ -11,6 +11,7 @@
 #include <iKan/Entrypoint.h>
 
 #include "EditorLayer.h"
+#include "IKanEditor.h"
 
 // ******************************************************************************
 // Client side Applicaiton. This will derive the ikan Application. Here different
@@ -71,11 +72,42 @@ public:
 };
 
 // ******************************************************************************
+// iKan Editor. Completely independent Editor
+// ******************************************************************************
+class IKanEditorApp : public iKan::Application
+{
+public:
+    // ******************************************************************************
+    // Constructor of Mario Application
+    // ******************************************************************************
+    IKanEditorApp(const iKan::Application::Property& props)
+    : iKan::Application(props)
+    {
+        IK_INFO("Constructing IKanEditor Application");
+        m_ActiveLayer = std::make_shared<IKanEditor>();
+        PushLayer(m_ActiveLayer);
+    }
+
+    // ******************************************************************************
+    // Virtual destructor of Mario application
+    // ******************************************************************************
+    virtual ~IKanEditorApp()
+    {
+        IK_WARN("Destroying IKanEditor Application");
+        PopLayer(m_ActiveLayer);
+    }
+
+private:
+    std::shared_ptr<iKan::Layer> m_ActiveLayer;
+
+};
+
+// ******************************************************************************
 // Client should decide which Application should be created for game loop
 // ******************************************************************************
 iKan::Scope<iKan::Application> iKan::CreateApplication()
 {
-    auto appProp    = iKan::Application::Property("Editor", 800, 450, RendererAPI::API::OpenGL );
-    auto editorApp  = iKan::CreateScope<EditorApp>(appProp);
-    return editorApp;
+    auto appProp        = iKan::Application::Property("Editor", 800, 450, RendererAPI::API::OpenGL );
+    auto iKanEditorApp  = iKan::CreateScope<IKanEditorApp>(appProp);
+    return iKanEditorApp;
 }
