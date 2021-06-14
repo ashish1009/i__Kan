@@ -30,7 +30,6 @@ private:
     void RendererStats(Timestep ts);
 
 private:
-    EditorCamera         m_EditorCamera;
     Ref<Scene>           m_ActiveScene;
     SceneHeirarchyPannel m_SceneHierarchyPannel;
     

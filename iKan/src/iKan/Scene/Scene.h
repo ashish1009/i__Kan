@@ -44,6 +44,9 @@ namespace iKan {
 
             // Store the map of Entityes present in the Scene with their UUID
             std::unordered_map<UUID, Entity> EntityIDMap;
+
+            // Stores the Editor Camera
+            Ref<iKan::EditorCamera> EditorCamera;
         };
 
     public:
@@ -52,15 +55,20 @@ namespace iKan {
         
         Entity CreateEntity(const std::string& name = "Unknown Entity", UUID uuid = UUID());
         void DestroyEntity(Entity entity);
-        
-        void OnUpdateEditor(Timestep ts, EditorCamera& camera);
+
+        void OnEvent(Event& event);
+        void OnUpdateEditor(Timestep ts);
         void OnViewportResize(uint32_t width, uint32_t height);
         void OnUpdateRuntime(Timestep ts);
         void OnImguiRenderer();
 
+        void SetEditorCamera(float fov, float aspectRatio, float near, float far);
+
         int32_t GetEntityIdFromPixels(int32_t mx, int32_t my);
         int32_t OnBoxColloider(Entity& currEntity, float speed);
         uint32_t GetNumEntities() const { return m_Data.NumEntities; }
+
+        Ref<EditorCamera> GetEditorCamera() { return m_Data.EditorCamera; }
 
         Data& GetDataRef() { return m_Data; }
 

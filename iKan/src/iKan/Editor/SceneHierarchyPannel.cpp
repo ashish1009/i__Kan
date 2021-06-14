@@ -310,8 +310,9 @@ namespace iKan {
 
             // Upload New Texture Texture
             static std::string newTexturePath;
-            PropertyGrid::String("", newTexturePath, 0.0f, 500.0f, " Enter Texture path here (path should be absolute), or \n Select already uploaded textures from below drop box", true, true, 2);
-
+            PropertyGrid::String("", newTexturePath, 0.0f, 500.0f, " Enter Texture path here (path should be absolute), or \n"
+                                                                   " Select already uploaded textures from below drop box", true, true, 2);
+            
             if (ImGui::Button("Upload Texture") && newTexturePath != "")
             {
                 src.UploadTexture(m_Context->AddTextureToScene(newTexturePath));

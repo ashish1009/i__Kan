@@ -15,11 +15,14 @@ EditorLayer::PropertyFlag EditorLayer::s_PropFlag;
 // EditorLayer Constructor
 // ******************************************************************************
 EditorLayer::EditorLayer()
-: Layer("Editor"), m_EditorCamera(glm::radians(45.0f), 1800.0f/800.0f, 0.01f, 10000.0f)
+: Layer("Editor")
 {
     IK_INFO("Editor layer created");
         
     m_ActiveScene = CreateRef<Scene>();
+
+    // Set the Editor Camera
+    m_ActiveScene->SetEditorCamera(glm::radians(45.0f), 1800.0f/800.0f, 0.01f, 10000.0f);
     
     // Frame buffer specifications
     Framebuffer::Specification specs;
@@ -78,16 +81,14 @@ void EditorLayer::OnUpdate(Timestep ts)
     {
         m_Viewport.FrameBuffer->Resize((uint32_t)m_Viewport.Size.x, (uint32_t)m_Viewport.Size.y);
         m_ActiveScene->OnViewportResize((uint32_t)m_Viewport.Size.x, (uint32_t)m_Viewport.Size.y);
-        m_EditorCamera.SetViewportSize((uint32_t)m_Viewport.Size.x, (uint32_t)m_Viewport.Size.y);
     }
 
     RendererStatistics::Reset();
-    m_EditorCamera.OnUpdate(ts);
-    
+
     m_Viewport.FrameBuffer->Bind();
     {
         Renderer::Clear({ 0.1f, 0.1f, 0.1f, 1.0f });
-        m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
+        m_ActiveScene->OnUpdateEditor(ts);
 
         m_Viewport.OnUpdate(m_ActiveScene);
     }
@@ -133,12 +134,6 @@ void EditorLayer::OnImguiRender(Timestep ts)
     {
         m_Viewport.OnImguiRenderer();
     }
-
-    // Editor Camera Imgui Renderer
-    if (m_EditorCamera.IsImguiPannel)
-    {
-        m_EditorCamera.OnImguiRenderer();
-    }
     
     ImGuiAPI::EndDcocking();
 }
@@ -148,8 +143,8 @@ void EditorLayer::OnImguiRender(Timestep ts)
 // ******************************************************************************
 void EditorLayer::OnEvent(Event& event)
 {
-    m_EditorCamera.OnEvent(event);
     m_Viewport.OnEvent(event);
+    m_ActiveScene->OnEvent(event);
 }
 
 // ******************************************************************************
@@ -189,10 +184,11 @@ void EditorLayer::ShowMenu()
             {
                 EditorLayer::s_PropFlag.IsVendorType = !EditorLayer::s_PropFlag.IsVendorType;
             }
-            
-            if (ImGui::MenuItem("Editor Camera Imgui Pannel", nullptr, m_EditorCamera.IsImguiPannel))
+
+            Ref<EditorCamera> editorCamera = m_ActiveScene->GetEditorCamera();
+            if (editorCamera && ImGui::MenuItem("Editor Camera Imgui Pannel", nullptr, editorCamera->IsImguiPannel))
             {
-                m_EditorCamera.IsImguiPannel = !m_EditorCamera.IsImguiPannel;
+                editorCamera->IsImguiPannel = !editorCamera->IsImguiPannel;
             }
 
             if (ImGui::BeginMenu("Viewport"))

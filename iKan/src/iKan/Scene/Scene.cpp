@@ -44,13 +44,25 @@ namespace iKan {
     }
 
     // ******************************************************************************
+    // Add the Editor camera to the scene
+    // ******************************************************************************
+    void Scene::SetEditorCamera(float fov, float aspectRatio, float near, float far)
+    {
+        m_Data.EditorCamera = CreateRef<iKan::EditorCamera>(fov, aspectRatio, near, far);
+    }
+
+    // ******************************************************************************
     // Imgui renderer for Scene
     // NOTE : Imgui::Begin and Imgui::End should be taken care at the place where it
     // is getting called
     // ******************************************************************************
     void Scene::OnImguiRenderer()
     {
-        
+        // Editor Camera Imgui Renderer
+        if (m_Data.EditorCamera && m_Data.EditorCamera->IsImguiPannel)
+        {
+            m_Data.EditorCamera->OnImguiRenderer();
+        }
     }
     
     // ******************************************************************************
@@ -100,13 +112,29 @@ namespace iKan {
     }
 
     // ******************************************************************************
+    // Handler events of Scene
+    // ******************************************************************************
+    void Scene::OnEvent(Event& event)
+    {
+        if (m_Data.EditorCamera)
+        {
+            m_Data.EditorCamera->OnEvent(event);
+        }
+    }
+
+    // ******************************************************************************
     // Update Scene. Editor camera helps to  Edit the Scene
     // ******************************************************************************
-    void Scene::OnUpdateEditor(Timestep ts, EditorCamera &editorCamera)
+    void Scene::OnUpdateEditor(Timestep ts)
     {
-        SceneRenderer::BeginScene(editorCamera);
-        RenderSpriteComponent();
-        SceneRenderer::EndScene();
+        if (m_Data.EditorCamera)
+        {
+            m_Data.EditorCamera->OnUpdate(ts);
+
+            SceneRenderer::BeginScene(*m_Data.EditorCamera.get());
+            RenderSpriteComponent();
+            SceneRenderer::EndScene();
+        }
     }
 
     // ******************************************************************************
@@ -191,6 +219,11 @@ namespace iKan {
             auto& cameraComponent = view.get<CameraComponent>(entity);
             if (!cameraComponent.FixedAspectRatio)
                 cameraComponent.Camera.SetViewportSize(width, height);
+        }
+
+        if (m_Data.EditorCamera)
+        {
+            m_Data.EditorCamera->SetViewportSize(width, height);
         }
     }
 
