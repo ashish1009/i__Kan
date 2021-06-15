@@ -11,6 +11,7 @@
 
 #include <iKan/Renderer/FrameBuffer.h>
 #include <iKan/Scene/Entity.h>
+#include <iKan/Editor/SceneHierarchyPannel.h>
 
 namespace iKan {
     
@@ -93,9 +94,9 @@ namespace iKan {
         void RendererStats(Timestep ts);
         
     public:
-        PropFlag     Flags;
-        ViewportData Data;
-
+        PropFlag                   Flags;
+        ViewportData               Data;
+        iKan::SceneHeirarchyPannel SceneHierarchyPannel;
     };
     
 }

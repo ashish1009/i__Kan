@@ -34,7 +34,6 @@ private:
     
 private:
     Ref<Scene>           m_ActiveScene;
-    SceneHeirarchyPannel m_SceneHierarchyPannel;
     Entity               m_CameraEntity;
 
 //    Mario::Player&       m_Player = Mario::Player::Create();

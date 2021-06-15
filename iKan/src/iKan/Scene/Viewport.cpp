@@ -68,6 +68,12 @@ namespace iKan {
     // ******************************************************************************
     void Viewport::OnUpdate(Ref<Scene>& activeScene)
     {
+        // Update selected entity
+        if (Data.SelectedEntity != Entity(entt::null, nullptr))
+        {
+            SceneHierarchyPannel.SetSelectedEntity(Data.SelectedEntity);
+        }
+
         UpdateMousePos();
         UpdateHoveredEntity(activeScene);
     }
@@ -135,12 +141,17 @@ namespace iKan {
     // ******************************************************************************
     void Viewport::OnImguiRenderer(Timestep ts)
     {
+        // Render Scene Hierarchy pannel in imgui
+        SceneHierarchyPannel.OnImguiender(&SceneHierarchyPannel.isSceneHeirarchypanel);
+
+        // Update the Viewport Data
         OnUpdateImGui();
 
         // No Imgui renderer if flag is false
         if (!Flags.IsImguiPannel)
             return;
 
+        // Renderer Viewport Properties
         ImGui::Begin("Viewport Properties", &Flags.IsImguiPannel);
         ImGui::PushID("Viewport Properties");
 
@@ -214,6 +225,7 @@ namespace iKan {
 
         ImGui::Separator();
 
+        // SHow the Hovered Eneity
         std::string entityName = "NULL";
         if ((entt::entity)Data.HoveredEntity != entt::null)
         {
@@ -259,6 +271,11 @@ namespace iKan {
     // ******************************************************************************
     void Viewport::ViewMenu()
     {
+        if (ImGui::MenuItem("Scene Heirarchy Panel", nullptr, SceneHierarchyPannel.isSceneHeirarchypanel))
+        {
+            SceneHierarchyPannel.isSceneHeirarchypanel = !SceneHierarchyPannel.isSceneHeirarchypanel;
+        }
+
         ImGui::Separator();
 
         if (ImGui::MenuItem("Frame Rate", nullptr, Flags.IsFrameRate))

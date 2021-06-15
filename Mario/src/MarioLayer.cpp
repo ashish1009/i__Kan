@@ -54,7 +54,7 @@ void MarioLayer::OnAttach()
     m_Viewport.Data.FrameBuffer = Framebuffer::Create(specs);
 
     // Set the current Scene to scene hierarchy pannel
-    m_SceneHierarchyPannel.SetContext(m_ActiveScene);
+    m_Viewport.SceneHierarchyPannel.SetContext(m_ActiveScene);
 
     // Setup the Camera Entity
     m_CameraEntity        = m_ActiveScene->CreateEntity("Camera");
@@ -93,11 +93,6 @@ void MarioLayer::OnUpdate(Timestep ts)
 
     RendererStatistics::Reset();
 
-    if (m_Viewport.Data.SelectedEntity != Entity(entt::null, nullptr))
-    {
-        m_SceneHierarchyPannel.SetSelectedEntity(m_Viewport.Data.SelectedEntity);
-    }
-
     m_Viewport.Data.FrameBuffer->Bind();
     {
         Renderer::Clear(Mario::Background::s_BgColor);
@@ -118,9 +113,6 @@ void MarioLayer::OnImguiRender(Timestep ts)
     ImGui::ShowDemoWindow();
 
     ShowMenu();
-    
-    // Render Scene Hierarchy pannel in imgui
-    m_SceneHierarchyPannel.OnImguiender(&m_SceneHierarchyPannel.isSceneHeirarchypanel);
 
     // Viewport Imgui Renderer
     m_Viewport.OnImguiRenderer(ts);
@@ -162,11 +154,6 @@ void MarioLayer::ShowMenu()
 
         if (ImGui::BeginMenu("View"))
         {
-            if (ImGui::MenuItem("Scene Heirarchy Panel", nullptr, m_SceneHierarchyPannel.isSceneHeirarchypanel))
-            {
-                m_SceneHierarchyPannel.isSceneHeirarchypanel = !m_SceneHierarchyPannel.isSceneHeirarchypanel;
-            }
-
             if (ImGui::MenuItem("Mario Settings", nullptr, s_PropFlag.IsSettings))
             {
                 s_PropFlag.IsSettings = !s_PropFlag.IsSettings;
