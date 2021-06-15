@@ -15,6 +15,7 @@
 		758155042642D2070062AE00 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 758155032642D2070062AE00 /* IOKit.framework */; };
 		758155062642D20D0062AE00 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 758155052642D20C0062AE00 /* OpenGL.framework */; };
 		758155092642D9AC0062AE00 /* MarioLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 758155072642D9AC0062AE00 /* MarioLayer.cpp */; };
+		758D280F2678F7B50032FCC2 /* StartScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 758D280D2678F7B50032FCC2 /* StartScreen.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -79,6 +80,8 @@
 		758155072642D9AC0062AE00 /* MarioLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MarioLayer.cpp; sourceTree = "<group>"; };
 		758155082642D9AC0062AE00 /* MarioLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MarioLayer.h; sourceTree = "<group>"; };
 		7589D5042677623500EB43D9 /* libyaml.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libyaml.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		758D280D2678F7B50032FCC2 /* StartScreen.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StartScreen.cpp; sourceTree = "<group>"; };
+		758D280E2678F7B50032FCC2 /* StartScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StartScreen.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,6 +218,8 @@
 				755FC0582645A36100F670FA /* Background.h */,
 				7533BDE826726CED000E91A7 /* Player.cpp */,
 				7533BDE926726CED000E91A7 /* Player.h */,
+				758D280D2678F7B50032FCC2 /* StartScreen.cpp */,
+				758D280E2678F7B50032FCC2 /* StartScreen.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -289,6 +294,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				758D280F2678F7B50032FCC2 /* StartScreen.cpp in Sources */,
 				7533BDEA26726CED000E91A7 /* Player.cpp in Sources */,
 				755FC0592645A36100F670FA /* Background.cpp in Sources */,
 				758155092642D9AC0062AE00 /* MarioLayer.cpp in Sources */,

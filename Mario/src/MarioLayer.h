@@ -28,11 +28,16 @@ public:
     virtual void OnEvent(Event& event) override;
     virtual void OnUpdate(Timestep ts) override;
     virtual void OnImguiRender(Timestep ts) override;
+
+private:
+    void ShowMenu();
     
 private:
-    Viewport& m_Viewport = Viewport::Get();
+    bool m_IsSetting = true;
 
-    Entity             m_CameraEntity;
+    Viewport& m_Viewport = Viewport::Get();
+    Entity m_CameraEntity;
     Ref<Mario::Player> m_Player;
+
 };
 

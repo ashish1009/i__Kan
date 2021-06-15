@@ -86,6 +86,12 @@ void MarioLayer::OnImguiRender(Timestep ts)
     // Viewport Imgui Renderer
     m_Viewport.OnImguiRenderer(ts);
 
+    ShowMenu();
+    // Mario Setting pannel
+    ImGui::Begin("Mario Setting", &m_IsSetting);
+    Background::ImGuiRenderer();
+    ImGui::End();
+
     ImGuiAPI::EndDcocking();
 }
 
@@ -96,3 +102,28 @@ void MarioLayer::OnEvent(Event& event)
 {
     m_Viewport.OnEvent(event);
 }
+
+// ******************************************************************************
+// Show Mario Menu
+// ******************************************************************************
+void MarioLayer::ShowMenu()
+{
+    if (ImGui::BeginMenuBar())
+    {
+        if (ImGui::BeginMenu("Mario"))
+        {
+            if (ImGui::BeginMenu("View"))
+            {
+                if (ImGui::MenuItem("Setting", nullptr, m_IsSetting))
+                    m_IsSetting = !m_IsSetting;
+                
+                ImGui::EndMenu(); // if (ImGui::BeginMenu("Scene"))
+            }
+            ImGui::Separator();
+
+            ImGui::EndMenu(); // ImGui::BeginMenu("File")
+        } // if (ImGui::BeginMenuBar())
+        ImGui::EndMenuBar(); // ImGui::BeginMenuBar()
+    }
+}
+

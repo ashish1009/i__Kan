@@ -305,39 +305,27 @@ namespace iKan {
     void Viewport::ViewMenu()
     {
         if (ImGui::MenuItem("Scene Heirarchy Panel", nullptr, m_SceneHierarchyPannel.isSceneHeirarchypanel))
-        {
             m_SceneHierarchyPannel.isSceneHeirarchypanel = !m_SceneHierarchyPannel.isSceneHeirarchypanel;
-        }
 
         ImGui::Separator();
 
         if (ImGui::MenuItem("Frame Rate", nullptr, m_Flags.IsFrameRate))
-        {
             m_Flags.IsFrameRate = !m_Flags.IsFrameRate;
-        }
 
         if (ImGui::MenuItem("Render Stats", nullptr, m_Flags.IsRendererStats))
-        {
             m_Flags.IsRendererStats = !m_Flags.IsRendererStats;
-        }
 
         if (ImGui::MenuItem("Vendor Types", nullptr, m_Flags.IsVendorType))
-        {
             m_Flags.IsVendorType = !m_Flags.IsVendorType;
-        }
 
         ImGui::Separator();
 
         if (ImGui::MenuItem("Renderer Viewport", nullptr, m_Flags.Present))
-        {
             m_Flags.Present = !m_Flags.Present;
-        }
 
         if (ImGui::MenuItem("Imgui", nullptr, m_Flags.IsImguiPannel))
-        {
             m_Flags.IsImguiPannel = !m_Flags.IsImguiPannel;
-        }
-
+        
         ImGui::Separator();
     }
     

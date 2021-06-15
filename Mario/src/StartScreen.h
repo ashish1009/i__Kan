@@ -1,9 +1,9 @@
 // ******************************************************************************
-// File         : Background.h
-// Description  : Storing all entity for Background rendering
+// File         : StartScreen.h
+// Description  : Storing all entity for Start Sceen rendering
 // Project      : Mario
 //
-//  Created by Ashish on 07/05/21.
+//  Created by Ashish on 15/06/21.
 //  Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
@@ -18,18 +18,10 @@ namespace Mario {
     // ******************************************************************************
     // Background Wrapper to store Entity to render background
     // ******************************************************************************
-    class Background
+    class StartScreen
     {
     public:
         static void CreateEntities(Ref<Scene>& scene);
-        static void ImGuiRenderer();
-
-    private:
-        static void Init();
-        static void ImgButtons(const char name);
-
-    public:
-        static glm::vec4 s_BgColor;
     };
 
 }
