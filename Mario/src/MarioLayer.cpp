@@ -9,6 +9,7 @@
 
 #include "MarioLayer.h"
 #include "Background.h"
+#include "StartScreen.h"
 
 using namespace Mario;
 
@@ -53,9 +54,12 @@ void MarioLayer::OnAttach()
     // Creating Entities for background tiles
     Mario::Background::CreateEntities(scene);
 
+    // Creating Entities for background tiles
+    Mario::StartScreen::CreateEntities(scene);
+
     // Create Player Instance
     // TODO: Add multi player Concept here
-    m_Player = CreateRef<Mario::Player>(scene);
+//    m_Player = CreateRef<Mario::Player>(scene);
 }
 
 // ******************************************************************************
