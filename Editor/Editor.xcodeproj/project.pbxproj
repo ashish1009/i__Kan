@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		7589D20F2677448700EB43D9 /* IKanEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7589D20D2677448700EB43D9 /* IKanEditor.cpp */; };
-		B20280622625E63400BC7F39 /* EditorLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B20280602625E63400BC7F39 /* EditorLayer.cpp */; };
 		B254585C262893080053BD47 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25684C526274C0F0030D00D /* IOKit.framework */; };
 		B254585E2628930D0053BD47 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B254585D2628930D0053BD47 /* OpenGL.framework */; };
 		B254585F262893120053BD47 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25684C326274C090030D00D /* Cocoa.framework */; };
@@ -31,8 +30,6 @@
 /* Begin PBXFileReference section */
 		7589D20D2677448700EB43D9 /* IKanEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IKanEditor.cpp; sourceTree = "<group>"; };
 		7589D20E2677448700EB43D9 /* IKanEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IKanEditor.h; sourceTree = "<group>"; };
-		B20280602625E63400BC7F39 /* EditorLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorLayer.cpp; sourceTree = "<group>"; wrapsLines = 0; };
-		B20280612625E63400BC7F39 /* EditorLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditorLayer.h; sourceTree = "<group>"; };
 		B254585D2628930D0053BD47 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B25684C326274C090030D00D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		B25684C526274C0F0030D00D /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -95,8 +92,6 @@
 			isa = PBXGroup;
 			children = (
 				B2FE350726248AF200AFC236 /* EditorApp.cpp */,
-				B20280602625E63400BC7F39 /* EditorLayer.cpp */,
-				B20280612625E63400BC7F39 /* EditorLayer.h */,
 				7589D20D2677448700EB43D9 /* IKanEditor.cpp */,
 				7589D20E2677448700EB43D9 /* IKanEditor.h */,
 			);
@@ -174,7 +169,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7589D20F2677448700EB43D9 /* IKanEditor.cpp in Sources */,
-				B20280622625E63400BC7F39 /* EditorLayer.cpp in Sources */,
 				B2FE350826248AF200AFC236 /* EditorApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

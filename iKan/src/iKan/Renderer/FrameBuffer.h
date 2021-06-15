@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include <iKan/Core/Window.h>
+
 namespace iKan {
     
     // ******************************************************************************
@@ -63,7 +65,8 @@ namespace iKan {
         {
             bool SwapChainTarget = false;
 
-            uint32_t Width, Height;
+            uint32_t Width   = Window::Property::DefaultWidth;
+            uint32_t Height  = Window::Property::DefaultHeight;
             uint32_t Samples = 1;
 
             Framebuffer::Attachments Attachments;

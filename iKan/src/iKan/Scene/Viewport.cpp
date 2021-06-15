@@ -67,7 +67,7 @@ namespace iKan {
     // ******************************************************************************
     // Update mouse position of viewport
     // ******************************************************************************
-    void Viewport::OnUpdate(Ref<Scene>& activeScene, Timestep ts, const glm::vec4& bgColor)
+    void Viewport::OnUpdate(Ref<Scene>& activeScene, Timestep ts)
     {
         // If resize the window call the update the Scene View port and Frame buffer should be resized
         if (Framebuffer::Specification spec = Data.FrameBuffer->GetSpecification();
@@ -82,7 +82,7 @@ namespace iKan {
 
         Data.FrameBuffer->Bind();
         {
-            Renderer::Clear(bgColor);
+            Renderer::Clear(Data.BgColor);
             activeScene->OnUpdateRuntime(ts);
 
             // Update selected entity
@@ -154,23 +154,127 @@ namespace iKan {
         }
         return false;
     }
+
+    // ******************************************************************************
+    // Menu items of Viewport
+    // ******************************************************************************
+    void Viewport::ShowMenu()
+    {
+        if (ImGui::BeginMenuBar())
+        {
+            if (ImGui::BeginMenu("File"))
+            {
+                if (ImGui::MenuItem("Exit", "Cmd + Q"))
+                {
+                    Application::Get().Close();
+                }
+                ImGui::EndMenu(); // ImGui::BeginMenu("File")
+            } // if (ImGui::BeginMenuBar())
+
+            if (ImGui::BeginMenu("View"))
+            {
+                ViewMenu();
+                ImGui::EndMenu(); // if (ImGui::BeginMenu("View"))
+            }
+
+            if (ImGui::BeginMenu("Properties"))
+            {
+                PropertyMenu();
+                ImGui::EndMenu(); // ImGui::BeginMenu("Properties")
+            } // if (ImGui::BeginMenu("Properties"))
+
+            ImGui::EndMenuBar(); // ImGui::BeginMenuBar()
+        }
+    }
+
+
+    // ******************************************************************************
+    // Property menu for Viewport
+    // ******************************************************************************
+    void Viewport::PropertyMenu()
+    {
+        if (ImGui::MenuItem("Theme", nullptr))
+        {
+            if (ImGui::MenuItem("Light Theme", nullptr))
+            {
+                Data.BgColor = {0.9f, 0.0f, 0.9f, 1.0f};
+            }
+        }
+    }
+
+    // ******************************************************************************
+    // View menu for view port
+    // NOTE: this should be called between Imgui::BeginMenue and ImGui::EndMenue();
+    // ******************************************************************************
+    void Viewport::ViewMenu()
+    {
+        if (ImGui::MenuItem("Scene Heirarchy Panel", nullptr, SceneHierarchyPannel.isSceneHeirarchypanel))
+        {
+            SceneHierarchyPannel.isSceneHeirarchypanel = !SceneHierarchyPannel.isSceneHeirarchypanel;
+        }
+
+        ImGui::Separator();
+
+        if (ImGui::MenuItem("Frame Rate", nullptr, Flags.IsFrameRate))
+        {
+            Flags.IsFrameRate = !Flags.IsFrameRate;
+        }
+
+        if (ImGui::MenuItem("Render Stats", nullptr, Flags.IsRendererStats))
+        {
+            Flags.IsRendererStats = !Flags.IsRendererStats;
+        }
+
+        if (ImGui::MenuItem("Vendor Types", nullptr, Flags.IsVendorType))
+        {
+            Flags.IsVendorType = !Flags.IsVendorType;
+        }
+
+        ImGui::Separator();
+
+        if (ImGui::MenuItem("Renderer Viewport", nullptr, Flags.Present))
+        {
+            Flags.Present = !Flags.Present;
+        }
+
+        if (ImGui::MenuItem("Imgui", nullptr, Flags.IsImguiPannel))
+        {
+            Flags.IsImguiPannel = !Flags.IsImguiPannel;
+        }
+
+        ImGui::Separator();
+    }
     
     // ******************************************************************************
     // Reender Viewport Imgui pannel, if flag is true then render
     // ******************************************************************************
     void Viewport::OnImguiRenderer(Timestep ts)
     {
+        ShowMenu();
+
         // Render Scene Hierarchy pannel in imgui
         SceneHierarchyPannel.OnImguiender(&SceneHierarchyPannel.isSceneHeirarchypanel);
 
         // Update the Viewport Data
         OnUpdateImGui();
 
+        // Renderer Viewport Properties
+        RendereViewportProp();
+
+        // Show Renderer Stats
+        RendererStats(ts);
+    }
+
+    // ******************************************************************************
+    // Reender Viewport Imgui pannel, if flag is true then render
+    // ******************************************************************************
+    void Viewport::RendereViewportProp()
+    {
         // No Imgui renderer if flag is false
         if (!Flags.IsImguiPannel)
             return;
 
-        // Renderer Viewport Properties
+        // Basic Properties
         ImGui::Begin("Viewport Properties", &Flags.IsImguiPannel);
         ImGui::PushID("Viewport Properties");
 
@@ -188,8 +292,20 @@ namespace iKan {
         ImGui::Text("Hovered : %d", Data.Hovered);
         ImGui::NextColumn();
 
+        ImGui::Columns(1);
         ImGui::Separator();
 
+        // Option for Background color
+        static ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_Selected | ImGuiTreeNodeFlags_SpanAvailWidth;
+        bool bgOpened = ImGui::TreeNodeEx((void*)1234567, flags, "Background Color");
+        if (bgOpened)
+        {
+            ImGuiAPI::ColorEdit(Data.BgColor);
+            ImGui::TreePop();
+        }
+        ImGui::Separator();
+
+        // Other Properties
         ImGui::Columns(2);
 
         ImGui::SetColumnWidth(0, 130);
@@ -260,7 +376,6 @@ namespace iKan {
         ImGui::PopID();
         ImGui::End();
 
-        RendererStats(ts);
     }
 
     // ******************************************************************************
@@ -282,49 +397,6 @@ namespace iKan {
         {
             ImGuiAPI::RendererVersion(&Flags.IsVendorType);
         }
-    }
-
-    // ******************************************************************************
-    // View menu for view port
-    // NOTE: this should be called between Imgui::BeginMenue and ImGui::EndMenue();
-    // ******************************************************************************
-    void Viewport::ViewMenu()
-    {
-        if (ImGui::MenuItem("Scene Heirarchy Panel", nullptr, SceneHierarchyPannel.isSceneHeirarchypanel))
-        {
-            SceneHierarchyPannel.isSceneHeirarchypanel = !SceneHierarchyPannel.isSceneHeirarchypanel;
-        }
-
-        ImGui::Separator();
-
-        if (ImGui::MenuItem("Frame Rate", nullptr, Flags.IsFrameRate))
-        {
-            Flags.IsFrameRate = !Flags.IsFrameRate;
-        }
-
-        if (ImGui::MenuItem("Render Stats", nullptr, Flags.IsRendererStats))
-        {
-            Flags.IsRendererStats = !Flags.IsRendererStats;
-        }
-
-        if (ImGui::MenuItem("Vendor Types", nullptr, Flags.IsVendorType))
-        {
-            Flags.IsVendorType = !Flags.IsVendorType;
-        }
-
-        ImGui::Separator();
-
-        if (ImGui::MenuItem("Renderer Viewport", nullptr, Flags.Present))
-        {
-            Flags.Present = !Flags.Present;
-        }
-
-        if (ImGui::MenuItem("Imgui", nullptr, Flags.IsImguiPannel))
-        {
-            Flags.IsImguiPannel = !Flags.IsImguiPannel;
-        }
-
-        ImGui::Separator();
     }
 
 }

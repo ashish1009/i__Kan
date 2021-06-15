@@ -24,6 +24,7 @@ namespace iKan {
         static void ColorEdit(glm::vec4& colorRef);
         
         static void SetGreyThemeColors();
+        static void SetLightThemeColors();
     };
     
 }

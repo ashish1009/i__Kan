@@ -278,7 +278,7 @@ namespace iKan {
     {
         IK_CORE_INFO("Resizing the Framebuffer");
 
-        m_Specifications.Width = width;
+        m_Specifications.Width  = width;
         m_Specifications.Height = height;
         
         Invalidate();

@@ -209,14 +209,7 @@ namespace Mario {
     // ******************************************************************************
     void Background::ImGuiRenderer()
     {
-        static ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_Selected | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
-        bool bgOpened = ImGui::TreeNodeEx((void*)1234567, flags, "Background Color");
-        if (bgOpened)
-        {
-            ImGuiAPI::ColorEdit(s_BgColor);
-            ImGui::TreePop();
-        }
-
+        static ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_Selected | ImGuiTreeNodeFlags_SpanAvailWidth;
         bool tileOpened = ImGui::TreeNodeEx((void*)1234567, flags, "Tile");
         if (tileOpened)
         {

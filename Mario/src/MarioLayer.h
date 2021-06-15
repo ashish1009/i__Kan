@@ -30,20 +30,12 @@ public:
     virtual void OnImguiRender(Timestep ts) override;
     
 private:
-    void ShowMenu();
-    
-private:
     Ref<Scene>           m_ActiveScene;
     Entity               m_CameraEntity;
 
 //    Mario::Player&       m_Player = Mario::Player::Create();
     
     Viewport& m_Viewport = Viewport::Get();
-    
-    struct PropertyFlag
-    {
-        bool IsSettings            = true;
-    };
-    static PropertyFlag s_PropFlag;
+
 };
 

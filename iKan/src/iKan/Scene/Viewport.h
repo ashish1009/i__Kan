@@ -50,6 +50,9 @@ namespace iKan {
             // 0 -> Top left, 1 -> bottom right
             glm::vec2 Bounds[2];
 
+            // Viewport background color
+            glm::vec4 BgColor = {0.1f, 0.1f, 0.1f, 1.0f};
+
             // Cursorn position of View port. Not the mouse pos
             ImVec2 CursorPos;
 
@@ -76,12 +79,12 @@ namespace iKan {
         Viewport& operator =(const Viewport& other) = delete;
         Viewport& operator =(Viewport&& other) = delete;
 
-        void OnUpdate(Ref<Scene>& activeScene, Timestep ts, const glm::vec4& bgColor);
+        void OnUpdate(Ref<Scene>& activeScene, Timestep ts);
         void UpdateBounds();
         void UpdateMousePos();
         void OnImguiRenderer(Timestep ts);
         void UpdateHoveredEntity(Ref<Scene>& activeScene);
-        void ViewMenu();
+        void ShowMenu();
         void OnEvent(Event& event);
 
         static Viewport& Get()
@@ -92,8 +95,11 @@ namespace iKan {
 
     private:
         void OnUpdateImGui();
+        void PropertyMenu();
+        void ViewMenu();
         void RendererStats(Timestep ts);
-        
+        void RendereViewportProp();
+
     public:
         PropFlag                   Flags;
         ViewportData               Data;

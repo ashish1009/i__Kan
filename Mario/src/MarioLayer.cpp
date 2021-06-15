@@ -12,8 +12,6 @@
 
 using namespace Mario;
 
-MarioLayer::PropertyFlag MarioLayer::s_PropFlag;
-
 // ******************************************************************************
 // MarioLayer Constructor
 // ******************************************************************************
@@ -41,20 +39,17 @@ void MarioLayer::OnAttach()
 
     m_ActiveScene = CreateRef<Scene>();
 
+    // Set the current Scene to scene hierarchy pannel
+    m_Viewport.SceneHierarchyPannel.SetContext(m_ActiveScene);
+
     // Frame buffer specifications
     Framebuffer::Specification specs;
     specs.Attachments = { Framebuffer::TextureSpecification::TextureFormat::RGBA8,
         Framebuffer::TextureSpecification::TextureFormat::DEPTH24STENCIL8,
         Framebuffer::TextureSpecification::TextureFormat::R32I };
-
-    specs.Width  = Window::Property::DefaultWidth;
-    specs.Height = Window::Property::DefaultHeight;
-
+    
     // Creating instance for Frame buffer in viewport
     m_Viewport.Data.FrameBuffer = Framebuffer::Create(specs);
-
-    // Set the current Scene to scene hierarchy pannel
-    m_Viewport.SceneHierarchyPannel.SetContext(m_ActiveScene);
 
     // Setup the Camera Entity
     m_CameraEntity        = m_ActiveScene->CreateEntity("Camera");
@@ -82,7 +77,7 @@ void MarioLayer::OnDetach()
 // ******************************************************************************
 void MarioLayer::OnUpdate(Timestep ts)
 {
-    m_Viewport.OnUpdate(m_ActiveScene, ts, Mario::Background::s_BgColor);
+    m_Viewport.OnUpdate(m_ActiveScene, ts);
 }
 
 // ******************************************************************************
@@ -94,18 +89,8 @@ void MarioLayer::OnImguiRender(Timestep ts)
 
     ImGui::ShowDemoWindow();
 
-    ShowMenu();
-
     // Viewport Imgui Renderer
     m_Viewport.OnImguiRenderer(ts);
-
-    // Show mario Setting in Imgui
-    if (MarioLayer::s_PropFlag.IsSettings)
-    {
-        ImGui::Begin("Setting", &MarioLayer::s_PropFlag.IsSettings);
-        Mario::Background::ImGuiRenderer();
-        ImGui::End();
-    }
 
     ImGuiAPI::EndDcocking();
 }
@@ -116,40 +101,4 @@ void MarioLayer::OnImguiRender(Timestep ts)
 void MarioLayer::OnEvent(Event& event)
 {
     m_Viewport.OnEvent(event);
-}
-
-// ******************************************************************************
-// Menu for Imgui View port
-// ******************************************************************************
-void MarioLayer::ShowMenu()
-{
-    if (ImGui::BeginMenuBar())
-    {
-        if (ImGui::BeginMenu("File"))
-        {
-            if (ImGui::MenuItem("Exit", "Cmd + Q"))
-            {
-                Application::Get().Close();
-            }
-            ImGui::EndMenu(); // ImGui::BeginMenu("File")
-        } // if (ImGui::BeginMenuBar())
-
-        if (ImGui::BeginMenu("View"))
-        {
-            if (ImGui::MenuItem("Mario Settings", nullptr, s_PropFlag.IsSettings))
-            {
-                s_PropFlag.IsSettings = !s_PropFlag.IsSettings;
-            }
-            m_Viewport.ViewMenu();
-
-            ImGui::EndMenu(); // if (ImGui::BeginMenu("View"))
-        }
-
-        if (ImGui::BeginMenu("Properties"))
-        {
-            ImGui::EndMenu(); // ImGui::BeginMenu("Properties")
-        } // if (ImGui::BeginMenu("Properties"))
-
-        ImGui::EndMenuBar(); // ImGui::BeginMenuBar()
-    }
 }
