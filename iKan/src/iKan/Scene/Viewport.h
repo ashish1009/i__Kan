@@ -12,6 +12,7 @@
 #include <iKan/Renderer/FrameBuffer.h>
 #include <iKan/Scene/Entity.h>
 #include <iKan/Core/TimeStep.h>
+#include <iKan/Core/Events/KeyEvent.h>
 #include <iKan/Editor/SceneHierarchyPannel.h>
 
 namespace iKan {
@@ -69,6 +70,13 @@ namespace iKan {
     private:
         Viewport() = default;
         bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
+        bool OnKeyPressed(KeyPressedEvent& e);
+
+        void OnUpdateImGui();
+        void PropertyMenu();
+        void ViewMenu();
+        void RendererStats(Timestep ts);
+        void RendereViewportProp();
 
     public:
         ~Viewport() = default;
@@ -79,13 +87,20 @@ namespace iKan {
         Viewport& operator =(const Viewport& other) = delete;
         Viewport& operator =(Viewport&& other) = delete;
 
-        void OnUpdate(Ref<Scene>& activeScene, Timestep ts);
+        void OnUpdate(Timestep ts);
         void UpdateBounds();
         void UpdateMousePos();
         void OnImguiRenderer(Timestep ts);
-        void UpdateHoveredEntity(Ref<Scene>& activeScene);
+        void UpdateHoveredEntity();
         void ShowMenu();
         void OnEvent(Event& event);
+
+        void NewScene();
+        void OpenScene();
+        void SaveScene();
+
+        ViewportData& GetDataRef() { return Data; }
+        Ref<Scene> GetScene() { return ActiveScene; }
 
         static Viewport& Get()
         {
@@ -94,13 +109,7 @@ namespace iKan {
         }
 
     private:
-        void OnUpdateImGui();
-        void PropertyMenu();
-        void ViewMenu();
-        void RendererStats(Timestep ts);
-        void RendereViewportProp();
-
-    public:
+        Ref<Scene>                 ActiveScene;
         PropFlag                   Flags;
         ViewportData               Data;
         iKan::SceneHeirarchyPannel SceneHierarchyPannel;

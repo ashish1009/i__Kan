@@ -67,7 +67,7 @@ namespace iKan {
     // ******************************************************************************
     // Update mouse position of viewport
     // ******************************************************************************
-    void Viewport::OnUpdate(Ref<Scene>& activeScene, Timestep ts)
+    void Viewport::OnUpdate(Timestep ts)
     {
         // If resize the window call the update the Scene View port and Frame buffer should be resized
         if (Framebuffer::Specification spec = Data.FrameBuffer->GetSpecification();
@@ -75,7 +75,7 @@ namespace iKan {
             (spec.Width != Data.Size.x || spec.Height != Data.Size.y))
         {
             Data.FrameBuffer->Resize((uint32_t)Data.Size.x, (uint32_t)Data.Size.y);
-            activeScene->OnViewportResize((uint32_t)Data.Size.x, (uint32_t)Data.Size.y);
+            ActiveScene->OnViewportResize((uint32_t)Data.Size.x, (uint32_t)Data.Size.y);
         }
 
         RendererStatistics::Reset();
@@ -83,7 +83,7 @@ namespace iKan {
         Data.FrameBuffer->Bind();
         {
             Renderer::Clear(Data.BgColor);
-            activeScene->OnUpdateRuntime(ts);
+            ActiveScene->OnUpdateRuntime(ts);
 
             // Update selected entity
             if (Data.SelectedEntity != Entity(entt::null, nullptr))
@@ -92,7 +92,7 @@ namespace iKan {
             }
 
             UpdateMousePos();
-            UpdateHoveredEntity(activeScene);
+            UpdateHoveredEntity();
         }
         Data.FrameBuffer->Unbind();
     }
@@ -118,12 +118,12 @@ namespace iKan {
     // ******************************************************************************
     // Update the Hovered entity in the view port
     // ******************************************************************************
-    void Viewport::UpdateHoveredEntity(Ref<Scene>& activeScene)
+    void Viewport::UpdateHoveredEntity()
     {
         if (Data.MousePosX >= 0 && Data.MousePosY >= 0 && Data.MousePosX <= Data.Width && Data.MousePosY <= Data.Height )
         {
-            int32_t ID = activeScene->GetEntityIdFromPixels(Data.MousePosX, Data.MousePosY);
-            Data.HoveredEntity = (ID >= activeScene->GetNumEntities()) ? Entity() : Entity((entt::entity)ID, activeScene.get());
+            int32_t ID = ActiveScene->GetEntityIdFromPixels(Data.MousePosX, Data.MousePosY);
+            Data.HoveredEntity = (ID >= ActiveScene->GetNumEntities()) ? Entity() : Entity((entt::entity)ID, ActiveScene.get());
         }
     }
 
@@ -156,6 +156,56 @@ namespace iKan {
     }
 
     // ******************************************************************************
+    // key press events
+    // ******************************************************************************
+    bool Viewport::OnKeyPressed(KeyPressedEvent& event)
+    {
+        // Shortcuts
+        if (event.GetRepeatCount() > 0)
+            return false;
+
+        bool cmd   = Input::IsKeyPressed(KeyCode::LeftSuper) || Input::IsKeyPressed(KeyCode::RightSuper);
+        switch (event.GetKeyCode())
+        {
+            case KeyCode::N:    if (cmd)    NewScene();     break;
+            case KeyCode::O:    if (cmd)    OpenScene();    break;
+            case KeyCode::S:    if (cmd)    SaveScene();    break;
+            default:                                        break;
+        }
+        return false;
+    }
+
+    // ******************************************************************************
+    // Create new active scene to the Viewport
+    // ******************************************************************************
+    void Viewport::NewScene()
+    {
+        ActiveScene = CreateRef<Scene>();
+        ActiveScene->OnViewportResize((uint32_t)Data.Size.x, (uint32_t)Data.Size.y);
+        
+        // Set the current Scene to scene hierarchy pannel
+        SceneHierarchyPannel.SetContext(ActiveScene);
+
+        IK_INFO("New scene is created");
+    }
+
+    // ******************************************************************************
+    // Open saved scene
+    // ******************************************************************************
+    void Viewport::OpenScene()
+    {
+
+    }
+
+    // ******************************************************************************
+    // Saving Scene
+    // ******************************************************************************
+    void Viewport::SaveScene()
+    {
+
+    }
+
+    // ******************************************************************************
     // Menu items of Viewport
     // ******************************************************************************
     void Viewport::ShowMenu()
@@ -164,6 +214,16 @@ namespace iKan {
         {
             if (ImGui::BeginMenu("File"))
             {
+                if (ImGui::BeginMenu("Scene"))
+                {
+                    if (ImGui::MenuItem("New", "Cmd + N"))      NewScene();
+                    if (ImGui::MenuItem("Open", "Cmd + O"))     OpenScene();
+                    if (ImGui::MenuItem("Save", "Cmd + S"))     SaveScene();
+
+                    ImGui::EndMenu(); // if (ImGui::BeginMenu("Scene"))
+                }
+                ImGui::Separator();
+                
                 if (ImGui::MenuItem("Exit", "Cmd + Q"))
                 {
                     Application::Get().Close();
@@ -187,18 +247,24 @@ namespace iKan {
         }
     }
 
-
     // ******************************************************************************
     // Property menu for Viewport
     // ******************************************************************************
     void Viewport::PropertyMenu()
     {
-        if (ImGui::MenuItem("Theme", nullptr))
+        if (ImGui::BeginMenu("Theme"))
         {
             if (ImGui::MenuItem("Light Theme", nullptr))
             {
-                Data.BgColor = {0.9f, 0.0f, 0.9f, 1.0f};
+                Data.BgColor = {0.9f, 0.9f, 0.9f, 1.0f};
+                ImGuiAPI::SetLightThemeColors();
             }
+            if (ImGui::MenuItem("Dark Theme", nullptr))
+            {
+                Data.BgColor = {0.1f, 0.1f, 0.1f, 1.0f};
+                ImGuiAPI::SetGreyThemeColors();
+            }
+            ImGui::EndMenu(); // ImGui::BeginMenu("Theme")
         }
     }
 

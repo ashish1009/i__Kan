@@ -209,6 +209,7 @@ namespace iKan {
 
         // Background
         colors[ImGuiCol_WindowBg]               = ImVec4(0.18f, 0.18f, 0.18f, 1.0f);
+        colors[ImGuiCol_ChildBg]                = ImVec4(0.18f, 0.18f, 0.18f, 1.0f);
         colors[ImGuiCol_PopupBg]                = ImVec4(0.15f, 0.15f, 0.15f, 1.0f);
         
         // Border

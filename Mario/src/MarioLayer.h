@@ -30,7 +30,6 @@ public:
     virtual void OnImguiRender(Timestep ts) override;
     
 private:
-    Ref<Scene>           m_ActiveScene;
     Entity               m_CameraEntity;
 
 //    Mario::Player&       m_Player = Mario::Player::Create();

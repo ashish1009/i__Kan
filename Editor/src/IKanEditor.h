@@ -24,18 +24,5 @@ public:
     virtual void OnEvent(Event& event) override;
     virtual void OnUpdate(Timestep ts) override;
     virtual void OnImguiRender(Timestep ts) override;
-
-private:
-    bool OnKeyPressed(KeyPressedEvent& e);
-    bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
-
-    void NewScene();
-    void OpenScene();
-    void SaveScene();
-
-    void ShowMenu();
-
-private:
-    Ref<Scene> m_ActiveScene;
 };
 

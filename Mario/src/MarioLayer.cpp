@@ -37,10 +37,7 @@ void MarioLayer::OnAttach()
 {
     IK_INFO("Attaching {0} Layer to Application", GetName().c_str());
 
-    m_ActiveScene = CreateRef<Scene>();
-
-    // Set the current Scene to scene hierarchy pannel
-    m_Viewport.SceneHierarchyPannel.SetContext(m_ActiveScene);
+    m_Viewport.CreateNewScene();
 
     // Frame buffer specifications
     Framebuffer::Specification specs;
@@ -49,10 +46,13 @@ void MarioLayer::OnAttach()
         Framebuffer::TextureSpecification::TextureFormat::R32I };
     
     // Creating instance for Frame buffer in viewport
-    m_Viewport.Data.FrameBuffer = Framebuffer::Create(specs);
+    auto& data  = m_Viewport.GetDataRef();
+    auto scene  = m_Viewport.GetScene();
+
+    data.FrameBuffer = Framebuffer::Create(specs);
 
     // Setup the Camera Entity
-    m_CameraEntity        = m_ActiveScene->CreateEntity("Camera");
+    m_CameraEntity        = scene->CreateEntity("Camera");
     auto& cameraComponent = m_CameraEntity.AddComponent<CameraComponent>();
     cameraComponent.Camera.SetProjectionType(SceneCamera::ProjectionType::Orthographic);
     cameraComponent.Camera.SetOrthographicSize(18.0f);
@@ -61,7 +61,7 @@ void MarioLayer::OnAttach()
     cameraPositionX = 18.0f;
 
     // Creating Entities for background tiles
-    Mario::Background::CreateEntities(m_ActiveScene);
+    Mario::Background::CreateEntities(scene);
 }
 
 // ******************************************************************************
@@ -77,7 +77,7 @@ void MarioLayer::OnDetach()
 // ******************************************************************************
 void MarioLayer::OnUpdate(Timestep ts)
 {
-    m_Viewport.OnUpdate(m_ActiveScene, ts);
+    m_Viewport.OnUpdate(ts);
 }
 
 // ******************************************************************************
