@@ -152,6 +152,7 @@ namespace iKan {
     {
         EventDispatcher dispatcher(event);
         dispatcher.Dispatch<MouseButtonPressedEvent>(IK_BIND_EVENT_FN(Viewport::OnMouseButtonPressed));
+        dispatcher.Dispatch<KeyPressedEvent>(IK_BIND_EVENT_FN(Viewport::OnKeyPressed));
     }
 
     // ******************************************************************************
@@ -188,6 +189,7 @@ namespace iKan {
             case KeyCode::N:    if (cmd)    NewScene();     break;
             case KeyCode::O:    if (cmd)    OpenScene();    break;
             case KeyCode::S:    if (cmd)    SaveScene();    break;
+            case KeyCode::X:    if (cmd)    CloseScene();    break;
             default:                                        break;
         }
         return false;
@@ -224,6 +226,15 @@ namespace iKan {
     }
 
     // ******************************************************************************
+    // Close the current Scene
+    // ******************************************************************************
+    void Viewport::CloseScene()
+    {
+        m_ActiveScene = nullptr;
+        m_SceneHierarchyPannel.SetContext(nullptr);
+    }
+
+    // ******************************************************************************
     // Menu items of Viewport
     // ******************************************************************************
     void Viewport::ShowMenu()
@@ -237,6 +248,7 @@ namespace iKan {
                     if (ImGui::MenuItem("New", "Cmd + N"))      NewScene();
                     if (ImGui::MenuItem("Open", "Cmd + O"))     OpenScene();
                     if (ImGui::MenuItem("Save", "Cmd + S"))     SaveScene();
+                    if (ImGui::MenuItem("Close", "Cmd + X"))    CloseScene();
 
                     ImGui::EndMenu(); // if (ImGui::BeginMenu("Scene"))
                 }
@@ -336,17 +348,25 @@ namespace iKan {
     {
         ShowMenu();
 
-        // Render Scene Hierarchy pannel in imgui
-        m_SceneHierarchyPannel.OnImguiender(&m_SceneHierarchyPannel.isSceneHeirarchypanel);
-
-        // Update the Viewport Data
-        OnUpdateImGui();
-
         // Renderer Viewport Properties
         RendereViewportProp();
 
         // Show Renderer Stats
         RendererStats(ts);
+
+        if (!m_ActiveScene)
+        {
+            ImGui::Begin("Warning");
+            ImGui::Text("No Scene is created yet. Scene can be created from File->Scene->New or Cmd+N");
+            ImGui::End();
+            return;
+        }
+
+        // Render Scene Hierarchy pannel in imgui
+        m_SceneHierarchyPannel.OnImguiender(&m_SceneHierarchyPannel.isSceneHeirarchypanel);
+
+        // Update the Viewport Data
+        OnUpdateImGui();
     }
 
     // ******************************************************************************

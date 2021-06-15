@@ -98,6 +98,7 @@ namespace iKan {
         void NewScene();
         void OpenScene();
         void SaveScene();
+        void CloseScene();
 
         ViewportData& GetDataRef() { return m_Data; }
         Ref<Scene> GetScene() { return m_ActiveScene; }
