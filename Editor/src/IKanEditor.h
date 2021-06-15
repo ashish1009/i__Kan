@@ -24,5 +24,8 @@ public:
     virtual void OnEvent(Event& event) override;
     virtual void OnUpdate(Timestep ts) override;
     virtual void OnImguiRender(Timestep ts) override;
+
+private:
+    Viewport& m_Viewport = Viewport::Get();
 };
 

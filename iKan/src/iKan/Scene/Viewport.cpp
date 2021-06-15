@@ -16,6 +16,20 @@
 #include <iKan/Renderer/RendererStats.h>
 
 namespace iKan {
+
+    // ******************************************************************************
+    // Viewport Default Constructor
+    // ******************************************************************************
+    Viewport::Viewport()
+    {
+        // Frame buffer specifications
+        Framebuffer::Specification specs;
+        specs.Attachments = { Framebuffer::TextureSpecification::TextureFormat::RGBA8,
+            Framebuffer::TextureSpecification::TextureFormat::DEPTH24STENCIL8,
+            Framebuffer::TextureSpecification::TextureFormat::R32I };
+
+        Data.FrameBuffer = Framebuffer::Create(specs);
+    }
     
     // ******************************************************************************
     // Update the view port bouds

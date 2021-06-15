@@ -47,7 +47,7 @@ void IKanEditor::OnDetach()
 // ******************************************************************************
 void IKanEditor::OnUpdate(Timestep ts)
 {
-
+    m_Viewport.OnUpdate(ts);
 }
 
 // ******************************************************************************
@@ -56,6 +56,10 @@ void IKanEditor::OnUpdate(Timestep ts)
 void IKanEditor::OnImguiRender(Timestep ts)
 {
     ImGuiAPI::StartDcocking();
+
+    // Viewport Imgui Renderer
+    m_Viewport.OnImguiRenderer(ts);
+
     ImGuiAPI::EndDcocking();
 }
 
@@ -64,5 +68,5 @@ void IKanEditor::OnImguiRender(Timestep ts)
 // ******************************************************************************
 void IKanEditor::OnEvent(Event& event)
 {
-
+    m_Viewport.OnEvent(event);
 }

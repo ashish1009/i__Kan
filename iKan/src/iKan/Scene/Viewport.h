@@ -68,7 +68,7 @@ namespace iKan {
         };
 
     private:
-        Viewport() = default;
+        Viewport();
         bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
         bool OnKeyPressed(KeyPressedEvent& e);
 

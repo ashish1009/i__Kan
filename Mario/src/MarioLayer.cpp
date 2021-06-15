@@ -26,7 +26,7 @@ MarioLayer::MarioLayer()
 // ******************************************************************************
 MarioLayer::~MarioLayer()
 {
-    Player::Destroy();
+//    Player::Destroy();
     IK_WARN("{0} Layer destroyed", GetName().c_str());
 }
 
@@ -37,20 +37,9 @@ void MarioLayer::OnAttach()
 {
     IK_INFO("Attaching {0} Layer to Application", GetName().c_str());
 
-    m_Viewport.CreateNewScene();
+    m_Viewport.NewScene();
 
-    // Frame buffer specifications
-    Framebuffer::Specification specs;
-    specs.Attachments = { Framebuffer::TextureSpecification::TextureFormat::RGBA8,
-        Framebuffer::TextureSpecification::TextureFormat::DEPTH24STENCIL8,
-        Framebuffer::TextureSpecification::TextureFormat::R32I };
-    
-    // Creating instance for Frame buffer in viewport
-    auto& data  = m_Viewport.GetDataRef();
     auto scene  = m_Viewport.GetScene();
-
-    data.FrameBuffer = Framebuffer::Create(specs);
-
     // Setup the Camera Entity
     m_CameraEntity        = scene->CreateEntity("Camera");
     auto& cameraComponent = m_CameraEntity.AddComponent<CameraComponent>();
