@@ -24,12 +24,12 @@ namespace iKan {
         ImVec2 windowSize = ImGui::GetWindowSize();
         ImVec2 minBound   = ImGui::GetWindowPos();
         
-        minBound.x += CursorPos.x;
-        minBound.y += CursorPos.y;
+        minBound.x += Data.CursorPos.x;
+        minBound.y += Data.CursorPos.y;
 
         ImVec2 maxBound = { minBound.x + windowSize.x, minBound.y + windowSize.y };
-        Bounds[0] = { minBound.x, minBound.y };
-        Bounds[1] = { maxBound.x, maxBound.y };
+        Data.Bounds[0] = { minBound.x, minBound.y };
+        Data.Bounds[1] = { maxBound.x, maxBound.y };
     }
     
     // ******************************************************************************
@@ -44,17 +44,17 @@ namespace iKan {
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         ImGui::Begin("Viewport", &Flags.Present);
         {
-            CursorPos = ImGui::GetCursorPos();
+            Data.CursorPos = ImGui::GetCursorPos();
 
-            Focused = ImGui::IsWindowFocused();
-            Hovered = ImGui::IsWindowHovered();
-            Application::Get().GetImGuiLayer()->BlockEvents(!Focused && !Hovered);
+            Data.Focused = ImGui::IsWindowFocused();
+            Data.Hovered = ImGui::IsWindowHovered();
+            Application::Get().GetImGuiLayer()->BlockEvents(!Data.Focused && !Data.Hovered);
 
             ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-            Size = { viewportPanelSize.x, viewportPanelSize.y };
+            Data.Size = { viewportPanelSize.x, viewportPanelSize.y };
 
-            size_t textureID = FrameBuffer->GetColorAttachmentRendererID();
-            ImGui::Image((void*)textureID, ImVec2{ Size.x, Size.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+            size_t textureID = Data.FrameBuffer->GetColorAttachmentRendererID();
+            ImGui::Image((void*)textureID, ImVec2{ Data.Size.x, Data.Size.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 
             UpdateBounds();
         }
@@ -78,16 +78,16 @@ namespace iKan {
     void Viewport::UpdateMousePos()
     {
         auto [mx, my] = ImGui::GetMousePos();
-        mx -= Bounds[0].x;
-        my -= Bounds[0].y;
+        mx -= Data.Bounds[0].x;
+        my -= Data.Bounds[0].y;
 
-        Height = Bounds[1].y - Bounds[0].y;
-        Width  = Bounds[1].x - Bounds[0].x;
+        Data.Height = Data.Bounds[1].y - Data.Bounds[0].y;
+        Data.Width  = Data.Bounds[1].x - Data.Bounds[0].x;
 
-        my = Height - my;
+        my = Data.Height - my;
 
-        MousePosX = (int32_t)mx;
-        MousePosY = (int32_t)my;
+        Data.MousePosX = (int32_t)mx;
+        Data.MousePosY = (int32_t)my;
     }
 
     // ******************************************************************************
@@ -95,10 +95,10 @@ namespace iKan {
     // ******************************************************************************
     void Viewport::UpdateHoveredEntity(Ref<Scene>& activeScene)
     {
-        if (MousePosX >= 0 && MousePosY >= 0 && MousePosX <= Width && MousePosY <= Height )
+        if (Data.MousePosX >= 0 && Data.MousePosY >= 0 && Data.MousePosX <= Data.Width && Data.MousePosY <= Data.Height )
         {
-            int32_t ID = activeScene->GetEntityIdFromPixels(MousePosX, MousePosY);
-            HoveredEntity = (ID >= activeScene->GetNumEntities()) ? Entity() : Entity((entt::entity)ID, activeScene.get());
+            int32_t ID = activeScene->GetEntityIdFromPixels(Data.MousePosX, Data.MousePosY);
+            Data.HoveredEntity = (ID >= activeScene->GetNumEntities()) ? Entity() : Entity((entt::entity)ID, activeScene.get());
         }
     }
 
@@ -118,13 +118,13 @@ namespace iKan {
     {
         if (e.GetMouseButton() == MouseCode::ButtonLeft && !Input::IsKeyPressed(KeyCode::LeftAlt))
         {
-            if (MousePosX >= 0 && MousePosY >= 0 && MousePosX <= Width && MousePosY <= Height )
+            if (Data.MousePosX >= 0 && Data.MousePosY >= 0 && Data.MousePosX <= Data.Width && Data.MousePosY <= Data.Height )
             {
-                SelectedEntity = HoveredEntity;
+                Data.SelectedEntity = Data.HoveredEntity;
             }
             else
             {
-                SelectedEntity = {};
+                Data.SelectedEntity = {};
             }
         }
         return false;
@@ -135,6 +135,8 @@ namespace iKan {
     // ******************************************************************************
     void Viewport::OnImguiRenderer(Timestep ts)
     {
+        OnUpdateImGui();
+
         // No Imgui renderer if flag is false
         if (!Flags.IsImguiPannel)
             return;
@@ -149,11 +151,11 @@ namespace iKan {
         ImGui::NextColumn();
 
         ImGui::SetColumnWidth(1, 80);
-        ImGui::Text("Focused : %d", Focused);
+        ImGui::Text("Focused : %d", Data.Focused);
         ImGui::NextColumn();
 
         ImGui::SetColumnWidth(2, 80);
-        ImGui::Text("Hovered : %d", Hovered);
+        ImGui::Text("Hovered : %d", Data.Hovered);
         ImGui::NextColumn();
 
         ImGui::Separator();
@@ -165,7 +167,7 @@ namespace iKan {
         ImGui::NextColumn();
 
         ImGui::SetColumnWidth(1, 130);
-        ImGui::Text("%d x %d", (int32_t)Width,  (int32_t)Height);
+        ImGui::Text("%d x %d", (int32_t)Data.Width,  (int32_t)Data.Height);
         ImGui::NextColumn();
 
         ImGui::Columns(2);
@@ -175,7 +177,7 @@ namespace iKan {
         ImGui::NextColumn();
 
         ImGui::SetColumnWidth(1, 130);
-        ImGui::Text("%d x %d", (int32_t)Size.x, (int32_t)Size.y);
+        ImGui::Text("%d x %d", (int32_t)Data.Size.x, (int32_t)Data.Size.y);
         ImGui::NextColumn();
 
         ImGui::Columns(2);
@@ -185,7 +187,7 @@ namespace iKan {
         ImGui::NextColumn();
 
         ImGui::SetColumnWidth(1, 130);
-        ImGui::Text("%d x %d", (int32_t)Bounds[0].x, (int32_t)Bounds[0].y);
+        ImGui::Text("%d x %d", (int32_t)Data.Bounds[0].x, (int32_t)Data.Bounds[0].y);
         ImGui::NextColumn();
 
         ImGui::Columns(2);
@@ -195,7 +197,7 @@ namespace iKan {
         ImGui::NextColumn();
 
         ImGui::SetColumnWidth(1, 130);
-        ImGui::Text("%d x %d", (int32_t)Bounds[1].x, (int32_t)Bounds[1].y);
+        ImGui::Text("%d x %d", (int32_t)Data.Bounds[1].x, (int32_t)Data.Bounds[1].y);
         ImGui::NextColumn();
 
         ImGui::Columns(2);
@@ -205,7 +207,7 @@ namespace iKan {
         ImGui::NextColumn();
 
         ImGui::SetColumnWidth(1, 130);
-        ImGui::Text("%d x %d", MousePosX, MousePosY);
+        ImGui::Text("%d x %d", Data.MousePosX, Data.MousePosY);
         ImGui::NextColumn();
 
         ImGui::Columns(1);
@@ -213,13 +215,13 @@ namespace iKan {
         ImGui::Separator();
 
         std::string entityName = "NULL";
-        if ((entt::entity)HoveredEntity != entt::null)
+        if ((entt::entity)Data.HoveredEntity != entt::null)
         {
-            entityName = HoveredEntity.GetComponent<TagComponent>().Tag;
+            entityName = Data.HoveredEntity.GetComponent<TagComponent>().Tag;
 
             ImGui::Text("Hovered Entity");
-            PropertyGrid::String("Entity ID", (uint32_t)HoveredEntity, 130.0f);
-            PropertyGrid::String("Unique ID", (uint32_t)HoveredEntity.GetComponent<IDComponent>().ID, 130.0f);
+            PropertyGrid::String("Entity ID", (uint32_t)Data.HoveredEntity, 130.0f);
+            PropertyGrid::String("Unique ID", (uint32_t)Data.HoveredEntity.GetComponent<IDComponent>().ID, 130.0f);
             PropertyGrid::String("Entity Name", entityName, 130.0f, 300.0f, "", false); // No need to add any Hint in non modifiable string
             ImGui::Separator();
         }

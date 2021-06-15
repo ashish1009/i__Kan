@@ -51,7 +51,7 @@ void MarioLayer::OnAttach()
     specs.Height = Window::Property::DefaultHeight;
 
     // Creating instance for Frame buffer in viewport
-    m_Viewport.FrameBuffer = Framebuffer::Create(specs);
+    m_Viewport.Data.FrameBuffer = Framebuffer::Create(specs);
 
     // Set the current Scene to scene hierarchy pannel
     m_SceneHierarchyPannel.SetContext(m_ActiveScene);
@@ -83,29 +83,29 @@ void MarioLayer::OnDetach()
 void MarioLayer::OnUpdate(Timestep ts)
 {
     // If resize the window call the update the Scene View port and Frame buffer should be resized
-    if (Framebuffer::Specification spec = m_Viewport.FrameBuffer->GetSpecification();
-        m_Viewport.Size.x > 0.0f && m_Viewport.Size.y > 0.0f && // zero sized framebuffer is invalid
-        (spec.Width != m_Viewport.Size.x || spec.Height != m_Viewport.Size.y))
+    if (Framebuffer::Specification spec = m_Viewport.Data.FrameBuffer->GetSpecification();
+        m_Viewport.Data.Size.x > 0.0f && m_Viewport.Data.Size.y > 0.0f && // zero sized framebuffer is invalid
+        (spec.Width != m_Viewport.Data.Size.x || spec.Height != m_Viewport.Data.Size.y))
     {
-        m_Viewport.FrameBuffer->Resize((uint32_t)m_Viewport.Size.x, (uint32_t)m_Viewport.Size.y);
-        m_ActiveScene->OnViewportResize((uint32_t)m_Viewport.Size.x, (uint32_t)m_Viewport.Size.y);
+        m_Viewport.Data.FrameBuffer->Resize((uint32_t)m_Viewport.Data.Size.x, (uint32_t)m_Viewport.Data.Size.y);
+        m_ActiveScene->OnViewportResize((uint32_t)m_Viewport.Data.Size.x, (uint32_t)m_Viewport.Data.Size.y);
     }
 
     RendererStatistics::Reset();
 
-    if (m_Viewport.SelectedEntity != Entity(entt::null, nullptr))
+    if (m_Viewport.Data.SelectedEntity != Entity(entt::null, nullptr))
     {
-        m_SceneHierarchyPannel.SetSelectedEntity(m_Viewport.SelectedEntity);
+        m_SceneHierarchyPannel.SetSelectedEntity(m_Viewport.Data.SelectedEntity);
     }
 
-    m_Viewport.FrameBuffer->Bind();
+    m_Viewport.Data.FrameBuffer->Bind();
     {
         Renderer::Clear(Mario::Background::s_BgColor);
         m_ActiveScene->OnUpdateRuntime(ts);
 
         m_Viewport.OnUpdate(m_ActiveScene);
     }
-    m_Viewport.FrameBuffer->Unbind();
+    m_Viewport.Data.FrameBuffer->Unbind();
 }
 
 // ******************************************************************************
@@ -121,9 +121,6 @@ void MarioLayer::OnImguiRender(Timestep ts)
     
     // Render Scene Hierarchy pannel in imgui
     m_SceneHierarchyPannel.OnImguiender(&m_SceneHierarchyPannel.isSceneHeirarchypanel);
-
-    // Viewport Update
-    m_Viewport.OnUpdateImGui();
 
     // Viewport Imgui Renderer
     m_Viewport.OnImguiRenderer(ts);

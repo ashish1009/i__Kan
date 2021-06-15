@@ -110,11 +110,8 @@ void EditorLayer::OnImguiRender(Timestep ts)
     // Render Scene Hierarchy pannel in imgui
     m_SceneHierarchyPannel.OnImguiender(&s_PropFlag.IsSceneHeirarchypanel);
     
-    // Viewport Update
-    m_Viewport.OnUpdateImGui();
-
     // Viewport Imgui Renderer
-    m_Viewport.OnImguiRenderer();
+    m_Viewport.OnImguiRenderer(ts);
     
     ImGuiAPI::EndDcocking();
 }
@@ -151,40 +148,8 @@ void EditorLayer::ShowMenu()
                 EditorLayer::s_PropFlag.IsSceneHeirarchypanel = !EditorLayer::s_PropFlag.IsSceneHeirarchypanel;
             }
 
-            if (ImGui::MenuItem("Frame Rate", NULL, EditorLayer::s_PropFlag.IsFrameRate))
-            {
-                EditorLayer::s_PropFlag.IsFrameRate = !EditorLayer::s_PropFlag.IsFrameRate;
-            }
+            m_Viewport.ViewMenu();
 
-            if (ImGui::MenuItem("Render Stats", NULL, EditorLayer::s_PropFlag.IsRendererStats))
-            {
-                EditorLayer::s_PropFlag.IsRendererStats = !EditorLayer::s_PropFlag.IsRendererStats;
-            }
-
-            if (ImGui::MenuItem("Vendor Types", NULL, EditorLayer::s_PropFlag.IsVendorType))
-            {
-                EditorLayer::s_PropFlag.IsVendorType = !EditorLayer::s_PropFlag.IsVendorType;
-            }
-
-            Ref<EditorCamera> editorCamera = m_ActiveScene->GetEditorCamera();
-            if (editorCamera && ImGui::MenuItem("Editor Camera Imgui Pannel", nullptr, editorCamera->IsImguiPannel))
-            {
-                editorCamera->IsImguiPannel = !editorCamera->IsImguiPannel;
-            }
-
-            if (ImGui::BeginMenu("Viewport"))
-            {
-                if (ImGui::MenuItem("Present", nullptr, m_Viewport.Present))
-                {
-                    m_Viewport.Present = !m_Viewport.Present;
-                }
-
-                if (ImGui::MenuItem("Imgui", nullptr, m_Viewport.IsImguiPannel))
-                {
-                    m_Viewport.IsImguiPannel = !m_Viewport.IsImguiPannel;
-                }
-                ImGui::EndMenu();
-            }
             ImGui::EndMenu(); // if (ImGui::BeginMenu("View"))
         }
         
