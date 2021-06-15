@@ -28,12 +28,9 @@ namespace iKan {
         io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
-        // Store the Bold font as well
-        io.Fonts->AddFontFromFileTTF("../../../iKan/src/iKan/Editor/Fonts/OpenSans/OpenSans-ExtraBold.ttf", 15.0f);
-        
-        // Default font is Regular
-        io.FontDefault = io.Fonts->AddFontFromFileTTF("../../../iKan/src/iKan/Editor/Fonts/OpenSans/OpenSans-Regular.ttf", 15.0f);
-                
+
+        SetFont("../../../iKan/src/iKan/Editor/Fonts/OpenSans/OpenSans-Regular.ttf");
+
         /* Setup Dear ImGui style */
         ImGui::StyleColorsDark();
         
@@ -51,6 +48,22 @@ namespace iKan {
         /* Setup Platform/Renderer bindings */
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init("#version 410");
+    }
+
+    // ******************************************************************************
+    // Set the imgui Font
+    // ******************************************************************************
+    void ImguiLayer::SetFont(const std::string &path)
+    {
+        ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+        // Store the Bold font as well
+        io.Fonts->AddFontFromFileTTF("../../../iKan/src/iKan/Editor/Fonts/OpenSans/OpenSans-ExtraBold.ttf", 15.0f);
+
+        // Default font is Regular
+        io.FontDefault = io.Fonts->AddFontFromFileTTF(path.c_str(), 15.0f);
+
+        IK_CORE_INFO("Imgui Font chnaged to {0}", path.c_str());
     }
 
     // ******************************************************************************

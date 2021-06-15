@@ -11,16 +11,14 @@
 
 namespace Mario {
 
-    Player* Player::s_Instance = nullptr;
-
     // ******************************************************************************
     // Player Constructor
     // ******************************************************************************
-    Player::Player()
+    Player::Player(Ref<Scene> scene)
     {
-        IK_ASSERT(!s_Instance, "Duplicate player instance ceation attempt");
-        
         IK_INFO("Mario Player Constructor called");
+
+        Init(scene);
     }
 
     // ******************************************************************************
@@ -29,6 +27,16 @@ namespace Mario {
     Player::~Player()
     {
         IK_WARN("Mario Player Destructor called");
+    }
+
+    // ******************************************************************************
+    // Initialize the player
+    // ******************************************************************************
+    void Player::Init(Ref<Scene> scene)
+    {
+        m_Entity = scene->CreateEntity("Player 1");
+        m_Entity.GetComponent<BoxCollider2DComponent>().IsRigid = true;
+        m_Entity.AddComponent<SpriteRendererComponent>();
     }
 
 }

@@ -31,8 +31,10 @@ namespace iKan {
 
         void Begin();
         void End();
-        
+
         void BlockEvents(bool blockEvents) { m_BlockEvents = blockEvents; }
+
+        static void SetFont(const std::string& path);
         
     private:
         bool m_BlockEvents = true;

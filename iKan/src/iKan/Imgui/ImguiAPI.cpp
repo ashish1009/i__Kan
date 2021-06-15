@@ -76,22 +76,19 @@ namespace iKan {
     // ******************************************************************************
     void ImGuiAPI::RendererVersion(bool *pIsOpen)
     {
-        ImGui::Begin("Renderer Version", pIsOpen);
+        ImGui::Begin("Renderer Version", pIsOpen, ImGuiWindowFlags_HorizontalScrollbar);
         auto& caps = RendererAPI::GetCapabilities();
 
         ImGui::PushID("Renderer Version");
         
         ImGui::Columns(3);
 
-        ImGui::SetColumnWidth(0, 100);
         ImGui::Text("Vendor : %s", caps.Vendor.c_str());
         ImGui::NextColumn();
         
-        ImGui::SetColumnWidth(1, 210);
         ImGui::Text("Renderer : %s", caps.Renderer.c_str());
         ImGui::NextColumn();
 
-        ImGui::SetColumnWidth(2, 150);
         ImGui::Text("Version : %s", caps.Version.c_str());
         ImGui::NextColumn();
 
@@ -113,11 +110,9 @@ namespace iKan {
 
         ImGui::Columns(2);
 
-        ImGui::SetColumnWidth(0, 170);
         ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
         ImGui::NextColumn();
 
-        ImGui::SetColumnWidth(1, 210);
         ImGui::Text("Time step : %f", ts);
         ImGui::NextColumn();
 
@@ -139,19 +134,15 @@ namespace iKan {
 
         ImGui::Columns(4);
 
-        ImGui::SetColumnWidth(0, 100);
         ImGui::Text("Draw Calls : %d", RendererStatistics::DrawCalls);
         ImGui::NextColumn();
 
-        ImGui::SetColumnWidth(1, 120);
         ImGui::Text("Vertex Counts : %d", RendererStatistics::VertexCount);
         ImGui::NextColumn();
 
-        ImGui::SetColumnWidth(2, 120);
         ImGui::Text("Index Counts : %d", RendererStatistics::IndexCount);
         ImGui::NextColumn();
 
-        ImGui::SetColumnWidth(3, 120);
         ImGui::Text("Texture Counts : %d", RendererStatistics::TextureCount);
 
         ImGui::Columns(1);

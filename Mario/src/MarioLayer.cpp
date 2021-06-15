@@ -26,7 +26,6 @@ MarioLayer::MarioLayer()
 // ******************************************************************************
 MarioLayer::~MarioLayer()
 {
-//    Player::Destroy();
     IK_WARN("{0} Layer destroyed", GetName().c_str());
 }
 
@@ -36,6 +35,8 @@ MarioLayer::~MarioLayer()
 void MarioLayer::OnAttach()
 {
     IK_INFO("Attaching {0} Layer to Application", GetName().c_str());
+
+    ImguiLayer::SetFont("/Users/ashish/iKan/Github/iKan/Mario/assets/Resources/Fonts/Mario.ttf");
 
     m_Viewport.NewScene();
 
@@ -51,6 +52,10 @@ void MarioLayer::OnAttach()
 
     // Creating Entities for background tiles
     Mario::Background::CreateEntities(scene);
+
+    // Create Player Instance
+    // TODO: Add multi player Concept here
+    m_Player = CreateRef<Mario::Player>(scene);
 }
 
 // ******************************************************************************

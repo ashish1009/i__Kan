@@ -384,15 +384,15 @@ namespace iKan {
 
         ImGui::Columns(3);
 
-        ImGui::SetColumnWidth(0, 80);
+        ImGui::SetColumnWidth(0, 120);
         ImGui::Text("Present : %d", m_Flags.Present);
         ImGui::NextColumn();
 
-        ImGui::SetColumnWidth(1, 80);
+        ImGui::SetColumnWidth(1, 120);
         ImGui::Text("Focused : %d", m_Data.Focused);
         ImGui::NextColumn();
 
-        ImGui::SetColumnWidth(2, 80);
+        ImGui::SetColumnWidth(2, 120);
         ImGui::Text("Hovered : %d", m_Data.Hovered);
         ImGui::NextColumn();
 
@@ -412,51 +412,53 @@ namespace iKan {
         // Other Properties
         ImGui::Columns(2);
 
-        ImGui::SetColumnWidth(0, 130);
+        float columnWidth = 200;
+
+        ImGui::SetColumnWidth(0, columnWidth);
         ImGui::Text("Scene Size ");
         ImGui::NextColumn();
 
-        ImGui::SetColumnWidth(1, 130);
+        ImGui::SetColumnWidth(1, columnWidth);
         ImGui::Text("%d x %d", (int32_t)m_Data.Width,  (int32_t)m_Data.Height);
         ImGui::NextColumn();
 
         ImGui::Columns(2);
 
-        ImGui::SetColumnWidth(0, 130);
+        ImGui::SetColumnWidth(0, columnWidth);
         ImGui::Text("Viewport Size ");
         ImGui::NextColumn();
 
-        ImGui::SetColumnWidth(1, 130);
+        ImGui::SetColumnWidth(1, columnWidth);
         ImGui::Text("%d x %d", (int32_t)m_Data.Size.x, (int32_t)m_Data.Size.y);
         ImGui::NextColumn();
 
         ImGui::Columns(2);
 
-        ImGui::SetColumnWidth(0, 130);
+        ImGui::SetColumnWidth(0, columnWidth);
         ImGui::Text("Top Left Position ");
         ImGui::NextColumn();
 
-        ImGui::SetColumnWidth(1, 130);
+        ImGui::SetColumnWidth(1, columnWidth);
         ImGui::Text("%d x %d", (int32_t)m_Data.Bounds[0].x, (int32_t)m_Data.Bounds[0].y);
         ImGui::NextColumn();
 
         ImGui::Columns(2);
 
-        ImGui::SetColumnWidth(0, 130);
+        ImGui::SetColumnWidth(0, columnWidth);
         ImGui::Text("Bottom Right Position ");
         ImGui::NextColumn();
 
-        ImGui::SetColumnWidth(1, 130);
+        ImGui::SetColumnWidth(1, columnWidth);
         ImGui::Text("%d x %d", (int32_t)m_Data.Bounds[1].x, (int32_t)m_Data.Bounds[1].y);
         ImGui::NextColumn();
 
         ImGui::Columns(2);
 
-        ImGui::SetColumnWidth(0, 130);
+        ImGui::SetColumnWidth(0, columnWidth);
         ImGui::Text("Mouse Position ");
         ImGui::NextColumn();
 
-        ImGui::SetColumnWidth(1, 130);
+        ImGui::SetColumnWidth(1, columnWidth);
         ImGui::Text("%d x %d", m_Data.MousePosX, m_Data.MousePosY);
         ImGui::NextColumn();
 

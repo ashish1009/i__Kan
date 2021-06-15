@@ -30,11 +30,9 @@ public:
     virtual void OnImguiRender(Timestep ts) override;
     
 private:
-    Entity               m_CameraEntity;
-
-//    Mario::Player&       m_Player = Mario::Player::Create();
-    
     Viewport& m_Viewport = Viewport::Get();
 
+    Entity             m_CameraEntity;
+    Ref<Mario::Player> m_Player;
 };
 
