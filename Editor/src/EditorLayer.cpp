@@ -31,7 +31,7 @@ EditorLayer::EditorLayer()
     specs.Height      = Window::Property::DefaultHeight;
     
     // Creating instance for Frame buffer in viewport
-    m_Viewport.FrameBuffer = Framebuffer::Create(specs);
+    m_Viewport.Data.FrameBuffer = Framebuffer::Create(specs);
     
     // Set the current Scene to scene hierarchy pannel
     m_SceneHierarchyPannel.SetContext(m_ActiveScene);
@@ -71,30 +71,7 @@ void EditorLayer::OnDetach()
 // ******************************************************************************
 void EditorLayer::OnUpdate(Timestep ts)
 {
-    // If resize the window call the update the Scene View port and Frame buffer should be resized
-    if (Framebuffer::Specification spec = m_Viewport.FrameBuffer->GetSpecification();
-        m_Viewport.Size.x > 0.0f && m_Viewport.Size.y > 0.0f && // zero sized framebuffer is invalid
-        (spec.Width != m_Viewport.Size.x || spec.Height != m_Viewport.Size.y))
-    {
-        m_Viewport.FrameBuffer->Resize((uint32_t)m_Viewport.Size.x, (uint32_t)m_Viewport.Size.y);
-        m_ActiveScene->OnViewportResize((uint32_t)m_Viewport.Size.x, (uint32_t)m_Viewport.Size.y);
-    }
-
-    RendererStatistics::Reset();
-
-    if (m_Viewport.SelectedEntity != Entity(entt::null, nullptr))
-    {
-        m_SceneHierarchyPannel.SetSelectedEntity(m_Viewport.SelectedEntity);
-    }
-
-    m_Viewport.FrameBuffer->Bind();
-    {
-        Renderer::Clear({ 0.1f, 0.1f, 0.1f, 1.0f });
-        m_ActiveScene->OnUpdateEditor(ts);
-
-        m_Viewport.OnUpdate(m_ActiveScene);
-    }
-    m_Viewport.FrameBuffer->Unbind();
+    m_Viewport.OnUpdate(m_ActiveScene, ts, {0.1, 0.1, 0.1, 1.0});
 }
 
 // ******************************************************************************

@@ -11,6 +11,7 @@
 
 #include <iKan/Renderer/FrameBuffer.h>
 #include <iKan/Scene/Entity.h>
+#include <iKan/Core/TimeStep.h>
 #include <iKan/Editor/SceneHierarchyPannel.h>
 
 namespace iKan {
@@ -75,7 +76,7 @@ namespace iKan {
         Viewport& operator =(const Viewport& other) = delete;
         Viewport& operator =(Viewport&& other) = delete;
 
-        void OnUpdate(Ref<Scene>& activeScene);
+        void OnUpdate(Ref<Scene>& activeScene, Timestep ts, const glm::vec4& bgColor);
         void UpdateBounds();
         void UpdateMousePos();
         void OnImguiRenderer(Timestep ts);

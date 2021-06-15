@@ -13,6 +13,7 @@
 #include <iKan/Scene/Component.h>
 #include <iKan/Editor/ScenePropertyGrid.h>
 #include <iKan/Imgui/ImguiAPI.h>
+#include <iKan/Renderer/RendererStats.h>
 
 namespace iKan {
     
@@ -66,16 +67,34 @@ namespace iKan {
     // ******************************************************************************
     // Update mouse position of viewport
     // ******************************************************************************
-    void Viewport::OnUpdate(Ref<Scene>& activeScene)
+    void Viewport::OnUpdate(Ref<Scene>& activeScene, Timestep ts, const glm::vec4& bgColor)
     {
-        // Update selected entity
-        if (Data.SelectedEntity != Entity(entt::null, nullptr))
+        // If resize the window call the update the Scene View port and Frame buffer should be resized
+        if (Framebuffer::Specification spec = Data.FrameBuffer->GetSpecification();
+            Data.Size.x > 0.0f && Data.Size.y > 0.0f && // zero sized framebuffer is invalid
+            (spec.Width != Data.Size.x || spec.Height != Data.Size.y))
         {
-            SceneHierarchyPannel.SetSelectedEntity(Data.SelectedEntity);
+            Data.FrameBuffer->Resize((uint32_t)Data.Size.x, (uint32_t)Data.Size.y);
+            activeScene->OnViewportResize((uint32_t)Data.Size.x, (uint32_t)Data.Size.y);
         }
 
-        UpdateMousePos();
-        UpdateHoveredEntity(activeScene);
+        RendererStatistics::Reset();
+
+        Data.FrameBuffer->Bind();
+        {
+            Renderer::Clear(bgColor);
+            activeScene->OnUpdateRuntime(ts);
+
+            // Update selected entity
+            if (Data.SelectedEntity != Entity(entt::null, nullptr))
+            {
+                SceneHierarchyPannel.SetSelectedEntity(Data.SelectedEntity);
+            }
+
+            UpdateMousePos();
+            UpdateHoveredEntity(activeScene);
+        }
+        Data.FrameBuffer->Unbind();
     }
     
     // ******************************************************************************

@@ -82,25 +82,7 @@ void MarioLayer::OnDetach()
 // ******************************************************************************
 void MarioLayer::OnUpdate(Timestep ts)
 {
-    // If resize the window call the update the Scene View port and Frame buffer should be resized
-    if (Framebuffer::Specification spec = m_Viewport.Data.FrameBuffer->GetSpecification();
-        m_Viewport.Data.Size.x > 0.0f && m_Viewport.Data.Size.y > 0.0f && // zero sized framebuffer is invalid
-        (spec.Width != m_Viewport.Data.Size.x || spec.Height != m_Viewport.Data.Size.y))
-    {
-        m_Viewport.Data.FrameBuffer->Resize((uint32_t)m_Viewport.Data.Size.x, (uint32_t)m_Viewport.Data.Size.y);
-        m_ActiveScene->OnViewportResize((uint32_t)m_Viewport.Data.Size.x, (uint32_t)m_Viewport.Data.Size.y);
-    }
-
-    RendererStatistics::Reset();
-
-    m_Viewport.Data.FrameBuffer->Bind();
-    {
-        Renderer::Clear(Mario::Background::s_BgColor);
-        m_ActiveScene->OnUpdateRuntime(ts);
-
-        m_Viewport.OnUpdate(m_ActiveScene);
-    }
-    m_Viewport.Data.FrameBuffer->Unbind();
+    m_Viewport.OnUpdate(m_ActiveScene, ts, Mario::Background::s_BgColor);
 }
 
 // ******************************************************************************
