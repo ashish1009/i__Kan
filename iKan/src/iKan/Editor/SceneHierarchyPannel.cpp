@@ -89,7 +89,7 @@ namespace iKan {
     void SceneHeirarchyPannel::OnImguiender(bool* pIsOpen)
     {
         // no rendering if flag is false
-        if (!isSceneHeirarchypanel)
+        if (!isSceneHeirarchypanel || !m_Context)
             return;
 
         ImGui::Begin("Scene Hierarchy", pIsOpen);

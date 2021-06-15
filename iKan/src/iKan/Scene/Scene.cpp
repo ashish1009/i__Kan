@@ -161,6 +161,8 @@ namespace iKan {
     // ******************************************************************************
     void Scene::OnUpdateRuntime(Timestep ts)
     {
+        static bool avoidCameraWarningPrint = false;
+
         Camera* mainCamera = nullptr;
         glm::mat4 cameraTransform;
         if (Entity cameraEntity = GetMainCameraEntity();
@@ -172,11 +174,15 @@ namespace iKan {
             SceneRenderer::BeginScene(*mainCamera, cameraTransform);
             RenderSpriteComponent();
             SceneRenderer::EndScene();
+
+            avoidCameraWarningPrint = false;
         }
         else
         {
             // TODO: Should it be assert or Warning
-             IK_CORE_WARN("No Camera is Binded to the Scene or none of them is set to primary !!! ");
+            if (!avoidCameraWarningPrint)
+                IK_CORE_WARN("No Camera is Binded to the Scene or none of them is set to primary !!! ");
+            avoidCameraWarningPrint = true;
         }
     }
 

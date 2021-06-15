@@ -28,7 +28,7 @@ namespace iKan {
             Framebuffer::TextureSpecification::TextureFormat::DEPTH24STENCIL8,
             Framebuffer::TextureSpecification::TextureFormat::R32I };
 
-        Data.FrameBuffer = Framebuffer::Create(specs);
+        m_Data.FrameBuffer = Framebuffer::Create(specs);
     }
     
     // ******************************************************************************
@@ -39,12 +39,12 @@ namespace iKan {
         ImVec2 windowSize = ImGui::GetWindowSize();
         ImVec2 minBound   = ImGui::GetWindowPos();
         
-        minBound.x += Data.CursorPos.x;
-        minBound.y += Data.CursorPos.y;
+        minBound.x += m_Data.CursorPos.x;
+        minBound.y += m_Data.CursorPos.y;
 
         ImVec2 maxBound = { minBound.x + windowSize.x, minBound.y + windowSize.y };
-        Data.Bounds[0] = { minBound.x, minBound.y };
-        Data.Bounds[1] = { maxBound.x, maxBound.y };
+        m_Data.Bounds[0] = { minBound.x, minBound.y };
+        m_Data.Bounds[1] = { maxBound.x, maxBound.y };
     }
     
     // ******************************************************************************
@@ -53,23 +53,23 @@ namespace iKan {
     void Viewport::OnUpdateImGui()
     {
         // If viewport is not present then return
-        if (!Flags.Present)
+        if (!m_Flags.Present)
             return;
 
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
-        ImGui::Begin("Viewport", &Flags.Present);
+        ImGui::Begin("Viewport", &m_Flags.Present);
         {
-            Data.CursorPos = ImGui::GetCursorPos();
+            m_Data.CursorPos = ImGui::GetCursorPos();
 
-            Data.Focused = ImGui::IsWindowFocused();
-            Data.Hovered = ImGui::IsWindowHovered();
-            Application::Get().GetImGuiLayer()->BlockEvents(!Data.Focused && !Data.Hovered);
+            m_Data.Focused = ImGui::IsWindowFocused();
+            m_Data.Hovered = ImGui::IsWindowHovered();
+            Application::Get().GetImGuiLayer()->BlockEvents(!m_Data.Focused && !m_Data.Hovered);
 
             ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-            Data.Size = { viewportPanelSize.x, viewportPanelSize.y };
+            m_Data.Size = { viewportPanelSize.x, viewportPanelSize.y };
 
-            size_t textureID = Data.FrameBuffer->GetColorAttachmentRendererID();
-            ImGui::Image((void*)textureID, ImVec2{ Data.Size.x, Data.Size.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+            size_t textureID = m_Data.FrameBuffer->GetColorAttachmentRendererID();
+            ImGui::Image((void*)textureID, ImVec2{ m_Data.Size.x, m_Data.Size.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 
             UpdateBounds();
         }
@@ -83,32 +83,36 @@ namespace iKan {
     // ******************************************************************************
     void Viewport::OnUpdate(Timestep ts)
     {
+        // No update in case Scene is not created
+        if (!m_ActiveScene)
+            return;
+
         // If resize the window call the update the Scene View port and Frame buffer should be resized
-        if (Framebuffer::Specification spec = Data.FrameBuffer->GetSpecification();
-            Data.Size.x > 0.0f && Data.Size.y > 0.0f && // zero sized framebuffer is invalid
-            (spec.Width != Data.Size.x || spec.Height != Data.Size.y))
+        if (Framebuffer::Specification spec = m_Data.FrameBuffer->GetSpecification();
+            m_Data.Size.x > 0.0f && m_Data.Size.y > 0.0f && // zero sized framebuffer is invalid
+            (spec.Width != m_Data.Size.x || spec.Height != m_Data.Size.y))
         {
-            Data.FrameBuffer->Resize((uint32_t)Data.Size.x, (uint32_t)Data.Size.y);
-            ActiveScene->OnViewportResize((uint32_t)Data.Size.x, (uint32_t)Data.Size.y);
+            m_Data.FrameBuffer->Resize((uint32_t)m_Data.Size.x, (uint32_t)m_Data.Size.y);
+            m_ActiveScene->OnViewportResize((uint32_t)m_Data.Size.x, (uint32_t)m_Data.Size.y);
         }
 
         RendererStatistics::Reset();
 
-        Data.FrameBuffer->Bind();
+        m_Data.FrameBuffer->Bind();
         {
-            Renderer::Clear(Data.BgColor);
-            ActiveScene->OnUpdateRuntime(ts);
+            Renderer::Clear(m_Data.BgColor);
+            m_ActiveScene->OnUpdateRuntime(ts);
 
             // Update selected entity
-            if (Data.SelectedEntity != Entity(entt::null, nullptr))
+            if (m_Data.SelectedEntity != Entity(entt::null, nullptr))
             {
-                SceneHierarchyPannel.SetSelectedEntity(Data.SelectedEntity);
+                m_SceneHierarchyPannel.SetSelectedEntity(m_Data.SelectedEntity);
             }
 
             UpdateMousePos();
             UpdateHoveredEntity();
         }
-        Data.FrameBuffer->Unbind();
+        m_Data.FrameBuffer->Unbind();
     }
     
     // ******************************************************************************
@@ -117,16 +121,16 @@ namespace iKan {
     void Viewport::UpdateMousePos()
     {
         auto [mx, my] = ImGui::GetMousePos();
-        mx -= Data.Bounds[0].x;
-        my -= Data.Bounds[0].y;
+        mx -= m_Data.Bounds[0].x;
+        my -= m_Data.Bounds[0].y;
 
-        Data.Height = Data.Bounds[1].y - Data.Bounds[0].y;
-        Data.Width  = Data.Bounds[1].x - Data.Bounds[0].x;
+        m_Data.Height = m_Data.Bounds[1].y - m_Data.Bounds[0].y;
+        m_Data.Width  = m_Data.Bounds[1].x - m_Data.Bounds[0].x;
 
-        my = Data.Height - my;
+        my = m_Data.Height - my;
 
-        Data.MousePosX = (int32_t)mx;
-        Data.MousePosY = (int32_t)my;
+        m_Data.MousePosX = (int32_t)mx;
+        m_Data.MousePosY = (int32_t)my;
     }
 
     // ******************************************************************************
@@ -134,10 +138,10 @@ namespace iKan {
     // ******************************************************************************
     void Viewport::UpdateHoveredEntity()
     {
-        if (Data.MousePosX >= 0 && Data.MousePosY >= 0 && Data.MousePosX <= Data.Width && Data.MousePosY <= Data.Height )
+        if (m_Data.MousePosX >= 0 && m_Data.MousePosY >= 0 && m_Data.MousePosX <= m_Data.Width && m_Data.MousePosY <= m_Data.Height )
         {
-            int32_t ID = ActiveScene->GetEntityIdFromPixels(Data.MousePosX, Data.MousePosY);
-            Data.HoveredEntity = (ID >= ActiveScene->GetNumEntities()) ? Entity() : Entity((entt::entity)ID, ActiveScene.get());
+            int32_t ID = m_ActiveScene->GetEntityIdFromPixels(m_Data.MousePosX, m_Data.MousePosY);
+            m_Data.HoveredEntity = (ID >= m_ActiveScene->GetNumEntities()) ? Entity() : Entity((entt::entity)ID, m_ActiveScene.get());
         }
     }
 
@@ -157,13 +161,13 @@ namespace iKan {
     {
         if (e.GetMouseButton() == MouseCode::ButtonLeft && !Input::IsKeyPressed(KeyCode::LeftAlt))
         {
-            if (Data.MousePosX >= 0 && Data.MousePosY >= 0 && Data.MousePosX <= Data.Width && Data.MousePosY <= Data.Height )
+            if (m_Data.MousePosX >= 0 && m_Data.MousePosY >= 0 && m_Data.MousePosX <= m_Data.Width && m_Data.MousePosY <= m_Data.Height )
             {
-                Data.SelectedEntity = Data.HoveredEntity;
+                m_Data.SelectedEntity = m_Data.HoveredEntity;
             }
             else
             {
-                Data.SelectedEntity = {};
+                m_Data.SelectedEntity = {};
             }
         }
         return false;
@@ -194,11 +198,11 @@ namespace iKan {
     // ******************************************************************************
     void Viewport::NewScene()
     {
-        ActiveScene = CreateRef<Scene>();
-        ActiveScene->OnViewportResize((uint32_t)Data.Size.x, (uint32_t)Data.Size.y);
+        m_ActiveScene = CreateRef<Scene>();
+        m_ActiveScene->OnViewportResize((uint32_t)m_Data.Size.x, (uint32_t)m_Data.Size.y);
         
         // Set the current Scene to scene hierarchy pannel
-        SceneHierarchyPannel.SetContext(ActiveScene);
+        m_SceneHierarchyPannel.SetContext(m_ActiveScene);
 
         IK_INFO("New scene is created");
     }
@@ -270,12 +274,12 @@ namespace iKan {
         {
             if (ImGui::MenuItem("Light Theme", nullptr))
             {
-                Data.BgColor = {0.9f, 0.9f, 0.9f, 1.0f};
+                m_Data.BgColor = {0.9f, 0.9f, 0.9f, 1.0f};
                 ImGuiAPI::SetLightThemeColors();
             }
             if (ImGui::MenuItem("Dark Theme", nullptr))
             {
-                Data.BgColor = {0.1f, 0.1f, 0.1f, 1.0f};
+                m_Data.BgColor = {0.1f, 0.1f, 0.1f, 1.0f};
                 ImGuiAPI::SetGreyThemeColors();
             }
             ImGui::EndMenu(); // ImGui::BeginMenu("Theme")
@@ -288,38 +292,38 @@ namespace iKan {
     // ******************************************************************************
     void Viewport::ViewMenu()
     {
-        if (ImGui::MenuItem("Scene Heirarchy Panel", nullptr, SceneHierarchyPannel.isSceneHeirarchypanel))
+        if (ImGui::MenuItem("Scene Heirarchy Panel", nullptr, m_SceneHierarchyPannel.isSceneHeirarchypanel))
         {
-            SceneHierarchyPannel.isSceneHeirarchypanel = !SceneHierarchyPannel.isSceneHeirarchypanel;
+            m_SceneHierarchyPannel.isSceneHeirarchypanel = !m_SceneHierarchyPannel.isSceneHeirarchypanel;
         }
 
         ImGui::Separator();
 
-        if (ImGui::MenuItem("Frame Rate", nullptr, Flags.IsFrameRate))
+        if (ImGui::MenuItem("Frame Rate", nullptr, m_Flags.IsFrameRate))
         {
-            Flags.IsFrameRate = !Flags.IsFrameRate;
+            m_Flags.IsFrameRate = !m_Flags.IsFrameRate;
         }
 
-        if (ImGui::MenuItem("Render Stats", nullptr, Flags.IsRendererStats))
+        if (ImGui::MenuItem("Render Stats", nullptr, m_Flags.IsRendererStats))
         {
-            Flags.IsRendererStats = !Flags.IsRendererStats;
+            m_Flags.IsRendererStats = !m_Flags.IsRendererStats;
         }
 
-        if (ImGui::MenuItem("Vendor Types", nullptr, Flags.IsVendorType))
+        if (ImGui::MenuItem("Vendor Types", nullptr, m_Flags.IsVendorType))
         {
-            Flags.IsVendorType = !Flags.IsVendorType;
+            m_Flags.IsVendorType = !m_Flags.IsVendorType;
         }
 
         ImGui::Separator();
 
-        if (ImGui::MenuItem("Renderer Viewport", nullptr, Flags.Present))
+        if (ImGui::MenuItem("Renderer Viewport", nullptr, m_Flags.Present))
         {
-            Flags.Present = !Flags.Present;
+            m_Flags.Present = !m_Flags.Present;
         }
 
-        if (ImGui::MenuItem("Imgui", nullptr, Flags.IsImguiPannel))
+        if (ImGui::MenuItem("Imgui", nullptr, m_Flags.IsImguiPannel))
         {
-            Flags.IsImguiPannel = !Flags.IsImguiPannel;
+            m_Flags.IsImguiPannel = !m_Flags.IsImguiPannel;
         }
 
         ImGui::Separator();
@@ -333,7 +337,7 @@ namespace iKan {
         ShowMenu();
 
         // Render Scene Hierarchy pannel in imgui
-        SceneHierarchyPannel.OnImguiender(&SceneHierarchyPannel.isSceneHeirarchypanel);
+        m_SceneHierarchyPannel.OnImguiender(&m_SceneHierarchyPannel.isSceneHeirarchypanel);
 
         // Update the Viewport Data
         OnUpdateImGui();
@@ -351,25 +355,25 @@ namespace iKan {
     void Viewport::RendereViewportProp()
     {
         // No Imgui renderer if flag is false
-        if (!Flags.IsImguiPannel)
+        if (!m_Flags.IsImguiPannel)
             return;
 
         // Basic Properties
-        ImGui::Begin("Viewport Properties", &Flags.IsImguiPannel);
+        ImGui::Begin("Viewport Properties", &m_Flags.IsImguiPannel);
         ImGui::PushID("Viewport Properties");
 
         ImGui::Columns(3);
 
         ImGui::SetColumnWidth(0, 80);
-        ImGui::Text("Present : %d", Flags.Present);
+        ImGui::Text("Present : %d", m_Flags.Present);
         ImGui::NextColumn();
 
         ImGui::SetColumnWidth(1, 80);
-        ImGui::Text("Focused : %d", Data.Focused);
+        ImGui::Text("Focused : %d", m_Data.Focused);
         ImGui::NextColumn();
 
         ImGui::SetColumnWidth(2, 80);
-        ImGui::Text("Hovered : %d", Data.Hovered);
+        ImGui::Text("Hovered : %d", m_Data.Hovered);
         ImGui::NextColumn();
 
         ImGui::Columns(1);
@@ -380,7 +384,7 @@ namespace iKan {
         bool bgOpened = ImGui::TreeNodeEx((void*)1234567, flags, "Background Color");
         if (bgOpened)
         {
-            ImGuiAPI::ColorEdit(Data.BgColor);
+            ImGuiAPI::ColorEdit(m_Data.BgColor);
             ImGui::TreePop();
         }
         ImGui::Separator();
@@ -389,21 +393,21 @@ namespace iKan {
         ImGui::Columns(2);
 
         ImGui::SetColumnWidth(0, 130);
-        ImGui::Text("Width x Height ");
+        ImGui::Text("Scene Size ");
         ImGui::NextColumn();
 
         ImGui::SetColumnWidth(1, 130);
-        ImGui::Text("%d x %d", (int32_t)Data.Width,  (int32_t)Data.Height);
+        ImGui::Text("%d x %d", (int32_t)m_Data.Width,  (int32_t)m_Data.Height);
         ImGui::NextColumn();
 
         ImGui::Columns(2);
 
         ImGui::SetColumnWidth(0, 130);
-        ImGui::Text("Size ");
+        ImGui::Text("Viewport Size ");
         ImGui::NextColumn();
 
         ImGui::SetColumnWidth(1, 130);
-        ImGui::Text("%d x %d", (int32_t)Data.Size.x, (int32_t)Data.Size.y);
+        ImGui::Text("%d x %d", (int32_t)m_Data.Size.x, (int32_t)m_Data.Size.y);
         ImGui::NextColumn();
 
         ImGui::Columns(2);
@@ -413,7 +417,7 @@ namespace iKan {
         ImGui::NextColumn();
 
         ImGui::SetColumnWidth(1, 130);
-        ImGui::Text("%d x %d", (int32_t)Data.Bounds[0].x, (int32_t)Data.Bounds[0].y);
+        ImGui::Text("%d x %d", (int32_t)m_Data.Bounds[0].x, (int32_t)m_Data.Bounds[0].y);
         ImGui::NextColumn();
 
         ImGui::Columns(2);
@@ -423,7 +427,7 @@ namespace iKan {
         ImGui::NextColumn();
 
         ImGui::SetColumnWidth(1, 130);
-        ImGui::Text("%d x %d", (int32_t)Data.Bounds[1].x, (int32_t)Data.Bounds[1].y);
+        ImGui::Text("%d x %d", (int32_t)m_Data.Bounds[1].x, (int32_t)m_Data.Bounds[1].y);
         ImGui::NextColumn();
 
         ImGui::Columns(2);
@@ -433,7 +437,7 @@ namespace iKan {
         ImGui::NextColumn();
 
         ImGui::SetColumnWidth(1, 130);
-        ImGui::Text("%d x %d", Data.MousePosX, Data.MousePosY);
+        ImGui::Text("%d x %d", m_Data.MousePosX, m_Data.MousePosY);
         ImGui::NextColumn();
 
         ImGui::Columns(1);
@@ -442,13 +446,13 @@ namespace iKan {
 
         // SHow the Hovered Eneity
         std::string entityName = "NULL";
-        if ((entt::entity)Data.HoveredEntity != entt::null)
+        if ((entt::entity)m_Data.HoveredEntity != entt::null)
         {
-            entityName = Data.HoveredEntity.GetComponent<TagComponent>().Tag;
+            entityName = m_Data.HoveredEntity.GetComponent<TagComponent>().Tag;
 
             ImGui::Text("Hovered Entity");
-            PropertyGrid::String("Entity ID", (uint32_t)Data.HoveredEntity, 130.0f);
-            PropertyGrid::String("Unique ID", (uint32_t)Data.HoveredEntity.GetComponent<IDComponent>().ID, 130.0f);
+            PropertyGrid::String("Entity ID", (uint32_t)m_Data.HoveredEntity, 130.0f);
+            PropertyGrid::String("Unique ID", (uint32_t)m_Data.HoveredEntity.GetComponent<IDComponent>().ID, 130.0f);
             PropertyGrid::String("Entity Name", entityName, 130.0f, 300.0f, "", false); // No need to add any Hint in non modifiable string
             ImGui::Separator();
         }
@@ -463,19 +467,19 @@ namespace iKan {
     // ******************************************************************************
     void Viewport::RendererStats(Timestep ts)
     {
-        if (Flags.IsFrameRate)
+        if (m_Flags.IsFrameRate)
         {
-            ImGuiAPI::FrameRate(ts, &Flags.IsFrameRate);
+            ImGuiAPI::FrameRate(ts, &m_Flags.IsFrameRate);
         }
 
-        if (Flags.IsRendererStats)
+        if (m_Flags.IsRendererStats)
         {
-            ImGuiAPI::RendererStats(&Flags.IsRendererStats);
+            ImGuiAPI::RendererStats(&m_Flags.IsRendererStats);
         }
 
-        if (Flags.IsVendorType)
+        if (m_Flags.IsVendorType)
         {
-            ImGuiAPI::RendererVersion(&Flags.IsVendorType);
+            ImGuiAPI::RendererVersion(&m_Flags.IsVendorType);
         }
     }
 

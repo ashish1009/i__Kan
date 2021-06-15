@@ -99,8 +99,8 @@ namespace iKan {
         void OpenScene();
         void SaveScene();
 
-        ViewportData& GetDataRef() { return Data; }
-        Ref<Scene> GetScene() { return ActiveScene; }
+        ViewportData& GetDataRef() { return m_Data; }
+        Ref<Scene> GetScene() { return m_ActiveScene; }
 
         static Viewport& Get()
         {
@@ -109,10 +109,10 @@ namespace iKan {
         }
 
     private:
-        Ref<Scene>                 ActiveScene;
-        PropFlag                   Flags;
-        ViewportData               Data;
-        iKan::SceneHeirarchyPannel SceneHierarchyPannel;
+        Ref<Scene>                 m_ActiveScene;
+        PropFlag                   m_Flags;
+        ViewportData               m_Data;
+        iKan::SceneHeirarchyPannel m_SceneHierarchyPannel;
     };
     
 }
