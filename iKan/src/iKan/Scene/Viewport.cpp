@@ -57,7 +57,7 @@ namespace iKan {
             return;
 
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
-        ImGui::Begin("Viewport", &m_Flags.Present);
+        ImGui::Begin("Viewport", &m_Flags.Present, ImGuiWindowFlags_NoTitleBar);
         {
             m_Data.CursorPos = ImGui::GetCursorPos();
 
@@ -344,7 +344,7 @@ namespace iKan {
 
         // Render Content browser pannel
         m_ContentBrowserPannel.OnImguiender();
-        
+
         if (!m_ActiveScene)
         {
             ImGui::Begin("Warning");
@@ -375,15 +375,15 @@ namespace iKan {
 
         ImGui::Columns(3);
 
-        ImGui::SetColumnWidth(0, 120);
+        ImGui::SetColumnWidth(0, 80);
         ImGui::Text("Present : %d", m_Flags.Present);
         ImGui::NextColumn();
 
-        ImGui::SetColumnWidth(1, 120);
+        ImGui::SetColumnWidth(1, 80);
         ImGui::Text("Focused : %d", m_Data.Focused);
         ImGui::NextColumn();
 
-        ImGui::SetColumnWidth(2, 120);
+        ImGui::SetColumnWidth(2, 80);
         ImGui::Text("Hovered : %d", m_Data.Hovered);
         ImGui::NextColumn();
 
@@ -403,7 +403,7 @@ namespace iKan {
         // Other Properties
         ImGui::Columns(2);
 
-        float columnWidth = 200;
+        float columnWidth = 120;
 
         ImGui::SetColumnWidth(0, columnWidth);
         ImGui::Text("Scene Size ");
@@ -464,9 +464,9 @@ namespace iKan {
             entityName = m_Data.HoveredEntity.GetComponent<TagComponent>().Tag;
 
             ImGui::Text("Hovered Entity");
-            PropertyGrid::String("Entity ID", (uint32_t)m_Data.HoveredEntity, 130.0f);
-            PropertyGrid::String("Unique ID", (uint32_t)m_Data.HoveredEntity.GetComponent<IDComponent>().ID, 130.0f);
-            PropertyGrid::String("Entity Name", entityName, 130.0f, 300.0f, "", false); // No need to add any Hint in non modifiable string
+            PropertyGrid::String("Entity ID", (uint32_t)m_Data.HoveredEntity, columnWidth);
+            PropertyGrid::String("Unique ID", (uint32_t)m_Data.HoveredEntity.GetComponent<IDComponent>().ID, columnWidth);
+            PropertyGrid::String("Entity Name", entityName, columnWidth, 300.0f, "", false); // No need to add any Hint in non modifiable string
             ImGui::Separator();
         }
 
