@@ -351,7 +351,10 @@ namespace iKan {
         }
 
         // Render Scene Hierarchy pannel in imgui
-        m_SceneHierarchyPannel.OnImguiender(&m_SceneHierarchyPannel.isSceneHeirarchypanel);
+        m_SceneHierarchyPannel.OnImguiender();
+
+        // Render Content browser pannel
+        m_ContentBrowserPannel.OnImguiender();
 
         // Update the Viewport Data
         OnUpdateImGui();

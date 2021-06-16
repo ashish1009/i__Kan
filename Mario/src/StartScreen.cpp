@@ -36,7 +36,7 @@ namespace Mario {
         std::unordered_map<std::string, Ref<Texture>> textureMap = sceneData.TextureMap;
 
         // Texture tile
-        s_Texture = scene->AddTextureToScene("../../../Mario/assets/Resources/Graphics/StartScreen/StartScreenTile.png");
+        s_Texture = scene->AddTextureToScene("../../../Mario/assets/Resources/Graphics/StartScreenTile.png");
 
         // Initialise the tiles and map
         Init();

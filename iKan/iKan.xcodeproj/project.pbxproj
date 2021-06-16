@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		750AA8E1265D52140031A3E0 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 750AA8DF265D52140031A3E0 /* Utils.cpp */; };
 		750AA8E2265D52140031A3E0 /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 750AA8E0265D52140031A3E0 /* Utils.h */; };
+		758265DB2679F6DF0080169A /* ContetBrowserPannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 758265D92679F6DF0080169A /* ContetBrowserPannel.cpp */; };
+		758265DC2679F6DF0080169A /* ContetBrowserPannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 758265DA2679F6DF0080169A /* ContetBrowserPannel.h */; };
 		7589D501267758DD00EB43D9 /* SceneSerializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7589D4FF267758DD00EB43D9 /* SceneSerializer.cpp */; };
 		7589D502267758DD00EB43D9 /* SceneSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7589D500267758DD00EB43D9 /* SceneSerializer.h */; };
 		7589D5032677622500EB43D9 /* libyaml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7589D2402677574300EB43D9 /* libyaml.a */; };
@@ -127,6 +129,8 @@
 /* Begin PBXFileReference section */
 		750AA8DF265D52140031A3E0 /* Utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
 		750AA8E0265D52140031A3E0 /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		758265D92679F6DF0080169A /* ContetBrowserPannel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ContetBrowserPannel.cpp; sourceTree = "<group>"; };
+		758265DA2679F6DF0080169A /* ContetBrowserPannel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContetBrowserPannel.h; sourceTree = "<group>"; };
 		7589D23B2677574200EB43D9 /* yaml.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = yaml.xcodeproj; path = vendor/yaml/yaml.xcodeproj; sourceTree = "<group>"; };
 		7589D4FF267758DD00EB43D9 /* SceneSerializer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneSerializer.cpp; sourceTree = "<group>"; };
 		7589D500267758DD00EB43D9 /* SceneSerializer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneSerializer.h; sourceTree = "<group>"; };
@@ -299,8 +303,10 @@
 				B249623426399AA40091C915 /* EditorCamera.h */,
 				B2A1C11B263EAE6800606017 /* SceneHierarchyPannel.cpp */,
 				B2A1C11C263EAE6800606017 /* SceneHierarchyPannel.h */,
-				B2A1C11F263EE4CA00606017 /* ScenePropertyGrid.h */,
 				B2F0CBC4263EEDC100A289AA /* ScenePropertyGrid.cpp */,
+				B2A1C11F263EE4CA00606017 /* ScenePropertyGrid.h */,
+				758265D92679F6DF0080169A /* ContetBrowserPannel.cpp */,
+				758265DA2679F6DF0080169A /* ContetBrowserPannel.h */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -575,6 +581,7 @@
 				B22FE6F12638431200C1640B /* OpenGLVertexArray.h in Headers */,
 				B2FE35152624B34000AFC236 /* Entrypoint.h in Headers */,
 				B2EAB33F262B23F2003D7FE6 /* MouseEvent.h in Headers */,
+				758265DC2679F6DF0080169A /* ContetBrowserPannel.h in Headers */,
 				B22FE70D26385EE600C1640B /* FrameBuffer.h in Headers */,
 				B28FE5BF262C87A500DC5E20 /* Input.h in Headers */,
 				750AA8E2265D52140031A3E0 /* Utils.h in Headers */,
@@ -738,6 +745,7 @@
 				B249622E26397FAC0091C915 /* OpenGlRendererAPI.cpp in Sources */,
 				B2A1C11D263EAE6800606017 /* SceneHierarchyPannel.cpp in Sources */,
 				B22FE6F82638473500C1640B /* Texture.cpp in Sources */,
+				758265DB2679F6DF0080169A /* ContetBrowserPannel.cpp in Sources */,
 				B28FE5C3262C881700DC5E20 /* MacInput.cpp in Sources */,
 				B2496F132639AA690091C915 /* SceneRenderer.cpp in Sources */,
 				7589D501267758DD00EB43D9 /* SceneSerializer.cpp in Sources */,

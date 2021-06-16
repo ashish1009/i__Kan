@@ -88,6 +88,8 @@ namespace iKan {
     // ******************************************************************************
     void SceneHeirarchyPannel::OnImguiender(bool* pIsOpen)
     {
+        pIsOpen = &isSceneHeirarchypanel;
+
         // no rendering if flag is false
         if (!isSceneHeirarchypanel || !m_Context)
             return;
@@ -96,7 +98,7 @@ namespace iKan {
         {
             m_Context->OnImguiRenderer();
 
-            PropertyGrid::String("Number of Entities in Scene", m_Context->GetNumEntities(), 200);
+            PropertyGrid::String("Number of Entities in Scene", m_Context->GetNumEntities(), 300);
             ImGui::Separator();
             
             m_Context->m_Registry.each([&](auto entityID)

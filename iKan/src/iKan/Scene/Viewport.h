@@ -14,6 +14,7 @@
 #include <iKan/Core/TimeStep.h>
 #include <iKan/Core/Events/KeyEvent.h>
 #include <iKan/Editor/SceneHierarchyPannel.h>
+#include <iKan/Editor/ContetBrowserPannel.h>
 
 namespace iKan {
     
@@ -77,6 +78,9 @@ namespace iKan {
         void ViewMenu();
         void RendererStats(Timestep ts);
         void RendereViewportProp();
+        void UpdateHoveredEntity();
+        void UpdateMousePos();
+        void UpdateBounds();
 
     public:
         ~Viewport() = default;
@@ -88,10 +92,7 @@ namespace iKan {
         Viewport& operator =(Viewport&& other) = delete;
 
         void OnUpdate(Timestep ts);
-        void UpdateBounds();
-        void UpdateMousePos();
         void OnImguiRenderer(Timestep ts);
-        void UpdateHoveredEntity();
         void ShowMenu();
         void OnEvent(Event& event);
 
@@ -114,6 +115,7 @@ namespace iKan {
         PropFlag                   m_Flags;
         ViewportData               m_Data;
         iKan::SceneHeirarchyPannel m_SceneHierarchyPannel;
+        iKan::ContentBrowserPannel m_ContentBrowserPannel;
     };
     
 }
