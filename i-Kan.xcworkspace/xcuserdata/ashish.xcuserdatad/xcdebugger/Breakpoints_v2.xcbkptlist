@@ -39,22 +39,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "5D8DBE89-72D7-4AE3-B00C-81FE5FDB1FA6"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "iKan/src/iKan/Editor/ContetBrowserPannel.cpp"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "ContentBrowserPannel::OnImguiender(pIsOpen)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "0DC9E50C-142F-4A55-A666-E69ACDAEC321"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -62,24 +46,8 @@
             filePath = "iKan/src/iKan/Editor/ContetBrowserPannel.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
-            landmarkName = "ContentBrowserPannel::OnImguiender(pIsOpen)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "3786A637-316F-4E6A-88E4-6B191AC7FCCA"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "iKan/src/iKan/Editor/ContetBrowserPannel.cpp"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
             landmarkName = "ContentBrowserPannel::OnImguiender(pIsOpen)"
             landmarkType = "7">
          </BreakpointContent>
@@ -97,6 +65,22 @@
             startingLineNumber = "34"
             endingLineNumber = "34"
             landmarkName = "ContentBrowserPannel::OnImguiender(pIsOpen)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7E9567C0-78F0-4A7A-9D97-C5BBD5C0B89C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Editor/src/IKanEditor.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
+            landmarkName = "IKanEditor::OnImguiRender(ts)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

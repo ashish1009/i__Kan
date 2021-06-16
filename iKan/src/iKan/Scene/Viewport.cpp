@@ -342,6 +342,9 @@ namespace iKan {
         // Show Renderer Stats
         RendererStats(ts);
 
+        // Render Content browser pannel
+        m_ContentBrowserPannel.OnImguiender();
+        
         if (!m_ActiveScene)
         {
             ImGui::Begin("Warning");
@@ -352,9 +355,6 @@ namespace iKan {
 
         // Render Scene Hierarchy pannel in imgui
         m_SceneHierarchyPannel.OnImguiender();
-
-        // Render Content browser pannel
-        m_ContentBrowserPannel.OnImguiender();
 
         // Update the Viewport Data
         OnUpdateImGui();
