@@ -18,7 +18,7 @@ namespace iKan {
     // ContentBrowserPannel constructor
     // ******************************************************************************
     ContentBrowserPannel::ContentBrowserPannel()
-    : m_CurrentDir(s_AssetsPath), m_PrevDir(s_AssetsPath)
+    : m_CurrentDir(s_AssetsPath)
     {
         m_PathHierarchy.emplace_back(m_CurrentDir.filename());
     }
@@ -33,112 +33,129 @@ namespace iKan {
             return;
 
         ImGui::Begin("Content Browser ", pIsOpen, ImGuiWindowFlags_NoResize);
+        ImGui::BeginChild("##Content Browser", ImVec2(0, ImGui::GetWindowHeight() - 30.0f), false, ImGuiWindowFlags_HorizontalScrollbar);
+        static ImVec2 initPos = ImGui::GetCursorPos();
+
+        TitleIcon();
+
+        int32_t pushId = 0;
+        for (auto& directoryEntry : std::filesystem::directory_iterator(m_CurrentDir))
         {
-            ImGui::BeginChild("##Content Browser", ImVec2(0, ImGui::GetWindowHeight() - 30.0f), false, ImGuiWindowFlags_HorizontalScrollbar);
-            static ImVec2 initPos = ImGui::GetCursorPos();
+            const auto& path            = directoryEntry.path();
+            auto relativePath           = std::filesystem::relative(path, s_AssetsPath);
+            std::string filenameString  = relativePath.filename().string();
 
-            ImGui::Columns(3);
-            ImGui::SetColumnWidth(0, 80);
-            if (PropertyGrid::ImageButton("Back", m_Back->GetRendererID(), ImVec2(16.0f, 16.0f)))
+            if (m_Filter.PassFilter(filenameString.c_str()))
             {
-                if (m_CurrentDir != std::filesystem::path(s_AssetsPath))
+                Ref<Texture> iconTexture;
+                static bool isDirectory = false;
+                if (directoryEntry.is_directory())
                 {
-                    m_PrevDir    = m_CurrentDir;
-                    m_CurrentDir = m_CurrentDir.parent_path();
-                    m_PathHierarchy.pop_back();
+                    iconTexture = m_FolderIcon;
+                    isDirectory = true;
                 }
-            }
-            ImGui::SameLine();
-            if (PropertyGrid::ImageButton("Forward", m_Forward->GetRendererID(), ImVec2(16.0f, 16.0f)))
-            {
-                m_CurrentDir = m_PrevDir;
-                m_PathHierarchy.emplace_back(m_CurrentDir);
-            }
-
-            ImGui::SameLine();
-            ImGui::NextColumn();
-            ImGui::SetColumnWidth(1, 200);
-
-            static ImGuiTextFilter filter;
-            filter.Draw("", 150.0f);
-            ImGui::SameLine();
-            PropertyGrid::ImageButton("Search", m_Search->GetRendererID(), ImVec2(16.0f, 16.0f));
-
-            ImGui::NextColumn();
-            ImGui::SetColumnWidth(1, 200);
-            size_t i = 0;
-            for (auto path : m_PathHierarchy)
-            {
-                i++;
-                ImGui::SameLine();
-                ImGui::Text("\\");
-                ImGui::SameLine();
-                if (ImGui::Button(path.filename().c_str()))
+                else
                 {
-                    m_PrevDir    = m_CurrentDir;
-                    m_CurrentDir = path;
-                    m_PathHierarchy.erase(m_PathHierarchy.begin() + i, m_PathHierarchy.end());
+                    if (".png" == relativePath.extension())         iconTexture = m_PngIcon;
+                    else if (".jpg" == relativePath.extension())    iconTexture = m_JpgIcon;
+                    else if (".cpp" == relativePath.extension())    iconTexture = m_Cpp;
+                    else if (".h" == relativePath.extension())      iconTexture = m_H;
+                    else if (".c" == relativePath.extension())      iconTexture = m_C;
+                    else                                            iconTexture = m_FileIcon;
+
+                    isDirectory = false;
                 }
-            }
-            ImGui::NextColumn();
-            ImGui::Columns(1);
 
-            ImGui::Separator();
-
-            int32_t pushId = 0;
-            for (auto& directoryEntry : std::filesystem::directory_iterator(m_CurrentDir))
-            {
-                const auto& path            = directoryEntry.path();
-                auto relativePath           = std::filesystem::relative(path, s_AssetsPath);
-                std::string filenameString  = relativePath.filename().string();
-
-                if (filter.PassFilter(filenameString.c_str()))
+                static float iconSize = 64.0f;
+                ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPos().x + ((iconSize + 30.0f) * pushId), initPos.y + 30.0f));
+                if (PropertyGrid::ImageButton(pushId, iconTexture->GetRendererID(), ImVec2(iconSize, iconSize)))
                 {
-                    Ref<Texture> iconTexture;
-                    static bool isDirectory = false;
-                    if (directoryEntry.is_directory())
+                    if (isDirectory)
                     {
-                        iconTexture = m_FolderIcon;
-                        isDirectory = true;
+                        m_CurrentDir /= path.filename();
+                        m_PathHierarchy.emplace_back(m_CurrentDir);
+                        m_PrevDir.clear();
                     }
-                    else
-                    {
-                        if (".png" == relativePath.extension())         iconTexture = m_PngIcon;
-                        else if (".jpg" == relativePath.extension())    iconTexture = m_JpgIcon;
-                        else if (".cpp" == relativePath.extension())    iconTexture = m_Cpp;
-                        else if (".h" == relativePath.extension())      iconTexture = m_H;
-                        else if (".c" == relativePath.extension())      iconTexture = m_C;
-                        else                                            iconTexture = m_FileIcon;
-
-                        isDirectory = false;
-                    }
-
-                    static float iconSize = 64.0f;
-                    ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPos().x + ((iconSize + 30.0f) * pushId), initPos.y + 30.0f));
-                    if (PropertyGrid::ImageButton(pushId, iconTexture->GetRendererID(), ImVec2(iconSize, iconSize)))
-                    {
-                        if (isDirectory)
-                        {
-                            m_CurrentDir /= path.filename();
-                            m_PathHierarchy.emplace_back(m_CurrentDir);
-                            m_PrevDir = m_CurrentDir;
-                        }
-                    }
-
-                    static float wrapWidth = 90.0f;
-                    ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPos().x + ((iconSize + 30.0f) * pushId), initPos.y + iconSize + 10.0f + 30.0f));
-                    ImGui::PushTextWrapPos(ImGui::GetCursorPos().x + wrapWidth);
-                    ImGui::Text(filenameString.c_str(), wrapWidth);
-                    ImGui::PopTextWrapPos();
-
-                    pushId++;
                 }
-            }
 
-            ImGui::EndChild();
+                static float wrapWidth = 90.0f;
+                ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPos().x + ((iconSize + 30.0f) * pushId), initPos.y + iconSize + 10.0f + 30.0f));
+                ImGui::PushTextWrapPos(ImGui::GetCursorPos().x + wrapWidth);
+                ImGui::Text(filenameString.c_str(), wrapWidth);
+                ImGui::PopTextWrapPos();
+
+                pushId++;
+            }
         }
+
+        for (auto i : m_PrevDir)
+        {
+            ImGui::Text("%s", i.filename().c_str());
+            ImGui::SameLine();
+        }
+        ImGui::EndChild();
         ImGui::End(); // ImGui::Begin("Scene Hierarchy", pIsOpen);
     }
 
+    // ******************************************************************************
+    // Render the Title Icons for COntent browser
+    // ******************************************************************************
+    void ContentBrowserPannel::TitleIcon()
+    {
+        ImGui::Columns(3);
+        ImGui::SetColumnWidth(0, 80);
+        if (PropertyGrid::ImageButton("Back", m_Back->GetRendererID(), ImVec2(16.0f, 16.0f)))
+        {
+            if (m_CurrentDir != std::filesystem::path(s_AssetsPath))
+            {
+                m_PrevDir.emplace_back(m_CurrentDir);
+                m_CurrentDir = m_CurrentDir.parent_path();
+                m_PathHierarchy.pop_back();
+            }
+        }
+        ImGui::SameLine();
+        if (PropertyGrid::ImageButton("Forward", m_Forward->GetRendererID(), ImVec2(16.0f, 16.0f)))
+        {
+            if (!m_PrevDir.empty())
+            {
+                m_CurrentDir = m_PrevDir.back();
+                m_PathHierarchy.emplace_back(m_CurrentDir);
+                m_PrevDir.pop_back();
+            }
+        }
+
+        ImGui::SameLine();
+        ImGui::NextColumn();
+        ImGui::SetColumnWidth(1, 200);
+
+        m_Filter.Draw("", 150.0f);
+        ImGui::SameLine();
+        PropertyGrid::ImageButton("Search", m_Search->GetRendererID(), ImVec2(16.0f, 16.0f));
+
+        ImGui::NextColumn();
+        ImGui::SetColumnWidth(1, 200);
+        size_t i = 0;
+        for (auto path : m_PathHierarchy)
+        {
+            i++;
+            ImGui::SameLine();
+            ImGui::Text("\\");
+            ImGui::SameLine();
+            if (ImGui::Button(path.filename().c_str()))
+            {
+                if (path != m_CurrentDir)
+                {
+                    m_PrevDir.clear();
+                    m_PrevDir.emplace_back(m_CurrentDir);
+                }
+                m_CurrentDir = path;
+                m_PathHierarchy.erase(m_PathHierarchy.begin() + i, m_PathHierarchy.end());
+            }
+        }
+        ImGui::NextColumn();
+        ImGui::Columns(1);
+
+        ImGui::Separator();
+    }
 
 }

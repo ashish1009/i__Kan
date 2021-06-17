@@ -307,6 +307,9 @@ namespace iKan {
         if (ImGui::MenuItem("Scene Heirarchy Panel", nullptr, m_SceneHierarchyPannel.isSceneHeirarchypanel))
             m_SceneHierarchyPannel.isSceneHeirarchypanel = !m_SceneHierarchyPannel.isSceneHeirarchypanel;
 
+        if (ImGui::MenuItem("Content Browser Panel", nullptr, m_ContentBrowserPannel.IsContentBrowserPannel))
+            m_ContentBrowserPannel.IsContentBrowserPannel = !m_ContentBrowserPannel.IsContentBrowserPannel;
+
         ImGui::Separator();
 
         if (ImGui::MenuItem("Frame Rate", nullptr, m_Flags.IsFrameRate))

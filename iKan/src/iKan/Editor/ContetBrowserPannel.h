@@ -24,14 +24,19 @@ namespace iKan {
 
         void OnImguiender(bool* pIsOpen = nullptr);
 
+    private:
+        void TitleIcon();
+
     public:
         bool IsContentBrowserPannel = true;
 
     private:
         std::filesystem::path m_CurrentDir;
-        std::filesystem::path m_PrevDir;
-        
+
+        std::vector<std::filesystem::path> m_PrevDir;
         std::vector<std::filesystem::path> m_PathHierarchy;
+
+        ImGuiTextFilter m_Filter;
 
         Ref<Texture> m_FolderIcon = Texture::Create("../../../Editor/assets/resources/ContentBrowser/Folder.png");
         Ref<Texture> m_FileIcon   = Texture::Create("../../../Editor/assets/resources/ContentBrowser/File.png");
