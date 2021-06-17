@@ -434,4 +434,32 @@ namespace iKan {
         
         colorRef = { color.x, color.y, color.z, color.w };
     }
+
+    // ******************************************************************************
+    // Image button
+    // ******************************************************************************
+    bool PropertyGrid::ImageButton(const std::string& lableId, uint32_t texId, ImVec2 size)
+    {
+        bool result = false;
+        ImTextureID myTexId = (ImTextureID)((size_t)texId);
+        ImGui::PushID(lableId.c_str());
+        result = ImGui::ImageButton(myTexId, size, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
+        ImGui::PopID();
+
+        return result;
+    }
+
+    // ******************************************************************************
+    // Image button
+    // ******************************************************************************
+    bool PropertyGrid::ImageButton(int32_t lableId, uint32_t texId, ImVec2 size)
+    {
+        bool result = false;
+        ImTextureID myTexId = (ImTextureID)((size_t)texId);
+        ImGui::PushID(lableId);
+        result = ImGui::ImageButton(myTexId, size, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
+        ImGui::PopID();
+
+        return result;
+    }
 }

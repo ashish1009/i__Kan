@@ -98,7 +98,7 @@ namespace iKan {
         {
             m_Context->OnImguiRenderer();
 
-            PropertyGrid::String("Number of Entities in Scene", m_Context->GetNumEntities(), 300);
+            PropertyGrid::String("Number of Entities in Scene", m_Context->GetNumEntities(), 200);
             ImGui::Separator();
             
             m_Context->m_Registry.each([&](auto entityID)

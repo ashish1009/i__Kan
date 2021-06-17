@@ -33,6 +33,9 @@ namespace iKan {
         
         static void ColorEdit(glm::vec4& colorRef);
 
+        static bool ImageButton(const std::string& lableId, uint32_t texId, ImVec2 size);
+        static bool ImageButton(const int32_t lableId, uint32_t texId, ImVec2 size);
+
     };
 
 }
