@@ -34,6 +34,7 @@ namespace iKan {
         std::filesystem::path m_CurrentDir;
 
         std::vector<std::filesystem::path> m_PrevDir;
+        std::vector<std::filesystem::path> m_ForwardDir;
         std::vector<std::filesystem::path> m_PathHierarchy;
 
         ImGuiTextFilter m_Filter;

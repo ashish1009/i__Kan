@@ -20,7 +20,7 @@ namespace iKan {
     ContentBrowserPannel::ContentBrowserPannel()
     : m_CurrentDir(s_AssetsPath)
     {
-        m_PathHierarchy.emplace_back(m_CurrentDir.filename());
+        m_PathHierarchy.emplace_back(m_CurrentDir);
     }
 
     // ******************************************************************************
@@ -72,9 +72,9 @@ namespace iKan {
                 {
                     if (isDirectory)
                     {
+                        m_PrevDir.emplace_back(m_CurrentDir);
                         m_CurrentDir /= path.filename();
                         m_PathHierarchy.emplace_back(m_CurrentDir);
-                        m_PrevDir.clear();
                     }
                 }
 
@@ -88,11 +88,6 @@ namespace iKan {
             }
         }
 
-        for (auto i : m_PrevDir)
-        {
-            ImGui::Text("%s", i.filename().c_str());
-            ImGui::SameLine();
-        }
         ImGui::EndChild();
         ImGui::End(); // ImGui::Begin("Scene Hierarchy", pIsOpen);
     }
@@ -108,19 +103,35 @@ namespace iKan {
         {
             if (m_CurrentDir != std::filesystem::path(s_AssetsPath))
             {
-                m_PrevDir.emplace_back(m_CurrentDir);
-                m_CurrentDir = m_CurrentDir.parent_path();
-                m_PathHierarchy.pop_back();
+                if (m_PrevDir.back() == m_CurrentDir.parent_path())
+                {
+                    m_PathHierarchy.pop_back();
+                }
+                else
+                {
+                    for (auto prevIt = m_PrevDir.begin(); prevIt != m_PrevDir.end(); prevIt++)
+                    {
+                        if (*prevIt == m_CurrentDir)
+                        {
+                            m_PathHierarchy.insert(m_PathHierarchy.end(), ++prevIt, m_PrevDir.end());
+                            break;
+                        }
+                    }
+                }
+                m_ForwardDir.emplace_back(m_CurrentDir);
+                m_CurrentDir = m_PrevDir.back();
+                m_PrevDir.pop_back();
             }
         }
         ImGui::SameLine();
         if (PropertyGrid::ImageButton("Forward", m_Forward->GetRendererID(), ImVec2(16.0f, 16.0f)))
         {
-            if (!m_PrevDir.empty())
+            if (!m_ForwardDir.empty())
             {
-                m_CurrentDir = m_PrevDir.back();
+                m_PrevDir.emplace_back(m_CurrentDir);
+                m_CurrentDir = m_ForwardDir.back();
                 m_PathHierarchy.emplace_back(m_CurrentDir);
-                m_PrevDir.pop_back();
+                m_ForwardDir.pop_back();
             }
         }
 
@@ -144,10 +155,8 @@ namespace iKan {
             if (ImGui::Button(path.filename().c_str()))
             {
                 if (path != m_CurrentDir)
-                {
-                    m_PrevDir.clear();
                     m_PrevDir.emplace_back(m_CurrentDir);
-                }
+
                 m_CurrentDir = path;
                 m_PathHierarchy.erase(m_PathHierarchy.begin() + i, m_PathHierarchy.end());
             }
