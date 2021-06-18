@@ -35,7 +35,7 @@ private:
 private:
     bool m_IsSetting = true;
 
-    Viewport& m_Viewport = Viewport::Get();
+    Viewport& m_Viewport = Viewport::Get("../../../../../../../ashish");
     Entity m_CameraEntity;
     Ref<Mario::Player> m_Player;
 

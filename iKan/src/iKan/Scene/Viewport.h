@@ -69,7 +69,7 @@ namespace iKan {
         };
 
     private:
-        Viewport();
+        Viewport(const std::string& contentBrowserPath);
         bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
         bool OnKeyPressed(KeyPressedEvent& e);
 
@@ -104,9 +104,10 @@ namespace iKan {
         ViewportData& GetDataRef() { return m_Data; }
         Ref<Scene> GetScene() { return m_ActiveScene; }
 
-        static Viewport& Get()
+        // TODO: change the API, that makes make more sense
+        static Viewport& Get(const std::string& contentBrowserPath)
         {
-            static Viewport viewport;
+            static Viewport viewport(contentBrowserPath);
             return viewport;
         }
 

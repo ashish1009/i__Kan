@@ -20,7 +20,8 @@ namespace iKan {
     // ******************************************************************************
     // Viewport Default Constructor
     // ******************************************************************************
-    Viewport::Viewport()
+    Viewport::Viewport(const std::string& contentBrowserPath)
+    : m_ContentBrowserPannel(contentBrowserPath)
     {
         // Frame buffer specifications
         Framebuffer::Specification specs;

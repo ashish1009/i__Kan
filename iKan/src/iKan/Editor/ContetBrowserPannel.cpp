@@ -12,13 +12,11 @@
 
 namespace iKan {
 
-    static std::filesystem::path s_AssetsPath = "../../../../../../../ashish";
-
     // ******************************************************************************
     // ContentBrowserPannel constructor
     // ******************************************************************************
-    ContentBrowserPannel::ContentBrowserPannel()
-    : m_CurrentDir(s_AssetsPath)
+    ContentBrowserPannel::ContentBrowserPannel(const std::string& rootPath)
+    : m_RootPath(rootPath), m_CurrentDir(rootPath)
     {
         m_PathHierarchy.emplace_back(m_CurrentDir);
     }
@@ -32,63 +30,16 @@ namespace iKan {
         if (!IsContentBrowserPannel)
             return;
 
-        ImGui::Begin("Content Browser ", pIsOpen, ImGuiWindowFlags_NoResize);
-        ImGui::BeginChild("##Content Browser", ImVec2(0, ImGui::GetWindowHeight() - 30.0f), false, ImGuiWindowFlags_HorizontalScrollbar);
-        static ImVec2 initPos = ImGui::GetCursorPos();
+        ImGui::Begin("Content Browser ", pIsOpen, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar);
 
         TitleIcon();
 
-        int32_t pushId = 0;
-        for (auto& directoryEntry : std::filesystem::directory_iterator(m_CurrentDir))
-        {
-            const auto& path            = directoryEntry.path();
-            auto relativePath           = std::filesystem::relative(path, s_AssetsPath);
-            std::string filenameString  = relativePath.filename().string();
+        // Side Menue should be called before MainArea
+        SideMenu();
+        ImGui::SameLine();
 
-            if (m_Filter.PassFilter(filenameString.c_str()))
-            {
-                Ref<Texture> iconTexture;
-                static bool isDirectory = false;
-                if (directoryEntry.is_directory())
-                {
-                    iconTexture = m_FolderIcon;
-                    isDirectory = true;
-                }
-                else
-                {
-                    if (".png" == relativePath.extension())         iconTexture = m_PngIcon;
-                    else if (".jpg" == relativePath.extension())    iconTexture = m_JpgIcon;
-                    else if (".cpp" == relativePath.extension())    iconTexture = m_Cpp;
-                    else if (".h" == relativePath.extension())      iconTexture = m_H;
-                    else if (".c" == relativePath.extension())      iconTexture = m_C;
-                    else                                            iconTexture = m_FileIcon;
+        MainArea();
 
-                    isDirectory = false;
-                }
-
-                static float iconSize = 64.0f;
-                ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPos().x + ((iconSize + 30.0f) * pushId), initPos.y + 30.0f));
-                if (PropertyGrid::ImageButton(pushId, iconTexture->GetRendererID(), ImVec2(iconSize, iconSize)))
-                {
-                    if (isDirectory)
-                    {
-                        m_PrevDir.emplace_back(m_CurrentDir);
-                        m_CurrentDir /= path.filename();
-                        m_PathHierarchy.emplace_back(m_CurrentDir);
-                    }
-                }
-
-                static float wrapWidth = 90.0f;
-                ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPos().x + ((iconSize + 30.0f) * pushId), initPos.y + iconSize + 10.0f + 30.0f));
-                ImGui::PushTextWrapPos(ImGui::GetCursorPos().x + wrapWidth);
-                ImGui::Text(filenameString.c_str(), wrapWidth);
-                ImGui::PopTextWrapPos();
-
-                pushId++;
-            }
-        }
-
-        ImGui::EndChild();
         ImGui::End(); // ImGui::Begin("Scene Hierarchy", pIsOpen);
     }
 
@@ -97,11 +48,14 @@ namespace iKan {
     // ******************************************************************************
     void ContentBrowserPannel::TitleIcon()
     {
+        ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 5.0f);
+        ImGui::BeginChild("Title Area", ImVec2(ImGui::GetWindowContentRegionWidth(), 40.0f), true, ImGuiWindowFlags_NoScrollbar);
+
         ImGui::Columns(3);
         ImGui::SetColumnWidth(0, 80);
         if (PropertyGrid::ImageButton("Back", m_Back->GetRendererID(), ImVec2(16.0f, 16.0f)))
         {
-            if (m_CurrentDir != std::filesystem::path(s_AssetsPath))
+            if (m_CurrentDir != std::filesystem::path(m_RootPath))
             {
                 if (m_PrevDir.back() == m_CurrentDir.parent_path())
                 {
@@ -164,7 +118,90 @@ namespace iKan {
         ImGui::NextColumn();
         ImGui::Columns(1);
 
-        ImGui::Separator();
+        ImGui::EndChild();
+        ImGui::PopStyleVar();
     }
+
+    // ******************************************************************************
+    // Render the Main for COntent browser
+    // ******************************************************************************
+    void ContentBrowserPannel::MainArea()
+    {
+        ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 5.0f);
+        ImGui::BeginChild("MainArea", ImVec2(ImGui::GetWindowContentRegionWidth() * (1.0f - s_SideChildWidth), ImGui::GetWindowHeight() - s_WindowYOffset), true, ImGuiWindowFlags_HorizontalScrollbar);
+
+        int32_t pushId = 0;
+        static ImVec2 initPos = ImGui::GetCursorPos();
+        for (auto& directoryEntry : std::filesystem::directory_iterator(m_CurrentDir))
+        {
+            const auto& path            = directoryEntry.path();
+            auto relativePath           = std::filesystem::relative(path, m_RootPath);
+            std::string filenameString  = relativePath.filename().string();
+
+            if (m_Filter.PassFilter(filenameString.c_str()))
+            {
+                Ref<Texture> iconTexture;
+                static bool isDirectory = false;
+                if (directoryEntry.is_directory())
+                {
+                    iconTexture = m_FolderIcon;
+                    isDirectory = true;
+                }
+                else
+                {
+                    if (".png" == relativePath.extension())         iconTexture = m_PngIcon;
+                    else if (".jpg" == relativePath.extension())    iconTexture = m_JpgIcon;
+                    else if (".cpp" == relativePath.extension())    iconTexture = m_Cpp;
+                    else if (".h" == relativePath.extension())      iconTexture = m_H;
+                    else if (".c" == relativePath.extension())      iconTexture = m_C;
+                    else                                            iconTexture = m_FileIcon;
+
+                    isDirectory = false;
+                }
+
+                static float iconSize = 64.0f;
+                ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPos().x + ((iconSize + 30.0f) * pushId), initPos.y + 30.0f));
+                if (PropertyGrid::ImageButton(pushId, iconTexture->GetRendererID(), ImVec2(iconSize, iconSize)))
+                {
+                    if (isDirectory)
+                    {
+                        m_PrevDir.emplace_back(m_CurrentDir);
+                        m_CurrentDir /= path.filename();
+                        m_PathHierarchy.emplace_back(m_CurrentDir);
+                    }
+                }
+
+                static float wrapWidth = 90.0f;
+                ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPos().x + ((iconSize + 30.0f) * pushId), initPos.y + iconSize + 10.0f + 30.0f));
+                ImGui::PushTextWrapPos(ImGui::GetCursorPos().x + wrapWidth);
+                ImGui::Text(filenameString.c_str(), wrapWidth);
+                ImGui::PopTextWrapPos();
+
+                pushId++;
+            }
+        }
+        ImGui::EndChild();
+        ImGui::PopStyleVar();
+    }
+
+    // ******************************************************************************
+    // Render the Main for COntent browser
+    // ******************************************************************************
+    void ContentBrowserPannel::SideMenu()
+    {
+        ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 5.0f);
+        ImGui::BeginChild("SideArea", ImVec2(ImGui::GetWindowContentRegionWidth() * s_SideChildWidth, ImGui::GetWindowHeight() - s_WindowYOffset), true, ImGuiWindowFlags_HorizontalScrollbar);
+
+        for (auto& directoryEntry : std::filesystem::directory_iterator(m_CurrentDir))
+        {
+            const auto& path            = directoryEntry.path();
+            auto relativePath           = std::filesystem::relative(path, m_RootPath);
+            std::string filenameString  = relativePath.filename().string();
+
+        }
+        ImGui::EndChild();
+        ImGui::PopStyleVar();
+    }
+
 
 }

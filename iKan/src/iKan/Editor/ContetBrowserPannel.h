@@ -20,18 +20,24 @@ namespace iKan {
     class ContentBrowserPannel
     {
     public:
-        ContentBrowserPannel();
+        ContentBrowserPannel(const std::string& rootPath);
 
         void OnImguiender(bool* pIsOpen = nullptr);
 
     private:
         void TitleIcon();
+        void MainArea();
+        void SideMenu();
 
     public:
         bool IsContentBrowserPannel = true;
 
     private:
+        static constexpr float s_SideChildWidth = 0.25;
+        static constexpr float s_WindowYOffset  = 75.0f;
+
         std::filesystem::path m_CurrentDir;
+        std::filesystem::path m_RootPath;
 
         std::vector<std::filesystem::path> m_PrevDir;
         std::vector<std::filesystem::path> m_ForwardDir;
