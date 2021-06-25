@@ -29,7 +29,7 @@ namespace iKan {
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
-        SetFont("../../../iKan/src/iKan/Editor/Fonts/OpenSans/OpenSans-Regular.ttf");
+        SetFont("../../../iKan/src/iKan/Editor/assets/Fonts/OpenSans/OpenSans-Regular.ttf");
 
         /* Setup Dear ImGui style */
         ImGui::StyleColorsDark();
@@ -58,7 +58,7 @@ namespace iKan {
         ImGuiIO& io = ImGui::GetIO(); (void)io;
 
         // Store the Bold font as well
-        io.Fonts->AddFontFromFileTTF("../../../iKan/src/iKan/Editor/Fonts/OpenSans/OpenSans-ExtraBold.ttf", 15.0f);
+        io.Fonts->AddFontFromFileTTF("../../../iKan/src/iKan/Editor/assets/Fonts/OpenSans/OpenSans-ExtraBold.ttf", 15.0f);
 
         // Default font is Regular
         io.FontDefault = io.Fonts->AddFontFromFileTTF(path.c_str(), 15.0f);

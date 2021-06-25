@@ -34,7 +34,7 @@ namespace iKan {
 
     private:
         static constexpr float s_SideChildWidth = 0.25;
-        static constexpr float s_WindowYOffset  = 75.0f;
+        static constexpr float s_WindowYOffset  = 82.0f;
 
         std::filesystem::path m_CurrentDir;
         std::filesystem::path m_RootPath;
@@ -45,18 +45,24 @@ namespace iKan {
 
         ImGuiTextFilter m_Filter;
 
-        Ref<Texture> m_FolderIcon = Texture::Create("../../../Editor/assets/resources/ContentBrowser/Folder.png");
-        Ref<Texture> m_FileIcon   = Texture::Create("../../../Editor/assets/resources/ContentBrowser/File.png");
-        Ref<Texture> m_JpgIcon    = Texture::Create("../../../Editor/assets/resources/ContentBrowser/Jpg.png");
-        Ref<Texture> m_PngIcon    = Texture::Create("../../../Editor/assets/resources/ContentBrowser/Png.png");
-        
-        Ref<Texture> m_Cpp        = Texture::Create("../../../Editor/assets/resources/ContentBrowser/cpp.png");
-        Ref<Texture> m_C          = Texture::Create("../../../Editor/assets/resources/ContentBrowser/c.png");
-        Ref<Texture> m_H          = Texture::Create("../../../Editor/assets/resources/ContentBrowser/h.png");
+        struct TileIconTexture
+        {
+            Ref<Texture> FolderIcon = Texture::Create("../../../iKan/src/iKan/Editor/assets/resources/ContentBrowser/Folder.png");
+            Ref<Texture> FileIcon   = Texture::Create("../../../iKan/src/iKan/Editor/assets/resources/ContentBrowser/File.png");
+            Ref<Texture> JpgIcon    = Texture::Create("../../../iKan/src/iKan/Editor/assets/resources/ContentBrowser/Jpg.png");
+            Ref<Texture> PngIcon    = Texture::Create("../../../iKan/src/iKan/Editor/assets/resources/ContentBrowser/Png.png");
 
-        Ref<Texture> m_Back       = Texture::Create("../../../Editor/assets/resources/ContentBrowser/Back.png");
-        Ref<Texture> m_Forward    = Texture::Create("../../../Editor/assets/resources/ContentBrowser/Forward.png");
-        Ref<Texture> m_Search     = Texture::Create("../../../Editor/assets/resources/ContentBrowser/Search.png");
+            Ref<Texture> Cpp        = Texture::Create("../../../iKan/src/iKan/Editor/assets/resources/ContentBrowser/cpp.png");
+            Ref<Texture> C          = Texture::Create("../../../iKan/src/iKan/Editor/assets/resources/ContentBrowser/c.png");
+            Ref<Texture> H          = Texture::Create("../../../iKan/src/iKan/Editor/assets/resources/ContentBrowser/h.png");
+
+            Ref<Texture> Back       = Texture::Create("../../../iKan/src/iKan/Editor/assets/resources/ContentBrowser/Back.png");
+            Ref<Texture> Forward    = Texture::Create("../../../iKan/src/iKan/Editor/assets/resources/ContentBrowser/Forward.png");
+            Ref<Texture> Search     = Texture::Create("../../../iKan/src/iKan/Editor/assets/resources/ContentBrowser/Search.png");
+
+            Ref<Texture> Home       = Texture::Create("../../../iKan/src/iKan/Editor/assets/resources/ContentBrowser/Home.png");
+        };
+        TileIconTexture m_TileIconTexture;
     };
 
 }

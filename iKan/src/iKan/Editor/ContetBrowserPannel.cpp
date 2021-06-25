@@ -12,6 +12,8 @@
 
 namespace iKan {
 
+    static std::vector<std::filesystem::path> s_PinedPaths;
+
     // ******************************************************************************
     // ContentBrowserPannel constructor
     // ******************************************************************************
@@ -19,6 +21,9 @@ namespace iKan {
     : m_RootPath(rootPath), m_CurrentDir(rootPath)
     {
         m_PathHierarchy.emplace_back(m_CurrentDir);
+        s_PinedPaths.emplace_back("../../../../../../../ashish");
+        s_PinedPaths.emplace_back("../../../../../../../ashish/iKan");
+        s_PinedPaths.emplace_back("../../../../../../../ashish/Downloads");
     }
 
     // ******************************************************************************
@@ -52,8 +57,8 @@ namespace iKan {
         ImGui::BeginChild("Title Area", ImVec2(ImGui::GetWindowContentRegionWidth(), 40.0f), true, ImGuiWindowFlags_NoScrollbar);
 
         ImGui::Columns(3);
-        ImGui::SetColumnWidth(0, 80);
-        if (PropertyGrid::ImageButton("Back", m_Back->GetRendererID(), ImVec2(16.0f, 16.0f)))
+        ImGui::SetColumnWidth(0, 100);
+        if (PropertyGrid::ImageButton("Back", m_TileIconTexture.Back->GetRendererID(), ImVec2(16.0f, 16.0f)))
         {
             if (m_CurrentDir != std::filesystem::path(m_RootPath))
             {
@@ -78,7 +83,7 @@ namespace iKan {
             }
         }
         ImGui::SameLine();
-        if (PropertyGrid::ImageButton("Forward", m_Forward->GetRendererID(), ImVec2(16.0f, 16.0f)))
+        if (PropertyGrid::ImageButton("Forward", m_TileIconTexture.Forward->GetRendererID(), ImVec2(16.0f, 16.0f)))
         {
             if (!m_ForwardDir.empty())
             {
@@ -90,15 +95,25 @@ namespace iKan {
         }
 
         ImGui::SameLine();
+        if (PropertyGrid::ImageButton("Home", m_TileIconTexture.Home->GetRendererID(), ImVec2(16.0f, 16.0f)))
+        {
+            m_PrevDir.clear();
+            m_CurrentDir = m_RootPath;
+            m_PathHierarchy.clear();
+            m_PathHierarchy.emplace_back(m_CurrentDir);
+        }
+
+        ImGui::SameLine();
         ImGui::NextColumn();
         ImGui::SetColumnWidth(1, 200);
 
         m_Filter.Draw("", 150.0f);
         ImGui::SameLine();
-        PropertyGrid::ImageButton("Search", m_Search->GetRendererID(), ImVec2(16.0f, 16.0f));
+        PropertyGrid::ImageButton("Search", m_TileIconTexture.Search->GetRendererID(), ImVec2(16.0f, 16.0f));
 
         ImGui::NextColumn();
         ImGui::SetColumnWidth(1, 200);
+
         size_t i = 0;
         for (auto path : m_PathHierarchy)
         {
@@ -128,7 +143,7 @@ namespace iKan {
     void ContentBrowserPannel::MainArea()
     {
         ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 5.0f);
-        ImGui::BeginChild("MainArea", ImVec2(ImGui::GetWindowContentRegionWidth() * (1.0f - s_SideChildWidth), ImGui::GetWindowHeight() - s_WindowYOffset), true, ImGuiWindowFlags_HorizontalScrollbar);
+        ImGui::BeginChild("MainArea", ImVec2(ImGui::GetWindowContentRegionWidth() * (0.99f - s_SideChildWidth), ImGui::GetWindowHeight() - s_WindowYOffset), true, ImGuiWindowFlags_HorizontalScrollbar);
 
         int32_t pushId = 0;
         static ImVec2 initPos = ImGui::GetCursorPos();
@@ -144,17 +159,17 @@ namespace iKan {
                 static bool isDirectory = false;
                 if (directoryEntry.is_directory())
                 {
-                    iconTexture = m_FolderIcon;
+                    iconTexture = m_TileIconTexture.FolderIcon;
                     isDirectory = true;
                 }
                 else
                 {
-                    if (".png" == relativePath.extension())         iconTexture = m_PngIcon;
-                    else if (".jpg" == relativePath.extension())    iconTexture = m_JpgIcon;
-                    else if (".cpp" == relativePath.extension())    iconTexture = m_Cpp;
-                    else if (".h" == relativePath.extension())      iconTexture = m_H;
-                    else if (".c" == relativePath.extension())      iconTexture = m_C;
-                    else                                            iconTexture = m_FileIcon;
+                    if (".png" == relativePath.extension())         iconTexture = m_TileIconTexture.PngIcon;
+                    else if (".jpg" == relativePath.extension())    iconTexture = m_TileIconTexture.JpgIcon;
+                    else if (".cpp" == relativePath.extension())    iconTexture = m_TileIconTexture.Cpp;
+                    else if (".h" == relativePath.extension())      iconTexture = m_TileIconTexture.H;
+                    else if (".c" == relativePath.extension())      iconTexture = m_TileIconTexture.C;
+                    else                                            iconTexture = m_TileIconTexture.FileIcon;
 
                     isDirectory = false;
                 }
@@ -192,13 +207,37 @@ namespace iKan {
         ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 5.0f);
         ImGui::BeginChild("SideArea", ImVec2(ImGui::GetWindowContentRegionWidth() * s_SideChildWidth, ImGui::GetWindowHeight() - s_WindowYOffset), true, ImGuiWindowFlags_HorizontalScrollbar);
 
-        for (auto& directoryEntry : std::filesystem::directory_iterator(m_CurrentDir))
+        for (auto pinnedPath : s_PinedPaths)
         {
-            const auto& path            = directoryEntry.path();
-            auto relativePath           = std::filesystem::relative(path, m_RootPath);
-            std::string filenameString  = relativePath.filename().string();
+            auto filename = pinnedPath.filename().c_str();
+            bool opened = ImGui::TreeNodeEx(filename, ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth, filename);
+            if (ImGui::IsItemClicked())
+            {
+                if (pinnedPath != m_CurrentDir)
+                {
+                    m_PrevDir.clear();
+                    m_PathHierarchy.clear();
+                    m_CurrentDir = pinnedPath;
+                    m_PathHierarchy.emplace_back(m_CurrentDir);
+                }
+            }
+            if (opened)
+            {
+                for (auto& directoryEntry : std::filesystem::directory_iterator(pinnedPath))
+                {
+                    const auto& path            = directoryEntry.path();
+                    auto relativePath           = std::filesystem::relative(path, m_RootPath);
+                    std::string filenameString  = relativePath.filename().string();
 
+                    if (ImGui::TreeNodeEx(filenameString.c_str(), ImGuiTreeNodeFlags_Bullet | ImGuiTreeNodeFlags_SpanAvailWidth, filenameString.c_str()))
+                    {
+                        ImGui::TreePop();
+                    }
+                }
+                ImGui::TreePop();
+            }
         }
+
         ImGui::EndChild();
         ImGui::PopStyleVar();
     }
