@@ -29,6 +29,12 @@ namespace iKan {
         void MainArea();
         void SideMenu();
 
+        void Back();
+        void Forward();
+        void Home();
+        void PathHistory();
+        void Search();
+
     public:
         bool IsContentBrowserPannel = true;
 

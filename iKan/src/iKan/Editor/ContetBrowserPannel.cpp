@@ -49,95 +49,6 @@ namespace iKan {
     }
 
     // ******************************************************************************
-    // Render the Title Icons for COntent browser
-    // ******************************************************************************
-    void ContentBrowserPannel::TitleIcon()
-    {
-        ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 5.0f);
-        ImGui::BeginChild("Title Area", ImVec2(ImGui::GetWindowContentRegionWidth(), 40.0f), true, ImGuiWindowFlags_NoScrollbar);
-
-        ImGui::Columns(3);
-        ImGui::SetColumnWidth(0, 100);
-        if (PropertyGrid::ImageButton("Back", m_TileIconTexture.Back->GetRendererID(), ImVec2(16.0f, 16.0f)))
-        {
-            if (m_CurrentDir != std::filesystem::path(m_RootPath))
-            {
-                if (m_PrevDir.back() == m_CurrentDir.parent_path())
-                {
-                    m_PathHierarchy.pop_back();
-                }
-                else
-                {
-                    for (auto prevIt = m_PrevDir.begin(); prevIt != m_PrevDir.end(); prevIt++)
-                    {
-                        if (*prevIt == m_CurrentDir)
-                        {
-                            m_PathHierarchy.insert(m_PathHierarchy.end(), ++prevIt, m_PrevDir.end());
-                            break;
-                        }
-                    }
-                }
-                m_ForwardDir.emplace_back(m_CurrentDir);
-                m_CurrentDir = m_PrevDir.back();
-                m_PrevDir.pop_back();
-            }
-        }
-        ImGui::SameLine();
-        if (PropertyGrid::ImageButton("Forward", m_TileIconTexture.Forward->GetRendererID(), ImVec2(16.0f, 16.0f)))
-        {
-            if (!m_ForwardDir.empty())
-            {
-                m_PrevDir.emplace_back(m_CurrentDir);
-                m_CurrentDir = m_ForwardDir.back();
-                m_PathHierarchy.emplace_back(m_CurrentDir);
-                m_ForwardDir.pop_back();
-            }
-        }
-
-        ImGui::SameLine();
-        if (PropertyGrid::ImageButton("Home", m_TileIconTexture.Home->GetRendererID(), ImVec2(16.0f, 16.0f)))
-        {
-            m_PrevDir.clear();
-            m_CurrentDir = m_RootPath;
-            m_PathHierarchy.clear();
-            m_PathHierarchy.emplace_back(m_CurrentDir);
-        }
-
-        ImGui::SameLine();
-        ImGui::NextColumn();
-        ImGui::SetColumnWidth(1, 200);
-
-        m_Filter.Draw("", 150.0f);
-        ImGui::SameLine();
-        PropertyGrid::ImageButton("Search", m_TileIconTexture.Search->GetRendererID(), ImVec2(16.0f, 16.0f));
-
-        ImGui::NextColumn();
-        ImGui::SetColumnWidth(1, 200);
-
-        size_t i = 0;
-        for (auto path : m_PathHierarchy)
-        {
-            i++;
-            ImGui::SameLine();
-            ImGui::Text("\\");
-            ImGui::SameLine();
-            if (ImGui::Button(path.filename().c_str()))
-            {
-                if (path != m_CurrentDir)
-                    m_PrevDir.emplace_back(m_CurrentDir);
-
-                m_CurrentDir = path;
-                m_PathHierarchy.erase(m_PathHierarchy.begin() + i, m_PathHierarchy.end());
-            }
-        }
-        ImGui::NextColumn();
-        ImGui::Columns(1);
-
-        ImGui::EndChild();
-        ImGui::PopStyleVar();
-    }
-
-    // ******************************************************************************
     // Render the Main for COntent browser
     // ******************************************************************************
     void ContentBrowserPannel::MainArea()
@@ -230,9 +141,7 @@ namespace iKan {
                     std::string filenameString  = relativePath.filename().string();
 
                     if (ImGui::TreeNodeEx(filenameString.c_str(), ImGuiTreeNodeFlags_Bullet | ImGuiTreeNodeFlags_SpanAvailWidth, filenameString.c_str()))
-                    {
                         ImGui::TreePop();
-                    }
                 }
                 ImGui::TreePop();
             }
@@ -242,5 +151,133 @@ namespace iKan {
         ImGui::PopStyleVar();
     }
 
+    // ******************************************************************************
+    // Render the Title Icons for COntent browser
+    // ******************************************************************************
+    void ContentBrowserPannel::TitleIcon()
+    {
+        ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 5.0f);
+        ImGui::BeginChild("Title Area", ImVec2(ImGui::GetWindowContentRegionWidth(), 40.0f), true, ImGuiWindowFlags_NoScrollbar);
+
+        ImGui::Columns(3);
+        ImGui::SetColumnWidth(0, 100);
+
+        Back();             ImGui::SameLine();
+        Forward();          ImGui::SameLine();
+        Home();             ImGui::SameLine();
+
+        ImGui::NextColumn();
+        ImGui::SetColumnWidth(1, 200);
+
+        Search();
+
+        ImGui::NextColumn();
+        ImGui::SetColumnWidth(1, 200);
+
+        PathHistory();
+        ImGui::NextColumn();
+        ImGui::Columns(1);
+
+        ImGui::EndChild();
+        ImGui::PopStyleVar();
+    }
+
+    // ******************************************************************************
+    // Back Button
+    // ******************************************************************************
+    void ContentBrowserPannel::Back()
+    {
+        if (PropertyGrid::ImageButton("Back", m_TileIconTexture.Back->GetRendererID(), ImVec2(16.0f, 16.0f)))
+        {
+            if (m_PrevDir.empty())
+                return;
+
+            if (m_CurrentDir != std::filesystem::path(m_RootPath))
+            {
+                if (m_PrevDir.back() == m_CurrentDir.parent_path())
+                {
+                    m_PathHierarchy.pop_back();
+                }
+                else
+                {
+                    for (auto prevIt = m_PrevDir.begin(); prevIt != m_PrevDir.end(); prevIt++)
+                    {
+                        if (*prevIt == m_CurrentDir)
+                        {
+                            m_PathHierarchy.insert(m_PathHierarchy.end(), ++prevIt, m_PrevDir.end());
+                            break;
+                        }
+                    }
+                }
+                m_ForwardDir.emplace_back(m_CurrentDir);
+                m_CurrentDir = m_PrevDir.back();
+                m_PrevDir.pop_back();
+            }
+        }
+    }
+
+    // ******************************************************************************
+    // Forward Button
+    // ******************************************************************************
+    void ContentBrowserPannel::Forward()
+    {
+        if (PropertyGrid::ImageButton("Forward", m_TileIconTexture.Forward->GetRendererID(), ImVec2(16.0f, 16.0f)))
+        {
+            if (m_ForwardDir.empty())
+                return;
+
+            m_PrevDir.emplace_back(m_CurrentDir);
+            m_CurrentDir = m_ForwardDir.back();
+            m_PathHierarchy.emplace_back(m_CurrentDir);
+            m_ForwardDir.pop_back();
+        }
+    }
+
+    // ******************************************************************************
+    // Home Button
+    // ******************************************************************************
+    void ContentBrowserPannel::Home()
+    {
+        if (PropertyGrid::ImageButton("Home", m_TileIconTexture.Home->GetRendererID(), ImVec2(16.0f, 16.0f)))
+        {
+            m_PrevDir.clear();
+            m_CurrentDir = m_RootPath;
+            m_PathHierarchy.clear();
+            m_PathHierarchy.emplace_back(m_CurrentDir);
+        }
+    }
+
+    // ******************************************************************************
+    // Path History Buttons
+    // ******************************************************************************
+    void ContentBrowserPannel::PathHistory()
+    {
+        size_t i = 0;
+        for (auto path : m_PathHierarchy)
+        {
+            i++;
+            ImGui::SameLine();
+            ImGui::Text("\\");
+            ImGui::SameLine();
+            if (ImGui::Button(path.filename().c_str()))
+            {
+                if (path != m_CurrentDir)
+                    m_PrevDir.emplace_back(m_CurrentDir);
+
+                m_CurrentDir = path;
+                m_PathHierarchy.erase(m_PathHierarchy.begin() + i, m_PathHierarchy.end());
+            }
+        }
+    }
+
+    // ******************************************************************************
+    // Search Tab
+    // ******************************************************************************
+    void ContentBrowserPannel::Search()
+    {
+        m_Filter.Draw("", 150.0f);
+        ImGui::SameLine();
+        PropertyGrid::ImageButton("Search", m_TileIconTexture.Search->GetRendererID(), ImVec2(16.0f, 16.0f));
+    }
 
 }
