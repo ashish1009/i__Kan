@@ -94,6 +94,7 @@ namespace iKan {
                         m_PrevDir.emplace_back(m_CurrentDir);
                         m_CurrentDir /= path.filename();
                         m_PathHierarchy.emplace_back(m_CurrentDir);
+                        m_ForwardDir.clear();
                     }
                 }
 
@@ -106,6 +107,19 @@ namespace iKan {
                 pushId++;
             }
         }
+
+        for (auto it : m_PrevDir)
+        {
+            ImGui::Text(it.filename().c_str()); ImGui::SameLine();
+        }
+
+        ImGui::NewLine();
+
+        for (auto it : m_ForwardDir)
+        {
+            ImGui::Text(it.filename().c_str()); ImGui::SameLine();
+        }
+
         ImGui::EndChild();
         ImGui::PopStyleVar();
     }
@@ -228,8 +242,27 @@ namespace iKan {
 
             m_PrevDir.emplace_back(m_CurrentDir);
             m_CurrentDir = m_ForwardDir.back();
-            m_PathHierarchy.emplace_back(m_CurrentDir);
             m_ForwardDir.pop_back();
+
+            bool found = false;
+            size_t pos = 0;
+            for (auto path : m_PathHierarchy)
+            {
+                pos++;
+                if (path == m_CurrentDir)
+                {
+                    found = true;
+                    break;
+                }
+            }
+            if (found)
+            {
+                m_PathHierarchy.erase(m_PathHierarchy.begin() + pos, m_PathHierarchy.end());
+            }
+            else
+            {
+                m_PathHierarchy.emplace_back(m_CurrentDir);
+            }
         }
     }
 
