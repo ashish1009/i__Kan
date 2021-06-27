@@ -12,7 +12,7 @@
 #include <iKan/Editor/ScenePropertyGrid.h>
 
 namespace iKan {
-    
+
     // ******************************************************************************
     // Draw the components in property pannel. Takes the function pointer in argument
     // ******************************************************************************
@@ -68,10 +68,26 @@ namespace iKan {
     // ******************************************************************************
     // Scene hirarchy pannel constructot
     // ******************************************************************************
+    SceneHeirarchyPannel::SceneHeirarchyPannel()
+    {
+        Init(nullptr);
+    }
+
+    // ******************************************************************************
+    // Scene hirarchy pannel constructot
+    // ******************************************************************************
     SceneHeirarchyPannel::SceneHeirarchyPannel(const Ref<Scene>& context)
     {
-        IK_CORE_INFO("Scene hierarchy Pannel created");
+        Init(context);
+    }
+
+    // ******************************************************************************
+    // Scene hirarchy pannel constructot
+    // ******************************************************************************
+    void SceneHeirarchyPannel::Init(const Ref<Scene>& context)
+    {
         SetContext(context);
+        IK_CORE_INFO("Scene hierarchy Pannel created");
     }
     
     // ******************************************************************************
@@ -94,9 +110,26 @@ namespace iKan {
         if (!isSceneHeirarchypanel || !m_Context)
             return;
 
+        m_Context->OnImguiRenderer();
+
         ImGui::Begin("Scene Hierarchy", pIsOpen);
         {
-            m_Context->OnImguiRenderer();
+            bool &isSceneEdititng = m_Context->GetDataRef().Editing;
+            uint32_t pauseTexId = m_PauseTexture->GetRendererID(), playTexId = m_PlayeTexture->GetRendererID();
+            ImGui::Indent(ImGui::GetWindowContentRegionWidth() / 2.0f);
+
+            if (isSceneEdititng)
+            {
+                if (PropertyGrid::ImageButton("Pause", playTexId, ImVec2(16.0f, 16.0f)))
+                    isSceneEdititng = false;
+            }
+            else
+            {
+                if (PropertyGrid::ImageButton("Pause", pauseTexId, ImVec2(16.0f, 16.0f)))
+                    isSceneEdititng = true;
+            }
+            ImGui::Unindent(ImGui::GetWindowContentRegionWidth() / 2.0f);
+            ImGui::Separator();
 
             PropertyGrid::String("Number of Entities in Scene", m_Context->GetNumEntities(), 200);
             ImGui::Separator();
@@ -107,37 +140,27 @@ namespace iKan {
                 // or entt::entity, in the same scene (active)
                 Entity entity( { entityID, m_Context.get() } );
                 if (entity.GetComponent<SceneHierarchyPannelProp>().IsProp)
-                {
                     DrawEntityNode(entity);
-                }
             });
             
             // Reset the selected entity
             if (ImGui::IsMouseDown((int32_t)MouseCode::Button0) && ImGui::IsWindowHovered())
-            {
                 m_SelectedEntity = {};
-            }
-            
+
             // false -> Right-click on blank space
             if (ImGui::BeginPopupContextWindow(0, (int32_t)MouseCode::ButtonRight, false))
             {
                 if (ImGui::MenuItem("Create Empty Entity"))
-                {
                     m_Context->CreateEntity("Empty Entity");
-                }
                 if (m_Context->GetEditorCamera())
                 {
                     if (ImGui::MenuItem("Remove Editor Camera"))
-                    {
                         m_Context->DeleteEditorCamera();
-                    }
                 }
                 else
                 {
                     if (ImGui::MenuItem("Add Editor Camera"))
-                    {
                         m_Context->SetEditorCamera();
-                    }
                 }
                 ImGui::EndPopup();
             }
@@ -147,9 +170,7 @@ namespace iKan {
         ImGui::Begin("Properties", pIsOpen);
         {
             if (m_SelectedEntity)
-            {
                 DrawComponents(m_SelectedEntity);
-            }
         }
         ImGui::End(); // ImGui::Begin("Properties", pIsOpen);
     }
@@ -166,18 +187,14 @@ namespace iKan {
 
         bool opened = ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)entity, flags, tag.c_str());
         if (ImGui::IsItemClicked())
-        {
             m_SelectedEntity = entity;
-        }
-        
+
         bool entityDeleted = false;
         // Right click of mouse
         if (ImGui::BeginPopupContextItem())
         {
             if (ImGui::MenuItem("Delete Entity"))
-            {
                 entityDeleted = true;
-            }
             ImGui::EndPopup();
         }
         
@@ -185,9 +202,8 @@ namespace iKan {
         {
             bool opened = ImGui::TreeNodeEx((void*)9817239, flags, tag.c_str());
             if (opened)
-            {
                 ImGui::TreePop();
-            }
+
             ImGui::TreePop();
         }
         
@@ -195,9 +211,7 @@ namespace iKan {
         {
             m_Context->DestroyEntity(entity);
             if (m_SelectedEntity == entity)
-            {
                 m_SelectedEntity = {};
-            }
         }
     }
     
@@ -231,14 +245,11 @@ namespace iKan {
         
         ImGui::PushItemWidth(-1);
         if (ImGui::Button("Add Component"))
-        {
             ImGui::OpenPopup("AddComponent");
-        }
-        
+
         if (ImGui::BeginPopup("AddComponent"))
-        {
             AddComponent();
-        }
+
         ImGui::PopItemWidth();
         
         DrawComponent<TransformComponent>("Transform", entity, [](auto& tc)
@@ -265,7 +276,7 @@ namespace iKan {
                 ImGui::NextColumn();
                 ImGui::PushItemWidth(-1);
                 
-                const std::vector <const char*> projectionTypeSTring = { "Projection", "Orthographic" };
+                const std::vector <const char*> projectionTypeSTring = { "Perspective", "Orthographic" };
                 const char* currentProjectionType = projectionTypeSTring[(int32_t)camera.GetProjectionType()];
                 if (ImGui::BeginCombo("##Projection", currentProjectionType))
                 {
@@ -279,9 +290,7 @@ namespace iKan {
                         }
                         
                         if (bIsSelected)
-                        {
                             ImGui::SetItemDefaultFocus();
-                        }
                     }
                     ImGui::EndCombo();
                 }
@@ -324,6 +333,11 @@ namespace iKan {
         
         DrawComponent<SpriteRendererComponent>("Sprite Renderer", entity, [this](auto& src)
                                                {
+            size_t texId = m_DefaultTexture->GetRendererID();
+            ImGui::Image((void*)texId, ImVec2(32.0f, 32.0f), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1.0f,1.0f,1.0f,1.0f), ImVec4(1.0f,1.0f,1.0f,0.5f));
+
+
+
             // Change the color of the Entity
             ImGui::ColorEdit4("Color", glm::value_ptr(src.ColorComp));
             ImGui::Separator();
@@ -334,9 +348,7 @@ namespace iKan {
                                                                    " Select already uploaded textures from below drop box", true, true, 2);
             
             if (ImGui::Button("Upload Texture") && newTexturePath != "")
-            {
                 src.UploadTexture(m_Context->AddTextureToScene(newTexturePath));
-            }
             
             ImGui::SameLine();
 

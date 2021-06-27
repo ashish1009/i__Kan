@@ -49,7 +49,7 @@ private:
 // ******************************************************************************
 iKan::Scope<iKan::Application> iKan::CreateApplication()
 {
-    auto appProp        = iKan::Application::Property("Editor", 800, 450, RendererAPI::API::OpenGL );
+    auto appProp        = iKan::Application::Property("Editor", 1800, 950, RendererAPI::API::OpenGL );
     auto iKanEditorApp  = iKan::CreateScope<IKanEditorApp>(appProp);
     return iKanEditorApp;
 }

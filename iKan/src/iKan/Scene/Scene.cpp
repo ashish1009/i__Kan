@@ -77,6 +77,14 @@ namespace iKan {
     // ******************************************************************************
     void Scene::OnImguiRenderer()
     {
+        if (m_Data.CameraWarning)
+        {
+            ImGui::Begin("Scene Warning ");
+
+            std::string warningMsg = ((m_Data.Editing) ? "Editor Camera is not created." : "Run-Time Primary Cmaera component is not present");
+            ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), warningMsg.c_str());
+            ImGui::End();
+        }
         // Editor Camera Imgui Renderer
         if (m_Data.EditorCamera && m_Data.EditorCamera->IsImguiPannel)
         {
@@ -153,6 +161,12 @@ namespace iKan {
             SceneRenderer::BeginScene(*m_Data.EditorCamera.get());
             RenderSpriteComponent();
             SceneRenderer::EndScene();
+
+            m_Data.CameraWarning = false;
+        }
+        else
+        {
+            m_Data.CameraWarning = true;
         }
     }
 
@@ -161,8 +175,6 @@ namespace iKan {
     // ******************************************************************************
     void Scene::OnUpdateRuntime(Timestep ts)
     {
-        static bool avoidCameraWarningPrint = false;
-
         Camera* mainCamera = nullptr;
         glm::mat4 cameraTransform;
         if (Entity cameraEntity = GetMainCameraEntity();
@@ -175,14 +187,11 @@ namespace iKan {
             RenderSpriteComponent();
             SceneRenderer::EndScene();
 
-            avoidCameraWarningPrint = false;
+            m_Data.CameraWarning = false;
         }
         else
         {
-            // TODO: Should it be assert or Warning
-            if (!avoidCameraWarningPrint)
-                IK_CORE_WARN("No Camera is Binded to the Scene or none of them is set to primary !!! ");
-            avoidCameraWarningPrint = true;
+            m_Data.CameraWarning = true;
         }
     }
 

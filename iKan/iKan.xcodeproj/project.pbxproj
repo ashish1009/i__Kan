@@ -169,14 +169,6 @@
 		B24010A0263450200051B868 /* ImguiLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ImguiLayer.cpp; sourceTree = "<group>"; wrapsLines = 0; };
 		B24010A1263450200051B868 /* ImguiLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImguiLayer.h; sourceTree = "<group>"; };
 		B24010A42634502E0051B868 /* ImguiBuild.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ImguiBuild.cpp; sourceTree = "<group>"; };
-		B24010A82634551B0051B868 /* Fonts.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fonts.otf; sourceTree = "<group>"; };
-		B24010AA2634551B0051B868 /* OpenSans-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Light.ttf"; sourceTree = "<group>"; };
-		B24010AB2634551B0051B868 /* OpenSans-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Italic.ttf"; sourceTree = "<group>"; };
-		B24010AC2634551B0051B868 /* OpenSans-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-ExtraBold.ttf"; sourceTree = "<group>"; };
-		B24010AD2634551B0051B868 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
-		B24010AE2634551B0051B868 /* LICENSE.webarchive */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = LICENSE.webarchive; sourceTree = "<group>"; };
-		B24010AF2634551B0051B868 /* OpenSans-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
-		B24010B02634551B0051B868 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		B249622826397EE80091C915 /* RendererAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RendererAPI.h; sourceTree = "<group>"; };
 		B249622926397EE80091C915 /* RendererAPI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RendererAPI.cpp; sourceTree = "<group>"; };
 		B249622C26397FAC0091C915 /* OpenGlRendererAPI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGlRendererAPI.cpp; sourceTree = "<group>"; };
@@ -298,7 +290,6 @@
 		B24010A62634551B0051B868 /* Editor */ = {
 			isa = PBXGroup;
 			children = (
-				B24010A72634551B0051B868 /* Fonts */,
 				B249623526399AA50091C915 /* EditorCamera.cpp */,
 				B249623426399AA40091C915 /* EditorCamera.h */,
 				B2A1C11B263EAE6800606017 /* SceneHierarchyPannel.cpp */,
@@ -309,29 +300,6 @@
 				758265DA2679F6DF0080169A /* ContetBrowserPannel.h */,
 			);
 			path = Editor;
-			sourceTree = "<group>";
-		};
-		B24010A72634551B0051B868 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				B24010A82634551B0051B868 /* Fonts.otf */,
-				B24010A92634551B0051B868 /* OpenSans */,
-			);
-			path = Fonts;
-			sourceTree = "<group>";
-		};
-		B24010A92634551B0051B868 /* OpenSans */ = {
-			isa = PBXGroup;
-			children = (
-				B24010AA2634551B0051B868 /* OpenSans-Light.ttf */,
-				B24010AB2634551B0051B868 /* OpenSans-Italic.ttf */,
-				B24010AC2634551B0051B868 /* OpenSans-ExtraBold.ttf */,
-				B24010AD2634551B0051B868 /* OpenSans-Bold.ttf */,
-				B24010AE2634551B0051B868 /* LICENSE.webarchive */,
-				B24010AF2634551B0051B868 /* OpenSans-ExtraBoldItalic.ttf */,
-				B24010B02634551B0051B868 /* OpenSans-Regular.ttf */,
-			);
-			path = OpenSans;
 			sourceTree = "<group>";
 		};
 		B24962382639A74B0091C915 /* Scene */ = {

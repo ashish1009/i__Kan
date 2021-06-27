@@ -26,6 +26,6 @@ public:
     virtual void OnImguiRender(Timestep ts) override;
 
 private:
-    Viewport& m_Viewport = Viewport::Get();
+    Viewport& m_Viewport = Viewport::Get("../../../../../../../ashish");
 };
 

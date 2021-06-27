@@ -102,14 +102,17 @@ namespace iKan {
         m_Data.FrameBuffer->Bind();
         {
             Renderer::Clear(m_Data.BgColor);
-            m_ActiveScene->OnUpdateRuntime(ts);
+
+            if (m_ActiveScene->GetDataRef().Editing)
+                m_ActiveScene->OnUpdateEditor(ts);
+            else
+                m_ActiveScene->OnUpdateRuntime(ts);
 
             // Update selected entity
             if (m_Data.SelectedEntity != Entity(entt::null, nullptr))
-            {
                 m_SceneHierarchyPannel.SetSelectedEntity(m_Data.SelectedEntity);
-            }
 
+            // Update Viewprt entities
             UpdateMousePos();
             UpdateHoveredEntity();
         }
@@ -352,7 +355,7 @@ namespace iKan {
         if (!m_ActiveScene)
         {
             ImGui::Begin("Warning");
-            ImGui::Text("No Scene is created yet. Scene can be created from File->Scene->New or Cmd+N");
+            ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "No Scene is created yet. Scene can be created from File->Scene->New or Cmd+N");
             ImGui::End();
             return;
         }
