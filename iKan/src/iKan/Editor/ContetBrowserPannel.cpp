@@ -98,6 +98,13 @@ namespace iKan {
                     }
                 }
 
+                if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
+                {
+                    ImGui::SetDragDropPayload("SelectedFile", (void*)&directoryEntry, sizeof(std::filesystem::path), ImGuiCond_Always);
+                    PropertyGrid::ImageButton(pushId, iconTexture->GetRendererID(), ImVec2(8.0f, 8.0f));
+                    ImGui::EndDragDropSource();
+                }
+
                 static float wrapWidth = 90.0f;
                 ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPos().x + ((iconSize + 30.0f) * pushId), initPos.y + iconSize + 10.0f + 30.0f));
                 ImGui::PushTextWrapPos(ImGui::GetCursorPos().x + wrapWidth);
@@ -106,18 +113,6 @@ namespace iKan {
 
                 pushId++;
             }
-        }
-
-        for (auto it : m_PrevDir)
-        {
-            ImGui::Text(it.filename().c_str()); ImGui::SameLine();
-        }
-
-        ImGui::NewLine();
-
-        for (auto it : m_ForwardDir)
-        {
-            ImGui::Text(it.filename().c_str()); ImGui::SameLine();
         }
 
         ImGui::EndChild();

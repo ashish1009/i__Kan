@@ -397,89 +397,91 @@ namespace iKan {
         ImGui::Columns(1);
         ImGui::Separator();
 
-        // Option for Background color
-        static ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_Selected | ImGuiTreeNodeFlags_SpanAvailWidth;
-        bool bgOpened = ImGui::TreeNodeEx((void*)1234567, flags, "Background Color");
-        if (bgOpened)
+        // Scene details should not be present if scene is not created yet
+        if (m_ActiveScene)
         {
-            ImGuiAPI::ColorEdit(m_Data.BgColor);
-            ImGui::TreePop();
-        }
-        ImGui::Separator();
-
-        // Other Properties
-        ImGui::Columns(2);
-
-        float columnWidth = 120;
-
-        ImGui::SetColumnWidth(0, columnWidth);
-        ImGui::Text("Scene Size ");
-        ImGui::NextColumn();
-
-        ImGui::SetColumnWidth(1, columnWidth);
-        ImGui::Text("%d x %d", (int32_t)m_Data.Width,  (int32_t)m_Data.Height);
-        ImGui::NextColumn();
-
-        ImGui::Columns(2);
-
-        ImGui::SetColumnWidth(0, columnWidth);
-        ImGui::Text("Viewport Size ");
-        ImGui::NextColumn();
-
-        ImGui::SetColumnWidth(1, columnWidth);
-        ImGui::Text("%d x %d", (int32_t)m_Data.Size.x, (int32_t)m_Data.Size.y);
-        ImGui::NextColumn();
-
-        ImGui::Columns(2);
-
-        ImGui::SetColumnWidth(0, columnWidth);
-        ImGui::Text("Top Left Position ");
-        ImGui::NextColumn();
-
-        ImGui::SetColumnWidth(1, columnWidth);
-        ImGui::Text("%d x %d", (int32_t)m_Data.Bounds[0].x, (int32_t)m_Data.Bounds[0].y);
-        ImGui::NextColumn();
-
-        ImGui::Columns(2);
-
-        ImGui::SetColumnWidth(0, columnWidth);
-        ImGui::Text("Bottom Right Position ");
-        ImGui::NextColumn();
-
-        ImGui::SetColumnWidth(1, columnWidth);
-        ImGui::Text("%d x %d", (int32_t)m_Data.Bounds[1].x, (int32_t)m_Data.Bounds[1].y);
-        ImGui::NextColumn();
-
-        ImGui::Columns(2);
-
-        ImGui::SetColumnWidth(0, columnWidth);
-        ImGui::Text("Mouse Position ");
-        ImGui::NextColumn();
-
-        ImGui::SetColumnWidth(1, columnWidth);
-        ImGui::Text("%d x %d", m_Data.MousePosX, m_Data.MousePosY);
-        ImGui::NextColumn();
-
-        ImGui::Columns(1);
-
-        ImGui::Separator();
-
-        // SHow the Hovered Eneity
-        std::string entityName = "NULL";
-        if ((entt::entity)m_Data.HoveredEntity != entt::null)
-        {
-            entityName = m_Data.HoveredEntity.GetComponent<TagComponent>().Tag;
-
-            ImGui::Text("Hovered Entity");
-            PropertyGrid::String("Entity ID", (uint32_t)m_Data.HoveredEntity, columnWidth);
-            PropertyGrid::String("Unique ID", (uint32_t)m_Data.HoveredEntity.GetComponent<IDComponent>().ID, columnWidth);
-            PropertyGrid::String("Entity Name", entityName, columnWidth, 300.0f, "", false); // No need to add any Hint in non modifiable string
+            // Option for Background color
+            static ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_Selected;
+            bool bgOpened = ImGui::TreeNodeEx((void*)1234567, flags, "Background Color");
+            if (bgOpened)
+            {
+                ImGuiAPI::ColorEdit(m_Data.BgColor);
+                ImGui::TreePop();
+            }
             ImGui::Separator();
-        }
 
+            // Other Properties
+            ImGui::Columns(2);
+
+            float columnWidth = 150;
+
+            ImGui::SetColumnWidth(0, columnWidth);
+            ImGui::Text("Scene Size ");
+            ImGui::NextColumn();
+
+            ImGui::SetColumnWidth(1, columnWidth);
+            ImGui::Text("%d x %d", (int32_t)m_Data.Width,  (int32_t)m_Data.Height);
+            ImGui::NextColumn();
+
+            ImGui::Columns(2);
+
+            ImGui::SetColumnWidth(0, columnWidth);
+            ImGui::Text("Viewport Size ");
+            ImGui::NextColumn();
+
+            ImGui::SetColumnWidth(1, columnWidth);
+            ImGui::Text("%d x %d", (int32_t)m_Data.Size.x, (int32_t)m_Data.Size.y);
+            ImGui::NextColumn();
+
+            ImGui::Columns(2);
+
+            ImGui::SetColumnWidth(0, columnWidth);
+            ImGui::Text("Top Left Position ");
+            ImGui::NextColumn();
+
+            ImGui::SetColumnWidth(1, columnWidth);
+            ImGui::Text("%d x %d", (int32_t)m_Data.Bounds[0].x, (int32_t)m_Data.Bounds[0].y);
+            ImGui::NextColumn();
+
+            ImGui::Columns(2);
+
+            ImGui::SetColumnWidth(0, columnWidth);
+            ImGui::Text("Bottom Right Position ");
+            ImGui::NextColumn();
+
+            ImGui::SetColumnWidth(1, columnWidth);
+            ImGui::Text("%d x %d", (int32_t)m_Data.Bounds[1].x, (int32_t)m_Data.Bounds[1].y);
+            ImGui::NextColumn();
+
+            ImGui::Columns(2);
+
+            ImGui::SetColumnWidth(0, columnWidth);
+            ImGui::Text("Mouse Position ");
+            ImGui::NextColumn();
+
+            ImGui::SetColumnWidth(1, columnWidth);
+            ImGui::Text("%d x %d", m_Data.MousePosX, m_Data.MousePosY);
+            ImGui::NextColumn();
+
+            ImGui::Columns(1);
+
+            ImGui::Separator();
+
+            // SHow the Hovered Eneity
+            std::string entityName = "NULL";
+            if ((entt::entity)m_Data.HoveredEntity != entt::null)
+            {
+                entityName = m_Data.HoveredEntity.GetComponent<TagComponent>().Tag;
+
+                ImGui::Text("Hovered Entity");
+                PropertyGrid::String("Entity ID", (uint32_t)m_Data.HoveredEntity, columnWidth);
+                PropertyGrid::String("Unique ID", (uint32_t)m_Data.HoveredEntity.GetComponent<IDComponent>().ID, columnWidth);
+                PropertyGrid::String("Entity Name", entityName, columnWidth, 300.0f, "", false); // No need to add any Hint in non modifiable string
+                ImGui::Separator();
+            }
+        }
         ImGui::PopID();
         ImGui::End();
-
     }
 
     // ******************************************************************************

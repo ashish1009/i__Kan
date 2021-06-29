@@ -15,6 +15,7 @@ namespace iKan {
     {
     public:
         static std::string GetNameFromFilePath(const std::string& path);
+        static std::string GetExtensionFromFilePath(const std::string& path);
     };
 
 }

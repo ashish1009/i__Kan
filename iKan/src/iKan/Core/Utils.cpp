@@ -11,6 +11,9 @@
 
 namespace iKan {
 
+    // ******************************************************************************
+    // Extract file Name from path
+    // ******************************************************************************
     std::string Utils::GetNameFromFilePath(const std::string& path)
     {
         auto lastSlash = path.find_last_of("/\\");
@@ -20,6 +23,17 @@ namespace iKan {
         auto count   = lastDot == std::string::npos ? path.size() - lastSlash : lastDot - lastSlash;
 
         return path.substr(lastSlash, count);
+    }
+
+    // ******************************************************************************
+    // Extract file extention from path
+    // ******************************************************************************
+    std::string Utils::GetExtensionFromFilePath(const std::string& path)
+    {
+        auto lastDot = path.find_last_of('.') + 1;
+        auto count   = lastDot - std::string::npos;
+
+        return path.substr(lastDot, count);
     }
 
 }

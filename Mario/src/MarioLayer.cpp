@@ -90,11 +90,14 @@ void MarioLayer::OnImguiRender(Timestep ts)
     // Viewport Imgui Renderer
     m_Viewport.OnImguiRenderer(ts);
 
-    ShowMenu();
-    // Mario Setting pannel
-    ImGui::Begin("Mario Setting", &m_IsSetting);
-    Background::ImGuiRenderer();
-    ImGui::End();
+    if (m_Viewport.GetScene())
+    {
+        ShowMenu();
+        // Mario Setting pannel
+        ImGui::Begin("Mario Setting", &m_IsSetting);
+        Background::ImGuiRenderer();
+        ImGui::End();
+    }
 
     ImGuiAPI::EndDcocking();
 }
