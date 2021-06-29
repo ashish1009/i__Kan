@@ -89,6 +89,5 @@ User defined layer can be defined in Client. This should be derived from `iKan::
 
 ### Bugs Identified (just to keep trac while developing)
 1. File tile menu not jumping on any "iKan" folder
-2. On opening Scene alot of textures are loading
 
 

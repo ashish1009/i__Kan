@@ -301,6 +301,8 @@ namespace iKan {
     // ******************************************************************************
     bool SceneSerializer::Deserialize(const std::string& filepath)
     {
+        auto& texMap = m_Scene->GetDataRef().TextureMap;
+
         YAML::Node data = YAML::LoadFile(filepath);
 
         if (!data["Scene"])
@@ -388,7 +390,17 @@ namespace iKan {
                     std::string texPath = spriteRendererComponent["TexAssetPath"].as<std::string>();
                     if (texPath != "")
                     {
-                        Ref<Texture> texture = Texture::Create(texPath);
+                        Ref<Texture> texture = nullptr;
+                        if (texMap.find(texPath) != texMap.end())
+                        {
+                            texture = texMap[texPath];
+                        }
+                        else
+                        {
+                            texture = Texture::Create(texPath);
+                            texMap[texPath] = texture;
+                        }
+
                         if (isTexture)
                         {
                             src.TextureComp = texture;
