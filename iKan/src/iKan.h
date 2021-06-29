@@ -43,6 +43,7 @@
 #include <iKan/Scene/Component.h>
 #include <iKan/Scene/Viewport.h>
 #include <iKan/Scene/SceneSerializer.h>
+#include <iKan/Scene/SceneSerializer.h>
 
 // Imgui Files
 #include <iKan/Imgui/ImguiAPI.h>

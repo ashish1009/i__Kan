@@ -133,17 +133,7 @@ namespace iKan {
 
             PropertyGrid::String("Number of Entities in Scene", m_Context->GetNumEntities(), 200);
             ImGui::Separator();
-//
-//
-//
-//            if (ImGui::BeginDragDropTarget())
-//            {
-//                const ImGuiPayload* data = ImGui::AcceptDragDropPayload("SelectedFile", ImGuiDragDropFlags_AcceptBeforeDelivery);
-//                ImGui::EndDragDropTarget();
-//            }
-//
-//
-//            
+     
             m_Context->m_Registry.each([&](auto entityID)
             {
                 // We are creating a local entity but it is containibg the same entity handle

@@ -191,7 +191,7 @@ namespace iKan {
         switch (event.GetKeyCode())
         {
             case KeyCode::N:    if (cmd)    NewScene();     break;
-            case KeyCode::O:    if (cmd)    OpenScene();    break;
+//            case KeyCode::O:    if (cmd)    OpenScene();    break;
             case KeyCode::S:    if (cmd)    SaveScene();    break;
             case KeyCode::X:    if (cmd)    CloseScene();    break;
             default:                                        break;
@@ -216,9 +216,18 @@ namespace iKan {
     // ******************************************************************************
     // Open saved scene
     // ******************************************************************************
-    void Viewport::OpenScene()
+    void Viewport::OpenScene(const std::string& path)
     {
+        IK_INFO("Opening saved scene from {0}", path.c_str());
+        if (!path.empty())
+        {
+            m_ActiveScene = CreateRef<Scene>();
+            m_ActiveScene->OnViewportResize((uint32_t)m_Data.Size.x, (uint32_t)m_Data.Size.y);
+            m_SceneHierarchyPannel.SetContext(m_ActiveScene);
 
+            SceneSerializer serializer(m_ActiveScene);
+            serializer.Deserialize(path);
+        }
     }
 
     // ******************************************************************************
@@ -250,7 +259,7 @@ namespace iKan {
                 if (ImGui::BeginMenu("Scene"))
                 {
                     if (ImGui::MenuItem("New", "Cmd + N"))      NewScene();
-                    if (ImGui::MenuItem("Open", "Cmd + O"))     OpenScene();
+//                    if (ImGui::MenuItem("Open", "Cmd + O"))     OpenScene();
                     if (ImGui::MenuItem("Save", "Cmd + S"))     SaveScene();
                     if (ImGui::MenuItem("Close", "Cmd + X"))    CloseScene();
 
@@ -355,7 +364,14 @@ namespace iKan {
         if (!m_ActiveScene)
         {
             ImGui::Begin("Warning");
-            ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "No Scene is created yet. Scene can be created from File->Scene->New or Cmd+N");
+            ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "No Scene is created yet. Scene can be created from 'File->Scene->New' or 'Cmd+N'. Already open scene can be uploaded by dragging the scene file (.iKan) from content browser pannel to this area" );
+            if (ImGui::BeginDragDropTarget())
+            {
+                const ImGuiPayload* data = ImGui::AcceptDragDropPayload("SelectedFile", ImGuiDragDropFlags_AcceptBeforeDelivery);
+                std::filesystem::path* filePath = (std::filesystem::path*)(data->Data);
+                OpenScene(*filePath);
+                ImGui::EndDragDropTarget();
+            }
             ImGui::End();
             return;
         }

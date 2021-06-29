@@ -16,8 +16,24 @@ You can clone the repository to a local destination using git:
 Make sure that you do a `--recursive` clone to fetch all of the submodules!
 
 ## Features
+1. GLFW Window can be created.
+2. Renderer APIs are available for OpenGL.
+3. Imgui Wrappers are available.
+4. Base application and layer class.
+5. Content browser pannel
+6. UI Editor to that shoes viewport information.
+7. New scene can be created inemty editor
 
 ## Road Map
+- Add feature Open Scene from already saved file
+- Add feature to Save the current scene to any folder
+- Add Side menu for content browser pannel (partially developed)
+- Add feature to Upload texture by darg and drop
+- Add material class
+- Add Light and multiple shaders
+- Add Mesh and assimp library
+- Add Guizmo
+
 
 ## How to use Library
 
@@ -69,3 +85,10 @@ In this application we can Push the user defined layer in the current applicatio
 ### Layer
 -------------
 User defined layer can be defined in Client. This should be derived from `iKan::Layer`. 
+
+
+### Bugs Identified (just to keep trac while developing)
+1. File tile menu not jumping on any "iKan" folder
+2. On opening Scene alot of textures are loading
+
+

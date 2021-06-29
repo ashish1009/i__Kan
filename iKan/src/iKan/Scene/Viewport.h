@@ -11,6 +11,7 @@
 
 #include <iKan/Renderer/FrameBuffer.h>
 #include <iKan/Scene/Entity.h>
+#include <iKan/Scene/SceneSerializer.h>
 #include <iKan/Core/TimeStep.h>
 #include <iKan/Core/Events/KeyEvent.h>
 #include <iKan/Editor/SceneHierarchyPannel.h>
@@ -97,7 +98,7 @@ namespace iKan {
         void OnEvent(Event& event);
 
         void NewScene();
-        void OpenScene();
+        void OpenScene(const std::string& path);
         void SaveScene();
         void CloseScene();
 
