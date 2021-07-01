@@ -19,8 +19,10 @@ namespace iKan {
     class PropertyGrid
     {
     public:
-        static bool String(const char* label, uint32_t value, float columnWidth, float column2Width = 300.0f, const char* hint = "Enter Here", bool modifiable = true, bool multiple = false, int numLines = 1, bool error = false);
-        static bool String(const char* label, std::string& value, float columnWidth, float column2Width = 300.0f, const char* hint = "Enter Here", bool modifiable = true, bool multiple = false, int numLines = 1, bool error = false);
+        static void HelpMarker(const char* desc);
+        static bool String(const char* label, uint32_t value, float columnWidth, float column2Width = 300.0f, const char* hint = nullptr, bool modifiable = true, bool multiple = false, int numLines = 1, bool error = false);
+        static bool String(const char* label, std::string& value, float columnWidth, float column2Width = 300.0f, const char* hint = nullptr, bool modifiable = true, bool multiple = false, int numLines = 1, bool error = false);
+        static bool String(const char* label, const std::string& value, const char* hint, float columnWidth);
 
         static bool Float(const char* label, float& value, bool* checkboxFlag, float delta = 0.1f, float resetValue = 0.0f, float columnWidth = 100.0f);
         static bool Float2(const char* label, glm::vec2& value, bool* checkboxFlag, float delta = 0.1f, float resetValue = 0.0f, float columnWidth = 100.0f);

@@ -9,6 +9,7 @@
 
 #include "SceneHierarchyPannel.h"
 #include <iKan/Scene/Component.h>
+#include <iKan/Scene/Viewport.h>
 #include <iKan/Editor/ScenePropertyGrid.h>
 
 namespace iKan {
@@ -130,6 +131,18 @@ namespace iKan {
             }
             ImGui::Unindent(ImGui::GetWindowContentRegionWidth() / 2.0f);
             ImGui::Separator();
+
+            PropertyGrid::String("Active Scene", m_Context->GetFileName(), "To Open a scene Drop the file here fron content browser pannel", 200);
+            if (ImGui::BeginDragDropTarget())
+            {
+                const ImGuiPayload* data = ImGui::AcceptDragDropPayload("SelectedFile", ImGuiDragDropFlags_AcceptBeforeDelivery);
+
+                char* filePath = new char[data->DataSize];
+                memcpy(filePath, (char*)data->Data, data->DataSize);
+
+                Viewport::Get().OpenScene(filePath);
+                ImGui::EndDragDropTarget();
+            }
 
             PropertyGrid::String("Number of Entities in Scene", m_Context->GetNumEntities(), 200);
             ImGui::Separator();

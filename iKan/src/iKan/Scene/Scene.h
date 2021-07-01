@@ -44,6 +44,9 @@ namespace iKan {
             uint32_t NumEntities = 0;
             uint32_t ViewportWidth = 1280.0f, ViewportHeight = 720.0f;
 
+            // Stores the file name and path
+            std::string FileName, FilePath;
+
             // vector of Textures that are present in the Scene
             // These textures might be used as Sprite as well
             std::unordered_map<std::string, Ref<Texture>> TextureMap;
@@ -56,7 +59,7 @@ namespace iKan {
         };
 
     public:
-        Scene();
+        Scene(const std::string& path = "/Unsaved.iKan");
         ~Scene();
         
         Entity CreateEntity(const std::string& name = "Unknown Entity", UUID uuid = UUID());
@@ -74,6 +77,9 @@ namespace iKan {
         int32_t GetEntityIdFromPixels(int32_t mx, int32_t my);
         int32_t OnBoxColloider(Entity& currEntity, float speed);
         uint32_t GetNumEntities() const { return m_Data.NumEntities; }
+
+        const std::string& GetFileName() const { return m_Data.FileName; }
+        const std::string& GetFilePath() const { return m_Data.FilePath; }
 
         Ref<EditorCamera> GetEditorCamera() { return m_Data.EditorCamera; }
 

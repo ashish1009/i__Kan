@@ -20,8 +20,11 @@ namespace iKan {
     // ******************************************************************************
     // Scene Constructor
     // ******************************************************************************
-    Scene::Scene()
+    Scene::Scene(const std::string& path)
     {
+        m_Data.FilePath = path;
+        m_Data.FileName = Utils::GetNameFromFilePath(path);
+
         IK_CORE_INFO("Creating Scene instance");
     }
     

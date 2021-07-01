@@ -17,6 +17,8 @@
 
 namespace iKan {
 
+    Viewport* Viewport::s_Instance = nullptr;
+
     // ******************************************************************************
     // Viewport Default Constructor
     // ******************************************************************************
@@ -191,7 +193,6 @@ namespace iKan {
         switch (event.GetKeyCode())
         {
             case KeyCode::N:    if (cmd)    NewScene();     break;
-//            case KeyCode::O:    if (cmd)    OpenScene();    break;
             case KeyCode::S:    if (cmd)    SaveScene();    break;
             case KeyCode::X:    if (cmd)    CloseScene();    break;
             default:                                        break;
@@ -204,6 +205,8 @@ namespace iKan {
     // ******************************************************************************
     void Viewport::NewScene()
     {
+        CloseScene();
+        
         m_ActiveScene = CreateRef<Scene>();
         m_ActiveScene->OnViewportResize((uint32_t)m_Data.Size.x, (uint32_t)m_Data.Size.y);
         
@@ -221,7 +224,7 @@ namespace iKan {
         IK_INFO("Opening saved scene from {0}", path.c_str());
         if (!path.empty())
         {
-            m_ActiveScene = CreateRef<Scene>();
+            m_ActiveScene = CreateRef<Scene>(path);
             m_ActiveScene->OnViewportResize((uint32_t)m_Data.Size.x, (uint32_t)m_Data.Size.y);
             m_SceneHierarchyPannel.SetContext(m_ActiveScene);
 
@@ -243,6 +246,7 @@ namespace iKan {
     // ******************************************************************************
     void Viewport::CloseScene()
     {
+        m_ActiveScene.reset();
         m_ActiveScene = nullptr;
         m_SceneHierarchyPannel.SetContext(nullptr);
     }
@@ -259,7 +263,6 @@ namespace iKan {
                 if (ImGui::BeginMenu("Scene"))
                 {
                     if (ImGui::MenuItem("New", "Cmd + N"))      NewScene();
-//                    if (ImGui::MenuItem("Open", "Cmd + O"))     OpenScene();
                     if (ImGui::MenuItem("Save", "Cmd + S"))     SaveScene();
                     if (ImGui::MenuItem("Close", "Cmd + X"))    CloseScene();
 
@@ -498,7 +501,7 @@ namespace iKan {
                 ImGui::Text("Hovered Entity");
                 PropertyGrid::String("Entity ID", (uint32_t)m_Data.HoveredEntity, columnWidth);
                 PropertyGrid::String("Unique ID", (uint32_t)m_Data.HoveredEntity.GetComponent<IDComponent>().ID, columnWidth);
-                PropertyGrid::String("Entity Name", entityName, columnWidth, 300.0f, "", false); // No need to add any Hint in non modifiable string
+                PropertyGrid::String("Entity Name", entityName, columnWidth, 300.0f, nullptr, false); // No need to add any Hint in non modifiable string
                 ImGui::Separator();
             }
         }

@@ -105,14 +105,27 @@ namespace iKan {
         ViewportData& GetDataRef() { return m_Data; }
         Ref<Scene> GetScene() { return m_ActiveScene; }
 
-        // TODO: change the API, that makes make more sense
-        static Viewport& Get(const std::string& contentBrowserPath)
+        // ******************************************************************************
+        // Create singleton instance of Viewport
+        // ******************************************************************************
+        static Viewport& Create(const std::string& contentBrowserPath)
         {
-            static Viewport viewport(contentBrowserPath);
-            return viewport;
+            s_Instance = new Viewport(contentBrowserPath);
+            return *s_Instance;
+        }
+
+        // ******************************************************************************
+        // Return the cretaed instance of viewport
+        // ******************************************************************************
+        static Viewport& Get()
+        {
+            IK_CORE_ASSERT(s_Instance, "Instance not created Yet");
+            return *s_Instance;
         }
 
     private:
+        static Viewport* s_Instance;
+
         Ref<Scene>                 m_ActiveScene;
         PropFlag                   m_Flags;
         ViewportData               m_Data;

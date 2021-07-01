@@ -15,6 +15,23 @@
 namespace iKan {
 
     // ******************************************************************************
+    // Helper to display a little (?) mark which shows a tooltip when hovered.
+    // In your own code you may want to display an actual icon if you are using a merged icon fonts (see docs/FONTS.txt)
+    // ******************************************************************************
+    void PropertyGrid::HelpMarker(const char* desc)
+    {
+        ImGui::TextDisabled("(?)");
+        if (ImGui::IsItemHovered())
+        {
+            ImGui::BeginTooltip();
+            ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+            ImGui::TextUnformatted(desc);
+            ImGui::PopTextWrapPos();
+            ImGui::EndTooltip();
+        }
+    }
+
+    // ******************************************************************************
     // Read and write the Number as String. Value can not be modified
     // ******************************************************************************
     bool PropertyGrid::String(const char* label, uint32_t value, float columnWidth, float column2Width, const char* hint, bool modifiable, bool multiple, int numLines, bool error)
@@ -24,7 +41,52 @@ namespace iKan {
         ss << value;
         ss >> idStr;
 
-        return String(label, idStr, columnWidth, column2Width, " ", false, multiple, numLines); // No need to add any hint as this is non modifiable
+        return String(label, idStr, columnWidth, column2Width, hint, false, multiple, numLines); // No need to add any hint as this is non modifiable
+    }
+
+    // ******************************************************************************
+    // Read and write the String. Modify the value
+    // if Modifiable is true then we can modify the value
+    // Hint will be printed to String path
+    // Multiple : flag to check multiple lines needed in strimg
+    // numlines : if multiple line supported then number of rows
+    // ******************************************************************************
+    bool PropertyGrid::String(const char* label, const std::string& value, const char* hint, float columnWidth)
+    {
+        bool modified = false;
+        ImGui::PushID(label);
+
+        ImGui::Columns(2);
+        ImGui::SetColumnWidth(0, columnWidth);
+
+        ImGui::Text(label);
+
+        if (hint)
+        {
+            ImGui::SameLine();
+            HelpMarker(hint);
+        }
+
+        ImGui::NextColumn();
+
+        ImGui::SetColumnWidth(1, 300.0f);
+        ImGui::PushItemWidth(-1);
+
+        // Copy the Name of entity to buffer that will be dumy text in property pannel
+        char buffer[256];
+        strcpy(buffer, value.c_str());
+
+        std::string UIContextId = "##" + (std::string)label;
+
+        ImGui::InputText(UIContextId.c_str(), (char*)value.c_str(), 256, ImGuiInputTextFlags_ReadOnly);
+
+        ImGui::PopItemWidth();
+        ImGui::NextColumn();
+        ImGui::Columns(1);
+
+        ImGui::PopID();
+
+        return modified;
     }
 
     // ******************************************************************************
@@ -37,11 +99,19 @@ namespace iKan {
     bool PropertyGrid::String(const char* label, std::string& value, float columnWidth, float column2Width, const char* hint, bool modifiable, bool multiple, int numLines, bool error)
     {
         bool modified = false;
-        
+        ImGui::PushID(label);
+
         ImGui::Columns(2);
         ImGui::SetColumnWidth(0, columnWidth);
 
         ImGui::Text(label);
+
+        if (hint)
+        {
+            ImGui::SameLine();
+            HelpMarker(hint);
+        }
+
         ImGui::NextColumn();
 
         ImGui::SetColumnWidth(1, column2Width);
@@ -93,6 +163,8 @@ namespace iKan {
         ImGui::PopItemWidth();
         ImGui::NextColumn();
         ImGui::Columns(1);
+
+        ImGui::PopID();
 
         return modified;
     }
