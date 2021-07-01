@@ -100,7 +100,9 @@ namespace iKan {
 
                 if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
                 {
-                    ImGui::SetDragDropPayload("SelectedFile", (void*)&directoryEntry, sizeof(std::filesystem::path), ImGuiCond_Always);
+                    std::string path = directoryEntry.path().string();
+                    const char* ch = path.c_str();
+                    ImGui::SetDragDropPayload("SelectedFile", (void*)ch, path.size(), ImGuiCond_Always);
                     PropertyGrid::ImageButton(pushId, iconTexture->GetRendererID(), ImVec2(8.0f, 8.0f));
                     ImGui::EndDragDropSource();
                 }

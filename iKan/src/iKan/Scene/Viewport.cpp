@@ -365,13 +365,19 @@ namespace iKan {
         {
             ImGui::Begin("Warning");
             ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "No Scene is created yet. Scene can be created from 'File->Scene->New' or 'Cmd+N'. Already open scene can be uploaded by dragging the scene file (.iKan) from content browser pannel to this area" );
+            ImGui::SameLine(); ImGui::Button("Drop Scene file Here");
+
             if (ImGui::BeginDragDropTarget())
             {
                 const ImGuiPayload* data = ImGui::AcceptDragDropPayload("SelectedFile", ImGuiDragDropFlags_AcceptBeforeDelivery);
-                std::filesystem::path* filePath = (std::filesystem::path*)(data->Data);
-                OpenScene(*filePath);
+
+                char* filePath = new char[data->DataSize];
+                memcpy(filePath, (char*)data->Data, data->DataSize);
+
+                OpenScene(filePath);
                 ImGui::EndDragDropTarget();
             }
+
             ImGui::End();
             return;
         }
