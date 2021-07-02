@@ -37,6 +37,15 @@ namespace iKan {
     }
 
     // ******************************************************************************
+    // Set the new scene path
+    // ******************************************************************************
+    void Scene::SetFilePath(const std::string& path)
+    {
+        m_Data.FilePath = path;
+        m_Data.FileName = Utils::GetNameFromFilePath(m_Data.FilePath);
+    }
+
+    // ******************************************************************************
     // Add the texture to Texture map in Scene data. Also extract the name of texture
     // ******************************************************************************
     Ref<Texture> Scene::AddTextureToScene(const std::string& texturePath)

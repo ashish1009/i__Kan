@@ -81,6 +81,8 @@ namespace iKan {
         const std::string& GetFileName() const { return m_Data.FileName; }
         const std::string& GetFilePath() const { return m_Data.FilePath; }
 
+        void SetFilePath(const std::string& path);
+
         Ref<EditorCamera> GetEditorCamera() { return m_Data.EditorCamera; }
 
         Data& GetDataRef() { return m_Data; }

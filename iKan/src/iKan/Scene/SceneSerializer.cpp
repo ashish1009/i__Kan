@@ -231,6 +231,13 @@ namespace iKan {
                 out << YAML::Key << "SpriteSize" << YAML::Value << spriteRendererComponent.SubTexComp->GetSpriteSize();
                 out << YAML::Key << "CellSize" << YAML::Value << spriteRendererComponent.SubTexComp->GetCellSize();
             }
+            else
+            {
+                out << YAML::Key << "IsTexture" << YAML::Value << (bool)false;
+                out << YAML::Key << "IsSubTexture" << YAML::Value << (bool)false;
+
+                out << YAML::Key << "TexAssetPath" << YAML::Value << "";
+            }
 
             // TODO: Add subtexture later
             out << YAML::EndMap; // SpriteRendererComponent

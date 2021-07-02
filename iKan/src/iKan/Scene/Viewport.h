@@ -100,6 +100,7 @@ namespace iKan {
         void NewScene();
         void OpenScene(const std::string& path);
         void SaveScene();
+        void SaveSceneAs();
         void CloseScene();
 
         ViewportData& GetDataRef() { return m_Data; }
@@ -126,7 +127,8 @@ namespace iKan {
     private:
         static Viewport* s_Instance;
 
-        bool m_SaveFile = false;
+        bool m_SaveFile   = false;
+        bool m_SaveFileAs = false;
 
         Ref<Scene>                 m_ActiveScene;
         PropFlag                   m_Flags;

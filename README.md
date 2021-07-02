@@ -24,10 +24,10 @@ Make sure that you do a `--recursive` clone to fetch all of the submodules!
 6. UI Editor to that shoes viewport information.
 7. New scene can be created inemty editor
 8. Open Scene from already saved file
+9. Save the current scene to any folder
 
 ## Road Map
 - Add feature to Upload texture by darg and drop
-- Add feature to Save the current scene to any folder
 - Add Side menu for content browser pannel (partially developed)
 - Add material class
 - Add Light and multiple shaders
