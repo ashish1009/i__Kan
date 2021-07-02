@@ -50,8 +50,13 @@ namespace iKan {
     // ******************************************************************************
     Ref<Texture> Scene::AddTextureToScene(const std::string& texturePath)
     {
-        Ref<Texture> texture = Texture::Create(texturePath);
-        m_Data.TextureMap[Utils::GetNameFromFilePath(texturePath)] = texture;
+        Ref<Texture> texture;
+        if (m_Data.TextureMap.find(texturePath) != m_Data.TextureMap.end())
+            texture = m_Data.TextureMap[texturePath];
+        else
+            texture = Texture::Create(texturePath);
+
+        m_Data.TextureMap[texturePath] = texture;
         return texture;
     }
 
@@ -217,9 +222,9 @@ namespace iKan {
         for (auto entity : group)
         {
             const auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-            if (sprite.TextureComp)
+            if (sprite.Texture.Use)
             {
-                SceneRenderer::DrawQuad(transform.GetTransform(), sprite.TextureComp, (int32_t)entity, sprite.TilingFactor, sprite.ColorComp);
+                SceneRenderer::DrawQuad(transform.GetTransform(), sprite.Texture.Component, (int32_t)entity, sprite.TilingFactor, sprite.ColorComp);
             }
             else if (sprite.SubTexComp)
             {

@@ -101,22 +101,32 @@ namespace iKan {
     // ******************************************************************************
     struct SpriteRendererComponent
     {
-        glm::vec4       ColorComp   = glm::vec4(1.0f);
-        Ref<SubTexture> SubTexComp  = nullptr;
-        Ref<Texture>    TextureComp = nullptr;
-        
+        // ******************************************************************************
+        // Structure store the refernece pointer of Texture and bool to
+        // ******************************************************************************
+        struct ImageTexture
+        {
+            bool Use = false;
+            Ref<iKan::Texture> Component = nullptr;
+        };
+
+        // Variables
+        glm::vec4       ColorComp  = glm::vec4(1.0f);
+        Ref<SubTexture> SubTexComp = nullptr;
+        ImageTexture    Texture;
+
         float TilingFactor = 1.0f;
 
         // ******************************************************************************
         // Upload new texture and reset the subtexture component
         // ******************************************************************************
-        Ref<Texture> UploadTexture(const Ref<Texture>& texture)
+        Ref<iKan::Texture> UploadTexture(const Ref<iKan::Texture>& texture)
         {
             // If texture is already created then delete the texture
             // (if shared with other entity then reduce the counter)
-            if (TextureComp)
+            if (Texture.Component)
             {
-                TextureComp.reset();
+                Texture.Component.reset();
             }
 
             // If component is subtexture then overrite it with texture
@@ -126,24 +136,27 @@ namespace iKan {
             }
 
             SubTexComp  = nullptr;
-            TextureComp = texture;
+
+            // Image Texture component
+            Texture.Component = texture;
+            Texture.Use = true;
 
             // If texture is uploaded with invalid path So delete the texture
-            if (!TextureComp->Uploaded())
+            if (!Texture.Component->Uploaded())
             {
-                TextureComp.reset();
+                Texture.Component.reset();
             }
 
-            return TextureComp;
+            return Texture.Component;
         }
 
         // ******************************************************************************
         // Upload new texture and reset the subtexture component
         // ******************************************************************************
-        Ref<Texture> UploadTexture(const std::string& path)
+        Ref<iKan::Texture> UploadTexture(const std::string& path)
         {
-            UploadTexture(Texture::Create(path));
-            return TextureComp;
+            UploadTexture(iKan::Texture::Create(path));
+            return Texture.Component;
         }
 
         // ******************************************************************************
@@ -153,11 +166,11 @@ namespace iKan {
         {
             // If texture is already created then delete the texture
             // (if shared with other entity then reduce the counter)
-            if (TextureComp)
+            if (Texture.Component)
             {
-                TextureComp.reset();
+                Texture.Component.reset();
             }
-            TextureComp = nullptr;
+            Texture.Component = nullptr;
 
             // If texture is already created then delete the texture
             // (if shared with other entity then reduce the counter)
@@ -174,19 +187,19 @@ namespace iKan {
         SpriteRendererComponent(const SpriteRendererComponent&) = default;
         
         SpriteRendererComponent(const glm::vec4& color)
-        : ColorComp(color), SubTexComp(nullptr), TextureComp(nullptr)
+        : ColorComp(color), SubTexComp(nullptr)
         {
             
         }
         
         SpriteRendererComponent(const Ref<SubTexture>& subtexture)
-        : ColorComp(glm::vec4(1.0f)), SubTexComp(subtexture), TextureComp(nullptr)
+        : ColorComp(glm::vec4(1.0f)), SubTexComp(subtexture)
         {
             
         }
         
         SpriteRendererComponent(const Ref<iKan::Texture>& texture)
-        : ColorComp(glm::vec4(1.0f)), SubTexComp(nullptr), TextureComp(texture)
+        : ColorComp(glm::vec4(1.0f)), SubTexComp(nullptr)
         {
             
         }

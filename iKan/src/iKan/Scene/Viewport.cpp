@@ -280,7 +280,7 @@ namespace iKan {
         }
         else
         {
-            std::string filepath = m_ContentBrowserPannel.GetCurrentDir().string() + "/" + m_ActiveScene->GetFileName() + ".iKan";
+            const std::string& filepath = m_ActiveScene->GetFilePath();
             IK_INFO("Saving Scene at {0}", filepath.c_str());
             if (!filepath.empty())
             {

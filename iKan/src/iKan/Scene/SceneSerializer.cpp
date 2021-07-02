@@ -213,12 +213,13 @@ namespace iKan {
 
             out << YAML::Key << "TilingFactor" << YAML::Value << spriteRendererComponent.TilingFactor;
 
-            if (spriteRendererComponent.TextureComp)
+            if (spriteRendererComponent.Texture.Component)
             {
                 out << YAML::Key << "IsTexture" << YAML::Value << (bool)true;
                 out << YAML::Key << "IsSubTexture" << YAML::Value << (bool)false;
 
-                out << YAML::Key << "TexAssetPath" << YAML::Value << spriteRendererComponent.TextureComp->GetfilePath();
+                out << YAML::Key << "TexAssetUse" << YAML::Value << spriteRendererComponent.Texture.Use;
+                out << YAML::Key << "TexAssetPath" << YAML::Value << spriteRendererComponent.Texture.Component->GetfilePath();
             }
             else if (spriteRendererComponent.SubTexComp)
             {
@@ -410,7 +411,8 @@ namespace iKan {
 
                         if (isTexture)
                         {
-                            src.TextureComp = texture;
+                            src.Texture.Component = texture;
+                            src.Texture.Use = spriteRendererComponent["TexAssetUse"].as<bool>();
                         }
                         else if (isSubTexture)
                         {
@@ -423,13 +425,13 @@ namespace iKan {
                         else
                         {
                             src.SubTexComp  = nullptr;
-                            src.TextureComp = nullptr;
+                            src.Texture.Component = nullptr;
                         }
                     }
                     else
                     {
                         src.SubTexComp  = nullptr;
-                        src.TextureComp = nullptr;
+                        src.Texture.Component = nullptr;
                     }
 
                     IK_CORE_INFO("  Entity Sprite:");
