@@ -160,6 +160,25 @@ namespace iKan {
         }
 
         // ******************************************************************************
+        // Addthe subtexture compnent to the current entity
+        // ******************************************************************************
+        Ref<SubTexture> AddSubTexture()
+        {
+            SubTexComp = SubTexture::CreateFromCoords(Texture.Component, glm::vec2(1.0f));
+
+            // If texture is already created then delete the texture
+            // (if shared with other entity then reduce the counter)
+            if (Texture.Component)
+            {
+                Texture.Component.reset();
+            }
+            Texture.Component = nullptr;
+            Texture.Use = false;
+
+            return SubTexComp;
+        }
+
+        // ******************************************************************************
         // Upload new texture and reset the subtexture component
         // ******************************************************************************
         void ResetAllComponents()
@@ -171,6 +190,7 @@ namespace iKan {
                 Texture.Component.reset();
             }
             Texture.Component = nullptr;
+            Texture.Use = false;
 
             // If texture is already created then delete the texture
             // (if shared with other entity then reduce the counter)

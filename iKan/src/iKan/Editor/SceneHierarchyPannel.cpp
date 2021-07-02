@@ -347,120 +347,67 @@ namespace iKan {
             ImGui::SetColumnWidth(0, 100);
 
             size_t texId = ((src.Texture.Component) ? src.Texture.Component->GetRendererID() : ((src.SubTexComp) ? src.SubTexComp->GetTexture()->GetRendererID() : m_DefaultTexture->GetRendererID()));
-            ImGui::Image((void*)texId, ImVec2(64.0f, 64.0f), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1.0f,1.0f,1.0f,1.0f), ImVec4(1.0f,1.0f,1.0f,0.5f));
+            ImGui::Image((void*)texId, ImVec2(40.0f, 40.0f), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1.0f,1.0f,1.0f,1.0f), ImVec4(1.0f,1.0f,1.0f,0.5f));
+            if (ImGui::IsItemClicked((int32_t)MouseCode::ButtonRight))
+                ImGui::OpenPopup("Select Texture");
+
+            // Sub menue ofption if mini image is right clicked
+            if (ImGui::BeginPopup("Select Texture"))
+            {
+                const auto& textureMap = m_Context->GetDataRef().TextureMap;
+                for (auto texMap : textureMap)
+                {
+                    const auto& filename = Utils::GetNameFromFilePath(texMap.first);
+                    if (ImGui::BeginMenu("Textures"))
+                    {
+                        ImGui::Bullet();
+                        if (ImGui::MenuItem(filename.c_str()))
+                        {
+                            ImGui::CloseCurrentPopup();
+                            src.UploadTexture(texMap.second);
+                        }
+                        ImGui::EndMenu();
+                    }
+                    if (ImGui::MenuItem("Add Sub Texture", nullptr, false, (src.Texture.Component != nullptr)))
+                    {
+                        src.AddSubTexture();
+                    }
+
+                    if (ImGui::MenuItem("Remove Texture", nullptr, false, (src.Texture.Component != nullptr)))
+                    {
+                        src.ResetAllComponents();
+                    }
+                }
+                ImGui::EndPopup();
+            }
+
             PropertyGrid::DropConent([&src, this](const std::string& path)
                                      {
                 src.UploadTexture(m_Context->AddTextureToScene(path));
             });
 
-            ImGui::SameLine(); PropertyGrid::HelpMarker("Drop the Texture file in the Image Button to upload the texture or Uplaod already stored texture from the scene");
-
+            ImGui::SameLine(); PropertyGrid::HelpMarker("Drop the Texture file in the Image Button to upload the texture or Select already stored texture from the scene (Option can be available by right click on image)");
             ImGui::NextColumn();
 
-            ImGui::SameLine(); ImGui::Checkbox("Use", &src.Texture.Use);
+            ImGui::Checkbox("Use", &src.Texture.Use);
             ImGui::SameLine(); ImGui::ColorEdit4("Color", glm::value_ptr(src.ColorComp), ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
 
-            ImGui::SameLine();
-            // Select the texture from already uploaded textures
-            const auto& textureMap = m_Context->GetDataRef().TextureMap;
-            const char* currentTextureSelected = "Select Texture";
-            if (ImGui::BeginCombo("##Texture", currentTextureSelected))
+            if (src.Texture.Use)
             {
-                for (auto texMap : textureMap)
-                {
-                    const auto& filename = Utils::GetNameFromFilePath(texMap.first);
-                    bool bIsSelected = currentTextureSelected == filename;
-                    if (ImGui::Selectable(filename.c_str(), bIsSelected))
-                    {
-                        currentTextureSelected = filename.c_str();
-                        src.UploadTexture(texMap.second);
-                    }
-
-                    if (bIsSelected)
-                    {
-                        ImGui::SetItemDefaultFocus();
-                    }
-                }
-                ImGui::EndCombo();
+                ImGui::SameLine(); PropertyGrid::CounterF("Tiling Factor", src.TilingFactor);
             }
 
-            ImGui::Separator();
             ImGui::Columns(1);
             ImGui::PopID();
 
-            if (src.Texture.Component || src.SubTexComp)
+            ImGui::Separator();
+
+            if (src.SubTexComp)
             {
                 // Open the Texture component
-                ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
-
-                ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 1, 1 });
-                float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y;
-
                 static ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_Selected | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap;
-
-                std::string treeNodeString = (src.Texture.Component) ? "Texture Component" : "Sub Texture Compinent";
-
-                bool opened = ImGui::TreeNodeEx((void*)99298273, flags, treeNodeString.c_str());
-                ImGui::PopStyleVar();
-
-                ImGui::SameLine(contentRegionAvailable.x - lineHeight * 0.5f);
-                if (ImGui::Button("+", ImVec2{ lineHeight, lineHeight }))
+                if (ImGui::TreeNodeEx((void*)99298273, flags, "Sub Texture Compinent"))
                 {
-                    ImGui::OpenPopup(treeNodeString.c_str());
-                }
-
-                // Texture Settings
-                if (ImGui::BeginPopup(treeNodeString.c_str()))
-                {
-                    if (ImGui::MenuItem("Remove texture"))
-                    {
-                        src.ResetAllComponents();
-                    }
-
-                    if (!src.SubTexComp && src.Texture.Component)
-                    {
-                        if (ImGui::MenuItem("Add Subtexture"))
-                        {
-                            // Add the subtexture component
-                            src.SubTexComp = SubTexture::CreateFromCoords(src.Texture.Component, glm::vec2(1.0f));
-
-                            // If texture is already created then delete the texture
-                            // (if shared with other entity then reduce the counter)
-                            if (src.Texture.Component)
-                            {
-                                src.Texture.Component.reset();
-                            }
-                            src.Texture.Component = nullptr;
-                        }
-                    }
-                    ImGui::EndPopup();
-                } // if (ImGui::BeginPopup("treeNodeString.c_str()"))
-
-                // If texture component is opened
-                if (opened)
-                {
-                    // Print the current texture path
-                    std::string texturePath;
-                    if (src.Texture.Component)
-                    {
-                        texturePath = src.Texture.Component->GetfilePath();
-                    }
-                    if (src.SubTexComp)
-                    {
-                        texturePath = src.SubTexComp->GetTexture()->GetfilePath();
-                    }
-                    PropertyGrid::String("Texture path", texturePath, 100.0f, 300.0f, "", false);
-                    ImGui::Separator();
-
-                    // From here Component specific prperties
-
-                    // Chnage the tiling Factor of the enitty if Texture component is present
-                    if (src.Texture.Component != nullptr)
-                    {
-                        PropertyGrid::CounterF("Tiling Factor", src.TilingFactor);
-                        ImGui::Separator();
-                    }
-
                     // Chnage the Subtexture properties
                     if (src.SubTexComp != nullptr)
                     {
