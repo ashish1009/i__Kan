@@ -59,6 +59,9 @@ namespace iKan {
         if (!m_Flags.Present)
             return;
 
+        if (m_SaveFile)
+            SaveScene();
+
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         ImGui::Begin("Viewport", &m_Flags.Present, ImGuiWindowFlags_NoTitleBar);
         {
@@ -192,10 +195,10 @@ namespace iKan {
         bool cmd   = Input::IsKeyPressed(KeyCode::LeftSuper) || Input::IsKeyPressed(KeyCode::RightSuper);
         switch (event.GetKeyCode())
         {
+            case KeyCode::S:    if (cmd && m_ActiveScene)   m_SaveFile = true;    break;
             case KeyCode::N:    if (cmd)    NewScene();     break;
-            case KeyCode::S:    if (cmd)    SaveScene();    break;
-            case KeyCode::X:    if (cmd)    CloseScene();    break;
-            default:                                        break;
+            case KeyCode::X:    if (cmd)    CloseScene();   break;
+            default:    break;
         }
         return false;
     }
@@ -238,7 +241,30 @@ namespace iKan {
     // ******************************************************************************
     void Viewport::SaveScene()
     {
+        ImGui::Begin("Save File", &m_SaveFile);
 
+        const auto& currDir         = m_ContentBrowserPannel.GetCurrentDir();
+        const auto& relativePath    = (std::filesystem::relative(currDir, m_ContentBrowserPannel.GetRootDir())).string();
+
+        PropertyGrid::String("Save Directory", relativePath, "File will be saved at the Current directory in the active scene", 150.0f);
+
+        static std::string fileName = "";
+        PropertyGrid::String("File Name", fileName, 150.0f);
+
+        if (ImGui::Button("Save Scene") && fileName != "")
+        {
+            std::string extensionType = ".iKan";
+            std::string filepath = currDir.string() + "/" + fileName + extensionType;
+            IK_INFO("Saving Scene at {0}", filepath.c_str());
+            if (!filepath.empty())
+            {
+                SceneSerializer serializer(m_ActiveScene);
+                serializer.Serialize(filepath);
+            }
+            m_SaveFile = false;
+        }
+
+        ImGui::End();
     }
 
     // ******************************************************************************
@@ -263,8 +289,8 @@ namespace iKan {
                 if (ImGui::BeginMenu("Scene"))
                 {
                     if (ImGui::MenuItem("New", "Cmd + N"))      NewScene();
-                    if (ImGui::MenuItem("Save", "Cmd + S"))     SaveScene();
                     if (ImGui::MenuItem("Close", "Cmd + X"))    CloseScene();
+                    if (ImGui::MenuItem("Save", "Cmd + S", false, m_ActiveScene != nullptr)) m_SaveFile = true;
 
                     ImGui::EndMenu(); // if (ImGui::BeginMenu("Scene"))
                 }

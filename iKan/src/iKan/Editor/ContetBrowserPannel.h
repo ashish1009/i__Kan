@@ -23,6 +23,8 @@ namespace iKan {
         ContentBrowserPannel(const std::string& rootPath);
 
         void OnImguiender(bool* pIsOpen = nullptr);
+        const std::filesystem::path& GetCurrentDir() const { return m_CurrentDir; }
+        const std::filesystem::path& GetRootDir() const { return m_RootPath; }
 
     private:
         void TitleIcon();

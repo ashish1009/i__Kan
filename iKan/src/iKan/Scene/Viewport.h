@@ -126,6 +126,8 @@ namespace iKan {
     private:
         static Viewport* s_Instance;
 
+        bool m_SaveFile = false;
+
         Ref<Scene>                 m_ActiveScene;
         PropFlag                   m_Flags;
         ViewportData               m_Data;

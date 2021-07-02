@@ -220,7 +220,7 @@ namespace iKan {
 
                 out << YAML::Key << "TexAssetPath" << YAML::Value << spriteRendererComponent.TextureComp->GetfilePath();
             }
-            else
+            else if (spriteRendererComponent.SubTexComp)
             {
                 out << YAML::Key << "IsTexture" << YAML::Value << (bool)false;
                 out << YAML::Key << "IsSubTexture" << YAML::Value << (bool)true;

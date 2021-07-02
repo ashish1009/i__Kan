@@ -59,7 +59,7 @@ namespace iKan {
         };
 
     public:
-        Scene(const std::string& path = "/Unsaved.iKan");
+        Scene(const std::string& path = "");
         ~Scene();
         
         Entity CreateEntity(const std::string& name = "Unknown Entity", UUID uuid = UUID());

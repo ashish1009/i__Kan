@@ -23,12 +23,12 @@ Make sure that you do a `--recursive` clone to fetch all of the submodules!
 5. Content browser pannel
 6. UI Editor to that shoes viewport information.
 7. New scene can be created inemty editor
+8. Open Scene from already saved file
 
 ## Road Map
-- Add feature Open Scene from already saved file
+- Add feature to Upload texture by darg and drop
 - Add feature to Save the current scene to any folder
 - Add Side menu for content browser pannel (partially developed)
-- Add feature to Upload texture by darg and drop
 - Add material class
 - Add Light and multiple shaders
 - Add Mesh and assimp library
