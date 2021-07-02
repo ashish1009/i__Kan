@@ -133,16 +133,10 @@ namespace iKan {
             ImGui::Separator();
 
             PropertyGrid::String("Active Scene", m_Context->GetFileName(), "To Open a scene Drop the file here fron content browser pannel", 200);
-            if (ImGui::BeginDragDropTarget())
-            {
-                const ImGuiPayload* data = ImGui::AcceptDragDropPayload("SelectedFile", ImGuiDragDropFlags_AcceptBeforeDelivery);
-
-                char* filePath = new char[data->DataSize];
-                memcpy(filePath, (char*)data->Data, data->DataSize);
-
-                Viewport::Get().OpenScene(filePath);
-                ImGui::EndDragDropTarget();
-            }
+            PropertyGrid::DropConent([](const std::string& path)
+                                     {
+                Viewport::Get().OpenScene(path);
+            });
 
             PropertyGrid::String("Number of Entities in Scene", m_Context->GetNumEntities(), 200);
             ImGui::Separator();
@@ -348,6 +342,10 @@ namespace iKan {
                                                {
             size_t texId = ((src.TextureComp) ? src.TextureComp->GetRendererID() : ((src.SubTexComp) ? src.SubTexComp->GetTexture()->GetRendererID() : m_DefaultTexture->GetRendererID()));
             ImGui::Image((void*)texId, ImVec2(64.0f, 64.0f), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1.0f,1.0f,1.0f,1.0f), ImVec4(1.0f,1.0f,1.0f,0.5f));
+            PropertyGrid::DropConent([&src, this](const std::string& path)
+                                     {
+                src.UploadTexture(m_Context->AddTextureToScene(path));
+            });
 
             // Change the color of the Entity
             ImGui::ColorEdit4("Color", glm::value_ptr(src.ColorComp));

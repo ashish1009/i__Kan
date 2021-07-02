@@ -38,6 +38,25 @@ namespace iKan {
         static bool ImageButton(const std::string& lableId, uint32_t texId, ImVec2 size);
         static bool ImageButton(const int32_t lableId, uint32_t texId, ImVec2 size);
 
+        // ******************************************************************************
+        // Drop content from content prowser pannel and call the function
+        // ******************************************************************************
+        template<typename UIFunction>
+        static void DropConent(UIFunction uiFunction)
+        {
+            if (ImGui::BeginDragDropTarget() && !ImGui::IsMouseDragging(0) && ImGui::IsMouseReleased(0))
+            {
+                const ImGuiPayload* data = ImGui::AcceptDragDropPayload("SelectedFile", ImGuiDragDropFlags_AcceptBeforeDelivery);
+
+                char* filePath = new char[data->DataSize + 1];
+                memcpy(filePath, (char*)data->Data, data->DataSize);
+                filePath[data->DataSize] = '\0';
+
+                uiFunction(filePath);
+                ImGui::EndDragDropTarget();
+            }
+        }
+
     };
 
 }
