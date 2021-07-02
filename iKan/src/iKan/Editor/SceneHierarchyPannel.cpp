@@ -368,12 +368,22 @@ namespace iKan {
                         }
                         ImGui::EndMenu();
                     }
-                    if (ImGui::MenuItem("Add Sub Texture", nullptr, false, (src.Texture.Component != nullptr)))
+                    if (!src.SubTexComp)
                     {
-                        src.AddSubTexture();
+                        if (ImGui::MenuItem("Add Sub Texture", nullptr, false, (src.Texture.Component != nullptr)))
+                        {
+                            src.AddSubTexture();
+                        }
+                    }
+                    else
+                    {
+                        if (ImGui::MenuItem("Remove Sub Texture"))
+                        {
+                            src.RemoveSubTexture();
+                        }
                     }
 
-                    if (ImGui::MenuItem("Remove Texture", nullptr, false, (src.Texture.Component != nullptr)))
+                    if (ImGui::MenuItem("Remove Texture", nullptr, false, ((src.Texture.Component != nullptr) || (src.SubTexComp != nullptr))))
                     {
                         src.ResetAllComponents();
                     }
@@ -409,7 +419,7 @@ namespace iKan {
                 if (ImGui::TreeNodeEx((void*)99298273, flags, "Sub Texture Compinent"))
                 {
                     // Chnage the Subtexture properties
-                    if (src.SubTexComp != nullptr)
+//                    if (src.SubTexComp != nullptr)
                     {
                         // Subtexture property
                         glm::vec2& coords     = src.SubTexComp->GetCoords();

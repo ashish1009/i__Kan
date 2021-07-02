@@ -179,6 +179,23 @@ namespace iKan {
         }
 
         // ******************************************************************************
+        // Remove subtexture compnent to the current entity
+        // ******************************************************************************
+        void RemoveSubTexture()
+        {
+            Texture.Component = SubTexComp->GetTexture();
+            Texture.Use = true;
+
+            // If texture is already created then delete the texture
+            // (if shared with other entity then reduce the counter)
+            if (SubTexComp)
+            {
+                SubTexComp.reset();
+            }
+            SubTexComp = nullptr;
+        }
+
+        // ******************************************************************************
         // Upload new texture and reset the subtexture component
         // ******************************************************************************
         void ResetAllComponents()
