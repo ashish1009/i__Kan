@@ -14,6 +14,9 @@
 		7589D501267758DD00EB43D9 /* SceneSerializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7589D4FF267758DD00EB43D9 /* SceneSerializer.cpp */; };
 		7589D502267758DD00EB43D9 /* SceneSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7589D500267758DD00EB43D9 /* SceneSerializer.h */; };
 		7589D5032677622500EB43D9 /* libyaml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7589D2402677574300EB43D9 /* libyaml.a */; };
+		75F34FAE269365C5006A2465 /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 75F34FAC269365C5006A2465 /* Mesh.cpp */; };
+		75F34FAF269365C5006A2465 /* Mesh.h in Headers */ = {isa = PBXBuildFile; fileRef = 75F34FAD269365C5006A2465 /* Mesh.h */; };
+		75F34FB52693685A006A2465 /* AABB.h in Headers */ = {isa = PBXBuildFile; fileRef = 75F34FB42693685A006A2465 /* AABB.h */; };
 		B2028051262590D300BC7F39 /* Core.h in Headers */ = {isa = PBXBuildFile; fileRef = B2028050262590D300BC7F39 /* Core.h */; };
 		B2028053262592DD00BC7F39 /* Log.h in Headers */ = {isa = PBXBuildFile; fileRef = B2028052262592DD00BC7F39 /* Log.h */; };
 		B20280562625934700BC7F39 /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B20280542625934700BC7F39 /* Log.cpp */; };
@@ -134,6 +137,9 @@
 		7589D23B2677574200EB43D9 /* yaml.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = yaml.xcodeproj; path = vendor/yaml/yaml.xcodeproj; sourceTree = "<group>"; };
 		7589D4FF267758DD00EB43D9 /* SceneSerializer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneSerializer.cpp; sourceTree = "<group>"; };
 		7589D500267758DD00EB43D9 /* SceneSerializer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneSerializer.h; sourceTree = "<group>"; };
+		75F34FAC269365C5006A2465 /* Mesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
+		75F34FAD269365C5006A2465 /* Mesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mesh.h; sourceTree = "<group>"; };
+		75F34FB42693685A006A2465 /* AABB.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AABB.h; sourceTree = "<group>"; };
 		B2028050262590D300BC7F39 /* Core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
 		B2028052262592DD00BC7F39 /* Log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
 		B20280542625934700BC7F39 /* Log.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Log.cpp; sourceTree = "<group>"; };
@@ -246,6 +252,14 @@
 				7589D2402677574300EB43D9 /* libyaml.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		75F34FB32693683B006A2465 /* Math */ = {
+			isa = PBXGroup;
+			children = (
+				75F34FB42693685A006A2465 /* AABB.h */,
+			);
+			path = Math;
 			sourceTree = "<group>";
 		};
 		B20280672625FEEE00BC7F39 /* Platform */ = {
@@ -404,6 +418,8 @@
 				B249623126399A140091C915 /* Camera.h */,
 				B2A1C113263E82E700606017 /* RendererStats.cpp */,
 				B2A1C114263E82E700606017 /* RendererStats.h */,
+				75F34FAC269365C5006A2465 /* Mesh.cpp */,
+				75F34FAD269365C5006A2465 /* Mesh.h */,
 			);
 			path = Renderer;
 			sourceTree = "<group>";
@@ -503,6 +519,7 @@
 		B2FE35192624B61A00AFC236 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				75F34FB32693683B006A2465 /* Math */,
 				B2EAB334262B20F3003D7FE6 /* Events */,
 				B2FE351A2624B67B00AFC236 /* Application.cpp */,
 				B2FE351B2624B67B00AFC236 /* Application.h */,
@@ -559,6 +576,7 @@
 				B2FE351D2624B67B00AFC236 /* Application.h in Headers */,
 				B22FE6FD2638482400C1640B /* OpenGLTexture.h in Headers */,
 				B249623C2639A7740091C915 /* Scene.h in Headers */,
+				75F34FB52693685A006A2465 /* AABB.h in Headers */,
 				B22FE70426385C8A00C1640B /* OpenGLShader.h in Headers */,
 				B249623626399AA50091C915 /* EditorCamera.h in Headers */,
 				B27FE31C2629E474000FD32D /* Renderer.h in Headers */,
@@ -584,6 +602,7 @@
 				B22FE6F92638473500C1640B /* Texture.h in Headers */,
 				B2496B552639A8AE0091C915 /* entt.hpp in Headers */,
 				B2EAB338262B20FF003D7FE6 /* Event.h in Headers */,
+				75F34FAF269365C5006A2465 /* Mesh.h in Headers */,
 				B2EAB343262B265B003D7FE6 /* MouseCode.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -713,6 +732,7 @@
 				B249622E26397FAC0091C915 /* OpenGlRendererAPI.cpp in Sources */,
 				B2A1C11D263EAE6800606017 /* SceneHierarchyPannel.cpp in Sources */,
 				B22FE6F82638473500C1640B /* Texture.cpp in Sources */,
+				75F34FAE269365C5006A2465 /* Mesh.cpp in Sources */,
 				758265DB2679F6DF0080169A /* ContetBrowserPannel.cpp in Sources */,
 				B28FE5C3262C881700DC5E20 /* MacInput.cpp in Sources */,
 				B2496F132639AA690091C915 /* SceneRenderer.cpp in Sources */,
@@ -862,6 +882,7 @@
 					"${PROJECT_DIR}/vendor/stbimage",
 					"${PROJECT_DIR}/vendor/EnTT/include",
 					"${PROJECT_DIR}/vendor/yaml/yaml/include",
+					"${PROJECT_DIR}/vendor/Assimp/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -898,6 +919,7 @@
 					"${PROJECT_DIR}/vendor/stbimage",
 					"${PROJECT_DIR}/vendor/EnTT/include",
 					"${PROJECT_DIR}/vendor/yaml/yaml/include",
+					"${PROJECT_DIR}/vendor/Assimp/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

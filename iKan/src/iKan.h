@@ -31,6 +31,7 @@
 #include <iKan/Renderer/Shader.h>
 #include <iKan/Renderer/Texture.h>
 #include <iKan/Renderer/Camera.h>
+#include <iKan/Renderer/Mesh.h>
 
 // Editor files
 #include <iKan/Editor/EditorCamera.h>

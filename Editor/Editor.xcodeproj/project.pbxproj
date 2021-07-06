@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		75668964269430B40007EA8D /* libassimp.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 75668963269430B40007EA8D /* libassimp.5.dylib */; };
 		7589D20F2677448700EB43D9 /* IKanEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7589D20D2677448700EB43D9 /* IKanEditor.cpp */; };
 		B254585C262893080053BD47 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25684C526274C0F0030D00D /* IOKit.framework */; };
 		B254585E2628930D0053BD47 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B254585D2628930D0053BD47 /* OpenGL.framework */; };
@@ -28,6 +29,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		75668961269430A50007EA8D /* libIrrXML.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libIrrXML.dylib; path = ../iKan/vendor/Assimp/lib/libIrrXML.dylib; sourceTree = "<group>"; };
+		75668963269430B40007EA8D /* libassimp.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.5.dylib; path = ../iKan/vendor/Assimp/lib/libassimp.5.dylib; sourceTree = "<group>"; };
 		7589D20D2677448700EB43D9 /* IKanEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IKanEditor.cpp; sourceTree = "<group>"; };
 		7589D20E2677448700EB43D9 /* IKanEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IKanEditor.h; sourceTree = "<group>"; };
 		B254585D2628930D0053BD47 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -45,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75668964269430B40007EA8D /* libassimp.5.dylib in Frameworks */,
 				B254585F262893120053BD47 /* Cocoa.framework in Frameworks */,
 				B254585E2628930D0053BD47 /* OpenGL.framework in Frameworks */,
 				B254585C262893080053BD47 /* IOKit.framework in Frameworks */,
@@ -101,6 +105,8 @@
 		B2FE35162624B5CA00AFC236 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				75668963269430B40007EA8D /* libassimp.5.dylib */,
+				75668961269430A50007EA8D /* libIrrXML.dylib */,
 				B2782461263C30A6009BB380 /* libGlad.a */,
 				B27B4DA2263B0033000AC7B5 /* libglfw3.a */,
 				B254585D2628930D0053BD47 /* OpenGL.framework */,
@@ -309,7 +315,7 @@
 					"${PROJECT_DIR}/../iKan/vendor/glm",
 					"${PROJECT_DIR}/../iKan/vendor/EnTT/include",
 				);
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/../iKan/vendor/Assimp/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -331,7 +337,7 @@
 					"${PROJECT_DIR}/../iKan/vendor/glm",
 					"${PROJECT_DIR}/../iKan/vendor/EnTT/include",
 				);
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/../iKan/vendor/Assimp/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
