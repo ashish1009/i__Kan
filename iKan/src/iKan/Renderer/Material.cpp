@@ -53,6 +53,7 @@ namespace iKan {
     {
         IK_CORE_INFO("Constructed Material instnace.");
         m_Material->m_MaterialInstances.insert(this);
+        AllocateStorage();
     }
 
     // ******************************************************************************
@@ -63,5 +64,12 @@ namespace iKan {
         m_Material->m_MaterialInstances.erase(this);
     }
 
+    // ******************************************************************************
+    // Allocate the storage buffers
+    // ******************************************************************************
+    void MaterialInstance::AllocateStorage()
+    {
+
+    }
 
 }

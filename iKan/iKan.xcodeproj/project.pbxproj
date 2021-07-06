@@ -11,6 +11,7 @@
 		750AA8E2265D52140031A3E0 /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 750AA8E0265D52140031A3E0 /* Utils.h */; };
 		7566896A2694361F0007EA8D /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 756689682694361F0007EA8D /* Material.cpp */; };
 		7566896B2694361F0007EA8D /* Material.h in Headers */ = {isa = PBXBuildFile; fileRef = 756689692694361F0007EA8D /* Material.h */; };
+		75668970269451970007EA8D /* Buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7566896F269451970007EA8D /* Buffer.h */; };
 		758265DB2679F6DF0080169A /* ContetBrowserPannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 758265D92679F6DF0080169A /* ContetBrowserPannel.cpp */; };
 		758265DC2679F6DF0080169A /* ContetBrowserPannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 758265DA2679F6DF0080169A /* ContetBrowserPannel.h */; };
 		7589D501267758DD00EB43D9 /* SceneSerializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7589D4FF267758DD00EB43D9 /* SceneSerializer.cpp */; };
@@ -136,6 +137,7 @@
 		750AA8E0265D52140031A3E0 /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		756689682694361F0007EA8D /* Material.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Material.cpp; sourceTree = "<group>"; };
 		756689692694361F0007EA8D /* Material.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Material.h; sourceTree = "<group>"; };
+		7566896F269451970007EA8D /* Buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Buffer.h; sourceTree = "<group>"; };
 		758265D92679F6DF0080169A /* ContetBrowserPannel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ContetBrowserPannel.cpp; sourceTree = "<group>"; };
 		758265DA2679F6DF0080169A /* ContetBrowserPannel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContetBrowserPannel.h; sourceTree = "<group>"; };
 		7589D23B2677574200EB43D9 /* yaml.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = yaml.xcodeproj; path = vendor/yaml/yaml.xcodeproj; sourceTree = "<group>"; };
@@ -545,6 +547,7 @@
 				B2400F3F263434F60051B868 /* TimeStep.h */,
 				B27D6094263D3A3000954BB6 /* UUID.cpp */,
 				B27D6097263D3A3000954BB6 /* UUID.h */,
+				7566896F269451970007EA8D /* Buffer.h */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -564,6 +567,7 @@
 				B2EAB33B262B2311003D7FE6 /* ApplicationEvent.h in Headers */,
 				B249622F26397FAC0091C915 /* OpenGlRendererAPI.h in Headers */,
 				B2A1C11A263E87DD00606017 /* Viewport.h in Headers */,
+				75668970269451970007EA8D /* Buffer.h in Headers */,
 				7566896B2694361F0007EA8D /* Material.h in Headers */,
 				B2A1C116263E82E700606017 /* RendererStats.h in Headers */,
 				B2A1C11E263EAE6800606017 /* SceneHierarchyPannel.h in Headers */,

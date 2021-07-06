@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include <iKan/Core/Buffer.h>
+
 #include <iKan/Renderer/Shader.h>
 #include <iKan/Renderer/Texture.h>
 
@@ -49,10 +51,17 @@ namespace iKan {
         static Ref<MaterialInstance> Create(const Ref<Material>& material);
 
     private:
-        Ref<Material> m_Material;
-        std::string m_Name;
-    };
+        void AllocateStorage();
 
+    private:
+        Ref<Material> m_Material;
+        std::string   m_Name;
+
+        Buffer m_VSUniformStorageBuffer;
+        Buffer m_PSUniformStorageBuffer;
+
+        std::vector<Ref<Texture>> m_Textures;
+    };
 
 }
 
