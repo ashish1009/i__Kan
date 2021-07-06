@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		750AA8E1265D52140031A3E0 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 750AA8DF265D52140031A3E0 /* Utils.cpp */; };
 		750AA8E2265D52140031A3E0 /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 750AA8E0265D52140031A3E0 /* Utils.h */; };
+		7566896A2694361F0007EA8D /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 756689682694361F0007EA8D /* Material.cpp */; };
+		7566896B2694361F0007EA8D /* Material.h in Headers */ = {isa = PBXBuildFile; fileRef = 756689692694361F0007EA8D /* Material.h */; };
 		758265DB2679F6DF0080169A /* ContetBrowserPannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 758265D92679F6DF0080169A /* ContetBrowserPannel.cpp */; };
 		758265DC2679F6DF0080169A /* ContetBrowserPannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 758265DA2679F6DF0080169A /* ContetBrowserPannel.h */; };
 		7589D501267758DD00EB43D9 /* SceneSerializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7589D4FF267758DD00EB43D9 /* SceneSerializer.cpp */; };
@@ -132,6 +134,8 @@
 /* Begin PBXFileReference section */
 		750AA8DF265D52140031A3E0 /* Utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
 		750AA8E0265D52140031A3E0 /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		756689682694361F0007EA8D /* Material.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Material.cpp; sourceTree = "<group>"; };
+		756689692694361F0007EA8D /* Material.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Material.h; sourceTree = "<group>"; };
 		758265D92679F6DF0080169A /* ContetBrowserPannel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ContetBrowserPannel.cpp; sourceTree = "<group>"; };
 		758265DA2679F6DF0080169A /* ContetBrowserPannel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContetBrowserPannel.h; sourceTree = "<group>"; };
 		7589D23B2677574200EB43D9 /* yaml.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = yaml.xcodeproj; path = vendor/yaml/yaml.xcodeproj; sourceTree = "<group>"; };
@@ -420,6 +424,8 @@
 				B2A1C114263E82E700606017 /* RendererStats.h */,
 				75F34FAC269365C5006A2465 /* Mesh.cpp */,
 				75F34FAD269365C5006A2465 /* Mesh.h */,
+				756689682694361F0007EA8D /* Material.cpp */,
+				756689692694361F0007EA8D /* Material.h */,
 			);
 			path = Renderer;
 			sourceTree = "<group>";
@@ -558,6 +564,7 @@
 				B2EAB33B262B2311003D7FE6 /* ApplicationEvent.h in Headers */,
 				B249622F26397FAC0091C915 /* OpenGlRendererAPI.h in Headers */,
 				B2A1C11A263E87DD00606017 /* Viewport.h in Headers */,
+				7566896B2694361F0007EA8D /* Material.h in Headers */,
 				B2A1C116263E82E700606017 /* RendererStats.h in Headers */,
 				B2A1C11E263EAE6800606017 /* SceneHierarchyPannel.h in Headers */,
 				B24010A3263450200051B868 /* ImguiLayer.h in Headers */,
@@ -716,6 +723,7 @@
 				B27FE3132629E153000FD32D /* OpenGLGraphicsContext.cpp in Sources */,
 				B22FE70126385C3B00C1640B /* Shader.cpp in Sources */,
 				B27D6098263D3A3000954BB6 /* UUID.cpp in Sources */,
+				7566896A2694361F0007EA8D /* Material.cpp in Sources */,
 				B27FE31B2629E474000FD32D /* Renderer.cpp in Sources */,
 				B22FE70526385C8A00C1640B /* OpenGLShader.cpp in Sources */,
 				B2A1C115263E82E700606017 /* RendererStats.cpp in Sources */,

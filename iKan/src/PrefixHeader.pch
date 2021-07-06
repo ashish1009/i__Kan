@@ -20,6 +20,7 @@
 #include <sstream>
 #include <vector>
 #include <fstream>
+#include <unordered_set>
 
 // Log files files
 #include <iKan/Core/Log.h>

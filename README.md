@@ -28,9 +28,9 @@ Make sure that you do a `--recursive` clone to fetch all of the submodules!
 10. Add feature to Upload texture by darg and drop
 
 ## Road Map
-- Add Mesh and assimp library
-- Add Side menu for content browser pannel (partially developed)
 - Add material class
+- Add Mesh and assimp library (Library added, on hold mfor materials)
+- Add Side menu for content browser pannel (partially developed)
 - Add Light and multiple shaders
 - Add Guizmo
 

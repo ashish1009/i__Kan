@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		75668964269430B40007EA8D /* libassimp.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 75668963269430B40007EA8D /* libassimp.5.dylib */; };
+		75668965269433140007EA8D /* libassimp.5.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 75668963269430B40007EA8D /* libassimp.5.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		75668966269433390007EA8D /* libIrrXML.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 75668961269430A50007EA8D /* libIrrXML.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		75668967269433500007EA8D /* libIrrXML.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 75668961269430A50007EA8D /* libIrrXML.dylib */; };
 		7589D20F2677448700EB43D9 /* IKanEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7589D20D2677448700EB43D9 /* IKanEditor.cpp */; };
 		B254585C262893080053BD47 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25684C526274C0F0030D00D /* IOKit.framework */; };
 		B254585E2628930D0053BD47 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B254585D2628930D0053BD47 /* OpenGL.framework */; };
@@ -20,9 +23,11 @@
 		B2FE350226248AF200AFC236 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
-			dstPath = usr/share/man/man1;
+			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
+				75668966269433390007EA8D /* libIrrXML.dylib in CopyFiles */,
+				75668965269433140007EA8D /* libassimp.5.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -48,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75668967269433500007EA8D /* libIrrXML.dylib in Frameworks */,
 				75668964269430B40007EA8D /* libassimp.5.dylib in Frameworks */,
 				B254585F262893120053BD47 /* Cocoa.framework in Frameworks */,
 				B254585E2628930D0053BD47 /* OpenGL.framework in Frameworks */,
