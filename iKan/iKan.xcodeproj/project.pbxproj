@@ -12,6 +12,9 @@
 		7566896A2694361F0007EA8D /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 756689682694361F0007EA8D /* Material.cpp */; };
 		7566896B2694361F0007EA8D /* Material.h in Headers */ = {isa = PBXBuildFile; fileRef = 756689692694361F0007EA8D /* Material.h */; };
 		75668970269451970007EA8D /* Buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7566896F269451970007EA8D /* Buffer.h */; };
+		7566897226945F050007EA8D /* ShaderUniform.h in Headers */ = {isa = PBXBuildFile; fileRef = 7566897126945F050007EA8D /* ShaderUniform.h */; };
+		756689752694614E0007EA8D /* OpenGlShaderUniform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 756689732694614E0007EA8D /* OpenGlShaderUniform.cpp */; };
+		756689762694614E0007EA8D /* OpenGlShaderUniform.h in Headers */ = {isa = PBXBuildFile; fileRef = 756689742694614E0007EA8D /* OpenGlShaderUniform.h */; };
 		758265DB2679F6DF0080169A /* ContetBrowserPannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 758265D92679F6DF0080169A /* ContetBrowserPannel.cpp */; };
 		758265DC2679F6DF0080169A /* ContetBrowserPannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 758265DA2679F6DF0080169A /* ContetBrowserPannel.h */; };
 		7589D501267758DD00EB43D9 /* SceneSerializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7589D4FF267758DD00EB43D9 /* SceneSerializer.cpp */; };
@@ -138,6 +141,9 @@
 		756689682694361F0007EA8D /* Material.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Material.cpp; sourceTree = "<group>"; };
 		756689692694361F0007EA8D /* Material.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Material.h; sourceTree = "<group>"; };
 		7566896F269451970007EA8D /* Buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Buffer.h; sourceTree = "<group>"; };
+		7566897126945F050007EA8D /* ShaderUniform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderUniform.h; sourceTree = "<group>"; };
+		756689732694614E0007EA8D /* OpenGlShaderUniform.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGlShaderUniform.cpp; sourceTree = "<group>"; };
+		756689742694614E0007EA8D /* OpenGlShaderUniform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGlShaderUniform.h; sourceTree = "<group>"; };
 		758265D92679F6DF0080169A /* ContetBrowserPannel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ContetBrowserPannel.cpp; sourceTree = "<group>"; };
 		758265DA2679F6DF0080169A /* ContetBrowserPannel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContetBrowserPannel.h; sourceTree = "<group>"; };
 		7589D23B2677574200EB43D9 /* yaml.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = yaml.xcodeproj; path = vendor/yaml/yaml.xcodeproj; sourceTree = "<group>"; };
@@ -419,6 +425,7 @@
 				B22FE6F72638473500C1640B /* Texture.h */,
 				B22FE6FF26385C3B00C1640B /* Shader.cpp */,
 				B22FE6FE26385C3B00C1640B /* Shader.h */,
+				7566897126945F050007EA8D /* ShaderUniform.h */,
 				B22FE70A26385EE600C1640B /* FrameBuffer.cpp */,
 				B22FE70B26385EE600C1640B /* FrameBuffer.h */,
 				B249623126399A140091C915 /* Camera.h */,
@@ -447,6 +454,8 @@
 				B22FE6FB2638482400C1640B /* OpenGLTexture.h */,
 				B22FE70326385C8A00C1640B /* OpenGLShader.cpp */,
 				B22FE70226385C8A00C1640B /* OpenGLShader.h */,
+				756689732694614E0007EA8D /* OpenGlShaderUniform.cpp */,
+				756689742694614E0007EA8D /* OpenGlShaderUniform.h */,
 				B22FE70626385ECE00C1640B /* OpenGLFrameBuffer.cpp */,
 				B22FE70726385ECE00C1640B /* OpenGLFrameBuffer.h */,
 			);
@@ -578,6 +587,7 @@
 				B2FE35152624B34000AFC236 /* Entrypoint.h in Headers */,
 				B2EAB33F262B23F2003D7FE6 /* MouseEvent.h in Headers */,
 				758265DC2679F6DF0080169A /* ContetBrowserPannel.h in Headers */,
+				7566897226945F050007EA8D /* ShaderUniform.h in Headers */,
 				B22FE70D26385EE600C1640B /* FrameBuffer.h in Headers */,
 				B28FE5BF262C87A500DC5E20 /* Input.h in Headers */,
 				750AA8E2265D52140031A3E0 /* Utils.h in Headers */,
@@ -595,6 +605,7 @@
 				7589D502267758DD00EB43D9 /* SceneSerializer.h in Headers */,
 				B22FE70926385ECE00C1640B /* OpenGLFrameBuffer.h in Headers */,
 				B2400F40263434F60051B868 /* TimeStep.h in Headers */,
+				756689762694614E0007EA8D /* OpenGlShaderUniform.h in Headers */,
 				B202805B2625DCD200BC7F39 /* Layer.h in Headers */,
 				B2028053262592DD00BC7F39 /* Log.h in Headers */,
 				B2496CB92639A8AF0091C915 /* stb_image.h in Headers */,
@@ -725,6 +736,7 @@
 				B227E5A32636DEB300DC3DFA /* Buffers.cpp in Sources */,
 				B249622B26397EE80091C915 /* RendererAPI.cpp in Sources */,
 				B27FE3132629E153000FD32D /* OpenGLGraphicsContext.cpp in Sources */,
+				756689752694614E0007EA8D /* OpenGlShaderUniform.cpp in Sources */,
 				B22FE70126385C3B00C1640B /* Shader.cpp in Sources */,
 				B27D6098263D3A3000954BB6 /* UUID.cpp in Sources */,
 				7566896A2694361F0007EA8D /* Material.cpp in Sources */,
