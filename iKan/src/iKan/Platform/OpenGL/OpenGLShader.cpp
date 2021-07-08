@@ -126,6 +126,7 @@ namespace iKan {
     }
 
     // ******************************************************************************
+    // Is it Premitive data type or not
     // ******************************************************************************
     static bool IsTypeStringResource(const std::string& type)
     {
@@ -244,6 +245,12 @@ namespace iKan {
     }
 
     // ******************************************************************************
+    // Parse the Uniform and store them in Shader class eg.
+    // uniform int a;
+    // uniform sampler2D b;
+    // uniform ABC abc;
+    // block  : struct block string "struct { ... }"
+    // domain : type of shader
     // ******************************************************************************
     void OpenGLShader::ParseUniform(const std::string& statement, ShaderDomain domain)
     {
@@ -284,7 +291,7 @@ namespace iKan {
             {
                 // Find struct
                 ShaderStruct* s = FindStruct(typeString);
-                IK_CORE_ASSERT(s, "");
+                IK_CORE_ASSERT(s, "No struct is created in the shader");
                 declaration = new OpenGLShaderUniformDeclaration(domain, s, name, count);
             }
             else
@@ -320,6 +327,7 @@ namespace iKan {
     }
 
     // ******************************************************************************
+    // Parse the structure and store them in Shader class. Vector of structure
     // block  : struct block string "struct { ... }"
     // domain : type of shader
     // ******************************************************************************
@@ -690,6 +698,227 @@ namespace iKan {
     {
         m_ShaderReloadedCallbacks.push_back(callback);
     }
+
+    // ******************************************************************************
+    // ******************************************************************************
+    void OpenGLShader::ResolveAndSetUniform(OpenGLShaderUniformDeclaration* uniform, Buffer buffer)
+    {
+        if (uniform->GetLocation() == -1)
+            return;
+
+        IK_CORE_ASSERT((uniform->GetLocation() != -1), "Uniform has invalid location!");
+
+        uint32_t offset = uniform->GetOffset();
+        switch (uniform->GetType())
+        {
+            case OpenGLShaderUniformDeclaration::Type::FLOAT32:
+                SetUniformFloat1(uniform->GetLocation(), *(float*)&buffer.Data[offset]);
+                break;
+            case OpenGLShaderUniformDeclaration::Type::INT32:
+                SetUniformInt1(uniform->GetLocation(), *(int32_t*)&buffer.Data[offset]);
+                break;
+            case OpenGLShaderUniformDeclaration::Type::VEC2:
+                SetUniformFloat2(uniform->GetLocation(), *(glm::vec2*)&buffer.Data[offset]);
+                break;
+            case OpenGLShaderUniformDeclaration::Type::VEC3:
+                SetUniformFloat3(uniform->GetLocation(), *(glm::vec3*)&buffer.Data[offset]);
+                break;
+            case OpenGLShaderUniformDeclaration::Type::VEC4:
+                SetUniformFloat4(uniform->GetLocation(), *(glm::vec4*)&buffer.Data[offset]);
+                break;
+            case OpenGLShaderUniformDeclaration::Type::MAT3:
+                SetUniformMat3(uniform->GetLocation(), *(glm::mat3*)&buffer.Data[offset]);
+                break;
+            case OpenGLShaderUniformDeclaration::Type::MAT4:
+                SetUniformMat4(uniform->GetLocation(), *(glm::mat4*)&buffer.Data[offset]);
+                break;
+            case OpenGLShaderUniformDeclaration::Type::STRUCT:
+                UploadUniformStruct(uniform, buffer.Data, offset);
+                break;
+            default:
+                IK_CORE_ASSERT(false, "Unknown uniform type!");
+        }
+    }
+
+    // ******************************************************************************
+    // ******************************************************************************
+    void OpenGLShader::ResolveAndSetUniformField(const OpenGLShaderUniformDeclaration& field, std::byte* data, int32_t offset)
+    {
+        switch (field.GetType())
+        {
+            case OpenGLShaderUniformDeclaration::Type::FLOAT32:
+                SetUniformFloat1(field.GetLocation(), *(float*)&data[offset]);
+                break;
+            case OpenGLShaderUniformDeclaration::Type::INT32:
+                SetUniformInt1(field.GetLocation(), *(int32_t*)&data[offset]);
+                break;
+            case OpenGLShaderUniformDeclaration::Type::VEC2:
+                SetUniformFloat2(field.GetLocation(), *(glm::vec2*)&data[offset]);
+                break;
+            case OpenGLShaderUniformDeclaration::Type::VEC3:
+                SetUniformFloat3(field.GetLocation(), *(glm::vec3*)&data[offset]);
+                break;
+            case OpenGLShaderUniformDeclaration::Type::VEC4:
+                SetUniformFloat4(field.GetLocation(), *(glm::vec4*)&data[offset]);
+                break;
+            case OpenGLShaderUniformDeclaration::Type::MAT3:
+                SetUniformMat3(field.GetLocation(), *(glm::mat3*)&data[offset]);
+                break;
+            case OpenGLShaderUniformDeclaration::Type::MAT4:
+                SetUniformMat4(field.GetLocation(), *(glm::mat4*)&data[offset]);
+                break;
+            default:
+                IK_CORE_ASSERT(false, "Unknown uniform type!");
+        }
+    }
+
+    // ******************************************************************************
+    // ******************************************************************************
+    void OpenGLShader::ResolveAndSetUniformArray(OpenGLShaderUniformDeclaration* uniform, Buffer buffer)
+    {
+        //HZ_CORE_ASSERT(uniform->GetLocation() != -1, "Uniform has invalid location!");
+
+        uint32_t offset = uniform->GetOffset();
+        switch (uniform->GetType())
+        {
+            case OpenGLShaderUniformDeclaration::Type::FLOAT32:
+                SetUniformFloat1(uniform->GetLocation(), *(float*)&buffer.Data[offset]);
+                break;
+            case OpenGLShaderUniformDeclaration::Type::INT32:
+                SetUniformInt1(uniform->GetLocation(), *(int32_t*)&buffer.Data[offset]);
+                break;
+            case OpenGLShaderUniformDeclaration::Type::VEC2:
+                SetUniformFloat2(uniform->GetLocation(), *(glm::vec2*)&buffer.Data[offset]);
+                break;
+            case OpenGLShaderUniformDeclaration::Type::VEC3:
+                SetUniformFloat3(uniform->GetLocation(), *(glm::vec3*)&buffer.Data[offset]);
+                break;
+            case OpenGLShaderUniformDeclaration::Type::VEC4:
+                SetUniformFloat4(uniform->GetLocation(), *(glm::vec4*)&buffer.Data[offset]);
+                break;
+            case OpenGLShaderUniformDeclaration::Type::MAT3:
+                SetUniformMat3(uniform->GetLocation(), *(glm::mat3*)&buffer.Data[offset]);
+                break;
+            case OpenGLShaderUniformDeclaration::Type::MAT4:
+                SetUniformMat4Array(uniform->GetLocation(), *(glm::mat4*)&buffer.Data[offset], uniform->GetCount());
+                break;
+            case OpenGLShaderUniformDeclaration::Type::STRUCT:
+                UploadUniformStruct(uniform, buffer.Data, offset);
+                break;
+            default:
+                IK_CORE_ASSERT(false, "Unknown uniform type!");
+        }
+    }
+
+    // ******************************************************************************
+    // ******************************************************************************
+    void OpenGLShader::ResolveAndSetUniforms(const Ref<OpenGLShaderUniformBufferDeclaration>& decl, Buffer buffer)
+    {
+        const ShaderUniformList& uniforms = decl->GetUniformDeclarations();
+        for (size_t i = 0; i < uniforms.size(); i++)
+        {
+            OpenGLShaderUniformDeclaration* uniform = (OpenGLShaderUniformDeclaration*)uniforms[i];
+            if (uniform->IsArray())
+                ResolveAndSetUniformArray(uniform, buffer);
+            else
+                ResolveAndSetUniform(uniform, buffer);
+        }
+    }
+
+    // ******************************************************************************
+    // ******************************************************************************
+    void OpenGLShader::UploadUniformBuffer(const UniformBufferBase& uniformBuffer)
+    {
+        for (uint32_t i = 0; i < uniformBuffer.GetUniformCount(); i++)
+        {
+            const UniformDecl& decl = uniformBuffer.GetUniforms()[i];
+            switch (decl.Type)
+            {
+                case UniformType::None:
+                {
+                    IK_CORE_ASSERT(false, "Invalid");
+                }
+                case UniformType::Int32:
+                {
+                    const std::string& name = decl.Name;
+                    int32_t value = *(int32_t*)(uniformBuffer.GetBuffer() + decl.Offset);
+                    SetUniformInt1(name, value);
+                }
+                case UniformType::Uint32:
+                {
+                    const std::string& name = decl.Name;
+                    uint32_t value = *(uint32_t*)(uniformBuffer.GetBuffer() + decl.Offset);
+                    SetUniformInt1(name, value);
+                }
+                case UniformType::Float:
+                {
+                    const std::string& name = decl.Name;
+                    float value = *(float*)(uniformBuffer.GetBuffer() + decl.Offset);
+                    SetUniformFloat1(name, value);
+                }
+                case UniformType::Float3:
+                {
+                    const std::string& name = decl.Name;
+                    glm::vec3& values = *(glm::vec3*)(uniformBuffer.GetBuffer() + decl.Offset);
+                    SetUniformFloat3(name, values);
+                }
+                case UniformType::Float2:
+                {
+                    const std::string& name = decl.Name;
+                    glm::vec2& values = *(glm::vec2*)(uniformBuffer.GetBuffer() + decl.Offset);
+                    SetUniformFloat2(name, values);
+                }
+                case UniformType::Float4:
+                {
+                    const std::string& name = decl.Name;
+                    glm::vec4& values = *(glm::vec4*)(uniformBuffer.GetBuffer() + decl.Offset);
+                    SetUniformFloat4(name, values);
+                }
+                case UniformType::Matrix3x3:
+                {
+                    const std::string& name = decl.Name;
+                    glm::mat3& values = *(glm::mat3*)(uniformBuffer.GetBuffer() + decl.Offset);
+                    SetUniformMat3(name, values);
+                }
+                case UniformType::Matrix4x4:
+                {
+                    const std::string& name = decl.Name;
+                    glm::mat4& values = *(glm::mat4*)(uniformBuffer.GetBuffer() + decl.Offset);
+                    SetUniformMat4(name, values);
+                }
+            }
+        }
+    }
+
+    // ******************************************************************************
+    // ******************************************************************************
+    void OpenGLShader::SetVSMaterialUniformBuffer(Buffer buffer)
+    {
+        glUseProgram(m_RendererId);
+        ResolveAndSetUniforms(m_VSMaterialUniformBuffer, buffer);
+    }
+
+    // ******************************************************************************
+    // ******************************************************************************
+    void OpenGLShader::SetPSMaterialUniformBuffer(Buffer buffer)
+    {
+        glUseProgram(m_RendererId);
+        ResolveAndSetUniforms(m_PSMaterialUniformBuffer, buffer);
+    }
+
+    // ******************************************************************************
+    // ******************************************************************************
+    void OpenGLShader::UploadUniformStruct(OpenGLShaderUniformDeclaration* uniform, std::byte* buffer, uint32_t offset)
+    {
+        const ShaderStruct& s = uniform->GetShaderUniformStruct();
+        const auto& fields = s.GetFields();
+        for (size_t k = 0; k < fields.size(); k++)
+        {
+            OpenGLShaderUniformDeclaration* field = (OpenGLShaderUniformDeclaration*)fields[k];
+            ResolveAndSetUniformField(*field, buffer, offset);
+            offset += field->m_Size;
+        }
+    }
     
     //-------------------------------- Uniforms --------------------------------
     void OpenGLShader::SetUniformInt1(const std::string& name, int value)
@@ -731,7 +960,52 @@ namespace iKan {
     {
         glUniform4f(GetUniformLocation(name), value.x, value.y, value.z, value.w);
     }
-    
+
+    void OpenGLShader::SetUniformInt1(uint32_t location, int value)
+    {
+        glUniform1i(location, value);
+    }
+
+    void OpenGLShader::SetIntArray(uint32_t location, int *values, uint32_t count)
+    {
+        glUniform1iv(location, count, values);
+    }
+
+    void OpenGLShader::SetUniformMat4(uint32_t location, const glm::mat4 &value)
+    {
+        glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value));
+    }
+
+    void OpenGLShader::SetUniformMat3(uint32_t location, const glm::mat3 &value)
+    {
+        glUniformMatrix3fv(location, 1, GL_FALSE, glm::value_ptr(value));
+    }
+
+    void OpenGLShader::SetUniformMat4Array(uint32_t location, const glm::mat4& values, uint32_t count)
+    {
+        glUniformMatrix4fv(location, count, GL_FALSE, glm::value_ptr(values));
+    }
+
+    void OpenGLShader::SetUniformFloat1(uint32_t location, float value)
+    {
+        glUniform1f(location, value);
+    }
+
+    void OpenGLShader::SetUniformFloat2(uint32_t location, const glm::vec2 &value)
+    {
+        glUniform2f(location, value.x, value.y);
+    }
+
+    void OpenGLShader::SetUniformFloat3(uint32_t location, const glm::vec3 &value)
+    {
+        glUniform3f(location, value.x, value.y, value.z);
+    }
+
+    void OpenGLShader::SetUniformFloat4(uint32_t location, const glm::vec4 &value)
+    {
+        glUniform4f(location, value.x, value.y, value.z, value.w);
+    }
+
     // ******************************************************************************
     // get the uniform Location
     // ******************************************************************************

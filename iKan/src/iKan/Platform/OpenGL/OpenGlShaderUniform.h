@@ -14,7 +14,7 @@
 namespace iKan {
 
     // ******************************************************************************
-    // Stores the type of shader Resources
+    // Stores the type of Shader datat type resources, like "sampler2d ... etc"
     // ******************************************************************************
     class OpenGLShaderResourceDeclaration : public ShaderResourceDeclaration
     {
@@ -48,7 +48,8 @@ namespace iKan {
     };
 
     // ******************************************************************************
-    // Shader Uniform buffer implementation. Stores the Type and count of data
+    // Shader Uniform buffer implementation. Stores the Type and count of data from
+    // the strcut
     // ******************************************************************************
     class OpenGLShaderUniformDeclaration : public ShaderUniformDeclaration
     {
@@ -93,9 +94,9 @@ namespace iKan {
     private:
         std::string m_Name;
 
-        uint32_t m_Size;
-        uint32_t m_Count;
-        uint32_t m_Offset;
+        uint32_t m_Size   = 0;
+        uint32_t m_Count  = 0;
+        uint32_t m_Offset = 0;
 
         Type m_Type;
         ShaderDomain m_Domain;
