@@ -10,6 +10,7 @@
 #pragma once
 
 #include <iKan/Renderer/Shader.h>
+#include <iKan/Platform/OpenGL/OpenGlShaderUniform.h>
 #include <glad/glad.h>
 
 namespace iKan {
@@ -47,9 +48,19 @@ namespace iKan {
 
     private:
         void Compile();
+        void Parse();
+
+        void ParseUniformStruct(const std::string& block, ShaderDomain domain);
+        void ParseUniform(const std::string& statement, ShaderDomain domain);
+
         int32_t GetUniformLocation(const std::string& name);
         std::unordered_map<GLenum, std::string> PreprocessFile(const std::string& path);
         std::string ReadFromFile(const std::string& path);
+
+        ShaderStruct* FindStruct(const std::string& name);
+        void ResolveUniforms();
+
+        static GLenum ShaderTypeFromString(const std::string& type);
 
     private:
         bool m_Loaded    = false;
@@ -59,10 +70,17 @@ namespace iKan {
         std::string m_Name, m_AssetPath;
 
         std::unordered_map<std::string, int32_t> m_LocationMap;
-        std::unordered_map<GLenum, std::string>  m_ShaderSource;
-
         std::unordered_map<GLenum, std::string>  m_Source;
         std::vector<ShaderReloadedCallback>      m_ShaderReloadedCallbacks;
+
+        ShaderUniformBufferList m_VSRendererUniformBuffers;
+        ShaderUniformBufferList m_PSRendererUniformBuffers;
+
+        Ref<OpenGLShaderUniformBufferDeclaration> m_VSMaterialUniformBuffer;
+        Ref<OpenGLShaderUniformBufferDeclaration> m_PSMaterialUniformBuffer;
+
+        ShaderResourceList m_Resources;
+        ShaderStructList m_Structs;
     };
     
 }

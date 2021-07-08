@@ -36,5 +36,117 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D261D3E1-C2F5-413B-BC35-0A2FBBE90F66"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iKan/src/iKan/Platform/OpenGL/OpenGLShader.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "356"
+            endingLineNumber = "356"
+            landmarkName = "OpenGLShader::ParseUniformStruct(block, domain)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5B4C05FC-9226-47C1-BAD2-626EC3ADA521"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iKan/src/iKan/Platform/OpenGL/OpenGLShader.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "337"
+            endingLineNumber = "337"
+            landmarkName = "OpenGLShader::ParseUniformStruct(block, domain)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "22D406E6-F72A-42F6-8D22-975CCA622264"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iKan/src/iKan/Platform/OpenGL/OpenGLShader.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "351"
+            endingLineNumber = "351"
+            landmarkName = "OpenGLShader::ParseUniformStruct(block, domain)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "22D406E6-F72A-42F6-8D22-975CCA622264 - 5365a5fb7bcad364"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "iKan::OpenGLShader::ParseUniformStruct(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; const&amp;, iKan::ShaderDomain)"
+                  moduleName = "Editor"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ashish/iKan/Github/iKan/iKan/src/iKan/Platform/OpenGL/OpenGLShader.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "322"
+                  endingLineNumber = "322"
+                  offsetFromSymbolStart = "664">
+               </Location>
+               <Location
+                  uuid = "22D406E6-F72A-42F6-8D22-975CCA622264 - 5365a5fb7bcad364"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "iKan::OpenGLShader::ParseUniformStruct(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; const&amp;, iKan::ShaderDomain)"
+                  moduleName = "Editor"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ashish/iKan/Github/iKan/iKan/src/iKan/Platform/OpenGL/OpenGLShader.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "322"
+                  endingLineNumber = "322"
+                  offsetFromSymbolStart = "717">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B365A397-B626-410A-B2A5-8AE3BAB0015B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iKan/src/iKan/Platform/OpenGL/OpenGLShader.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "353"
+            endingLineNumber = "353"
+            landmarkName = "OpenGLShader::ParseUniformStruct(block, domain)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0AD9BCFD-AF44-4893-ABD1-058BBF213F31"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iKan/src/iKan/Platform/OpenGL/OpenGLShader.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "362"
+            endingLineNumber = "362"
+            landmarkName = "OpenGLShader::ParseUniformStruct(block, domain)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

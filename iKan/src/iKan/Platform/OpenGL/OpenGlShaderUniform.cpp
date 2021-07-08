@@ -133,6 +133,14 @@ namespace iKan {
     }
 
     // ******************************************************************************
+    // OpenGLShaderUniformBufferDeclaration constructor
+    // ******************************************************************************
+    OpenGLShaderUniformBufferDeclaration::OpenGLShaderUniformBufferDeclaration(const std::string& name, ShaderDomain domain)
+    : m_Name(name), m_Domain(domain), m_Size(0), m_Register(0)
+    {
+    }
+
+    // ******************************************************************************
     // Push the uniform in the buffer
     // ******************************************************************************
     void OpenGLShaderUniformBufferDeclaration::PushUniform(OpenGLShaderUniformDeclaration* uniform)

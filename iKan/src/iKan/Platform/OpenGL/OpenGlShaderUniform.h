@@ -105,17 +105,6 @@ namespace iKan {
     };
 
     // ******************************************************************************
-    // ******************************************************************************
-    struct GLShaderUniformField
-    {
-        OpenGLShaderUniformDeclaration::Type type;
-        std::string name;
-        uint32_t count;
-        mutable uint32_t size;
-        mutable int32_t location;
-    };
-
-    // ******************************************************************************
     // Shader Buffer that stores the Unioform declaration for Shader
     // ******************************************************************************
     class OpenGLShaderUniformBufferDeclaration : public ShaderUniformBufferDeclaration
@@ -141,7 +130,7 @@ namespace iKan {
 
         uint32_t GetRegister() const override { return m_Register; }
         uint32_t GetSize() const override { return m_Size; }
-        
+
         const ShaderUniformList& GetUniformDeclarations() const override { return m_Uniforms; }
         ShaderUniformDeclaration* FindUniform(const std::string& name) override;
         
