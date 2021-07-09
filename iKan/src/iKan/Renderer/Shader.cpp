@@ -48,21 +48,28 @@ namespace iKan {
     {
         IK_CORE_INFO("Loadinh shader from path {0} into library", path.c_str());
 
-        Ref<Shader> shader = Shader::Create(path);
-        m_Shaders[shader->GetName()] = shader;
-        return shader;
+        const std::string shaderName = Utils::GetNameFromFilePath(path);
+        if (m_Shaders.find(shaderName) == m_Shaders.end())
+        {
+            Ref<Shader> shader    = Shader::Create(path);
+            m_Shaders[shaderName] = shader;
+        }
+        return m_Shaders[shaderName];
     }
     
     // ******************************************************************************
     // Loadinh shader into library
     // ******************************************************************************
-    Ref<Shader> ShaderLibrary::Load(const std::string&name, const std::string& filapath)
+    Ref<Shader> ShaderLibrary::Load(const std::string&name, const std::string& filepath)
     {
         IK_CORE_INFO("Loadinh shader {0} into library", name.c_str());
 
-        Ref<Shader> shader = Shader::Create(filapath);
-        m_Shaders[name] = shader;
-        return shader;
+        if (m_Shaders.find(name) == m_Shaders.end())
+        {
+            Ref<Shader> shader  = Shader::Create(filepath);
+            m_Shaders[name]     = shader;
+        }
+        return m_Shaders[name];
     }
 
     // ******************************************************************************

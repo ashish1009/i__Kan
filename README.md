@@ -15,28 +15,6 @@ You can clone the repository to a local destination using git:
 
 Make sure that you do a `--recursive` clone to fetch all of the submodules!
 
-## Features
-1. GLFW Window can be created.
-2. Renderer APIs are available for OpenGL.
-3. Imgui Wrappers are available.
-4. Base application and layer class.
-5. Content browser pannel
-6. UI Editor to that shoes viewport information.
-7. New scene can be created inemty editor
-8. Open Scene from already saved file
-9. Save the current scene to any folder
-10. Add feature to Upload texture by darg and drop
-11.  Add Buffer class
-12. Unifrom Buffers added in Shader class
-
-## Road Map
-- Add material class (on hold for Buffer class and uniform shader)
-- Add Mesh and assimp library (Library added, on hold or materials)
-- Add Side menu for content browser pannel (partially developed)
-- Add Light and multiple shaders
-- Add Guizmo
-
-
 ## How to use Library
 
 ### C++ Version
@@ -88,8 +66,29 @@ In this application we can Push the user defined layer in the current applicatio
 -------------
 User defined layer can be defined in Client. This should be derived from `iKan::Layer`. 
 
+## Features
+1. GLFW Window can be created.
+2. Renderer APIs are available for OpenGL.
+3. Imgui Wrappers are available.
+4. Base application and layer class.
+5. Content browser pannel
+6. UI Editor to that shoes viewport information.
+7. New scene can be created inemty editor
+8. Open Scene from already saved file
+9. Save the current scene to any folder
+10. Add feature to Upload texture by darg and drop
+11. Add Buffer class
+12. Unifrom Buffers added in Shader class
+13. Material class 
 
-### Bugs Identified (just to keep trac while developing)
+## Road Map
+- Add Mesh and assimp library (Library added, on hold or materials)
+- Add Side menu for content browser pannel (partially developed)
+- Add Light and multiple shaders
+- Add Guizmo
+
+### Bugs Identified (just to keep track while developing)
+--------------------------------------------------------------------
 1. File tile menu not jumping on any "iKan" folder
 2. Zoom not working on Editor camera
 

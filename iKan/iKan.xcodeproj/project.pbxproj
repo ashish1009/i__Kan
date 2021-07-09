@@ -149,6 +149,50 @@
 		7589D23B2677574200EB43D9 /* yaml.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = yaml.xcodeproj; path = vendor/yaml/yaml.xcodeproj; sourceTree = "<group>"; };
 		7589D4FF267758DD00EB43D9 /* SceneSerializer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneSerializer.cpp; sourceTree = "<group>"; };
 		7589D500267758DD00EB43D9 /* SceneSerializer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneSerializer.h; sourceTree = "<group>"; };
+		75D8FACF269753EB0048B4BF /* PBR_Static.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PBR_Static.glsl; sourceTree = "<group>"; };
+		75D8FAD3269753EB0048B4BF /* PBR_Anim.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PBR_Anim.glsl; sourceTree = "<group>"; };
+		75D8FAD7269754310048B4BF /* NoTexture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NoTexture.png; sourceTree = "<group>"; };
+		75D8FAD9269754310048B4BF /* Pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pause.png; sourceTree = "<group>"; };
+		75D8FADA269754310048B4BF /* Play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Play.png; sourceTree = "<group>"; };
+		75D8FADC269754310048B4BF /* h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = h.png; sourceTree = "<group>"; };
+		75D8FADD269754310048B4BF /* cpp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cpp.png; sourceTree = "<group>"; };
+		75D8FADE269754310048B4BF /* File.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = File.png; sourceTree = "<group>"; };
+		75D8FADF269754310048B4BF /* Home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Home.png; sourceTree = "<group>"; };
+		75D8FAE0269754310048B4BF /* Search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Search.png; sourceTree = "<group>"; };
+		75D8FAE1269754310048B4BF /* Folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Folder.png; sourceTree = "<group>"; };
+		75D8FAE2269754310048B4BF /* Png.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Png.png; sourceTree = "<group>"; };
+		75D8FAE3269754310048B4BF /* Forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Forward.png; sourceTree = "<group>"; };
+		75D8FAE4269754310048B4BF /* Jpg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Jpg.png; sourceTree = "<group>"; };
+		75D8FAE5269754310048B4BF /* c.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = c.png; sourceTree = "<group>"; };
+		75D8FAE6269754310048B4BF /* FolderMac.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FolderMac.png; sourceTree = "<group>"; };
+		75D8FAE7269754310048B4BF /* Back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Back.png; sourceTree = "<group>"; };
+		75D8FAE9269754310048B4BF /* container.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = container.png; sourceTree = "<group>"; };
+		75D8FAEA269754310048B4BF /* DefaultTexture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DefaultTexture.png; sourceTree = "<group>"; };
+		75D8FAEB269754310048B4BF /* metal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = metal.png; sourceTree = "<group>"; };
+		75D8FAEC269754310048B4BF /* wood.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wood.png; sourceTree = "<group>"; };
+		75D8FAED269754310048B4BF /* matrix.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = matrix.png; sourceTree = "<group>"; };
+		75D8FAEE269754310048B4BF /* grass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grass.png; sourceTree = "<group>"; };
+		75D8FAEF269754310048B4BF /* window.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = window.png; sourceTree = "<group>"; };
+		75D8FAF0269754310048B4BF /* checkerboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkerboard.png; sourceTree = "<group>"; };
+		75D8FAF1269754310048B4BF /* marble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = marble.png; sourceTree = "<group>"; };
+		75D8FAF2269754310048B4BF /* smile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smile.png; sourceTree = "<group>"; };
+		75D8FAF5269754310048B4BF /* source_attribution.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = source_attribution.txt; sourceTree = "<group>"; };
+		75D8FAF6269754310048B4BF /* backpack.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = backpack.obj; sourceTree = "<group>"; };
+		75D8FAF7269754310048B4BF /* diffuse.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = diffuse.jpg; sourceTree = "<group>"; };
+		75D8FAF8269754310048B4BF /* specular.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = specular.jpg; sourceTree = "<group>"; };
+		75D8FAF9269754310048B4BF /* normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = normal.png; sourceTree = "<group>"; };
+		75D8FAFA269754310048B4BF /* ao.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ao.jpg; sourceTree = "<group>"; };
+		75D8FAFB269754310048B4BF /* roughness.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = roughness.jpg; sourceTree = "<group>"; };
+		75D8FAFC269754310048B4BF /* backpack.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = backpack.mtl; sourceTree = "<group>"; };
+		75D8FAFE269754310048B4BF /* Example.iKan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Example.iKan; sourceTree = "<group>"; };
+		75D8FB00269754310048B4BF /* Fonts.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fonts.otf; sourceTree = "<group>"; };
+		75D8FB02269754310048B4BF /* OpenSans-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Light.ttf"; sourceTree = "<group>"; };
+		75D8FB03269754310048B4BF /* OpenSans-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Italic.ttf"; sourceTree = "<group>"; };
+		75D8FB04269754310048B4BF /* OpenSans-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-ExtraBold.ttf"; sourceTree = "<group>"; };
+		75D8FB05269754310048B4BF /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
+		75D8FB06269754310048B4BF /* LICENSE.webarchive */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = LICENSE.webarchive; sourceTree = "<group>"; };
+		75D8FB07269754310048B4BF /* OpenSans-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
+		75D8FB08269754310048B4BF /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		75F34FAC269365C5006A2465 /* Mesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
 		75F34FAD269365C5006A2465 /* Mesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mesh.h; sourceTree = "<group>"; };
 		75F34FB42693685A006A2465 /* AABB.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AABB.h; sourceTree = "<group>"; };
@@ -266,6 +310,135 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		75D8FAD4269754310048B4BF /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				75D8FAD5269754310048B4BF /* resources */,
+				75D8FAF3269754310048B4BF /* objects */,
+				75D8FAFD269754310048B4BF /* scene */,
+				75D8FAFF269754310048B4BF /* Fonts */,
+			);
+			path = assets;
+			sourceTree = "<group>";
+		};
+		75D8FAD5269754310048B4BF /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				75D8FAD6269754310048B4BF /* Default */,
+				75D8FAD8269754310048B4BF /* Icons */,
+				75D8FADB269754310048B4BF /* ContentBrowser */,
+				75D8FAE8269754310048B4BF /* texture */,
+			);
+			path = resources;
+			sourceTree = "<group>";
+		};
+		75D8FAD6269754310048B4BF /* Default */ = {
+			isa = PBXGroup;
+			children = (
+				75D8FAD7269754310048B4BF /* NoTexture.png */,
+			);
+			path = Default;
+			sourceTree = "<group>";
+		};
+		75D8FAD8269754310048B4BF /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				75D8FAD9269754310048B4BF /* Pause.png */,
+				75D8FADA269754310048B4BF /* Play.png */,
+			);
+			path = Icons;
+			sourceTree = "<group>";
+		};
+		75D8FADB269754310048B4BF /* ContentBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				75D8FADC269754310048B4BF /* h.png */,
+				75D8FADD269754310048B4BF /* cpp.png */,
+				75D8FADE269754310048B4BF /* File.png */,
+				75D8FADF269754310048B4BF /* Home.png */,
+				75D8FAE0269754310048B4BF /* Search.png */,
+				75D8FAE1269754310048B4BF /* Folder.png */,
+				75D8FAE2269754310048B4BF /* Png.png */,
+				75D8FAE3269754310048B4BF /* Forward.png */,
+				75D8FAE4269754310048B4BF /* Jpg.png */,
+				75D8FAE5269754310048B4BF /* c.png */,
+				75D8FAE6269754310048B4BF /* FolderMac.png */,
+				75D8FAE7269754310048B4BF /* Back.png */,
+			);
+			path = ContentBrowser;
+			sourceTree = "<group>";
+		};
+		75D8FAE8269754310048B4BF /* texture */ = {
+			isa = PBXGroup;
+			children = (
+				75D8FAE9269754310048B4BF /* container.png */,
+				75D8FAEA269754310048B4BF /* DefaultTexture.png */,
+				75D8FAEB269754310048B4BF /* metal.png */,
+				75D8FAEC269754310048B4BF /* wood.png */,
+				75D8FAED269754310048B4BF /* matrix.png */,
+				75D8FAEE269754310048B4BF /* grass.png */,
+				75D8FAEF269754310048B4BF /* window.png */,
+				75D8FAF0269754310048B4BF /* checkerboard.png */,
+				75D8FAF1269754310048B4BF /* marble.png */,
+				75D8FAF2269754310048B4BF /* smile.png */,
+			);
+			path = texture;
+			sourceTree = "<group>";
+		};
+		75D8FAF3269754310048B4BF /* objects */ = {
+			isa = PBXGroup;
+			children = (
+				75D8FAF4269754310048B4BF /* backpack */,
+			);
+			path = objects;
+			sourceTree = "<group>";
+		};
+		75D8FAF4269754310048B4BF /* backpack */ = {
+			isa = PBXGroup;
+			children = (
+				75D8FAF5269754310048B4BF /* source_attribution.txt */,
+				75D8FAF6269754310048B4BF /* backpack.obj */,
+				75D8FAF7269754310048B4BF /* diffuse.jpg */,
+				75D8FAF8269754310048B4BF /* specular.jpg */,
+				75D8FAF9269754310048B4BF /* normal.png */,
+				75D8FAFA269754310048B4BF /* ao.jpg */,
+				75D8FAFB269754310048B4BF /* roughness.jpg */,
+				75D8FAFC269754310048B4BF /* backpack.mtl */,
+			);
+			path = backpack;
+			sourceTree = "<group>";
+		};
+		75D8FAFD269754310048B4BF /* scene */ = {
+			isa = PBXGroup;
+			children = (
+				75D8FAFE269754310048B4BF /* Example.iKan */,
+			);
+			path = scene;
+			sourceTree = "<group>";
+		};
+		75D8FAFF269754310048B4BF /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				75D8FB00269754310048B4BF /* Fonts.otf */,
+				75D8FB01269754310048B4BF /* OpenSans */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		75D8FB01269754310048B4BF /* OpenSans */ = {
+			isa = PBXGroup;
+			children = (
+				75D8FB02269754310048B4BF /* OpenSans-Light.ttf */,
+				75D8FB03269754310048B4BF /* OpenSans-Italic.ttf */,
+				75D8FB04269754310048B4BF /* OpenSans-ExtraBold.ttf */,
+				75D8FB05269754310048B4BF /* OpenSans-Bold.ttf */,
+				75D8FB06269754310048B4BF /* LICENSE.webarchive */,
+				75D8FB07269754310048B4BF /* OpenSans-ExtraBoldItalic.ttf */,
+				75D8FB08269754310048B4BF /* OpenSans-Regular.ttf */,
+			);
+			path = OpenSans;
+			sourceTree = "<group>";
+		};
 		75F34FB32693683B006A2465 /* Math */ = {
 			isa = PBXGroup;
 			children = (
@@ -316,6 +489,7 @@
 		B24010A62634551B0051B868 /* Editor */ = {
 			isa = PBXGroup;
 			children = (
+				75D8FAD4269754310048B4BF /* assets */,
 				B249623526399AA50091C915 /* EditorCamera.cpp */,
 				B249623426399AA40091C915 /* EditorCamera.h */,
 				B2A1C11B263EAE6800606017 /* SceneHierarchyPannel.cpp */,
@@ -473,6 +647,8 @@
 		B2E1A03A263AC3CF00889B3F /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				75D8FAD3269753EB0048B4BF /* PBR_Anim.glsl */,
+				75D8FACF269753EB0048B4BF /* PBR_Static.glsl */,
 				B2E1A03B263AC3CF00889B3F /* BatchRenderer2DShader.glsl */,
 			);
 			path = shaders;

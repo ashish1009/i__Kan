@@ -44,31 +44,11 @@ namespace iKan {
         uint32_t GetFlags() const { return m_MaterialFlags; }
         void SetFlag(MaterialFlag flag) { m_MaterialFlags |= (uint32_t)flag; }
 
+        void Set(const std::string& name, const Ref<Texture>& texture);
+        void Set(const std::string& name, const Ref<CubeMapTexture>& texture);
+
         template <typename T>
         void Set(const std::string& name, const T& value);
-//        {
-//            auto decl = FindUniformDeclaration(name);
-//            IK_CORE_ASSERT(decl, "Could not find uniform with name 'x'");
-//            auto& buffer = GetUniformBufferTarget(decl);
-//            buffer.Write((std::byte*)&value, decl->GetSize(), decl->GetOffset());
-//
-//            for (auto mi : m_MaterialInstances)
-//                mi->OnMaterialValueUpdated(decl);
-//        }
-
-        void Set(const std::string& name, const Ref<Texture>& texture)
-        {
-            auto decl = FindResourceDeclaration(name);
-            uint32_t slot = decl->GetRegister();
-            if (m_Textures.size() <= slot)
-                m_Textures.resize((size_t)slot + 1);
-            m_Textures[slot] = texture;
-        }
-
-        void Set(const std::string& name, const Ref<CubeMapTexture>& texture)
-        {
-            Set(name, (const Ref<Texture>&)texture);
-        }
 
         template<typename T>
         T& Get(const std::string& name)
@@ -121,6 +101,9 @@ namespace iKan {
         MaterialInstance(const Ref<Material>& material, const std::string& name = "");
         virtual ~MaterialInstance();
 
+        void Set(const std::string& name, const Ref<Texture>& texture);
+        void Set(const std::string& name, const Ref<CubeMapTexture>& texture);
+
         template <typename T>
         void Set(const std::string& name, const T& value)
         {
@@ -133,25 +116,6 @@ namespace iKan {
             buffer.Write((std::byte*)& value, decl->GetSize(), decl->GetOffset());
 
             m_OverriddenValues.insert(name);
-        }
-
-        void Set(const std::string& name, const Ref<Texture>& texture)
-        {
-            auto decl = m_Material->FindResourceDeclaration(name);
-            if (!decl)
-            {
-                IK_CORE_WARN("Cannot find material property: ", name);
-                return;
-            }
-            uint32_t slot = decl->GetRegister();
-            if (m_Textures.size() <= slot)
-                m_Textures.resize((size_t)slot + 1);
-            m_Textures[slot] = texture;
-        }
-
-        void Set(const std::string& name, const Ref<CubeMapTexture>& texture)
-        {
-            Set(name, (const Ref<Texture>&)texture);
         }
 
         template<typename T>

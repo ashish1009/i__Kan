@@ -212,6 +212,8 @@ namespace iKan {
     // ******************************************************************************
     void OpenGLShader::Parse()
     {
+        IK_CORE_INFO("Parse the shader {0}", m_Name.c_str());
+
         const char* token;
         const char* vstr;
         const char* fstr;
@@ -254,6 +256,8 @@ namespace iKan {
     // ******************************************************************************
     void OpenGLShader::ParseUniform(const std::string& statement, ShaderDomain domain)
     {
+        IK_CORE_INFO("Parse the Uniform from Shader {0}", m_Name.c_str());
+
         std::vector<std::string> tokens = Tokenize(statement);
         uint32_t index = 0;
 
@@ -333,6 +337,8 @@ namespace iKan {
     // ******************************************************************************
     void OpenGLShader::ParseUniformStruct(const std::string& block, ShaderDomain domain)
     {
+        IK_CORE_INFO("Parse the Uniform struct Shader {0}", m_Name.c_str());
+
         // get each word from the block and store them in vector
         std::vector<std::string> tokens = Tokenize(block);
 
@@ -378,6 +384,8 @@ namespace iKan {
     // ******************************************************************************
     void OpenGLShader::ResolveUniforms()
     {
+        IK_CORE_INFO("Resolve the uniforms from shader {0}", m_Name.c_str());
+
         glUseProgram(m_RendererId);
 
         for (size_t i = 0; i < m_VSRendererUniformBuffers.size(); i++)

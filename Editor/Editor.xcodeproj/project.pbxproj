@@ -65,25 +65,9 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B27D609E263D9FFE00954BB6 /* assets */ = {
-			isa = PBXGroup;
-			children = (
-				B27D609F263DA00600954BB6 /* resources */,
-			);
-			path = assets;
-			sourceTree = "<group>";
-		};
-		B27D609F263DA00600954BB6 /* resources */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = resources;
-			sourceTree = "<group>";
-		};
 		B2FE34FB26248AF200AFC236 = {
 			isa = PBXGroup;
 			children = (
-				B27D609E263D9FFE00954BB6 /* assets */,
 				B2FE350626248AF200AFC236 /* src */,
 				B2FE350526248AF200AFC236 /* Products */,
 				B2FE35162624B5CA00AFC236 /* Frameworks */,
