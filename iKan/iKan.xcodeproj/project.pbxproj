@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		750AA8E1265D52140031A3E0 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 750AA8DF265D52140031A3E0 /* Utils.cpp */; };
 		750AA8E2265D52140031A3E0 /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 750AA8E0265D52140031A3E0 /* Utils.h */; };
+		754ACD7F269CA0E400CC6563 /* RenderPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 754ACD7D269CA0E400CC6563 /* RenderPass.cpp */; };
+		754ACD80269CA0E400CC6563 /* RenderPass.h in Headers */ = {isa = PBXBuildFile; fileRef = 754ACD7E269CA0E400CC6563 /* RenderPass.h */; };
+		754ACD86269CA77700CC6563 /* OpenGLRenderPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 754ACD84269CA77700CC6563 /* OpenGLRenderPass.cpp */; };
+		754ACD87269CA77700CC6563 /* OpenGLRenderPass.h in Headers */ = {isa = PBXBuildFile; fileRef = 754ACD85269CA77700CC6563 /* OpenGLRenderPass.h */; };
 		7566896A2694361F0007EA8D /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 756689682694361F0007EA8D /* Material.cpp */; };
 		7566896B2694361F0007EA8D /* Material.h in Headers */ = {isa = PBXBuildFile; fileRef = 756689692694361F0007EA8D /* Material.h */; };
 		75668970269451970007EA8D /* Buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7566896F269451970007EA8D /* Buffer.h */; };
@@ -138,6 +142,10 @@
 /* Begin PBXFileReference section */
 		750AA8DF265D52140031A3E0 /* Utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
 		750AA8E0265D52140031A3E0 /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		754ACD7D269CA0E400CC6563 /* RenderPass.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RenderPass.cpp; sourceTree = "<group>"; };
+		754ACD7E269CA0E400CC6563 /* RenderPass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RenderPass.h; sourceTree = "<group>"; };
+		754ACD84269CA77700CC6563 /* OpenGLRenderPass.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLRenderPass.cpp; sourceTree = "<group>"; };
+		754ACD85269CA77700CC6563 /* OpenGLRenderPass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGLRenderPass.h; sourceTree = "<group>"; };
 		756689682694361F0007EA8D /* Material.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Material.cpp; sourceTree = "<group>"; };
 		756689692694361F0007EA8D /* Material.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Material.h; sourceTree = "<group>"; };
 		7566896F269451970007EA8D /* Buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Buffer.h; sourceTree = "<group>"; };
@@ -589,6 +597,8 @@
 				B249622826397EE80091C915 /* RendererAPI.h */,
 				B27FE3192629E474000FD32D /* Renderer.cpp */,
 				B27FE31A2629E474000FD32D /* Renderer.h */,
+				754ACD7D269CA0E400CC6563 /* RenderPass.cpp */,
+				754ACD7E269CA0E400CC6563 /* RenderPass.h */,
 				B27FE3152629E1D2000FD32D /* GraphicsContext.cpp */,
 				B27FE3162629E1D2000FD32D /* GraphicsContext.h */,
 				B227E5A12636DEB300DC3DFA /* Buffers.cpp */,
@@ -632,6 +642,8 @@
 				756689742694614E0007EA8D /* OpenGlShaderUniform.h */,
 				B22FE70626385ECE00C1640B /* OpenGLFrameBuffer.cpp */,
 				B22FE70726385ECE00C1640B /* OpenGLFrameBuffer.h */,
+				754ACD84269CA77700CC6563 /* OpenGLRenderPass.cpp */,
+				754ACD85269CA77700CC6563 /* OpenGLRenderPass.h */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
@@ -745,6 +757,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B27B4DA1263AF8AA000AC7B5 /* Component.h in Headers */,
+				754ACD80269CA0E400CC6563 /* RenderPass.h in Headers */,
 				B202806C2625FF1900BC7F39 /* MacWindow.h in Headers */,
 				B27D609D263D6B1A00954BB6 /* SceneCamera.h in Headers */,
 				B227E5AA2636F22B00DC3DFA /* OpenGLBuffers.h in Headers */,
@@ -762,6 +775,7 @@
 				B22FE6F12638431200C1640B /* OpenGLVertexArray.h in Headers */,
 				B2FE35152624B34000AFC236 /* Entrypoint.h in Headers */,
 				B2EAB33F262B23F2003D7FE6 /* MouseEvent.h in Headers */,
+				754ACD87269CA77700CC6563 /* OpenGLRenderPass.h in Headers */,
 				758265DC2679F6DF0080169A /* ContetBrowserPannel.h in Headers */,
 				7566897226945F050007EA8D /* ShaderUniform.h in Headers */,
 				B22FE70D26385EE600C1640B /* FrameBuffer.h in Headers */,
@@ -900,6 +914,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				754ACD86269CA77700CC6563 /* OpenGLRenderPass.cpp in Sources */,
 				B202806B2625FF1900BC7F39 /* MacWindow.cpp in Sources */,
 				B24010A2263450200051B868 /* ImguiLayer.cpp in Sources */,
 				B22FE6F02638431200C1640B /* OpenGLVertexArray.cpp in Sources */,
@@ -926,6 +941,7 @@
 				B249623726399AA50091C915 /* EditorCamera.cpp in Sources */,
 				B22FE70C26385EE600C1640B /* FrameBuffer.cpp in Sources */,
 				750AA8E1265D52140031A3E0 /* Utils.cpp in Sources */,
+				754ACD7F269CA0E400CC6563 /* RenderPass.cpp in Sources */,
 				B22FE70826385ECE00C1640B /* OpenGLFrameBuffer.cpp in Sources */,
 				B2A1C10F263E78C200606017 /* ImguiAPI.cpp in Sources */,
 				B2496CBA2639A8AF0091C915 /* stb_image.cpp in Sources */,

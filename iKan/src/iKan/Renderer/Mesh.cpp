@@ -97,7 +97,7 @@ namespace iKan {
             IK_CORE_ERROR("Failed to load mesh file: {0}", m_Path);
 
         m_IsAnimated       = m_Scene->mAnimations != nullptr;
-        m_MeshShader       = m_IsAnimated ? SceneRenderer::GetShaderLibrary()->Get("BatchRenderer2DShader") : SceneRenderer::GetShaderLibrary()->Get("BatchRenderer2DShader");
+        m_MeshShader       = m_IsAnimated ? SceneRenderer::GetShaderLibrary()->Get("BatchRenderer2DShader") : SceneRenderer::GetShaderLibrary()->Get("PBR_Static");
         m_BaseMaterial     = CreateRef<Material>(m_MeshShader);
         m_InverseTransform = glm::inverse(Mat4FromAssimpMat4(m_Scene->mRootNode->mTransformation));
 
@@ -607,6 +607,8 @@ namespace iKan {
             ReadNodeHierarchy(AnimationTime, pNode->mChildren[i], transform);
     }
 
+    // ******************************************************************************
+    // ******************************************************************************
     const aiNodeAnim* Mesh::FindNodeAnim(const aiAnimation* animation, const std::string& nodeName)
     {
         for (uint32_t i = 0; i < animation->mNumChannels; i++)
@@ -618,6 +620,8 @@ namespace iKan {
         return nullptr;
     }
 
+    // ******************************************************************************
+    // ******************************************************************************
     glm::vec3 Mesh::InterpolateTranslation(float animationTime, const aiNodeAnim* nodeAnim)
     {
         if (nodeAnim->mNumPositionKeys == 1)
@@ -645,6 +649,8 @@ namespace iKan {
         return { aiVec.x, aiVec.y, aiVec.z };
     }
 
+    // ******************************************************************************
+    // ******************************************************************************
     glm::quat Mesh::InterpolateRotation(float animationTime, const aiNodeAnim* nodeAnim)
     {
         if (nodeAnim->mNumRotationKeys == 1)
@@ -673,6 +679,8 @@ namespace iKan {
         return glm::quat(q.w, q.x, q.y, q.z);
     }
 
+    // ******************************************************************************
+    // ******************************************************************************
     glm::vec3 Mesh::InterpolateScale(float animationTime, const aiNodeAnim* nodeAnim)
     {
         if (nodeAnim->mNumScalingKeys == 1)
@@ -699,6 +707,8 @@ namespace iKan {
         return { aiVec.x, aiVec.y, aiVec.z };
     }
 
+    // ******************************************************************************
+    // ******************************************************************************
     uint32_t Mesh::FindPosition(float AnimationTime, const aiNodeAnim* pNodeAnim)
     {
         for (uint32_t i = 0; i < pNodeAnim->mNumPositionKeys - 1; i++)
@@ -710,6 +720,8 @@ namespace iKan {
         return 0;
     }
 
+    // ******************************************************************************
+    // ******************************************************************************
     uint32_t Mesh::FindRotation(float AnimationTime, const aiNodeAnim* pNodeAnim)
     {
         IK_CORE_ASSERT((pNodeAnim->mNumRotationKeys > 0), "");
@@ -723,6 +735,8 @@ namespace iKan {
         return 0;
     }
 
+    // ******************************************************************************
+    // ******************************************************************************
     uint32_t Mesh::FindScaling(float AnimationTime, const aiNodeAnim* pNodeAnim)
     {
         IK_CORE_ASSERT((pNodeAnim->mNumScalingKeys > 0), "");
@@ -736,6 +750,8 @@ namespace iKan {
         return 0;
     }
 
+    // ******************************************************************************
+    // ******************************************************************************
     void Mesh::DumpVertexBuffer()
     {
         // TODO: Convert to ImGui

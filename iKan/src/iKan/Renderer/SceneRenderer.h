@@ -12,9 +12,22 @@
 #include <iKan/Editor/EditorCamera.h>
 #include <iKan/Renderer/Texture.h>
 #include <iKan/Renderer/Shader.h>
+#include <iKan/Renderer/Camera.h>
 
 namespace iKan {
+
+    // ******************************************************************************
+    // Stores the Scene Camera component
+    // ******************************************************************************
+    struct SceneRendererCamera
+    {
+        iKan::Camera Camera;
+        glm::mat4 ViewMatrix;
+    };
     
+    // ******************************************************************************
+    // Scene Renderer API
+    // ******************************************************************************
     class SceneRenderer
     {
     public:
@@ -35,6 +48,8 @@ namespace iKan {
         static void DrawQuad(const glm::mat4& transform, const Ref<SubTexture>& texture, int32_t entID, float tilingFactor = 1.0f, const glm::vec4& tintColor = glm::vec4(1.0f));
         
     private:
+        static void Init2DData();
+        static void InitSceneData();
         static void Flush();
         static void StartBatch();
         static void NextBatch();

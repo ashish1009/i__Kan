@@ -12,6 +12,9 @@
 #include <iKan/Renderer/Shader.h>
 #include <iKan/Renderer/Renderer.h>
 #include <iKan/Renderer/RendererStats.h>
+#include <iKan/Renderer/Material.h>
+#include <iKan/Renderer/Mesh.h>
+#include <iKan/Scene/Scene.h>
 
 namespace iKan {
         
@@ -67,20 +70,47 @@ namespace iKan {
             delete [] QuadVertexBufferBase;
         }
     };
-    static RendererQuadData* s_Data = new RendererQuadData();
+
+    // ******************************************************************************
+    // Stores the Scene Data Majorly Mesh. All data and buffer pointers
+    // ******************************************************************************
+    struct SceneData
+    {
+        // ******************************************************************************
+        // Stores the Scene Information
+        // ******************************************************************************
+        struct SceneInfo
+        {
+            SceneRendererCamera   SceneCamera;
+            Ref<MaterialInstance> SkyboxMaterial;
+        } SceneData;
+        
+        const Scene* ActiveScene = nullptr;
+
+        struct DrawCommand
+        {
+            Ref<Mesh> Mesh;
+            Ref<MaterialInstance> Material;
+            glm::mat4 Transform;
+        };
+        std::vector<DrawCommand> DrawList;
+    };
+
+    static RendererQuadData* s_Renderer2DData = new RendererQuadData();
+    static SceneData* s_SceneData = new SceneData();
     
     // ******************************************************************************
-    // Initialise the Scene Renderer
+    // Initialise the 2D Data
     // ******************************************************************************
-    void SceneRenderer::Init()
+    void SceneRenderer::Init2DData()
     {
         IK_CORE_INFO("Initialising the Scene Renderer");
         
-        s_Data->QuadVertexArray  = VertexArray::Create();
+        s_Renderer2DData->QuadVertexArray  = VertexArray::Create();
         
         // Vertex Buffer and adding the layput
-        s_Data->QuadVertexBuffer = VertexBuffer::Create(s_Data->MaxVertices * sizeof(RendererQuadData::Vertex));
-        s_Data->QuadVertexBuffer->AddLayout ({
+        s_Renderer2DData->QuadVertexBuffer = VertexBuffer::Create(s_Renderer2DData->MaxVertices * sizeof(RendererQuadData::Vertex));
+        s_Renderer2DData->QuadVertexBuffer->AddLayout ({
             { ShaderDataType::Float3, "a_Position" },
             { ShaderDataType::Float4, "a_Color" },
             { ShaderDataType::Float2, "a_TexCoord" },
@@ -88,16 +118,16 @@ namespace iKan {
             { ShaderDataType::Float,  "a_TilingFactor" },
             { ShaderDataType::Int,    "a_ObjectID" }
         });
-        s_Data->QuadVertexArray->AddVertexBuffer(s_Data->QuadVertexBuffer);
+        s_Renderer2DData->QuadVertexArray->AddVertexBuffer(s_Renderer2DData->QuadVertexBuffer);
         
         // Allocating the memory for vertex Buffer Pointer
-        s_Data->QuadVertexBufferBase = new RendererQuadData::Vertex[s_Data->MaxVertices];
+        s_Renderer2DData->QuadVertexBufferBase = new RendererQuadData::Vertex[s_Renderer2DData->MaxVertices];
         
         // Index Buffer
-        uint32_t* quadIndices = new uint32_t[s_Data->MaxIndices];
+        uint32_t* quadIndices = new uint32_t[s_Renderer2DData->MaxIndices];
         
         uint32_t offset = 0;
-        for (uint32_t i = 0; i < s_Data->MaxIndices; i += 6)
+        for (uint32_t i = 0; i < s_Renderer2DData->MaxIndices; i += 6)
         {
             quadIndices[i + 0] = offset + 0;
             quadIndices[i + 1] = offset + 1;
@@ -110,28 +140,44 @@ namespace iKan {
             offset += 4;
         }
         
-        Ref<IndexBuffer> quadIB = IndexBuffer::Create(s_Data->MaxIndices, quadIndices);
-        s_Data->QuadVertexArray->SetIndexBuffer(quadIB);
+        Ref<IndexBuffer> quadIB = IndexBuffer::Create(s_Renderer2DData->MaxIndices, quadIndices);
+        s_Renderer2DData->QuadVertexArray->SetIndexBuffer(quadIB);
         delete[] quadIndices;
 
         // Creating white texture for colorful quads witout any texture or sprite
         uint32_t whiteTextureData = 0xffffffff;
-        s_Data->WhiteTexture      = Texture::Create(1, 1, &whiteTextureData, sizeof(uint32_t));
+        s_Renderer2DData->WhiteTexture      = Texture::Create(1, 1, &whiteTextureData, sizeof(uint32_t));
 
         // Set the Texture slot 0 as White Texture
-        s_Data->TextureSlots[0] = s_Data->WhiteTexture;
+        s_Renderer2DData->TextureSlots[0] = s_Renderer2DData->WhiteTexture;
 
         // Setting basic Vertex point of quad
-        s_Data->QuadVertexPositions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
-        s_Data->QuadVertexPositions[1] = {  0.5f, -0.5f, 0.0f, 1.0f };
-        s_Data->QuadVertexPositions[2] = {  0.5f,  0.5f, 0.0f, 1.0f };
-        s_Data->QuadVertexPositions[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
+        s_Renderer2DData->QuadVertexPositions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
+        s_Renderer2DData->QuadVertexPositions[1] = {  0.5f, -0.5f, 0.0f, 1.0f };
+        s_Renderer2DData->QuadVertexPositions[2] = {  0.5f,  0.5f, 0.0f, 1.0f };
+        s_Renderer2DData->QuadVertexPositions[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
 
-        s_Data->ShaderLibrary = CreateRef<ShaderLibrary>();
+        s_Renderer2DData->ShaderLibrary = CreateRef<ShaderLibrary>();
         
         AddShaader("../../../iKan/assets/shaders/BatchRenderer2DShader.glsl");
+        AddShaader("../../../iKan/assets/shaders/PBR_Static.glsl");
 //        AddShaader("../../../iKan/assets/shaders/PBR_Anim.glsl");
-//        AddShaader("../../../iKan/assets/shaders/PBR_Static.glsl");
+    }
+
+    // ******************************************************************************
+    // Initialise the Scene Data
+    // ******************************************************************************
+    void SceneRenderer::InitSceneData()
+    {
+    }
+
+    // ******************************************************************************
+    // Initialise the All data
+    // ******************************************************************************
+    void SceneRenderer::Init()
+    {
+        Init2DData();
+        InitSceneData();
     }
     
     // ******************************************************************************
@@ -142,17 +188,17 @@ namespace iKan {
         IK_CORE_INFO("Set the 2D Renderer Shader {0}", path.c_str());
 
         // Creating array of Slots to store hem in shader
-        int32_t samplers[s_Data->MaxTextureSlots];
-        for (uint32_t i = 0; i < s_Data->MaxTextureSlots; i++)
+        int32_t samplers[s_Renderer2DData->MaxTextureSlots];
+        for (uint32_t i = 0; i < s_Renderer2DData->MaxTextureSlots; i++)
         {
             samplers[i] = i;
         }
         
         // Creating Shader and storing all the slots
-        auto textureShader = s_Data->ShaderLibrary->Load(path);
+        auto textureShader = s_Renderer2DData->ShaderLibrary->Load(path);
 
         textureShader->Bind();
-        textureShader->SetIntArray("u_Textures", samplers, s_Data->MaxTextureSlots);
+        textureShader->SetIntArray("u_Textures", samplers, s_Renderer2DData->MaxTextureSlots);
     }
     
     // ******************************************************************************
@@ -161,7 +207,7 @@ namespace iKan {
     void SceneRenderer::Shutdown()
     {
         IK_CORE_WARN("Shutting down the Scene Renderer");
-        delete s_Data;
+        delete s_Renderer2DData;
     }
     
     // ******************************************************************************
@@ -171,7 +217,7 @@ namespace iKan {
     {
         glm::mat4 viewProj = camera.GetViewProjection();
 
-        auto textureShader = s_Data->ShaderLibrary->Get("BatchRenderer2DShader");
+        auto textureShader = s_Renderer2DData->ShaderLibrary->Get("BatchRenderer2DShader");
 
         textureShader->Bind();
         textureShader->SetUniformMat4("u_ViewProjection", viewProj);
@@ -187,7 +233,7 @@ namespace iKan {
         // Upload Camera View Projection Matris to shader
         glm::mat4 viewProj = camera.GetProjection() * glm::inverse(transform);
 
-        auto textureShader = s_Data->ShaderLibrary->Get("BatchRenderer2DShader");
+        auto textureShader = s_Renderer2DData->ShaderLibrary->Get("BatchRenderer2DShader");
 
         textureShader->Bind();
         textureShader->SetUniformMat4("u_ViewProjection", viewProj);
@@ -200,10 +246,10 @@ namespace iKan {
     // ******************************************************************************
     void SceneRenderer::StartBatch()
     {
-        s_Data->QuadIndexCount = 0;
-        s_Data->QuadVertexBufferPtr = s_Data->QuadVertexBufferBase;
+        s_Renderer2DData->QuadIndexCount = 0;
+        s_Renderer2DData->QuadVertexBufferPtr = s_Renderer2DData->QuadVertexBufferBase;
         
-        s_Data->TextureSlotIndex = 1;
+        s_Renderer2DData->TextureSlotIndex = 1;
     }
     
     // ******************************************************************************
@@ -220,16 +266,16 @@ namespace iKan {
     void SceneRenderer::Flush()
     {
         // Nothing to draw
-        if (s_Data->QuadIndexCount == 0)
+        if (s_Renderer2DData->QuadIndexCount == 0)
         {
             return;
         }
         
-        uint32_t dataSize = (uint32_t)((uint8_t*)s_Data->QuadVertexBufferPtr - (uint8_t*)s_Data->QuadVertexBufferBase);
-        s_Data->QuadVertexBuffer->SetData(s_Data->QuadVertexBufferBase, dataSize);
+        uint32_t dataSize = (uint32_t)((uint8_t*)s_Renderer2DData->QuadVertexBufferPtr - (uint8_t*)s_Renderer2DData->QuadVertexBufferBase);
+        s_Renderer2DData->QuadVertexBuffer->SetData(s_Renderer2DData->QuadVertexBufferBase, dataSize);
         
         // Bind textures
-        for (uint32_t i = 0; i < s_Data->TextureSlotIndex; i++)
+        for (uint32_t i = 0; i < s_Renderer2DData->TextureSlotIndex; i++)
         {
             if (i > 0)
             {
@@ -237,11 +283,11 @@ namespace iKan {
                 RendererStatistics::TextureCount++;
             }
 
-            s_Data->TextureSlots[i]->Bind(i);
+            s_Renderer2DData->TextureSlots[i]->Bind(i);
         }
         
         // Render the Scene
-        Renderer::DrawIndexed(s_Data->QuadVertexArray, s_Data->QuadIndexCount);
+        Renderer::DrawIndexed(s_Renderer2DData->QuadVertexArray, s_Renderer2DData->QuadIndexCount);
     }
     
     // ******************************************************************************
@@ -252,10 +298,10 @@ namespace iKan {
         // if num Quad per Batch exceeds then Render the Scene and reset all parameters
         EndScene();
         
-        s_Data->QuadIndexCount = 0;
-        s_Data->QuadVertexBufferPtr = s_Data->QuadVertexBufferBase;
+        s_Renderer2DData->QuadIndexCount = 0;
+        s_Renderer2DData->QuadVertexBufferPtr = s_Renderer2DData->QuadVertexBufferBase;
         
-        s_Data->TextureSlotIndex = 1;
+        s_Renderer2DData->TextureSlotIndex = 1;
     }
 
     // ******************************************************************************
@@ -263,7 +309,7 @@ namespace iKan {
     // ******************************************************************************
     Ref<ShaderLibrary> SceneRenderer::GetShaderLibrary()
     {
-        return s_Data->ShaderLibrary;
+        return s_Renderer2DData->ShaderLibrary;
     }
     
     // ******************************************************************************
@@ -298,9 +344,9 @@ namespace iKan {
         constexpr size_t quadVertexCount = 4;
 
         // If number of indices increase in batch then start new batch
-        if (s_Data->QuadIndexCount >= RendererQuadData::MaxIndices)
+        if (s_Renderer2DData->QuadIndexCount >= RendererQuadData::MaxIndices)
         {
-            IK_CORE_WARN("Starts the new batch as number of indices ({0}) increases in the previous batch", s_Data->QuadIndexCount);
+            IK_CORE_WARN("Starts the new batch as number of indices ({0}) increases in the previous batch", s_Renderer2DData->QuadIndexCount);
             NextBatch();
         }
         
@@ -308,9 +354,9 @@ namespace iKan {
         if (texture)
         {
             // Find if texture is already loaded in current batch
-            for (int8_t i = 1; i < s_Data->TextureSlotIndex; i++)
+            for (int8_t i = 1; i < s_Renderer2DData->TextureSlotIndex; i++)
             {
-                if (*s_Data->TextureSlots[i] == *texture)
+                if (*s_Renderer2DData->TextureSlots[i] == *texture)
                 {
                     // Found the current textue in the batch
                     textureIndex = (float)i;
@@ -322,31 +368,31 @@ namespace iKan {
             if (textureIndex == 0.0f)
             {
                 // If number of slots increases max then start new batch
-                if (s_Data->TextureSlotIndex >= RendererQuadData::MaxTextureSlots)
+                if (s_Renderer2DData->TextureSlotIndex >= RendererQuadData::MaxTextureSlots)
                 {
-                    IK_CORE_WARN("Starts the new batch as number of texture slot ({0}) increases in the previous batch", s_Data->TextureSlotIndex);
+                    IK_CORE_WARN("Starts the new batch as number of texture slot ({0}) increases in the previous batch", s_Renderer2DData->TextureSlotIndex);
                     NextBatch();
                 }
 
                 // Loading the current texture in the first free slot slot
-                textureIndex = (float)s_Data->TextureSlotIndex;
-                s_Data->TextureSlots[s_Data->TextureSlotIndex] = texture;
-                s_Data->TextureSlotIndex++;
+                textureIndex = (float)s_Renderer2DData->TextureSlotIndex;
+                s_Renderer2DData->TextureSlots[s_Renderer2DData->TextureSlotIndex] = texture;
+                s_Renderer2DData->TextureSlotIndex++;
             }
         }
         
         for (size_t i = 0; i < quadVertexCount; i++)
         {
-            s_Data->QuadVertexBufferPtr->Position     = transform * s_Data->QuadVertexPositions[i];
-            s_Data->QuadVertexBufferPtr->Color        = tintColor;
-            s_Data->QuadVertexBufferPtr->TexCoord     = textureCoords[i];
-            s_Data->QuadVertexBufferPtr->TexIndex     = textureIndex;
-            s_Data->QuadVertexBufferPtr->TilingFactor = tilingFactor;
-            s_Data->QuadVertexBufferPtr->ObjectID     = entID;
-            s_Data->QuadVertexBufferPtr++;
+            s_Renderer2DData->QuadVertexBufferPtr->Position     = transform * s_Renderer2DData->QuadVertexPositions[i];
+            s_Renderer2DData->QuadVertexBufferPtr->Color        = tintColor;
+            s_Renderer2DData->QuadVertexBufferPtr->TexCoord     = textureCoords[i];
+            s_Renderer2DData->QuadVertexBufferPtr->TexIndex     = textureIndex;
+            s_Renderer2DData->QuadVertexBufferPtr->TilingFactor = tilingFactor;
+            s_Renderer2DData->QuadVertexBufferPtr->ObjectID     = entID;
+            s_Renderer2DData->QuadVertexBufferPtr++;
         }
         
-        s_Data->QuadIndexCount += 6;
+        s_Renderer2DData->QuadIndexCount += 6;
 
         RendererStatistics::VertexCount += 4;
         RendererStatistics::IndexCount += 6;
