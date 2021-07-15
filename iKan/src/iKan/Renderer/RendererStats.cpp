@@ -11,10 +11,11 @@
 
 namespace iKan {
 
-    uint32_t RendererStatistics::DrawCalls   = 0;
-    uint32_t RendererStatistics::VertexCount = 0;
-    uint32_t RendererStatistics::IndexCount  = 0;
+    uint32_t RendererStatistics::DrawCalls    = 0;
+    uint32_t RendererStatistics::VertexCount  = 0;
+    uint32_t RendererStatistics::IndexCount   = 0;
     uint32_t RendererStatistics::TextureCount = 0;
+    uint32_t RendererStatistics::LineCount    = 0;
     
     // ******************************************************************************
     // Reset the renderer stats
@@ -25,6 +26,7 @@ namespace iKan {
         VertexCount  = 0;
         IndexCount   = 0;
         TextureCount = 0;
+        LineCount    = 0;
     }
 
 }

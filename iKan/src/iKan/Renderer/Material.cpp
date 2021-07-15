@@ -168,7 +168,7 @@ namespace iKan {
 
     // ******************************************************************************
     // ******************************************************************************
-    void Material::Set(const std::string& name, const Ref<CubeMapTexture>& texture)
+    void Material::Set(const std::string& name, const Ref<TextureCube>& texture)
     {
         Set(name, (const Ref<Texture>&)texture);
     }
@@ -312,7 +312,7 @@ namespace iKan {
 
     // ******************************************************************************
     // ******************************************************************************
-    void MaterialInstance::Set(const std::string& name, const Ref<CubeMapTexture>& texture)
+    void MaterialInstance::Set(const std::string& name, const Ref<TextureCube>& texture)
     {
         Set(name, (const Ref<Texture>&)texture);
     }

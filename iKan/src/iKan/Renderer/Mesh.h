@@ -129,7 +129,7 @@ namespace iKan {
 
         Ref<Shader> GetMeshShader() { return m_MeshShader; }
         Ref<Material> GetMaterial() { return m_BaseMaterial; }
-        std::vector<Ref<MaterialInstance>> GetMaterials() { return m_Materials; }
+        std::vector<Ref<MaterialInstance>>& GetMaterials() { return m_Materials; }
         const std::vector<Ref<Texture>>& GetTextures() const { return m_Textures; }
         const std::string& GetFilePath() const { return m_Path; }
 
@@ -186,6 +186,9 @@ namespace iKan {
         float m_AnimationTime   = 0.0f;
         float m_WorldTime       = 0.0f;
         float m_TimeMultiplier  = 1.0f;
+
+        friend class Renderer;
+        friend class SceneHierarchyPanel;
     };
 
 }

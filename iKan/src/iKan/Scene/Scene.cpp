@@ -37,6 +37,16 @@ namespace iKan {
     }
 
     // ******************************************************************************
+    // Initialize the Scnce
+    // ******************************************************************************
+    void Scene::Init()
+    {
+        auto skyboxShader = Shader::Create("assets/shaders/Skybox.glsl");
+        m_Data.SkyboxMaterial = MaterialInstance::Create(Material::Create(skyboxShader));
+        m_Data.SkyboxMaterial->SetFlag(MaterialFlag::DepthTest, false);
+    }
+
+    // ******************************************************************************
     // Set the new scene path
     // ******************************************************************************
     void Scene::SetFilePath(const std::string& path)
@@ -276,6 +286,24 @@ namespace iKan {
         {
             m_Data.EditorCamera->SetViewportSize(width, height);
         }
+    }
+
+    // ******************************************************************************
+    // Set the environment
+    // ******************************************************************************
+    void Scene::SetEnvironment(const Scene::Environment& environment)
+    {
+        m_Data.Environment = environment;
+        SetSkybox(environment.RadianceMap);
+    }
+
+    // ******************************************************************************
+    // Set skybox textyre
+    // ******************************************************************************
+    void Scene::SetSkybox(const Ref<TextureCube>& skybox)
+    {
+        m_Data.SkyboxTexture = skybox;
+        m_Data.SkyboxMaterial->Set("u_Texture", skybox);
     }
 
     // ******************************************************************************

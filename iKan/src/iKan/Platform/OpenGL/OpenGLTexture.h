@@ -54,7 +54,7 @@ namespace iKan {
     // ******************************************************************************
     // Implementation for OpenGL Cubemap
     // ******************************************************************************
-    class OpenGLCubeMapTexture : public CubeMapTexture
+    class OpenGLCubeMapTexture : public TextureCube
     {
     public:
         OpenGLCubeMapTexture(std::vector<std::string> paths);

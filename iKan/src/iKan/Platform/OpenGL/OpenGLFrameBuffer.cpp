@@ -283,5 +283,13 @@ namespace iKan {
         
         Invalidate();
     }
+
+    // ******************************************************************************
+    // ******************************************************************************
+    void OpenGLFrameBuffer::BindTexture(uint32_t slot)
+    {
+        for (auto colorAttachment : m_ColorAttachments)
+            glBindTextureUnit(slot, colorAttachment);
+    }
         
 }

@@ -69,6 +69,8 @@ namespace iKan {
             uint32_t Height  = Window::Property::DefaultHeight;
             uint32_t Samples = 1;
 
+            glm::vec4 ClearColor = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
+
             Framebuffer::Attachments Attachments;
             
             Specification() = default;
@@ -80,6 +82,7 @@ namespace iKan {
         
         virtual void Bind() = 0;
         virtual void Unbind() = 0;
+        virtual void BindTexture(uint32_t slot = 0) = 0;
         
         virtual void Resize(uint32_t width, uint32_t height) = 0;
         virtual uint32_t GetColorAttachmentRendererID(uint32_t index = 0) const = 0;

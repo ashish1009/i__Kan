@@ -21,6 +21,7 @@ namespace iKan {
         static uint32_t VertexCount;
         static uint32_t IndexCount;
         static uint32_t TextureCount;
+        static uint32_t LineCount;
         
         static void Reset();
     };

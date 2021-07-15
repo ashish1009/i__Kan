@@ -45,7 +45,7 @@ namespace iKan {
         void SetFlag(MaterialFlag flag) { m_MaterialFlags |= (uint32_t)flag; }
 
         void Set(const std::string& name, const Ref<Texture>& texture);
-        void Set(const std::string& name, const Ref<CubeMapTexture>& texture);
+        void Set(const std::string& name, const Ref<TextureCube>& texture);
 
         template <typename T>
         void Set(const std::string& name, const T& value);
@@ -102,7 +102,7 @@ namespace iKan {
         virtual ~MaterialInstance();
 
         void Set(const std::string& name, const Ref<Texture>& texture);
-        void Set(const std::string& name, const Ref<CubeMapTexture>& texture);
+        void Set(const std::string& name, const Ref<TextureCube>& texture);
 
         template <typename T>
         void Set(const std::string& name, const T& value)
