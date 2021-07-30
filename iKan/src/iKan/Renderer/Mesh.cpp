@@ -18,7 +18,7 @@
 #include <iKan/Renderer/SceneRenderer.h>
 #include <iKan/Renderer/Buffers.h>
 
-#define MESH_DEBUG_LOG 1
+#define MESH_DEBUG_LOG 0
 
 #if MESH_DEBUG_LOG
     #define IK_MESH_LOG(...) IK_CORE_TRACE(__VA_ARGS__)
@@ -97,7 +97,7 @@ namespace iKan {
             IK_CORE_ERROR("Failed to load mesh file: {0}", m_Path);
 
         m_IsAnimated       = m_Scene->mAnimations != nullptr;
-        m_MeshShader       = m_IsAnimated ? SceneRenderer::GetShaderLibrary()->Get("BatchRenderer2DShader") : SceneRenderer::GetShaderLibrary()->Get("BatchRenderer2DShader");
+//        m_MeshShader       = m_IsAnimated ? SceneRenderer::GetShaderLibrary()->Get("PBR_Anim") : SceneRenderer::GetShaderLibrary()->Get("PBR_Static");
         m_BaseMaterial     = CreateRef<Material>(m_MeshShader);
         m_InverseTransform = glm::inverse(Mat4FromAssimpMat4(m_Scene->mRootNode->mTransformation));
 
@@ -245,8 +245,7 @@ namespace iKan {
 
                 IK_MESH_LOG("  {0} (Index = {1})", aiMaterialName.data, i);
                 aiString aiTexPath;
-
-                IK_MESH_LOG("    TextureCount = {0}", aiMaterial->GetTextureCount(aiTextureType_DIFFUSE));
+                IK_MESH_LOG("    TextureCount = {0}", textureCount);
 
                 aiColor3D aiColor;
                 aiMaterial->Get(AI_MATKEY_COLOR_DIFFUSE, aiColor);
@@ -390,7 +389,7 @@ namespace iKan {
                     IK_MESH_LOG("Material Property:");
                     IK_MESH_LOG("  Name = {0}", prop->mKey.data);
 
-                    IK_MESH_LOG("  Value = {0}", *(float*)prop->mData);
+                    IK_MESH_LOG("  Value = {0}", data);
 
                     switch (prop->mSemantic)
                     {
@@ -540,234 +539,4 @@ namespace iKan {
             TraverseNodes(node->mChildren[i], transform, level + 1);
     }
 
-    // ******************************************************************************
-    // Update the Scene for each frame
-    // ******************************************************************************
-    void Mesh::OnUpdate(Timestep ts)
-    {
-        if (m_IsAnimated)
-        {
-            if (m_AnimationPlaying)
-            {
-                m_WorldTime += ts;
-
-                float ticksPerSecond = (float)(m_Scene->mAnimations[0]->mTicksPerSecond != 0 ? m_Scene->mAnimations[0]->mTicksPerSecond : 25.0f) * m_TimeMultiplier;
-                m_AnimationTime += ts * ticksPerSecond;
-                m_AnimationTime = fmod(m_AnimationTime, (float)m_Scene->mAnimations[0]->mDuration);
-            }
-
-            // TODO: We only need to recalc bones if rendering has been requested at the current animation frame
-            BoneTransform(m_AnimationTime);
-        }
-    }
-
-    // ******************************************************************************
-    // ******************************************************************************
-    void Mesh::BoneTransform(float time)
-    {
-        ReadNodeHierarchy(time, m_Scene->mRootNode, glm::mat4(1.0f));
-        m_BoneTransforms.resize(m_BoneCount);
-        
-        for (size_t i = 0; i < m_BoneCount; i++)
-            m_BoneTransforms[i] = m_BoneInfo[i].FinalTransformation;
-    }
-
-    // ******************************************************************************
-    // ******************************************************************************
-    void Mesh::ReadNodeHierarchy(float AnimationTime, const aiNode* pNode, const glm::mat4& parentTransform)
-    {
-        std::string name(pNode->mName.data);
-        const aiAnimation* animation = m_Scene->mAnimations[0];
-        glm::mat4 nodeTransform(Mat4FromAssimpMat4(pNode->mTransformation));
-        const aiNodeAnim* nodeAnim = FindNodeAnim(animation, name);
-
-        if (nodeAnim)
-        {
-            glm::vec3 translation = InterpolateTranslation(AnimationTime, nodeAnim);
-            glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(translation.x, translation.y, translation.z));
-
-            glm::quat rotation = InterpolateRotation(AnimationTime, nodeAnim);
-            glm::mat4 rotationMatrix = glm::toMat4(rotation);
-
-            glm::vec3 scale = InterpolateScale(AnimationTime, nodeAnim);
-            glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(scale.x, scale.y, scale.z));
-
-            nodeTransform = translationMatrix * rotationMatrix * scaleMatrix;
-        }
-
-        glm::mat4 transform = parentTransform * nodeTransform;
-
-        if (m_BoneMapping.find(name) != m_BoneMapping.end())
-        {
-            uint32_t BoneIndex = m_BoneMapping[name];
-            m_BoneInfo[BoneIndex].FinalTransformation = m_InverseTransform * transform * m_BoneInfo[BoneIndex].BoneOffset;
-        }
-
-        for (uint32_t i = 0; i < pNode->mNumChildren; i++)
-            ReadNodeHierarchy(AnimationTime, pNode->mChildren[i], transform);
-    }
-
-    const aiNodeAnim* Mesh::FindNodeAnim(const aiAnimation* animation, const std::string& nodeName)
-    {
-        for (uint32_t i = 0; i < animation->mNumChannels; i++)
-        {
-            const aiNodeAnim* nodeAnim = animation->mChannels[i];
-            if (std::string(nodeAnim->mNodeName.data) == nodeName)
-                return nodeAnim;
-        }
-        return nullptr;
-    }
-
-    glm::vec3 Mesh::InterpolateTranslation(float animationTime, const aiNodeAnim* nodeAnim)
-    {
-        if (nodeAnim->mNumPositionKeys == 1)
-        {
-            // No interpolation necessary for single value
-            auto v = nodeAnim->mPositionKeys[0].mValue;
-            return { v.x, v.y, v.z };
-        }
-
-        uint32_t PositionIndex      = FindPosition(animationTime, nodeAnim);
-        uint32_t NextPositionIndex  = (PositionIndex + 1);
-
-        IK_CORE_ASSERT((NextPositionIndex < nodeAnim->mNumPositionKeys), "");
-        float DeltaTime = (float)(nodeAnim->mPositionKeys[NextPositionIndex].mTime - nodeAnim->mPositionKeys[PositionIndex].mTime);
-        float Factor    = (animationTime - (float)nodeAnim->mPositionKeys[PositionIndex].mTime) / DeltaTime;
-
-        IK_CORE_ASSERT((Factor <= 1.0f), "Factor must be below 1.0f");
-        Factor = glm::clamp(Factor, 0.0f, 1.0f);
-
-        const aiVector3D& Start = nodeAnim->mPositionKeys[PositionIndex].mValue;
-        const aiVector3D& End   = nodeAnim->mPositionKeys[NextPositionIndex].mValue;
-
-        aiVector3D Delta = End - Start;
-        auto aiVec       = Start + Factor * Delta;
-        return { aiVec.x, aiVec.y, aiVec.z };
-    }
-
-    glm::quat Mesh::InterpolateRotation(float animationTime, const aiNodeAnim* nodeAnim)
-    {
-        if (nodeAnim->mNumRotationKeys == 1)
-        {
-            // No interpolation necessary for single value
-            auto v = nodeAnim->mRotationKeys[0].mValue;
-            return glm::quat(v.w, v.x, v.y, v.z);
-        }
-
-        uint32_t RotationIndex = FindRotation(animationTime, nodeAnim);
-        uint32_t NextRotationIndex = (RotationIndex + 1);
-
-        IK_CORE_ASSERT((NextRotationIndex < nodeAnim->mNumRotationKeys), "");
-        float DeltaTime = (float)(nodeAnim->mRotationKeys[NextRotationIndex].mTime - nodeAnim->mRotationKeys[RotationIndex].mTime);
-        float Factor = (animationTime - (float)nodeAnim->mRotationKeys[RotationIndex].mTime) / DeltaTime;
-
-        IK_CORE_ASSERT((Factor <= 1.0f), "Factor must be below 1.0f");
-        Factor = glm::clamp(Factor, 0.0f, 1.0f);
-
-        const aiQuaternion& StartRotationQ = nodeAnim->mRotationKeys[RotationIndex].mValue;
-        const aiQuaternion& EndRotationQ = nodeAnim->mRotationKeys[NextRotationIndex].mValue;
-
-        auto q = aiQuaternion();
-        aiQuaternion::Interpolate(q, StartRotationQ, EndRotationQ, Factor);
-        q = q.Normalize();
-        return glm::quat(q.w, q.x, q.y, q.z);
-    }
-
-    glm::vec3 Mesh::InterpolateScale(float animationTime, const aiNodeAnim* nodeAnim)
-    {
-        if (nodeAnim->mNumScalingKeys == 1)
-        {
-            // No interpolation necessary for single value
-            auto v = nodeAnim->mScalingKeys[0].mValue;
-            return { v.x, v.y, v.z };
-        }
-
-        uint32_t index = FindScaling(animationTime, nodeAnim);
-        uint32_t nextIndex = (index + 1);
-
-        IK_CORE_ASSERT((nextIndex < nodeAnim->mNumScalingKeys), "");
-        float deltaTime = (float)(nodeAnim->mScalingKeys[nextIndex].mTime - nodeAnim->mScalingKeys[index].mTime);
-        float factor = (animationTime - (float)nodeAnim->mScalingKeys[index].mTime) / deltaTime;
-
-        IK_CORE_ASSERT((factor <= 1.0f), "Factor must be below 1.0f");
-        factor = glm::clamp(factor, 0.0f, 1.0f);
-
-        const auto& start = nodeAnim->mScalingKeys[index].mValue;
-        const auto& end = nodeAnim->mScalingKeys[nextIndex].mValue;
-        auto delta = end - start;
-        auto aiVec = start + factor * delta;
-        return { aiVec.x, aiVec.y, aiVec.z };
-    }
-
-    uint32_t Mesh::FindPosition(float AnimationTime, const aiNodeAnim* pNodeAnim)
-    {
-        for (uint32_t i = 0; i < pNodeAnim->mNumPositionKeys - 1; i++)
-        {
-            if (AnimationTime < (float)pNodeAnim->mPositionKeys[i + 1].mTime)
-                return i;
-        }
-
-        return 0;
-    }
-
-    uint32_t Mesh::FindRotation(float AnimationTime, const aiNodeAnim* pNodeAnim)
-    {
-        IK_CORE_ASSERT((pNodeAnim->mNumRotationKeys > 0), "");
-
-        for (uint32_t i = 0; i < pNodeAnim->mNumRotationKeys - 1; i++)
-        {
-            if (AnimationTime < (float)pNodeAnim->mRotationKeys[i + 1].mTime)
-                return i;
-        }
-
-        return 0;
-    }
-
-    uint32_t Mesh::FindScaling(float AnimationTime, const aiNodeAnim* pNodeAnim)
-    {
-        IK_CORE_ASSERT((pNodeAnim->mNumScalingKeys > 0), "");
-
-        for (uint32_t i = 0; i < pNodeAnim->mNumScalingKeys - 1; i++)
-        {
-            if (AnimationTime < (float)pNodeAnim->mScalingKeys[i + 1].mTime)
-                return i;
-        }
-
-        return 0;
-    }
-
-    void Mesh::DumpVertexBuffer()
-    {
-        // TODO: Convert to ImGui
-        IK_MESH_LOG("------------------------------------------------------");
-        IK_MESH_LOG("Vertex Buffer Dump");
-        IK_MESH_LOG("Mesh: {0}", m_Path);
-        if (m_IsAnimated)
-        {
-            for (size_t i = 0; i < m_AnimatedVertices.size(); i++)
-            {
-                IK_MESH_LOG("Vertex: {0}", i);
-                IK_MESH_LOG("Position: {0}, {1}, {2}", m_AnimatedVertices[i].Position.x, m_AnimatedVertices[i].Position.y, m_AnimatedVertices[i].Position.z);
-                IK_MESH_LOG("Normal: {0}, {1}, {2}", m_AnimatedVertices[i].Normal.x, m_AnimatedVertices[i].Normal.y, m_AnimatedVertices[i].Normal.z);
-                IK_MESH_LOG("Binormal: {0}, {1}, {2}", m_AnimatedVertices[i].Binormal.x, m_AnimatedVertices[i].Binormal.y, m_AnimatedVertices[i].Binormal.z);
-                IK_MESH_LOG("Tangent: {0}, {1}, {2}", m_AnimatedVertices[i].Tangent.x, m_AnimatedVertices[i].Tangent.y, m_AnimatedVertices[i].Tangent.z);
-                IK_MESH_LOG("TexCoord: {0}, {1}", m_AnimatedVertices[i].Texcoord.x, m_AnimatedVertices[i].Texcoord.y);
-                IK_MESH_LOG("--");
-            }
-        }
-        else
-        {
-            for (size_t i = 0; i < m_StaticVertices.size(); i++)
-            {
-                IK_MESH_LOG("Vertex: {0}", i);
-                IK_MESH_LOG("Position: {0}, {1}, {2}", m_StaticVertices[i].Position.x, m_StaticVertices[i].Position.y, m_StaticVertices[i].Position.z);
-                IK_MESH_LOG("Normal: {0}, {1}, {2}", m_StaticVertices[i].Normal.x, m_StaticVertices[i].Normal.y, m_StaticVertices[i].Normal.z);
-                IK_MESH_LOG("Binormal: {0}, {1}, {2}", m_StaticVertices[i].Binormal.x, m_StaticVertices[i].Binormal.y, m_StaticVertices[i].Binormal.z);
-                IK_MESH_LOG("Tangent: {0}, {1}, {2}", m_StaticVertices[i].Tangent.x, m_StaticVertices[i].Tangent.y, m_StaticVertices[i].Tangent.z);
-                IK_MESH_LOG("TexCoord: {0}, {1}", m_StaticVertices[i].Texcoord.x, m_StaticVertices[i].Texcoord.y);
-                IK_MESH_LOG("--");
-            }
-        }
-        IK_MESH_LOG("------------------------------------------------------");
-    }
 }

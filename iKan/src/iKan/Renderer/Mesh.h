@@ -18,8 +18,6 @@
 
 struct aiScene;
 struct aiNode;
-struct aiAnimation;
-struct aiNodeAnim;
 
 namespace Assimp {
     class Importer;
@@ -122,32 +120,9 @@ namespace iKan {
         ~Mesh();
 
         void OnUpdate(Timestep ts);
-        void DumpVertexBuffer();
-
-        std::vector<Submesh>& GetSubmeshes() { return m_Submeshes; }
-        const std::vector<Submesh>& GetSubmeshes() const { return m_Submeshes; }
-
-        Ref<Shader> GetMeshShader() { return m_MeshShader; }
-        Ref<Material> GetMaterial() { return m_BaseMaterial; }
-        std::vector<Ref<MaterialInstance>> GetMaterials() { return m_Materials; }
-        const std::vector<Ref<Texture>>& GetTextures() const { return m_Textures; }
-        const std::string& GetFilePath() const { return m_Path; }
-
-        const std::vector<Triangle> GetTriangleCache(uint32_t index) const { return m_TriangleCache.at(index); }
 
     private:
         void TraverseNodes(aiNode* node, const glm::mat4& parentTransform = glm::mat4(1.0f), uint32_t level = 0);
-        void BoneTransform(float time);
-        void ReadNodeHierarchy(float AnimationTime, const aiNode* pNode, const glm::mat4& ParentTransform);
-        const aiNodeAnim* FindNodeAnim(const aiAnimation* animation, const std::string& nodeName);
-
-        uint32_t FindPosition(float AnimationTime, const aiNodeAnim* pNodeAnim);
-        uint32_t FindRotation(float AnimationTime, const aiNodeAnim* pNodeAnim);
-        uint32_t FindScaling(float AnimationTime, const aiNodeAnim* pNodeAnim);
-
-        glm::vec3 InterpolateTranslation(float animationTime, const aiNodeAnim* nodeAnim);
-        glm::quat InterpolateRotation(float animationTime, const aiNodeAnim* nodeAnim);
-        glm::vec3 InterpolateScale(float animationTime, const aiNodeAnim* nodeAnim);
 
     private:
         std::string m_Path;
@@ -166,8 +141,7 @@ namespace iKan {
         std::vector<AnimatedVertex> m_AnimatedVertices;
         std::vector<Index>          m_Indices;
         std::vector<BoneInfo>       m_BoneInfo;
-        std::vector<glm::mat4>      m_BoneTransforms;
-        
+
         std::unordered_map<std::string, uint32_t>           m_BoneMapping;
         std::unordered_map<uint32_t, std::vector<Triangle>> m_TriangleCache;
 
@@ -180,12 +154,8 @@ namespace iKan {
         std::vector<Ref<MaterialInstance>> m_Materials;
 
         // Animation
-        bool m_IsAnimated       = false;
-        bool m_AnimationPlaying = true;
+        bool m_IsAnimated = false;
 
-        float m_AnimationTime   = 0.0f;
-        float m_WorldTime       = 0.0f;
-        float m_TimeMultiplier  = 1.0f;
     };
 
 }
