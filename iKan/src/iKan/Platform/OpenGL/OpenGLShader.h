@@ -32,12 +32,7 @@ namespace iKan {
         virtual void AddShaderReloadedCallback(const ShaderReloadedCallback& callback) override;
         
         virtual const std::string& GetName() override { return m_Name; }
-
-        virtual void UploadUniformBuffer(const UniformBufferBase& uniformBuffer) override;
-
-        virtual void SetVSMaterialUniformBuffer(Buffer buffer) override;
-        virtual void SetPSMaterialUniformBuffer(Buffer buffer) override;
-
+        
         virtual void SetUniformInt1(const std::string& name, int value) override;
         virtual void SetIntArray(const std::string& name, int* values, uint32_t count) override;
         
@@ -48,18 +43,6 @@ namespace iKan {
         virtual void SetUniformFloat2(const std::string& name, const glm::vec2& value) override;
         virtual void SetUniformFloat3(const std::string& name, const glm::vec3& value) override;
         virtual void SetUniformFloat4(const std::string& name, const glm::vec4& value) override;
-
-        virtual void SetUniformInt1(uint32_t location, int value) override;
-        virtual void SetIntArray(uint32_t location, int* values, uint32_t count) override;
-
-        virtual void SetUniformMat4(uint32_t location, const glm::mat4& value) override;
-        virtual void SetUniformMat3(uint32_t location, const glm::mat3& value) override;
-        virtual void SetUniformMat4Array(uint32_t location, const glm::mat4& values, uint32_t count) override;
-
-        virtual void SetUniformFloat1(uint32_t location, float value) override;
-        virtual void SetUniformFloat2(uint32_t location, const glm::vec2& value) override;
-        virtual void SetUniformFloat3(uint32_t location, const glm::vec3& value) override;
-        virtual void SetUniformFloat4(uint32_t location, const glm::vec4& value) override;
 
         virtual uint32_t GetRendererID() const override { return m_RendererId; }
 
@@ -78,21 +61,6 @@ namespace iKan {
         void ResolveUniforms();
 
         static GLenum ShaderTypeFromString(const std::string& type);
-
-        void ResolveAndSetUniforms(const Ref<OpenGLShaderUniformBufferDeclaration>& decl, Buffer buffer);
-        void ResolveAndSetUniform(OpenGLShaderUniformDeclaration* uniform, Buffer buffer);
-        void ResolveAndSetUniformField(const OpenGLShaderUniformDeclaration& field, std::byte* data, int32_t offset);
-        void ResolveAndSetUniformArray(OpenGLShaderUniformDeclaration* uniform, Buffer buffer);
-
-        void UploadUniformStruct(OpenGLShaderUniformDeclaration* uniform, std::byte* buffer, uint32_t offset);
-
-        virtual const ShaderUniformBufferList& GetVSRendererUniforms() const override { return m_VSRendererUniformBuffers; }
-        virtual const ShaderUniformBufferList& GetPSRendererUniforms() const override { return m_PSRendererUniformBuffers; }
-        virtual bool HasVSMaterialUniformBuffer() const override { return (bool)m_VSMaterialUniformBuffer; }
-        virtual bool HasPSMaterialUniformBuffer() const override { return (bool)m_PSMaterialUniformBuffer; }
-        virtual const ShaderUniformBufferDeclaration& GetVSMaterialUniformBuffer() const override { return *m_VSMaterialUniformBuffer; }
-        virtual const ShaderUniformBufferDeclaration& GetPSMaterialUniformBuffer() const override { return *m_PSMaterialUniformBuffer; }
-        virtual const ShaderResourceList& GetResources() const override { return m_Resources; }
 
     private:
         bool m_Loaded    = false;
