@@ -26,11 +26,10 @@ Make sure that you do a `--recursive` clone to fetch all of the submodules!
 8. Open Scene from already saved file
 9. Save the current scene to any folder
 10. Add feature to Upload texture by darg and drop
-11.  Add Buffer class
-12. Unifrom Buffers added in Shader class
 
 ## Road Map
-- Add material class (on hold for Buffer class and uniform shader)
+- Add Buffer class
+- Add material class (on hold for Buffer class)
 - Add Mesh and assimp library (Library added, on hold or materials)
 - Add Side menu for content browser pannel (partially developed)
 - Add Light and multiple shaders
@@ -91,5 +90,5 @@ User defined layer can be defined in Client. This should be derived from `iKan::
 
 ### Bugs Identified (just to keep trac while developing)
 1. File tile menu not jumping on any "iKan" folder
-2. Zoom not working on Editor camera
+
 

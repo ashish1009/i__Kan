@@ -135,6 +135,9 @@ namespace iKan {
         virtual const ShaderUniformBufferDeclaration& GetPSMaterialUniformBuffer() const = 0;
 
         virtual const ShaderResourceList& GetResources() const = 0;
+
+        // Temporary, before we have an asset manager
+//        static std::vector<Ref<Shader>> s_AllShaders;
         
         virtual void SetUniformInt1(const std::string& name, int value) = 0;
         virtual void SetIntArray(const std::string& name, int* values, uint32_t count) = 0;

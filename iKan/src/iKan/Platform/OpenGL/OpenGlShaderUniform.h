@@ -48,7 +48,8 @@ namespace iKan {
     };
 
     // ******************************************************************************
-    // Stores the field, it can be structur or pre defined data type.
+    // Shader Uniform buffer implementation. Stores the Type and count of data from
+    // the strcut
     // ******************************************************************************
     class OpenGLShaderUniformDeclaration : public ShaderUniformDeclaration
     {
@@ -105,7 +106,7 @@ namespace iKan {
     };
 
     // ******************************************************************************
-    // Shader Buffer that stores the Uniform declaration for Shader
+    // Shader Buffer that stores the Unioform declaration for Shader
     // ******************************************************************************
     class OpenGLShaderUniformBufferDeclaration : public ShaderUniformBufferDeclaration
     {

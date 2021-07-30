@@ -208,7 +208,7 @@ namespace iKan {
     }
 
     // ******************************************************************************
-    // Psrse the the shader and extract the structure and uniforms
+    // Psrse the compute shader
     // ******************************************************************************
     void OpenGLShader::Parse()
     {
@@ -373,8 +373,6 @@ namespace iKan {
     }
 
     // ******************************************************************************
-    // Update the location of the Stored Uniforms
-    // TODO: Chanege loop to iterator after testing
     // ******************************************************************************
     void OpenGLShader::ResolveUniforms()
     {
