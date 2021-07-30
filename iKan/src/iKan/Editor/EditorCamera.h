@@ -87,7 +87,9 @@ namespace iKan {
         
         float m_Distance;
         float m_Pitch, m_Yaw;
-                
+        
+        float m_Exposure = 0.8f;
+        
         uint32_t m_ViewportWidth = 1280, m_ViewportHeight = 720;
     };
     

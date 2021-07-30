@@ -27,11 +27,6 @@ namespace iKan {
         virtual void SetViewPort(uint32_t widht, uint32_t height) override;
         virtual void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t count = 0) override;
         virtual void DrawIndexed(uint32_t count) override;
-        virtual void SetStencils() override;
-        virtual void StencilMask(uint32_t mask) override;
-        virtual void DrawIndexed(uint32_t count, PrimitiveType type, bool depthTest) override;
-        virtual void DrawElementBaseVertex(uint32_t indexCount, void* baseIndex, uint32_t baseVertex, bool depth) override;
-        virtual void SetLineThickness(float thickness) override;
     };
     
 }

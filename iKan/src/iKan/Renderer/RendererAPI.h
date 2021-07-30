@@ -21,14 +21,6 @@ namespace iKan {
     {
     public:
         // ******************************************************************************
-        // Type of drawing 
-        // ******************************************************************************
-        enum class PrimitiveType
-        {
-            None = 0, Triangles, Lines
-        };
-
-        // ******************************************************************************
         // Stores the capability of renderer
         // ******************************************************************************
         struct Capabilities
@@ -51,15 +43,10 @@ namespace iKan {
         virtual void Clear() = 0;
         virtual void Depth(bool state) = 0;
         virtual void Blend(bool state) = 0;
-        virtual void SetStencils() = 0;
-        virtual void StencilMask(uint32_t mask) = 0;
         virtual void SetViewPort(uint32_t widht, uint32_t height) = 0;
         virtual void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t count = 0) = 0;
         virtual void DrawIndexed(uint32_t count) = 0;
-        virtual void DrawIndexed(uint32_t count, PrimitiveType type, bool depthTest) = 0;
-        virtual void DrawElementBaseVertex(uint32_t indexCount, void* baseIndex, uint32_t baseVertex, bool depth) = 0;
-        virtual void SetLineThickness(float thickness) = 0;
-
+        
         // NOTE: This API should be set before creating Windown instance as
         // Window creates context acc to the API
         static void SetAPI(API api) { s_API = api; }

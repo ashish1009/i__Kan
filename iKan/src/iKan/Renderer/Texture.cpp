@@ -80,7 +80,7 @@ namespace iKan {
     // ******************************************************************************
     // Creating Cubemap
     // ******************************************************************************
-    Ref<TextureCube> TextureCube::Create(std::vector<std::string> paths)
+    Ref<CubeMapTexture> CubeMapTexture::Create(std::vector<std::string> paths)
     {
         switch (Renderer::GetAPI())
         {
@@ -94,7 +94,7 @@ namespace iKan {
     // ******************************************************************************
     // Creating Cubemap
     // ******************************************************************************
-    Ref<TextureCube> TextureCube::Create(const std::string& path)
+    Ref<CubeMapTexture> CubeMapTexture::Create(const std::string& path)
     {
         switch (Renderer::GetAPI())
         {

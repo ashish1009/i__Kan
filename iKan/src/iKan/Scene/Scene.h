@@ -14,46 +14,14 @@
 #include <iKan/Core/TimeStep.h>
 #include <iKan/Editor/EditorCamera.h>
 #include <iKan/Renderer/Texture.h>
-#include <iKan/Renderer/Material.h>
 
 namespace iKan {
     
     class Entity;
     class SceneHeirarchyPannel;
-
-    // ******************************************************************************
-    // Scene Class
-    // ******************************************************************************
     class Scene
     {
     public:
-
-        // ******************************************************************************
-        // Environmant data
-        // ******************************************************************************
-        struct Environment
-        {
-            std::string FilePath;
-            Ref<TextureCube> RadianceMap;
-            Ref<TextureCube> IrradianceMap;
-
-            static Environment Load(const std::string& filepath);
-        };
-
-        // ******************************************************************************
-        // Light Data
-        // ******************************************************************************
-        struct Light
-        {
-            glm::vec3 Direction = { 0.0f, 0.0f, 0.0f };
-            glm::vec3 Radiance = { 0.0f, 0.0f, 0.0f };
-
-            float Multiplier = 1.0f;
-        };
-
-        // ******************************************************************************
-        // Collision side
-        // ******************************************************************************
         enum class BoxCollisionSide
         {
             Right   = BIT(0),
@@ -62,9 +30,6 @@ namespace iKan {
             Down    = BIT(3)
         };
 
-        // ******************************************************************************
-        // Scene Data
-        // ******************************************************************************
         struct Data
         {
             Data() = default;
@@ -91,20 +56,12 @@ namespace iKan {
 
             // Stores the Editor Camera
             Ref<iKan::EditorCamera> EditorCamera;
-
-            // Environment data
-            Scene::Light                 Light;
-            Scene::Environment           Environment;
-            Ref<iKan::TextureCube>       SkyboxTexture;
-            Ref<iKan::MaterialInstance>  SkyboxMaterial;
         };
 
     public:
         Scene(const std::string& path = "");
         ~Scene();
-
-        void Init();
-
+        
         Entity CreateEntity(const std::string& name = "Unknown Entity", UUID uuid = UUID());
         void DestroyEntity(Entity entity);
 
@@ -132,11 +89,6 @@ namespace iKan {
 
         Ref<Texture> AddTextureToScene(const std::string& texturePath);
 
-        void SetEnvironment(const Environment& environment);
-        void SetSkybox(const Ref<TextureCube>& skybox);
-
-        const Environment& GetEnvironment() const { return m_Data.Environment; }
-
     private:
         Entity GetMainCameraEntity();
         void RenderSpriteComponent();
@@ -151,7 +103,6 @@ namespace iKan {
         friend class Entity;
         friend class SceneHeirarchyPannel;
         friend class SceneSerializer;
-        friend class SceneRenderer;
     };
     
 }

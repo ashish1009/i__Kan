@@ -106,75 +106,12 @@ namespace iKan {
     }
 
     // ******************************************************************************
-    //
-    // ******************************************************************************
-    void OpenGlRendererAPI::DrawElementBaseVertex(uint32_t indexCount, void* baseIndex, uint32_t baseVertex, bool depth)
-    {
-        if (depth)
-            glEnable(GL_DEPTH_TEST);
-        else
-            glDisable(GL_DEPTH_TEST);
-
-        glDrawElementsBaseVertex(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, baseIndex, baseVertex);
-    }
-
-    // ******************************************************************************
-    // Draw the Triangle with vertex array
-    // ******************************************************************************
-    void OpenGlRendererAPI::DrawIndexed(uint32_t count, RendererAPI::PrimitiveType type, bool depthTest)
-    {
-        if (!depthTest)
-            glDisable(GL_DEPTH_TEST);
-
-        GLenum glPrimitiveType = 0;
-        switch (type)
-        {
-            case RendererAPI::PrimitiveType::None: IK_CORE_ASSERT(false, "Invalid type");
-            case RendererAPI::PrimitiveType::Triangles:
-                glPrimitiveType = GL_TRIANGLES;
-                break;
-            case RendererAPI::PrimitiveType::Lines:
-                glPrimitiveType = GL_LINES;
-                break;
-        }
-
-        glDrawElements(glPrimitiveType, count, GL_UNSIGNED_INT, nullptr);
-
-        if (!depthTest)
-            glEnable(GL_DEPTH_TEST);
-    }
-
-    // ******************************************************************************
     // Draw the Triangle without vertex array
     // ******************************************************************************
     void OpenGlRendererAPI::DrawIndexed(uint32_t count)
     {
         glDrawArrays(GL_TRIANGLES, 0, count);
         glBindTexture(GL_TEXTURE_2D, 0);
-    }
-
-    // ******************************************************************************
-    // set front and back stencil test actions
-    // ******************************************************************************
-    void OpenGlRendererAPI::SetStencils()
-    {
-        glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-    }
-
-    // ******************************************************************************
-    // control the front and back writing of individual bits in the stencil planes
-    // ******************************************************************************
-    void OpenGlRendererAPI::StencilMask(uint32_t mask)
-    {
-        glStencilMask((GLuint)mask);
-    }
-
-    // ******************************************************************************
-    //
-    // ******************************************************************************
-    void OpenGlRendererAPI::SetLineThickness(float thickness)
-    {
-        glLineWidth(thickness);
     }
 
 }

@@ -24,8 +24,7 @@ namespace iKan {
         
         virtual void Bind() override;
         virtual void Unbind() override;
-        virtual void BindTexture(uint32_t slot = 0) override;
-
+        
         virtual const Framebuffer::Specification& GetSpecification() const override { return m_Specifications; }
         virtual uint32_t GetColorAttachmentRendererID(uint32_t index = 0) const override
         {
