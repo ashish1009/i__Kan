@@ -52,15 +52,10 @@ namespace iKan {
         std::string ReadFromFile(const std::string& path);
 
     private:
-        bool m_Loaded    = false;
-        bool m_IsCompute = false;
-
         uint32_t    m_RendererId;
-        std::string m_Name, m_AssetPath;
+        std::string m_Name;
 
         std::unordered_map<std::string, int32_t> m_LocationMap;
-        std::unordered_map<GLenum, std::string>  m_ShaderSource;
-
         std::unordered_map<GLenum, std::string>  m_Source;
         std::vector<ShaderReloadedCallback>      m_ShaderReloadedCallbacks;
     };
