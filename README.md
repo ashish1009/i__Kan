@@ -82,7 +82,7 @@ User defined layer can be defined in Client. This should be derived from `iKan::
 13. Material class 
 
 ## Road Map
-- Add Mesh and assimp library (Functionality done, pending on proper renderer and Shader)
+- Add Mesh and assimp library (Library added, on hold or materials)
 - Add Side menu for content browser pannel (partially developed)
 - Add Light and multiple shaders
 - Add Guizmo

@@ -14,13 +14,10 @@
 #include <iKan/Editor/ScenePropertyGrid.h>
 #include <iKan/Imgui/ImguiAPI.h>
 #include <iKan/Renderer/RendererStats.h>
-#include <iKan/Renderer/Mesh.h>
 
 namespace iKan {
 
     Viewport* Viewport::s_Instance = nullptr;
-
-    static Ref<Mesh> mesh;
 
     // ******************************************************************************
     // Viewport Default Constructor
@@ -28,8 +25,6 @@ namespace iKan {
     Viewport::Viewport(const std::string& contentBrowserPath)
     : m_ContentBrowserPannel(contentBrowserPath)
     {
-        mesh = CreateRef<Mesh>("/Users/ashish/iKan/Github/iKan/iKan/src/iKan/Editor/assets/objects/backpack/backpack.obj");
-
         // Frame buffer specifications
         Framebuffer::Specification specs;
         specs.Attachments = { Framebuffer::TextureSpecification::TextureFormat::RGBA8,

@@ -9,12 +9,15 @@
 
 #include "IKanEditor.h"
 
+static Ref<Mesh> mesh;
+
 // ******************************************************************************
 // EditorLayer Constructor
 // ******************************************************************************
 IKanEditor::IKanEditor()
 : Layer("IKanEditor")
 {
+    mesh = CreateRef<Mesh>("/Users/ashish/iKan/Github/iKan/iKan/src/iKan/Editor/assets/objects/backpack/backpack.obj");
     IK_INFO("IKanEditor layer created");
 }
 
