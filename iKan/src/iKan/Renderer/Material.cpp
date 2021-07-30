@@ -26,13 +26,7 @@ namespace iKan {
     Material::Material(const Ref<Shader>& shader)
     : m_Shader(shader)
     {
-        IK_CORE_INFO("Creating Material with shader {0}", m_Shader->GetName());
 
-        m_Shader->AddShaderReloadedCallback(std::bind(&Material::OnShaderReloaded, this));
-        AllocateStorage();
-
-        m_MaterialFlags |= (uint32_t)MaterialFlag::DepthTest;
-        m_MaterialFlags |= (uint32_t)MaterialFlag::Blend;
     }
 
     // ******************************************************************************
@@ -40,16 +34,13 @@ namespace iKan {
     // ******************************************************************************
     Material::~Material()
     {
-        IK_CORE_INFO("Deleting Material with shader {0}", m_Shader->GetName());
+
     }
 
     // ******************************************************************************
-    // Allocate the Material Buffer is Shader buffer is present.
     // ******************************************************************************
     void Material::AllocateStorage()
     {
-        IK_CORE_INFO("Allocating memory to Material Storage buffers");
-
         if (m_Shader->HasVSMaterialUniformBuffer())
         {
             const auto& vsBuffer = m_Shader->GetVSMaterialUniformBuffer();
@@ -154,28 +145,6 @@ namespace iKan {
                 texture->Bind((uint32_t)i);
         }
     }
-
-    // ******************************************************************************
-    // ******************************************************************************
-    void Material::Set(const std::string& name, const Ref<Texture>& texture)
-    {
-        auto decl = FindResourceDeclaration(name);
-        uint32_t slot = decl->GetRegister();
-        if (m_Textures.size() <= slot)
-            m_Textures.resize((size_t)slot + 1);
-        m_Textures[slot] = texture;
-    }
-
-    // ******************************************************************************
-    // ******************************************************************************
-    void Material::Set(const std::string& name, const Ref<CubeMapTexture>& texture)
-    {
-        Set(name, (const Ref<Texture>&)texture);
-    }
-
-    // ******************************************************************************
-    // ---------------------------- Material Instance -------------------------------
-    // ******************************************************************************
 
     // ******************************************************************************
     // Create the instance of Material instance
@@ -293,30 +262,5 @@ namespace iKan {
                 texture->Bind((uint32_t)i);
         }
     }
-
-    // ******************************************************************************
-    // ******************************************************************************
-    void MaterialInstance::Set(const std::string& name, const Ref<Texture>& texture)
-    {
-        auto decl = m_Material->FindResourceDeclaration(name);
-        if (!decl)
-        {
-            IK_CORE_WARN("Cannot find material property: ", name);
-            return;
-        }
-        uint32_t slot = decl->GetRegister();
-        if (m_Textures.size() <= slot)
-            m_Textures.resize((size_t)slot + 1);
-        m_Textures[slot] = texture;
-    }
-
-    // ******************************************************************************
-    // ******************************************************************************
-    void MaterialInstance::Set(const std::string& name, const Ref<CubeMapTexture>& texture)
-    {
-        Set(name, (const Ref<Texture>&)texture);
-    }
-
-
 
 }

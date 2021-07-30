@@ -42,10 +42,10 @@ namespace iKan {
         static const uint32_t MaxTextureSlots = 16;
         
         // Data storage for Rendering
-        Ref<VertexArray>   QuadVertexArray;
-        Ref<VertexBuffer>  QuadVertexBuffer;
-        Ref<Texture>       WhiteTexture;
-        Ref<ShaderLibrary> ShaderLibrary;
+        Ref<VertexArray>  QuadVertexArray;
+        Ref<VertexBuffer> QuadVertexBuffer;
+        Ref<Shader>       TextureShader;
+        Ref<Texture>      WhiteTexture;
         
         uint32_t QuadIndexCount = 0;
         
@@ -126,18 +126,14 @@ namespace iKan {
         s_Data->QuadVertexPositions[1] = {  0.5f, -0.5f, 0.0f, 1.0f };
         s_Data->QuadVertexPositions[2] = {  0.5f,  0.5f, 0.0f, 1.0f };
         s_Data->QuadVertexPositions[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
-
-        s_Data->ShaderLibrary = CreateRef<ShaderLibrary>();
         
-        AddShaader("../../../iKan/assets/shaders/BatchRenderer2DShader.glsl");
-//        AddShaader("../../../iKan/assets/shaders/PBR_Anim.glsl");
-//        AddShaader("../../../iKan/assets/shaders/PBR_Static.glsl");
+        SetShaader("../../../iKan/assets/shaders/BatchRenderer2DShader.glsl");
     }
     
     // ******************************************************************************
     // Set the 2DD shader
     // ******************************************************************************
-    void SceneRenderer::AddShaader(const std::string &path)
+    void SceneRenderer::SetShaader(const std::string &path)
     {
         IK_CORE_INFO("Set the 2D Renderer Shader {0}", path.c_str());
 
@@ -149,10 +145,9 @@ namespace iKan {
         }
         
         // Creating Shader and storing all the slots
-        auto textureShader = s_Data->ShaderLibrary->Load(path);
-
-        textureShader->Bind();
-        textureShader->SetIntArray("u_Textures", samplers, s_Data->MaxTextureSlots);
+        s_Data->TextureShader = Shader::Create(path);
+        s_Data->TextureShader->Bind();
+        s_Data->TextureShader->SetIntArray("u_Textures", samplers, s_Data->MaxTextureSlots);
     }
     
     // ******************************************************************************
@@ -171,10 +166,8 @@ namespace iKan {
     {
         glm::mat4 viewProj = camera.GetViewProjection();
 
-        auto textureShader = s_Data->ShaderLibrary->Get("BatchRenderer2DShader");
-
-        textureShader->Bind();
-        textureShader->SetUniformMat4("u_ViewProjection", viewProj);
+        s_Data->TextureShader->Bind();
+        s_Data->TextureShader->SetUniformMat4("u_ViewProjection", viewProj);
 
         StartBatch();
     }
@@ -187,10 +180,8 @@ namespace iKan {
         // Upload Camera View Projection Matris to shader
         glm::mat4 viewProj = camera.GetProjection() * glm::inverse(transform);
 
-        auto textureShader = s_Data->ShaderLibrary->Get("BatchRenderer2DShader");
-
-        textureShader->Bind();
-        textureShader->SetUniformMat4("u_ViewProjection", viewProj);
+        s_Data->TextureShader->Bind();
+        s_Data->TextureShader->SetUniformMat4("u_ViewProjection", viewProj);
 
         StartBatch();
     }
@@ -256,14 +247,6 @@ namespace iKan {
         s_Data->QuadVertexBufferPtr = s_Data->QuadVertexBufferBase;
         
         s_Data->TextureSlotIndex = 1;
-    }
-
-    // ******************************************************************************
-    // Get the shader library
-    // ******************************************************************************
-    Ref<ShaderLibrary> SceneRenderer::GetShaderLibrary()
-    {
-        return s_Data->ShaderLibrary;
     }
     
     // ******************************************************************************

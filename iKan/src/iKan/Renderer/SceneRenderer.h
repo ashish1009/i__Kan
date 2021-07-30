@@ -11,7 +11,6 @@
 
 #include <iKan/Editor/EditorCamera.h>
 #include <iKan/Renderer/Texture.h>
-#include <iKan/Renderer/Shader.h>
 
 namespace iKan {
     
@@ -21,13 +20,11 @@ namespace iKan {
         static void Init();
         static void Shutdown();
         
-        static void AddShaader(const std::string &path);
+        static void SetShaader(const std::string &path);
         
         static void BeginScene(const EditorCamera& camera);
         static void BeginScene(const Camera& camera, const glm::mat4& transform);
         static void EndScene();
-
-        static Ref<ShaderLibrary> GetShaderLibrary();
         
         // Primitives
         static void DrawQuad(const glm::mat4& transform, const glm::vec4& color, int32_t entID);
