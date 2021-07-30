@@ -10,33 +10,7 @@
 #pragma once
 
 #include <iKan/Core/Utils.h>
-
-// ******************************************************************************
-// Assertion API defined for iKan Engine
-// ******************************************************************************
-#ifdef IK_ENABLE_ASSERT
-
-// x is conditional statement. Assert if x is false
-#define IK_CORE_ASSERT(x, ...)                                  \
-if (!x)                                                         \
-{                                                               \
-    IK_CORE_CRITICAL("Assertion Failed {0}", __VA_ARGS__);      \
-    assert(x); \
-}
-
-#define IK_ASSERT(x, ...)                                       \
-if (!x)                                                         \
-{                                                               \
-    IK_CRITICAL("Assertion Failed {0}", __VA_ARGS__);           \
-    assert(x); \
-}
-
-#else
-
-#define IK_CORE_ASSERT(x, ...)
-#define IK_ASSERT(x, ...)
-
-#endif
+#include <iKan/Core/Asserts.h>
 
 // API to get bit positioned value
 #define BIT(x) (1 << x)

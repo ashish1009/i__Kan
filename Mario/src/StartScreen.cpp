@@ -15,7 +15,7 @@ namespace Mario {
     std::unordered_map<char, Ref<SubTexture>> StartScreen::s_TileMap;
 
     static std::string s_MapTiles =
-//              I__K A N
+    //          I__K A N
     "aggggggggggggggggggggggggggggggggb0"
     "e          I  JJ  yzG            h0"
     "e          w  JlyzJJJ            h0"
