@@ -22,7 +22,7 @@
 #include <fstream>
 
 // Log files files
-#include <iKan/Core/Log.h>
+#include <iKan/Core/Core.h>
 
 // Imgui files
 #include <imgui.h>

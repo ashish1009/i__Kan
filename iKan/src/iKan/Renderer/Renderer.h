@@ -10,6 +10,7 @@
 #pragma once
 
 #include <iKan/Renderer/RendererAPI.h>
+#include <iKan/Renderer/RenderCommandQueue.h>
 
 namespace iKan {
     
@@ -25,6 +26,7 @@ namespace iKan {
         static void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t count = 0);
         static void DrawIndexed(uint32_t count);
         static void Shutdown();
+        static void WaitAndRender();
 
         static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 
@@ -35,9 +37,30 @@ namespace iKan {
             RendererAPI::SetAPI(api);
             s_RendererAPI = RendererAPI::Create();
         }
+
+        // ******************************************************************************
+        // Submit the renderer API in the Renderer Command Queue. Later will be executed
+        // one by one. FunT is type of funcion
+        // ******************************************************************************
+        template<typename FuncT>
+        static void Submit(FuncT&& func)
+        {
+            auto renderCmd = [](void* ptr) {
+                auto pFunc = (FuncT*)ptr;
+                (*pFunc)();
+
+                // NOTE: Instead of destroying we could try and enforce all items to be trivally destructible
+                // however some items like uniforms which contain std::strings still exist for now
+                // static_assert(std::is_trivially_destructible_v<FuncT>, "FuncT must be trivially destructible");
+                pFunc->~FuncT();
+            };
+            auto storageBuffer = GetRenderCommandQueue().Allocate(renderCmd, sizeof(func));
+            new (storageBuffer) FuncT(std::forward<FuncT>(func));
+        }
         
     private:
         static Scope<RendererAPI> s_RendererAPI;
+        static RenderCommandQueue& GetRenderCommandQueue();
     };
     
 }

@@ -10,6 +10,7 @@
 #pragma once
 
 #include <iKan/Core/Events/Event.h>
+#include <iKan/Core/TimeStep.h>
 
 namespace iKan {
     
@@ -57,7 +58,9 @@ namespace iKan {
         virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
 
         virtual bool IsVSync() const = 0;
-        
+
+        virtual const Timestep& GetTime() const = 0;
+
         static Scope<Window> Create(const Window::Property& props = Window::Property());
     };
     

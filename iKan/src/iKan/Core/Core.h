@@ -11,6 +11,8 @@
 
 #include <iKan/Core/Utils.h>
 #include <iKan/Core/Asserts.h>
+#include <iKan/Core/Buffer.h>
+#include <iKan/Core/Log.h>
 
 // API to get bit positioned value
 #define BIT(x) (1 << x)

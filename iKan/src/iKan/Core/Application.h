@@ -40,10 +40,7 @@ namespace iKan {
                      uint32_t width        = Window::Property::DefaultWidth,
                      uint32_t height       = Window::Property::DefaultHeight,
                      RendererAPI::API api  = RendererAPI::API::OpenGL)
-            : Title(title), Width(width), Height(height), Api(api)
-            {
-                
-            }
+            : Title(title), Width(width), Height(height), Api(api) { }
             
             ~Property() = default;
         };
@@ -85,10 +82,8 @@ namespace iKan {
         
         Layerstack m_Layerstack;
         Property   m_Property;
-        Timestep   m_Timestep;
 
         bool  m_IsRunning = true;
-        float m_LastFrame = 0.0f;
 
         static Application* s_Instance;
     };

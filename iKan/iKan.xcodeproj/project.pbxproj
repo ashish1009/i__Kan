@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		750AA8E1265D52140031A3E0 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 750AA8DF265D52140031A3E0 /* Utils.cpp */; };
 		750AA8E2265D52140031A3E0 /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 750AA8E0265D52140031A3E0 /* Utils.h */; };
+		75158EB726B5A1BD00F938E5 /* RenderCommandQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 75158EB526B5A1BD00F938E5 /* RenderCommandQueue.cpp */; };
+		75158EB826B5A1BD00F938E5 /* RenderCommandQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 75158EB626B5A1BD00F938E5 /* RenderCommandQueue.h */; };
+		75158EBF26B5A3AE00F938E5 /* Buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 75158EBE26B5A3AE00F938E5 /* Buffer.h */; };
 		758265DB2679F6DF0080169A /* ContetBrowserPannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 758265D92679F6DF0080169A /* ContetBrowserPannel.cpp */; };
 		758265DC2679F6DF0080169A /* ContetBrowserPannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 758265DA2679F6DF0080169A /* ContetBrowserPannel.h */; };
 		7589D501267758DD00EB43D9 /* SceneSerializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7589D4FF267758DD00EB43D9 /* SceneSerializer.cpp */; };
@@ -130,6 +133,9 @@
 /* Begin PBXFileReference section */
 		750AA8DF265D52140031A3E0 /* Utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
 		750AA8E0265D52140031A3E0 /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		75158EB526B5A1BD00F938E5 /* RenderCommandQueue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RenderCommandQueue.cpp; sourceTree = "<group>"; };
+		75158EB626B5A1BD00F938E5 /* RenderCommandQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RenderCommandQueue.h; sourceTree = "<group>"; };
+		75158EBE26B5A3AE00F938E5 /* Buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Buffer.h; sourceTree = "<group>"; };
 		758265D92679F6DF0080169A /* ContetBrowserPannel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ContetBrowserPannel.cpp; sourceTree = "<group>"; };
 		758265DA2679F6DF0080169A /* ContetBrowserPannel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContetBrowserPannel.h; sourceTree = "<group>"; };
 		7589D23B2677574200EB43D9 /* yaml.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = yaml.xcodeproj; path = vendor/yaml/yaml.xcodeproj; sourceTree = "<group>"; };
@@ -391,6 +397,8 @@
 				B249622826397EE80091C915 /* RendererAPI.h */,
 				B27FE3192629E474000FD32D /* Renderer.cpp */,
 				B27FE31A2629E474000FD32D /* Renderer.h */,
+				75158EB526B5A1BD00F938E5 /* RenderCommandQueue.cpp */,
+				75158EB626B5A1BD00F938E5 /* RenderCommandQueue.h */,
 				B27FE3152629E1D2000FD32D /* GraphicsContext.cpp */,
 				B27FE3162629E1D2000FD32D /* GraphicsContext.h */,
 				B227E5A12636DEB300DC3DFA /* Buffers.cpp */,
@@ -525,6 +533,7 @@
 				B27D6094263D3A3000954BB6 /* UUID.cpp */,
 				B27D6097263D3A3000954BB6 /* UUID.h */,
 				75CDC6FE26B461B600A804CB /* Asserts.h */,
+				75158EBE26B5A3AE00F938E5 /* Buffer.h */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -542,8 +551,10 @@
 				B227E5AA2636F22B00DC3DFA /* OpenGLBuffers.h in Headers */,
 				B27D6099263D3A3000954BB6 /* UUID.h in Headers */,
 				B2EAB33B262B2311003D7FE6 /* ApplicationEvent.h in Headers */,
+				75158EB826B5A1BD00F938E5 /* RenderCommandQueue.h in Headers */,
 				B249622F26397FAC0091C915 /* OpenGlRendererAPI.h in Headers */,
 				B2A1C11A263E87DD00606017 /* Viewport.h in Headers */,
+				75158EBF26B5A3AE00F938E5 /* Buffer.h in Headers */,
 				B2A1C116263E82E700606017 /* RendererStats.h in Headers */,
 				B2A1C11E263EAE6800606017 /* SceneHierarchyPannel.h in Headers */,
 				B24010A3263450200051B868 /* ImguiLayer.h in Headers */,
@@ -698,6 +709,7 @@
 				B202805E2625DF4900BC7F39 /* Layerstack.cpp in Sources */,
 				B227E5A32636DEB300DC3DFA /* Buffers.cpp in Sources */,
 				B249622B26397EE80091C915 /* RendererAPI.cpp in Sources */,
+				75158EB726B5A1BD00F938E5 /* RenderCommandQueue.cpp in Sources */,
 				B27FE3132629E153000FD32D /* OpenGLGraphicsContext.cpp in Sources */,
 				B22FE70126385C3B00C1640B /* Shader.cpp in Sources */,
 				B27D6098263D3A3000954BB6 /* UUID.cpp in Sources */,

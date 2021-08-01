@@ -9,7 +9,6 @@
 
 #include "Application.h"
 #include <iKan/Imgui/ImguiAPI.h>
-#include <GLFW/glfw3.h>
 
 namespace iKan {
     
@@ -73,20 +72,13 @@ namespace iKan {
         {
             // Updating all the attached layer
             for (Ref<Layer> layer : m_Layerstack)
-            {
-                layer->OnUpdate(m_Timestep);
-            }
-            
+                layer->OnUpdate(m_Window->GetTime());
+
             // render Imgui Layer
             ImguiRenderer();
 
             // Update the Window
             m_Window->Update();
-            
-            // Update the GLFW Time and store in time step
-            float currentFrame = glfwGetTime();
-            m_Timestep         = currentFrame - m_LastFrame;
-            m_LastFrame        = currentFrame;
         }
         IK_CORE_WARN("-----------------------------     Exiting Game loop    ---------------------------------");
     }
@@ -104,9 +96,7 @@ namespace iKan {
 
         // Events handling for all layers
         for (auto it = m_Layerstack.rbegin(); it != m_Layerstack.rend(); it++)
-        {
             (*it)->OnEvent(event);
-        }
     }
     
     // ******************************************************************************
@@ -140,10 +130,8 @@ namespace iKan {
 
         // Rendering ImGui for all the layers
         for (auto layer : m_Layerstack)
-        {
-            layer->OnImguiRender(m_Timestep);
-        }
-        
+            layer->OnImguiRender(m_Window->GetTime());
+
         m_ImguiLayer->End();
     }
 

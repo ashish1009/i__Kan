@@ -56,7 +56,9 @@ namespace iKan {
         virtual void* GetNativeWindow() override { return (void*)m_Window; }
         virtual void SetVSync(bool enabled) override;
         virtual void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; };
-        
+
+        virtual const Timestep& GetTime() const override { return m_Timestep; }
+
         virtual bool IsVSync() const override;
         
     private:
@@ -64,9 +66,12 @@ namespace iKan {
         void SetCallBacks();
         
     private:
-        Data                    m_Data;
-        GLFWwindow*             m_Window;
-        Scope<GraphicsContext>  m_Context;
+        Data        m_Data;
+        GLFWwindow* m_Window;
+        Timestep    m_Timestep;
+        GLFWcursor* m_ImGuiMouseCursors[ImGuiMouseCursor_COUNT] = { 0 };
+        Scope<GraphicsContext> m_Context;
+        float m_LastFrame = 0.0f;
     };
     
 }

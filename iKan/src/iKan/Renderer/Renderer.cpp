@@ -21,7 +21,7 @@ namespace iKan {
     void Renderer::Init()
     {
         IK_CORE_INFO("Initialising all Renderers");
-        
+
         s_RendererAPI->Init();
         SceneRenderer::Init();
     }
@@ -67,6 +67,22 @@ namespace iKan {
     void Renderer::Shutdown()
     {
         SceneRenderer::Shutdown();
+    }
+    
+    // ******************************************************************************
+    // Return the Renderer Command Queue instance
+    // ******************************************************************************
+    RenderCommandQueue& Renderer::GetRenderCommandQueue()
+    {
+        return s_Data.m_CommandQueue;
+    }
+
+    // ******************************************************************************
+    // Run all the commands
+    // ******************************************************************************
+    void Renderer::WaitAndRender()
+    {
+        s_Data.m_CommandQueue.Execute();
     }
     
 }

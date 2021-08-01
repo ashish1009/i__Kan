@@ -182,6 +182,17 @@ namespace iKan {
             MouseMovedEvent event((float)xPos, (float)yPos);
             data.EventCallback(event);
         });
+
+        m_ImGuiMouseCursors[ImGuiMouseCursor_Arrow]         = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
+        m_ImGuiMouseCursors[ImGuiMouseCursor_TextInput]     = glfwCreateStandardCursor(GLFW_IBEAM_CURSOR);
+        m_ImGuiMouseCursors[ImGuiMouseCursor_ResizeAll]     = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);   // FIXME: GLFW doesn't have this.
+        m_ImGuiMouseCursors[ImGuiMouseCursor_ResizeNS]      = glfwCreateStandardCursor(GLFW_VRESIZE_CURSOR);
+        m_ImGuiMouseCursors[ImGuiMouseCursor_ResizeEW]      = glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR);
+        m_ImGuiMouseCursors[ImGuiMouseCursor_ResizeNESW]    = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);  // FIXME: GLFW doesn't have this.
+        m_ImGuiMouseCursors[ImGuiMouseCursor_ResizeNWSE]    = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);  // FIXME: GLFW doesn't have this.
+        m_ImGuiMouseCursors[ImGuiMouseCursor_Hand]          = glfwCreateStandardCursor(GLFW_HAND_CURSOR);
+        m_ImGuiMouseCursors[ImGuiMouseCursor_NotAllowed]    = glfwCreateStandardCursor(GLFW_NOT_ALLOWED_CURSOR);
+
     }
     
     // ******************************************************************************
@@ -203,6 +214,15 @@ namespace iKan {
     {
         m_Context->SwapBuffers();
         glfwPollEvents();
+
+        ImGuiMouseCursor imgui_cursor = ImGui::GetMouseCursor();
+        glfwSetCursor(m_Window, m_ImGuiMouseCursors[imgui_cursor] ? m_ImGuiMouseCursors[imgui_cursor] : m_ImGuiMouseCursors[ImGuiMouseCursor_Arrow]);
+        glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+
+        // Update the GLFW Time and store in time step
+        float currentFrame = glfwGetTime();
+        m_Timestep         = currentFrame - m_LastFrame;
+        m_LastFrame        = currentFrame;
     }
     
     // ******************************************************************************
