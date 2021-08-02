@@ -11,6 +11,7 @@
 
 #include <filesystem>
 #include <iKan/Renderer/Texture.h>
+#include <iKan/Imgui/ImguiAPI.h>
 
 namespace iKan {
 
@@ -25,6 +26,12 @@ namespace iKan {
         void OnImguiender(bool* pIsOpen = nullptr);
         const std::filesystem::path& GetCurrentDir() const { return m_CurrentDir; }
         const std::filesystem::path& GetRootDir() const { return m_RootPath; }
+
+        static void UpdateTileBgColor()
+        {
+            for (auto& bgColor : s_DirBgColor)
+                bgColor.second = ImGuiAPI::GetBgColor();
+        }
 
     private:
         void TitleIcon();
@@ -53,6 +60,7 @@ namespace iKan {
 
         ImGuiTextFilter m_Filter;
 
+        // TODO move some other place.
         struct TileIconTexture
         {
             Ref<Texture> FolderIcon = Texture::Create("../../../iKan/src/iKan/Editor/assets/resources/ContentBrowser/Folder.png");
@@ -71,6 +79,9 @@ namespace iKan {
             Ref<Texture> Home       = Texture::Create("../../../iKan/src/iKan/Editor/assets/resources/ContentBrowser/Home.png");
         };
         TileIconTexture m_TileIconTexture;
+
+        // Map to store the BG color of each content
+        static std::unordered_map<int32_t, ImVec4> s_DirBgColor;
     };
 
 }
