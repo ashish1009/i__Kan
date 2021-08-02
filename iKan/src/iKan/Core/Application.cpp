@@ -75,8 +75,11 @@ namespace iKan {
             for (Ref<Layer> layer : m_Layerstack)
                 layer->OnUpdate(m_Window->GetTime());
 
-            // render Imgui Layer
-            ImguiRenderer();
+            // Render ImGui on render thread
+            Application* app = this;
+            Renderer::Submit([app]() { app->ImguiRenderer(); });
+
+            Renderer::WaitAndRender();
 
             // Update the Window
             m_Window->Update();

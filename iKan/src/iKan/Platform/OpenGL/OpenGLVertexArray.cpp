@@ -8,6 +8,7 @@
 // ******************************************************************************
 
 #include "OpenGLVertexArray.h"
+#include <iKan/Renderer/Renderer.h>
 #include <glad/glad.h>
 
 namespace iKan {
@@ -42,10 +43,13 @@ namespace iKan {
     // ******************************************************************************
     OpenGLVertexArray::OpenGLVertexArray()
     {
-        IK_CORE_INFO("Open GL Vertex Array Constructor called ");
+        Renderer::Submit([this]()
+                         {
+            IK_CORE_INFO("Open GL Vertex Array Constructor called ");
 
-        glGenVertexArrays(1, &m_RendererId);
-        glBindVertexArray(m_RendererId);
+            glGenVertexArrays(1, &m_RendererId);
+            glBindVertexArray(m_RendererId);
+        });
     }
     
     // ******************************************************************************
@@ -53,9 +57,11 @@ namespace iKan {
     // ******************************************************************************
     OpenGLVertexArray::~OpenGLVertexArray()
     {
-        IK_CORE_WARN("Open GL Vertex array destroyed ");
-
-        glDeleteVertexArrays(1, &m_RendererId);
+        Renderer::Submit([this]()
+                         {
+            IK_CORE_WARN("Open GL Vertex array destroyed ");
+            glDeleteVertexArrays(1, &m_RendererId);
+        });
     }
     
     // ******************************************************************************
@@ -79,72 +85,75 @@ namespace iKan {
     // ******************************************************************************
     void OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer)
     {
-        IK_CORE_INFO("Storing the Vertex Buffer with ID: {0} into Vertex Array of ID: {1}", vertexBuffer->GetRendererID(), this->GetRendererID());
+        Renderer::Submit([this, vertexBuffer]()
+                         {
+            IK_CORE_INFO("Storing the Vertex Buffer with ID: {0} into Vertex Array of ID: {1}", vertexBuffer->GetRendererID(), this->GetRendererID());
 
-        glBindVertexArray(m_RendererId);
-        m_VertexBuffers.push_back(vertexBuffer);
-        
-        uint32_t index = 0;
-        const auto& layout = vertexBuffer->GetLayout();
-        for (const auto& element : layout.GetElements())
-        {
-            switch (element.Type)
+            glBindVertexArray(m_RendererId);
+            m_VertexBuffers.push_back(vertexBuffer);
+
+            uint32_t index = 0;
+            const auto& layout = vertexBuffer->GetLayout();
+            for (const auto& element : layout.GetElements())
             {
-                case ShaderDataType::Int:
-                case ShaderDataType::Int2:
-                case ShaderDataType::Int3:
-                case ShaderDataType::Int4:
-                case ShaderDataType::Bool:
+                switch (element.Type)
                 {
-                    glEnableVertexAttribArray(index);
-                    glVertexAttribIPointer(index,
-                                          element.Count,
-                                          ShaderDataTypeToOpenGLBaseType(element.Type),
-                                          layout.GetStride(),
-                                          (const void*)element.Offset);
-                    index++;
-                    break;
-                }
+                    case ShaderDataType::Int:
+                    case ShaderDataType::Int2:
+                    case ShaderDataType::Int3:
+                    case ShaderDataType::Int4:
+                    case ShaderDataType::Bool:
+                    {
+                        glEnableVertexAttribArray(index);
+                        glVertexAttribIPointer(index,
+                                              element.Count,
+                                              ShaderDataTypeToOpenGLBaseType(element.Type),
+                                              layout.GetStride(),
+                                              (const void*)element.Offset);
+                        index++;
+                        break;
+                    }
 
-                case ShaderDataType::Float:
-                case ShaderDataType::Float2:
-                case ShaderDataType::Float3:
-                case ShaderDataType::Float4:
-                {
-                    glEnableVertexAttribArray(index);
-                    glVertexAttribPointer(index,
-                                          element.Count,
-                                          ShaderDataTypeToOpenGLBaseType(element.Type),
-                                          element.Normalized ? GL_TRUE : GL_FALSE,
-                                          layout.GetStride(),
-                                          (const void*)element.Offset);
-                    index++;
-                    break;
-                }
-                case ShaderDataType::Mat3:
-                case ShaderDataType::Mat4:
-                {
-                    uint8_t count = element.Count;
-                    for (uint8_t i = 0; i < count; i++)
+                    case ShaderDataType::Float:
+                    case ShaderDataType::Float2:
+                    case ShaderDataType::Float3:
+                    case ShaderDataType::Float4:
                     {
                         glEnableVertexAttribArray(index);
                         glVertexAttribPointer(index,
-                                              count,
+                                              element.Count,
                                               ShaderDataTypeToOpenGLBaseType(element.Type),
                                               element.Normalized ? GL_TRUE : GL_FALSE,
                                               layout.GetStride(),
-                                              (const void*)(sizeof(float) * count * i));
-                        glVertexAttribDivisor(index, 1);
+                                              (const void*)element.Offset);
                         index++;
+                        break;
                     }
-                    break;
-                }
-                default:
-                {
-                    IK_CORE_ASSERT(false, "Unknown ShaderDataType!");
+                    case ShaderDataType::Mat3:
+                    case ShaderDataType::Mat4:
+                    {
+                        uint8_t count = element.Count;
+                        for (uint8_t i = 0; i < count; i++)
+                        {
+                            glEnableVertexAttribArray(index);
+                            glVertexAttribPointer(index,
+                                                  count,
+                                                  ShaderDataTypeToOpenGLBaseType(element.Type),
+                                                  element.Normalized ? GL_TRUE : GL_FALSE,
+                                                  layout.GetStride(),
+                                                  (const void*)(sizeof(float) * count * i));
+                            glVertexAttribDivisor(index, 1);
+                            index++;
+                        }
+                        break;
+                    }
+                    default:
+                    {
+                        IK_CORE_ASSERT(false, "Unknown ShaderDataType!");
+                    }
                 }
             }
-        }
+        });
     }
     
     // ******************************************************************************
@@ -152,12 +161,13 @@ namespace iKan {
     // ******************************************************************************
     void OpenGLVertexArray::SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer)
     {
-        IK_CORE_INFO("Setting up the Index Buffer with ID: {0} into Vertex Array of ID: {1}", indexBuffer->GetRendererID(), this->GetRendererID());
-
-        glBindVertexArray(m_RendererId);
-        indexBuffer->Bind();
-        
         m_IndexBuffer = indexBuffer;
+        Renderer::Submit([this]()
+                         {
+            IK_CORE_INFO("Setting up the Index Buffer with ID: {0} into Vertex Array of ID: {1}", m_IndexBuffer->GetRendererID(), GetRendererID());
+            glBindVertexArray(m_RendererId);
+            m_IndexBuffer->Bind();
+        });
     }
 
 }

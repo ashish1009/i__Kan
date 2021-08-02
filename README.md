@@ -16,18 +16,25 @@ You can clone the repository to a local destination using git:
 Make sure that you do a `--recursive` clone to fetch all of the submodules!
 
 ## Features
-1. GLFW Window can be created.
-2. Renderer APIs are available for OpenGL.
-3. Imgui Wrappers are available.
-4. Base application and layer class.
-5. Content browser pannel
-6. UI Editor to that shoes viewport information.
-7. New scene can be created inemty editor
-8. Open Scene from already saved file
-9. Save the current scene to any folder
+1. SPD Logger is added. iKan::Log class can be used to initialise the log.
+2. Add core application and layer class (To Grow with time)
+3. GLFW Window handling is done
+4. Add Imgui Functionality for having a GUI to control the window and rendering (GUI grow with time)
+5. Renderer Buffers and Array (Open GL)
+6. Add the Framebuffers
+7. Handling of Adding Texture files (Upload the texture to renderer)
+8. Add Shader source code and its compiler
+9. Create Shader library to store multiple shaders
+10. 2D Renderere API
+11. Entity COmponent System
+12. Content browser pannel
+13. UI Editor to that shoes viewport information.
+14. New scene can be created in empty editor
+15. Open Scene from already saved file
+16.  Save the current scene to any folder
 
 ## Road Map
-- Add feature to Upload texture by darg and drop
+- Multi Thread
 - Add Side menu for content browser pannel (partially developed)
 - Add material class
 - Add Light and multiple shaders
