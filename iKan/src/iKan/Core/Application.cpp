@@ -33,6 +33,7 @@ namespace iKan {
     Application::~Application()
     {
         IK_CORE_WARN("Destroying the application");
+        Renderer::WaitAndRender();
     }
     
     // ******************************************************************************
@@ -68,6 +69,9 @@ namespace iKan {
     // ******************************************************************************
     void Application::Run()
     {
+        // Finish all pending init time render commands
+        Renderer::WaitAndRender();
+        
         IK_CORE_INFO("-----------------------------     Entering Game loop   ---------------------------------");
         while (m_IsRunning)
         {

@@ -26,7 +26,6 @@ namespace iKan {
         virtual ~OpenGLShader();
         
         virtual void Bind() override;
-        virtual void TempBind() override;
         virtual void Unbind() override;
         
         virtual void AddShaderReloadedCallback(const ShaderReloadedCallback& callback) override;

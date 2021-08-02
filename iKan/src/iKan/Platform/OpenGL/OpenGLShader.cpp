@@ -202,9 +202,11 @@ namespace iKan {
     // ******************************************************************************
     OpenGLShader::~OpenGLShader()
     {
-        IK_CORE_WARN("Destroying Open GL Shader : {0}", m_Name.c_str());
-
-        glDeleteProgram(m_RendererId);
+        Renderer::Submit([this]()
+                         {
+            IK_CORE_WARN("Destroying Open GL Shader : {0}", m_Name.c_str());
+            glDeleteProgram(m_RendererId);
+        });
     }
     
     // ******************************************************************************
@@ -214,18 +216,13 @@ namespace iKan {
     {
         Renderer::Submit([this]() { glUseProgram(m_RendererId); });
     }
-
-    void OpenGLShader::TempBind()
-    {
-        glUseProgram(m_RendererId);
-    }
     
     // ******************************************************************************
     // Unbind Open GL Shader file
     // ******************************************************************************
     void OpenGLShader::Unbind()
     {
-        glUseProgram(0);
+        Renderer::Submit([]() { glUseProgram(0); });
     }
     
     // ******************************************************************************
@@ -251,32 +248,32 @@ namespace iKan {
     
     void OpenGLShader::SetUniformMat4(const std::string& name, const glm::mat4& value)
     {
-        glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value));
+        Renderer::Submit([name, value, this]() { glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value)); });
     }
 
     void OpenGLShader::SetUniformMat3(const std::string& name, const glm::mat3& value)
     {
-        glUniformMatrix3fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value));
+        Renderer::Submit([name, value, this]() { glUniformMatrix3fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value)); });
     }
     
     void OpenGLShader::SetUniformFloat1(const std::string& name, float value)
     {
-        glUniform1f(GetUniformLocation(name), value);
+        Renderer::Submit([name, value, this]() { glUniform1f(GetUniformLocation(name), value); });
     }
     
     void OpenGLShader::SetUniformFloat2(const std::string& name, const glm::vec2& value)
     {
-        glUniform2f(GetUniformLocation(name), value.x, value.y);
+        Renderer::Submit([name, value, this]() { glUniform2f(GetUniformLocation(name), value.x, value.y); });
     }
     
     void OpenGLShader::SetUniformFloat3(const std::string& name, const glm::vec3& value)
     {
-        glUniform3f(GetUniformLocation(name), value.x, value.y, value.z);
+        Renderer::Submit([name, value, this]() { glUniform3f(GetUniformLocation(name), value.x, value.y, value.z); });
     }
     
     void OpenGLShader::SetUniformFloat4(const std::string& name, const glm::vec4& value)
     {
-        glUniform4f(GetUniformLocation(name), value.x, value.y, value.z, value.w);
+        Renderer::Submit([name, value, this]() { glUniform4f(GetUniformLocation(name), value.x, value.y, value.z, value.w); });
     }
     
     // ******************************************************************************

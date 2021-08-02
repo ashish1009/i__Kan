@@ -59,7 +59,7 @@ void MarioLayer::OnAttach()
 
     // Create Player Instance
     // TODO: Add multi player Concept here
-//    m_Player = CreateRef<Mario::Player>(scene);
+    m_Player = CreateRef<Mario::Player>(scene);
 }
 
 // ******************************************************************************

@@ -28,7 +28,7 @@ namespace iKan {
     {
         IK_CORE_INFO("Initialising all Renderers");
 
-        s_RendererAPI->Init();
+        Renderer::Submit([]() { s_RendererAPI->Init(); });
         SceneRenderer::Init();
     }
     
@@ -37,8 +37,11 @@ namespace iKan {
     // ******************************************************************************
     void Renderer::Clear(glm::vec4 color)
     {
-        s_RendererAPI->Clear();
-        s_RendererAPI->SetClearColor(color);
+        Renderer::Submit([color]()
+        {
+            s_RendererAPI->Clear();
+            s_RendererAPI->SetClearColor(color);
+        });
     }
     
     // ******************************************************************************
@@ -46,7 +49,7 @@ namespace iKan {
     // ******************************************************************************
     void Renderer::SetViewport(float width, float height)
     {
-        s_RendererAPI->SetViewPort(width, height);
+        Renderer::Submit([width, height]() { s_RendererAPI->SetViewPort(width, height); });
     }
     
     // ******************************************************************************
@@ -55,7 +58,7 @@ namespace iKan {
     void Renderer::DrawIndexed(uint32_t count)
     {
         RendererStatistics::DrawCalls++;
-        s_RendererAPI->DrawIndexed(count);
+        Renderer::Submit([count]() { s_RendererAPI->DrawIndexed(count); });
     }
     
     // ******************************************************************************
@@ -64,7 +67,7 @@ namespace iKan {
     void Renderer::DrawIndexed(const Ref<VertexArray> &vertexArray, uint32_t count)
     {
         RendererStatistics::DrawCalls++;
-        s_RendererAPI->DrawIndexed(vertexArray, count);
+        Renderer::Submit([vertexArray, count]() { s_RendererAPI->DrawIndexed(vertexArray, count); });
     }
     
     // ******************************************************************************
