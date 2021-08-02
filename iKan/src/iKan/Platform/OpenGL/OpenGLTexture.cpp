@@ -19,55 +19,53 @@ namespace iKan {
     OpenGLTexture::OpenGLTexture(const std::string& path)
     : m_Filepath(path)
     {
-//        Renderer::Submit([this]()
-//                         {
-            IK_CORE_INFO("Creating Open GL Texture from file : {0}", m_Filepath.c_str());
+        IK_CORE_INFO("Creating Open GL Texture from file : {0}", path.c_str());
 
-            stbi_set_flip_vertically_on_load(1);
+        stbi_set_flip_vertically_on_load(1);
+        
+        int32_t height, width, channel;
+        
+        stbi_uc* data = nullptr;
+        data = stbi_load(path.c_str(), &width, &height, &channel, 0);
+        if (!data)
+            IK_CORE_CRITICAL("Failed to load stbi Image {0}", path.c_str());
 
-            int32_t height, width, channel;
+        else
+        {
+            m_Uploaded = true;
 
-            m_Data = stbi_load(m_Filepath.c_str(), &width, &height, &channel, 0);
-            if (!m_Data)
-                IK_CORE_CRITICAL("Failed to load stbi Image {0}", m_Filepath.c_str());
+            m_Width   = width;
+            m_Height  = height;
+            m_Channel = channel;
 
+            if (4 == m_Channel)
+            {
+                m_InternalFormat = GL_RGBA8;
+                m_DataFormat     = GL_RGBA;
+            }
+            else if (3 == channel)
+            {
+                m_InternalFormat = GL_RGB8;
+                m_DataFormat     = GL_RGB;
+            }
             else
             {
-                m_Uploaded = true;
-
-                m_Width   = width;
-                m_Height  = height;
-                m_Channel = channel;
-
-                if (4 == m_Channel)
-                {
-                    m_InternalFormat = GL_RGBA8;
-                    m_DataFormat     = GL_RGBA;
-                }
-                else if (3 == channel)
-                {
-                    m_InternalFormat = GL_RGB8;
-                    m_DataFormat     = GL_RGB;
-                }
-                else
-                {
-                    IK_CORE_ASSERT(false, "Invalid Format ");
-                }
-
-                glGenTextures(1, &m_RendererId);
-                glBindTexture(GL_TEXTURE_2D, m_RendererId);
-
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-                glTexImage2D(GL_TEXTURE_2D, 0, m_InternalFormat, m_Width, m_Height, 0, m_DataFormat, GL_UNSIGNED_BYTE, m_Data);
-
-                if (m_Data)
-                    stbi_image_free(m_Data);
+                IK_CORE_ASSERT(false, "Invalid Format ");
             }
-//        });
+
+            glGenTextures(1, &m_RendererId);
+            glBindTexture(GL_TEXTURE_2D, m_RendererId);
+
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+            glTexImage2D(GL_TEXTURE_2D, 0, m_InternalFormat, m_Width, m_Height, 0, m_DataFormat, GL_UNSIGNED_BYTE, data);
+
+            if (data)
+                stbi_image_free(data);
+        }
     }
     
     // ******************************************************************************
@@ -99,11 +97,9 @@ namespace iKan {
     // ******************************************************************************
     OpenGLTexture::~OpenGLTexture()
     {
-        Renderer::Submit([this]()
-                         {
-            IK_CORE_WARN("Destroying Open GL Texture");
-            glDeleteTextures(1, &m_RendererId);
-        });
+        IK_CORE_WARN("Destroying Open GL Texture");
+
+        glDeleteTextures(1, &m_RendererId);
     }
     
     // ******************************************************************************
@@ -111,11 +107,8 @@ namespace iKan {
     // ******************************************************************************
     void OpenGLTexture::Bind(uint32_t slot) const
     {
-        Renderer::Submit([this, slot]()
-                         {
-            glActiveTexture(GL_TEXTURE0 + slot);
-            glBindTexture(GL_TEXTURE_2D, m_RendererId);
-        });
+        glActiveTexture(GL_TEXTURE0 + slot);
+        glBindTexture(GL_TEXTURE_2D, m_RendererId);
     }
     
     // ******************************************************************************
@@ -123,7 +116,7 @@ namespace iKan {
     // ******************************************************************************
     void OpenGLTexture::Unbind() const
     {
-        Renderer::Submit([]() { glBindTexture(GL_TEXTURE_2D, 0); });
+        glBindTexture(GL_TEXTURE_2D, 0);
     }
 
     // ******************************************************************************
@@ -131,57 +124,54 @@ namespace iKan {
     // ******************************************************************************
     OpenGLCubeMapTexture::OpenGLCubeMapTexture(std::vector<std::string> paths)
     {
-        Renderer::Submit([this, paths]()
-                         {
-            IK_CORE_INFO("Creating Open GL Cubemap from paths");
+        IK_CORE_INFO("Creating Open GL Cubemap from paths");
 
-            stbi_set_flip_vertically_on_load(0);
+        stbi_set_flip_vertically_on_load(0);
+        
+        glGenTextures(1, &m_RendererId);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, m_RendererId);
+        
+        int32_t width, height, nrChannels;
+        int32_t i = 0;
+        for (auto path : paths)
+        {
+            IK_CORE_INFO("{0}", path.c_str());
 
-            glGenTextures(1, &m_RendererId);
-            glBindTexture(GL_TEXTURE_CUBE_MAP, m_RendererId);
+            uint8_t *data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
+            GLenum internalFormat = GL_RGB8, dataFormat = GL_RGB;
 
-            int32_t width, height, nrChannels;
-            int32_t i = 0;
-            for (auto path : paths)
+            if (4 == nrChannels)
             {
-                IK_CORE_INFO("{0}", path.c_str());
-
-                uint8_t *data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
-                GLenum internalFormat = GL_RGB8, dataFormat = GL_RGB;
-
-                if (4 == nrChannels)
-                {
-                    internalFormat = GL_RGBA8;
-                    dataFormat     = GL_RGBA;
-                }
-                else if (3 == nrChannels)
-                {
-                    internalFormat = GL_RGB8;
-                    dataFormat     = GL_RGB;
-                }
-                else
-                {
-                    IK_CORE_ASSERT(false, "Invalid Format ");
-                }
-
-                if (data)
-                {
-                    glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, internalFormat, width, height, 0, dataFormat, GL_UNSIGNED_BYTE, data);
-                    stbi_image_free(data);
-                }
-                else
-                {
-                    IK_CORE_ERROR("Cubemap texture failed to load at path: {0}",  path);
-                    stbi_image_free(data);
-                }
-                i++;
+                internalFormat = GL_RGBA8;
+                dataFormat     = GL_RGBA;
             }
-            glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-        });
+            else if (3 == nrChannels)
+            {
+                internalFormat = GL_RGB8;
+                dataFormat     = GL_RGB;
+            }
+            else
+            {
+                IK_CORE_ASSERT(false, "Invalid Format ");
+            }
+            
+            if (data)
+            {
+                glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, internalFormat, width, height, 0, dataFormat, GL_UNSIGNED_BYTE, data);
+                stbi_image_free(data);
+            }
+            else
+            {
+                IK_CORE_ERROR("Cubemap texture failed to load at path: {0}",  path);
+                stbi_image_free(data);
+            }
+            i++;
+        }
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
     }
     
     // ******************************************************************************
@@ -189,101 +179,98 @@ namespace iKan {
     // ******************************************************************************
     OpenGLCubeMapTexture::OpenGLCubeMapTexture(const std::string& path)
     {
-        Renderer::Submit([this, path]()
-                         {
-            IK_CORE_INFO("Constructing Open GL Cubemaps from path : {0}", path.c_str());
+        IK_CORE_INFO("Constructing Open GL Cubemaps from path : {0}", path.c_str());
 
-            int32_t width, height, channels;
-            stbi_set_flip_vertically_on_load(false);
-            uint8_t* imageData = stbi_load(path.c_str(), &width, &height, &channels, STBI_rgb);
-
-            if (!imageData)
-            {
-                IK_CORE_ERROR("Cubemap texture failed to load at path: {0}",  path);
-                stbi_image_free(imageData);
-            }
-
-            uint32_t faceWidth  = width / 4;
-            uint32_t faceHeight = height / 3;
-
-            IK_CORE_ASSERT((faceWidth == faceHeight), "Non-square faces!");
-
-            std::array<uint8_t*, 6> faces;
-            for (size_t i = 0; i < faces.size(); i++)
-            {
-                faces[i] = new uint8_t[faceWidth * faceHeight * 3]; // 3 BPP
-            }
-
-            int32_t faceIndex = 0;
-
-            for (size_t i = 0; i < 4; i++)
-            {
-                for (size_t y = 0; y < faceHeight; y++)
-                {
-                    size_t yOffset = y + faceHeight;
-                    for (size_t x = 0; x < faceWidth; x++)
-                    {
-                        size_t xOffset = x + i * faceWidth;
-                        faces[faceIndex][(x + y * faceWidth) * 3 + 0] = imageData[(xOffset + yOffset * width) * 3 + 0];
-                        faces[faceIndex][(x + y * faceWidth) * 3 + 1] = imageData[(xOffset + yOffset * width) * 3 + 1];
-                        faces[faceIndex][(x + y * faceWidth) * 3 + 2] = imageData[(xOffset + yOffset * width) * 3 + 2];
-                    }
-                }
-                faceIndex++;
-            }
-
-            for (size_t i = 0; i < 3; i++)
-            {
-                // Skip the middle one
-                if (i == 1)
-                {
-                    continue;
-                }
-
-                for (size_t y = 0; y < faceHeight; y++)
-                {
-                    size_t yOffset = y + i * faceHeight;
-                    for (size_t x = 0; x < faceWidth; x++)
-                    {
-                        size_t xOffset = x + faceWidth;
-                        faces[faceIndex][(x + y * faceWidth) * 3 + 0] = imageData[(xOffset + yOffset * width) * 3 + 0];
-                        faces[faceIndex][(x + y * faceWidth) * 3 + 1] = imageData[(xOffset + yOffset * width) * 3 + 1];
-                        faces[faceIndex][(x + y * faceWidth) * 3 + 2] = imageData[(xOffset + yOffset * width) * 3 + 2];
-                    }
-                }
-                faceIndex++;
-            }
-
-            glGenTextures(1, &m_RendererId);
-            glBindTexture(GL_TEXTURE_CUBE_MAP, m_RendererId);
-
-            glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-            glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-
-            auto format = GL_RGB;
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, format, faceWidth, faceHeight, 0, format, GL_UNSIGNED_BYTE, faces[2]);
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, format, faceWidth, faceHeight, 0, format, GL_UNSIGNED_BYTE, faces[0]);
-
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, format, faceWidth, faceHeight, 0, format, GL_UNSIGNED_BYTE, faces[4]);
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, format, faceWidth, faceHeight, 0, format, GL_UNSIGNED_BYTE, faces[5]);
-
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, format, faceWidth, faceHeight, 0, format, GL_UNSIGNED_BYTE, faces[1]);
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, format, faceWidth, faceHeight, 0, format, GL_UNSIGNED_BYTE, faces[3]);
-
-            glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
-
-            glBindTexture(GL_TEXTURE_2D, 0);
-
-            for (size_t i = 0; i < faces.size(); i++)
-            {
-                delete[] faces[i];
-            }
-
+        int32_t width, height, channels;
+        stbi_set_flip_vertically_on_load(false);
+        uint8_t* imageData = stbi_load(path.c_str(), &width, &height, &channels, STBI_rgb);
+        
+        if (!imageData)
+        {
+            IK_CORE_ERROR("Cubemap texture failed to load at path: {0}",  path);
             stbi_image_free(imageData);
-        });
+        }
+        
+        uint32_t faceWidth  = width / 4;
+        uint32_t faceHeight = height / 3;
+
+        IK_CORE_ASSERT((faceWidth == faceHeight), "Non-square faces!");
+        
+        std::array<uint8_t*, 6> faces;
+        for (size_t i = 0; i < faces.size(); i++)
+        {
+            faces[i] = new uint8_t[faceWidth * faceHeight * 3]; // 3 BPP
+        }
+        
+        int32_t faceIndex = 0;
+        
+        for (size_t i = 0; i < 4; i++)
+        {
+            for (size_t y = 0; y < faceHeight; y++)
+            {
+                size_t yOffset = y + faceHeight;
+                for (size_t x = 0; x < faceWidth; x++)
+                {
+                    size_t xOffset = x + i * faceWidth;
+                    faces[faceIndex][(x + y * faceWidth) * 3 + 0] = imageData[(xOffset + yOffset * width) * 3 + 0];
+                    faces[faceIndex][(x + y * faceWidth) * 3 + 1] = imageData[(xOffset + yOffset * width) * 3 + 1];
+                    faces[faceIndex][(x + y * faceWidth) * 3 + 2] = imageData[(xOffset + yOffset * width) * 3 + 2];
+                }
+            }
+            faceIndex++;
+        }
+        
+        for (size_t i = 0; i < 3; i++)
+        {
+            // Skip the middle one
+            if (i == 1)
+            {
+                continue;
+            }
+            
+            for (size_t y = 0; y < faceHeight; y++)
+            {
+                size_t yOffset = y + i * faceHeight;
+                for (size_t x = 0; x < faceWidth; x++)
+                {
+                    size_t xOffset = x + faceWidth;
+                    faces[faceIndex][(x + y * faceWidth) * 3 + 0] = imageData[(xOffset + yOffset * width) * 3 + 0];
+                    faces[faceIndex][(x + y * faceWidth) * 3 + 1] = imageData[(xOffset + yOffset * width) * 3 + 1];
+                    faces[faceIndex][(x + y * faceWidth) * 3 + 2] = imageData[(xOffset + yOffset * width) * 3 + 2];
+                }
+            }
+            faceIndex++;
+        }
+        
+        glGenTextures(1, &m_RendererId);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, m_RendererId);
+            
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+        auto format = GL_RGB;
+        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, format, faceWidth, faceHeight, 0, format, GL_UNSIGNED_BYTE, faces[2]);
+        glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, format, faceWidth, faceHeight, 0, format, GL_UNSIGNED_BYTE, faces[0]);
+        
+        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, format, faceWidth, faceHeight, 0, format, GL_UNSIGNED_BYTE, faces[4]);
+        glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, format, faceWidth, faceHeight, 0, format, GL_UNSIGNED_BYTE, faces[5]);
+            
+        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, format, faceWidth, faceHeight, 0, format, GL_UNSIGNED_BYTE, faces[1]);
+        glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, format, faceWidth, faceHeight, 0, format, GL_UNSIGNED_BYTE, faces[3]);
+        
+        glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+        
+        glBindTexture(GL_TEXTURE_2D, 0);
+            
+        for (size_t i = 0; i < faces.size(); i++)
+        {
+            delete[] faces[i];
+        }
+        
+        stbi_image_free(imageData);
     }
 
     // ******************************************************************************
@@ -291,11 +278,9 @@ namespace iKan {
     // ******************************************************************************
     OpenGLCubeMapTexture::~OpenGLCubeMapTexture()
     {
-        Renderer::Submit([this]()
-                         {
-            IK_CORE_WARN("Destroying OpenGL Cubemap");
-            glDeleteTextures(1, &m_RendererId);
-        });
+        IK_CORE_WARN("Destroying OpenGL Cubemap");
+
+        glDeleteTextures(1, &m_RendererId);
     }
     
     // ******************************************************************************
@@ -303,11 +288,8 @@ namespace iKan {
     // ******************************************************************************
     void OpenGLCubeMapTexture::Bind(uint32_t slot) const
     {
-        Renderer::Submit([this, slot]()
-                         {
-            glActiveTexture(GL_TEXTURE0 + slot);
-            glBindTexture(GL_TEXTURE_2D, m_RendererId);
-        });
+        glActiveTexture(GL_TEXTURE0 + slot);
+        glBindTexture(GL_TEXTURE_2D, m_RendererId);
     }
 
 

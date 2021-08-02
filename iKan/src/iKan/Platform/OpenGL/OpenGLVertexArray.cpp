@@ -66,10 +66,6 @@ namespace iKan {
     
     // ******************************************************************************
     // Bind Open GL Vertex Array
-    // NOTE: this function is not submitted to renderer queue as this is wrapped
-    // inside draw indexed only. If caller of this funciton is other than
-    // Rnederer::DrawIndexed(), then we need to submit this too and take care the
-    // hanling in Rnederer::DrawIndexed() accordigly
     // ******************************************************************************
     void OpenGLVertexArray::Bind() const
     {
@@ -78,10 +74,6 @@ namespace iKan {
     
     // ******************************************************************************
     // Unbind Open GL Vertex Array
-    // NOTE: this function is not submitted to renderer queue as this is wrapped
-    // inside draw indexed only. If caller of this funciton is other than
-    // Rnederer::DrawIndexed(), then we need to submit this too and take care the
-    // hanling in Rnederer::DrawIndexed() accordigly
     // ******************************************************************************
     void OpenGLVertexArray::Unbind() const
     {

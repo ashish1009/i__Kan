@@ -22,6 +22,7 @@ namespace iKan {
         virtual ~Shader() = default;
         
         virtual void Bind() = 0;
+        virtual void TempBind() =0;
         virtual void Unbind() = 0;
         
         virtual const std::string& GetName() = 0;

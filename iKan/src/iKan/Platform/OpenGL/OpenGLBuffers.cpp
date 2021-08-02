@@ -77,15 +77,10 @@ namespace iKan {
     // ******************************************************************************
     // Set the Open GL Vertex Buffer data dynamycally
     // ******************************************************************************
-    void OpenGLVertexBuffer::SetData(void* data, uint32_t size)
+    void OpenGLVertexBuffer::SetData(const void* data, uint32_t size)
     {
-        m_Data = Buffer::Copy(data, size);
-        m_Size = size;
-        Renderer::Submit([this]()
-                         {
-            glBindBuffer(GL_ARRAY_BUFFER, m_RendererId);
-            glBufferSubData(GL_ARRAY_BUFFER, 0, m_Size, m_Data.Data);
-        });
+        glBindBuffer(GL_ARRAY_BUFFER, m_RendererId);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
     }
         
     // ******************************************************************************

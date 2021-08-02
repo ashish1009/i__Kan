@@ -256,11 +256,8 @@ namespace iKan {
     // ******************************************************************************
     void OpenGLFrameBuffer::Bind()
     {
-        Renderer::Submit([this]()
-                         {
-            glBindFramebuffer(GL_FRAMEBUFFER, m_RendererId);
-            glViewport(0, 0, m_Specifications.Width, m_Specifications.Height);
-        });
+        glBindFramebuffer(GL_FRAMEBUFFER, m_RendererId);
+        glViewport(0, 0, m_Specifications.Width, m_Specifications.Height);
     }
     
     // ******************************************************************************
@@ -268,7 +265,7 @@ namespace iKan {
     // ******************************************************************************
     void OpenGLFrameBuffer::Unbind()
     {
-        Renderer::Submit([]() { glBindFramebuffer(GL_FRAMEBUFFER, 0); });
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
     
     // ******************************************************************************

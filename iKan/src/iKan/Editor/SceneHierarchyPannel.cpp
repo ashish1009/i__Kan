@@ -403,7 +403,9 @@ namespace iKan {
             ImGui::SameLine(); ImGui::ColorEdit4("Color", glm::value_ptr(src.ColorComp), ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
 
             if (src.Texture.Use)
+            {
                 ImGui::SameLine(); PropertyGrid::CounterF("Tiling Factor", src.TilingFactor);
+            }
 
             ImGui::Columns(1);
             ImGui::PopID();

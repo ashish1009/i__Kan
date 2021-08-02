@@ -164,7 +164,7 @@ namespace iKan {
     {
         glm::mat4 viewProj = camera.GetViewProjection();
 
-        s_Data->TextureShader->Bind();
+        s_Data->TextureShader->TempBind();
         s_Data->TextureShader->SetUniformMat4("u_ViewProjection", viewProj);
 
         StartBatch();
@@ -178,7 +178,7 @@ namespace iKan {
         // Upload Camera View Projection Matris to shader
         glm::mat4 viewProj = camera.GetProjection() * glm::inverse(transform);
 
-        s_Data->TextureShader->Bind();
+        s_Data->TextureShader->TempBind();
         s_Data->TextureShader->SetUniformMat4("u_ViewProjection", viewProj);
 
         StartBatch();
