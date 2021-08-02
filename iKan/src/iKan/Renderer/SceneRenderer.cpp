@@ -140,8 +140,10 @@ namespace iKan {
         // Creating array of Slots to store hem in shader
         int32_t samplers[s_Data->MaxTextureSlots];
         for (uint32_t i = 0; i < s_Data->MaxTextureSlots; i++)
+        {
             samplers[i] = i;
-
+        }
+        
         // Creating Shader and storing all the slots
         s_Data->TextureShader = Shader::Create(path);
         s_Data->TextureShader->Bind();
@@ -164,7 +166,7 @@ namespace iKan {
     {
         glm::mat4 viewProj = camera.GetViewProjection();
 
-        s_Data->TextureShader->TempBind();
+        s_Data->TextureShader->Bind();
         s_Data->TextureShader->SetUniformMat4("u_ViewProjection", viewProj);
 
         StartBatch();
@@ -178,7 +180,7 @@ namespace iKan {
         // Upload Camera View Projection Matris to shader
         glm::mat4 viewProj = camera.GetProjection() * glm::inverse(transform);
 
-        s_Data->TextureShader->TempBind();
+        s_Data->TextureShader->Bind();
         s_Data->TextureShader->SetUniformMat4("u_ViewProjection", viewProj);
 
         StartBatch();
@@ -191,6 +193,7 @@ namespace iKan {
     {
         s_Data->QuadIndexCount = 0;
         s_Data->QuadVertexBufferPtr = s_Data->QuadVertexBufferBase;
+        
         s_Data->TextureSlotIndex = 1;
     }
     
@@ -209,7 +212,9 @@ namespace iKan {
     {
         // Nothing to draw
         if (s_Data->QuadIndexCount == 0)
+        {
             return;
+        }
         
         uint32_t dataSize = (uint32_t)((uint8_t*)s_Data->QuadVertexBufferPtr - (uint8_t*)s_Data->QuadVertexBufferBase);
         s_Data->QuadVertexBuffer->SetData(s_Data->QuadVertexBufferBase, dataSize);
@@ -217,9 +222,11 @@ namespace iKan {
         // Bind textures
         for (uint32_t i = 0; i < s_Data->TextureSlotIndex; i++)
         {
-            // Skipping i = 0 as 0 is slot for white texture
             if (i > 0)
+            {
+                // Skipping i = 0 as 0 is slot for white texture
                 RendererStatistics::TextureCount++;
+            }
 
             s_Data->TextureSlots[i]->Bind(i);
         }

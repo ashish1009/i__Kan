@@ -78,9 +78,13 @@ namespace iKan {
     void Scene::SetEditorCamera(float fov, float aspectRatio, float near, float far)
     {
         if (!m_Data.EditorCamera)
+        {
             m_Data.EditorCamera = CreateRef<iKan::EditorCamera>(fov, aspectRatio, near, far);
+        }
         else
+        {
             IK_CORE_WARN("Editor camera already added to Active Scene");
+        }
     }
 
     // ******************************************************************************
@@ -100,7 +104,9 @@ namespace iKan {
         }
         // Editor Camera Imgui Renderer
         if (m_Data.EditorCamera && m_Data.EditorCamera->IsImguiPannel)
+        {
             m_Data.EditorCamera->OnImguiRenderer();
+        }
     }
     
     // ******************************************************************************
@@ -141,7 +147,6 @@ namespace iKan {
     // ******************************************************************************
     int32_t Scene::GetEntityIdFromPixels(int32_t mx, int32_t my)
     {
-        // TODO: move this to Open GL FIles
         glReadBuffer(GL_COLOR_ATTACHMENT1);
 
         int32_t pixelData = -1;
@@ -156,7 +161,9 @@ namespace iKan {
     void Scene::OnEvent(Event& event)
     {
         if (m_Data.EditorCamera)
+        {
             m_Data.EditorCamera->OnEvent(event);
+        }
     }
 
     // ******************************************************************************
@@ -216,11 +223,17 @@ namespace iKan {
         {
             const auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
             if (sprite.Texture.Use)
+            {
                 SceneRenderer::DrawQuad(transform.GetTransform(), sprite.Texture.Component, (int32_t)entity, sprite.TilingFactor, sprite.ColorComp);
+            }
             else if (sprite.SubTexComp)
+            {
                 SceneRenderer::DrawQuad(transform.GetTransform(), sprite.SubTexComp, (int32_t)entity, sprite.TilingFactor, sprite.ColorComp);
+            }
             else
+            {
                 SceneRenderer::DrawQuad(transform.GetTransform(), sprite.ColorComp, (int32_t)entity);
+            }
         }
     }
 
@@ -234,7 +247,9 @@ namespace iKan {
         {
             auto& comp = view.get<CameraComponent>(entity);
             if (comp.Primary)
+            {
                 return { entity, this };
+            }
         }
         return {};
     }
@@ -258,7 +273,9 @@ namespace iKan {
         }
 
         if (m_Data.EditorCamera)
+        {
             m_Data.EditorCamera->SetViewportSize(width, height);
+        }
     }
 
     // ******************************************************************************

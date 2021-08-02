@@ -39,7 +39,7 @@ namespace iKan {
 
             // Flag to check is editor is under editing proces sor run time
             // if "false" then editor is run time state
-            bool Editing = false;
+            bool Editing = true;
 
             uint32_t NumEntities = 0;
             uint32_t ViewportWidth = 1280.0f, ViewportHeight = 720.0f;

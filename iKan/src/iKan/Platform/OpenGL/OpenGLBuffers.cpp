@@ -8,7 +8,6 @@
 // ******************************************************************************
 
 #include "OpenGLBuffers.h"
-#include <iKan/Renderer/Renderer.h>
 #include <glad/glad.h>
 
 namespace iKan {
@@ -17,33 +16,24 @@ namespace iKan {
     // Open GL Vertex Buffer Constructor without data
     // ******************************************************************************
     OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t size)
-    : m_Size(size)
     {
-        Renderer::Submit([this]()
-                         {
-            IK_CORE_INFO("Open GL Vertex Buffer constructed without data of size {0}", m_Size);
+        IK_CORE_INFO("Open GL Vertex Buffer constructed without data of size {0}", size);
 
-            glGenBuffers(1, &m_RendererId);
-            glBindBuffer(GL_ARRAY_BUFFER, m_RendererId);
-            glBufferData(GL_ARRAY_BUFFER, m_Size, nullptr, GL_DYNAMIC_DRAW);
-        });
+        glGenBuffers(1, &m_RendererId);
+        glBindBuffer(GL_ARRAY_BUFFER, m_RendererId);
+        glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
     }
 
     // ******************************************************************************
     // Open GL Vertex Buffer Constructor with data
     // ******************************************************************************
     OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t size, float* data)
-    : m_Size(size)
     {
-        m_Data = Buffer::Copy(data, m_Size);
-        Renderer::Submit([this]()
-                         {
-            IK_CORE_INFO("Open GL Vertex Buffer constructed with data of size {0}", m_Size);
+        IK_CORE_INFO("Open GL Vertex Buffer constructed with data of size {0}", size);
 
-            glGenBuffers(1, &m_RendererId);
-            glBindBuffer(GL_ARRAY_BUFFER, m_RendererId);
-            glBufferData(GL_ARRAY_BUFFER, m_Size, m_Data.Data, GL_STATIC_DRAW);
-        });
+        glGenBuffers(1, &m_RendererId);
+        glBindBuffer(GL_ARRAY_BUFFER, m_RendererId);
+        glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
     }
     
     // ******************************************************************************
@@ -51,11 +41,9 @@ namespace iKan {
     // ******************************************************************************
     OpenGLVertexBuffer::~OpenGLVertexBuffer()
     {
-        Renderer::Submit([this]()
-                         {
-            IK_CORE_WARN("Open GL Vertex Buffer destroyed ...");
-            glDeleteBuffers(1, &m_RendererId);
-        });
+        IK_CORE_WARN("Open GL Vertex Buffer destroyed ...");
+
+        glDeleteBuffers(1, &m_RendererId);
     }
     
     // ******************************************************************************
@@ -63,7 +51,7 @@ namespace iKan {
     // ******************************************************************************
     void OpenGLVertexBuffer::Bind() const
     {
-        Renderer::Submit([this]() { glBindBuffer(GL_ARRAY_BUFFER, m_RendererId); });
+        glBindBuffer(GL_ARRAY_BUFFER, m_RendererId);
     }
     
     // ******************************************************************************
@@ -71,7 +59,7 @@ namespace iKan {
     // ******************************************************************************
     void OpenGLVertexBuffer::Unbind() const
     {
-        Renderer::Submit([]() { glBindBuffer(GL_ARRAY_BUFFER, 0); });
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
     
     // ******************************************************************************
@@ -89,14 +77,11 @@ namespace iKan {
     OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t count, uint32_t* data)
     : m_Count(count)
     {
-        m_Data = Buffer::Copy(data, count * sizeof(uint32_t));
-        Renderer::Submit([this]()
-                         {
-            IK_CORE_INFO("Open GL Index Buffer constructed with count {0}", m_Count);
-            glGenBuffers(1, &m_RendererId);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererId);
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t) * m_Count, m_Data.Data, GL_STATIC_DRAW);
-        });
+        IK_CORE_INFO("Open GL Index Buffer constructed with count {0}", count);
+
+        glGenBuffers(1, &m_RendererId);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererId);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t) * count, data, GL_STATIC_DRAW);
     }
     
     // ******************************************************************************
@@ -104,11 +89,9 @@ namespace iKan {
     // ******************************************************************************
     OpenGLIndexBuffer::~OpenGLIndexBuffer()
     {
-        Renderer::Submit([this]()
-                         {
-            IK_CORE_WARN("Open GL Index Buffer destroyed");
-            glDeleteBuffers(1, &m_RendererId);
-        });
+        IK_CORE_WARN("Open GL Index Buffer destroyed");
+
+        glDeleteBuffers(1, &m_RendererId);
     }
     
     // ******************************************************************************
@@ -116,7 +99,7 @@ namespace iKan {
     // ******************************************************************************
     void OpenGLIndexBuffer::Bind() const
     {
-        Renderer::Submit([this]() { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererId); });
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererId);
     }
     
     // ******************************************************************************
@@ -124,7 +107,7 @@ namespace iKan {
     // ******************************************************************************
     void OpenGLIndexBuffer::Unbind() const
     {
-        Renderer::Submit([this]() { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); });
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
     
 }

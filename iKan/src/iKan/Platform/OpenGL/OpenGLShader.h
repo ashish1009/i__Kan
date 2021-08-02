@@ -25,16 +25,15 @@ namespace iKan {
         
         virtual ~OpenGLShader();
         
-        virtual void Bind() override;
-        virtual void TempBind() override;
-        virtual void Unbind() override;
+        virtual void Bind() const override;
+        virtual void Unbind() const override;
         
         virtual void AddShaderReloadedCallback(const ShaderReloadedCallback& callback) override;
         
         virtual const std::string& GetName() override { return m_Name; }
         
-        virtual void SetUniformInt1(const std::string& name, int32_t value) override;
-        virtual void SetIntArray(const std::string& name, int32_t* values, uint32_t count) override;
+        virtual void SetUniformInt1(const std::string& name, int value) override;
+        virtual void SetIntArray(const std::string& name, int* values, uint32_t count) override;
         
         virtual void SetUniformMat4(const std::string& name, const glm::mat4& value) override;
         virtual void SetUniformMat3(const std::string& name, const glm::mat3& value) override;
@@ -59,9 +58,6 @@ namespace iKan {
         std::unordered_map<std::string, int32_t> m_LocationMap;
         std::unordered_map<GLenum, std::string>  m_Source;
         std::vector<ShaderReloadedCallback>      m_ShaderReloadedCallbacks;
-
-        // to store the texture slot array from local argument so that it can be passed to Lambda
-        int32_t* m_TextureArraySlotData;
     };
     
 }

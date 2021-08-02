@@ -175,9 +175,13 @@ namespace iKan {
         if (e.GetMouseButton() == MouseCode::ButtonLeft && !Input::IsKeyPressed(KeyCode::LeftAlt))
         {
             if (m_Data.MousePosX >= 0 && m_Data.MousePosY >= 0 && m_Data.MousePosX <= m_Data.Width && m_Data.MousePosY <= m_Data.Height )
+            {
                 m_Data.SelectedEntity = m_Data.HoveredEntity;
+            }
             else
+            {
                 m_Data.SelectedEntity = {};
+            }
         }
         return false;
     }
@@ -357,7 +361,7 @@ namespace iKan {
             {
                 m_Data.BgColor = {0.1f, 0.1f, 0.1f, 1.0f};
                 ImGuiAPI::SetGreyThemeColors();
-                ContentBrowserPannel::UpdateTileBgColor();
+                ContentBrowserPannel::UpdateTileBgColor(); 
             }
             ImGui::EndMenu(); // ImGui::BeginMenu("Theme")
         }

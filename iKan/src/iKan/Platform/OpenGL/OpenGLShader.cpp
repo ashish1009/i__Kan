@@ -7,8 +7,7 @@
 // Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
-#include "OpenGLShader.h"
-#include <iKan/Renderer/Renderer.h>
+#include <iKan/Platform/OpenGL/OpenGLShader.h>
 #include <glad/glad.h>
 
 namespace iKan {
@@ -122,79 +121,76 @@ namespace iKan {
     // ******************************************************************************
     void OpenGLShader::Compile()
     {
-        Renderer::Submit([this]()
-                         {
-            IK_CORE_INFO("Compiling Open GL Shader: {0} ", m_Name.c_str());
+        IK_CORE_INFO("Compiling Open GL Shader: {0} ", m_Name.c_str());
 
-            int32_t program = glCreateProgram();
-            int32_t glShaderIDIndex = 0;
-            std::array<uint32_t, 3> shaderId;
+        int32_t program = glCreateProgram();
+        int32_t glShaderIDIndex = 0;
+        std::array<uint32_t, 3> shaderId;
 
-            for (auto& kv : m_Source)
-            {
-                GLenum type = kv.first;
-                std::string src = kv.second;
-
-                uint32_t shader = glCreateShader(type);
-
-                // Attch the shader source and then compile
-                const char* string = src.c_str();
-                glShaderSource(shader, 1, &string, nullptr);
-                glCompileShader(shader);
-
-                // Error Handling
-                GLint isCompiled = 0;
-                glGetShaderiv(shader, GL_COMPILE_STATUS, &isCompiled);
-                if (isCompiled == GL_FALSE)
-                {
-                    GLint maxLength = 0;
-                    glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
-
-                    std::vector<GLchar> infoLog(maxLength);
-                    glGetShaderInfoLog(shader, maxLength, &maxLength, &infoLog[0]);
-
-                    glDeleteShader(shader);
-
-                    IK_CORE_ERROR("{0}", infoLog.data());
-                    IK_CORE_ASSERT(false, "Shader compilation failure!");
-                }
-                // Attach both shader and link them
-                glAttachShader(program, shader);
-                shaderId[glShaderIDIndex++] = shader;
-            }
-
-            // Create Shader program to activate and linke the shader
-            m_RendererId = program;
-
-            glLinkProgram(m_RendererId);
-
+        for (auto& kv : m_Source)
+        {
+            GLenum type = kv.first;
+            std::string src = kv.second;
+            
+            uint32_t shader = glCreateShader(type);
+            
+            // Attch the shader source and then compile
+            const char* string = src.c_str();
+            glShaderSource(shader, 1, &string, nullptr);
+            glCompileShader(shader);
+            
             // Error Handling
-            // Note the different functions here: glGetProgram* instead of glGetShader
-            GLint isLinked = 0;
-            glGetProgramiv(m_RendererId, GL_LINK_STATUS, (int32_t*)&isLinked);
-            if (isLinked == GL_FALSE)
+            GLint isCompiled = 0;
+            glGetShaderiv(shader, GL_COMPILE_STATUS, &isCompiled);
+            if (isCompiled == GL_FALSE)
             {
                 GLint maxLength = 0;
-                glGetProgramiv(m_RendererId, GL_INFO_LOG_LENGTH, &maxLength);
-
-                /* The maxLength includes the NULL character */
+                glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
+                
                 std::vector<GLchar> infoLog(maxLength);
-                glGetProgramInfoLog(m_RendererId, maxLength, &maxLength, &infoLog[0]);
-
-                /* We don't need the program anymore. */
-                glDeleteProgram(m_RendererId);
-
-                for (auto id : shaderId)
-                {
-                    glDeleteShader(id);
-                }
-
+                glGetShaderInfoLog(shader, maxLength, &maxLength, &infoLog[0]);
+                
+                glDeleteShader(shader);
+                
                 IK_CORE_ERROR("{0}", infoLog.data());
-                IK_CORE_ASSERT(false, "Shader link failure!");
+                IK_CORE_ASSERT(false, "Shader compilation failure!");
             }
+            // Attach both shader and link them
+            glAttachShader(program, shader);
+            shaderId[glShaderIDIndex++] = shader;
+        }
+        
+        // Create Shader program to activate and linke the shader
+        m_RendererId = program;
+        
+        glLinkProgram(m_RendererId);
+        
+        // Error Handling
+        // Note the different functions here: glGetProgram* instead of glGetShader
+        GLint isLinked = 0;
+        glGetProgramiv(m_RendererId, GL_LINK_STATUS, (int32_t*)&isLinked);
+        if (isLinked == GL_FALSE)
+        {
+            GLint maxLength = 0;
+            glGetProgramiv(m_RendererId, GL_INFO_LOG_LENGTH, &maxLength);
+            
+            /* The maxLength includes the NULL character */
+            std::vector<GLchar> infoLog(maxLength);
+            glGetProgramInfoLog(m_RendererId, maxLength, &maxLength, &infoLog[0]);
+            
+            /* We don't need the program anymore. */
+            glDeleteProgram(m_RendererId);
+            
             for (auto id : shaderId)
+            {
                 glDeleteShader(id);
-        });
+            }
+            
+            IK_CORE_ERROR("{0}", infoLog.data());
+            IK_CORE_ASSERT(false, "Shader link failure!");
+        }
+        for (auto id : shaderId)
+            glDeleteShader(id);
     }
     
     // ******************************************************************************
@@ -210,12 +206,7 @@ namespace iKan {
     // ******************************************************************************
     // Bind Open GL Shader file
     // ******************************************************************************
-    void OpenGLShader::Bind()
-    {
-        Renderer::Submit([this]() { glUseProgram(m_RendererId); });
-    }
-
-    void OpenGLShader::TempBind()
+    void OpenGLShader::Bind() const
     {
         glUseProgram(m_RendererId);
     }
@@ -223,7 +214,7 @@ namespace iKan {
     // ******************************************************************************
     // Unbind Open GL Shader file
     // ******************************************************************************
-    void OpenGLShader::Unbind()
+    void OpenGLShader::Unbind() const
     {
         glUseProgram(0);
     }
@@ -237,16 +228,14 @@ namespace iKan {
     }
     
     //-------------------------------- Uniforms --------------------------------
-    void OpenGLShader::SetUniformInt1(const std::string& name, int32_t value)
+    void OpenGLShader::SetUniformInt1(const std::string& name, int value)
     {
         glUniform1i(GetUniformLocation(name), value);
     }
     
-    void OpenGLShader::SetIntArray(const std::string& name, int32_t* values, uint32_t count)
+    void OpenGLShader::SetIntArray(const std::string& name, int* values, uint32_t count)
     {
-        m_TextureArraySlotData = new int32_t[count];
-        memcpy(m_TextureArraySlotData, values, count * sizeof(int32_t));
-        Renderer::Submit([name, values, count, this]() { glUniform1iv(GetUniformLocation(name), count, m_TextureArraySlotData); });
+        glUniform1iv(GetUniformLocation(name), count, values);
     }
     
     void OpenGLShader::SetUniformMat4(const std::string& name, const glm::mat4& value)

@@ -35,9 +35,7 @@ namespace iKan {
         
     private:
         uint32_t     m_RendererId;
-        uint32_t     m_Size;
         BufferLayout m_Layout;
-        Buffer       m_Data;
     };
 
     // ******************************************************************************
@@ -56,7 +54,6 @@ namespace iKan {
         virtual uint32_t GetRendererID() const override { return m_RendererId; }
         
     private:
-        Buffer   m_Data;
         uint32_t m_RendererId;
         uint32_t m_Count;
     };

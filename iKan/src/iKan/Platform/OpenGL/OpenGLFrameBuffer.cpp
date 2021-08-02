@@ -8,7 +8,6 @@
 // ******************************************************************************
 
 #include <iKan/Platform/OpenGL/OpenGLFrameBuffer.h>
-#include <iKan/Renderer/Renderer.h>
 #include <glad/glad.h>
 
 namespace iKan {
@@ -148,9 +147,13 @@ namespace iKan {
         for (auto attachment : m_Specifications.Attachments.TextureFormats)
         {
             if (!FbUtils::IsDepthFormat(attachment.Format))
+            {
                 m_ColorAttachmentSpecifications.emplace_back(attachment);
+            }
             else
+            {
                 m_DepthAttachmentSpecification = attachment;
+            }
         }
 
         Invalidate();
