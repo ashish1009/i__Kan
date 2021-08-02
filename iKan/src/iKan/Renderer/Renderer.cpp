@@ -15,6 +15,12 @@ namespace iKan {
  
     Scope<RendererAPI> Renderer::s_RendererAPI = RendererAPI::Create();
     
+    struct RendererData
+    {
+        RenderCommandQueue m_CommandQueue;
+    };
+    static RendererData s_Data;
+
     // ******************************************************************************
     // Initialise all renderer
     // ******************************************************************************

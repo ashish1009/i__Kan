@@ -25,6 +25,11 @@ namespace iKan {
         
         static void SetGreyThemeColors();
         static void SetLightThemeColors();
+
+        static const ImVec4& GetBgColor() { return s_BgColor; }
+
+    private:
+        static ImVec4 s_BgColor;
     };
     
 }

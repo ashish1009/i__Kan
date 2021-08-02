@@ -35,8 +35,8 @@ namespace iKan {
         
         static void ColorEdit(glm::vec4& colorRef);
 
-        static bool ImageButton(const std::string& lableId, uint32_t texId, ImVec2 size);
-        static bool ImageButton(const int32_t lableId, uint32_t texId, ImVec2 size);
+        static bool ImageButton(const std::string& lableId, uint32_t texId, ImVec2 size, ImVec4 bgColor = ImVec4(0,0,0,0), int32_t padding = 0);
+        static bool ImageButton(const int32_t lableId, uint32_t texId, ImVec2 size, ImVec4 bgColor = ImVec4(0,0,0,0), int32_t padding = 0);
 
         // ******************************************************************************
         // Drop content from content prowser pannel and call the function

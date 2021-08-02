@@ -60,6 +60,7 @@ namespace iKan {
 
         // Initialising the renderers
         Renderer::Init();
+        Renderer::WaitAndRender();
     }
 
     // ******************************************************************************

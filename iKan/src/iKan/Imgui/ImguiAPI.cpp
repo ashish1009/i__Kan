@@ -12,6 +12,8 @@
 #include <iKan/Renderer/RendererStats.h>
 
 namespace iKan {
+
+    ImVec4 ImGuiAPI::s_BgColor = { 0.0f, 0.0f, 0.0f, 0.0f };
     
     // ******************************************************************************
     // Starts Window Docking Docking
@@ -192,6 +194,8 @@ namespace iKan {
     {
         IK_CORE_INFO("Imgui theme is set to Grey");
 
+        s_BgColor = ImVec4(0.18f, 0.18f, 0.18f, 1.0f);
+
         ImVec4* colors = ImGui::GetStyle().Colors;
         // Text
         colors[ImGuiCol_Text]                   = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -200,7 +204,7 @@ namespace iKan {
 
         // Background
         colors[ImGuiCol_WindowBg]               = ImVec4(0.18f, 0.18f, 0.18f, 1.0f);
-        colors[ImGuiCol_ChildBg]                = ImVec4(0.18f, 0.18f, 0.18f, 1.0f);
+        colors[ImGuiCol_ChildBg]                = s_BgColor;
         colors[ImGuiCol_PopupBg]                = ImVec4(0.15f, 0.15f, 0.15f, 1.0f);
         
         // Border
@@ -281,6 +285,8 @@ namespace iKan {
     {
         IK_CORE_INFO("Imgui theme is set to Grey");
 
+        s_BgColor = ImVec4(0.82f, 0.82f, 0.82f, 1.0f);;
+
         ImVec4* colors = ImGui::GetStyle().Colors;
         // Text
         colors[ImGuiCol_Text]                   = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
@@ -289,7 +295,7 @@ namespace iKan {
 
         // Background
         colors[ImGuiCol_WindowBg]               = ImVec4(0.82f, 0.82f, 0.82f, 1.0f);
-        colors[ImGuiCol_ChildBg]                = ImVec4(0.82f, 0.82f, 0.82f, 1.0f);
+        colors[ImGuiCol_ChildBg]                = s_BgColor;
         colors[ImGuiCol_PopupBg]                = ImVec4(0.85f, 0.85f, 0.85f, 1.0f);
 
         // Border

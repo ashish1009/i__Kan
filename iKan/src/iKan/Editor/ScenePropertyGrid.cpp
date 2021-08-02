@@ -8,6 +8,7 @@
 // ******************************************************************************
 
 #include "ScenePropertyGrid.h"
+#include <iKan/Imgui/ImguiAPI.h>
 
 // ******************************************************************************
 // Wrapper for imgui interface for various operations
@@ -510,12 +511,12 @@ namespace iKan {
     // ******************************************************************************
     // Image button
     // ******************************************************************************
-    bool PropertyGrid::ImageButton(const std::string& lableId, uint32_t texId, ImVec2 size)
+    bool PropertyGrid::ImageButton(const std::string& lableId, uint32_t texId, ImVec2 size, ImVec4 bgColor, int32_t padding)
     {
         bool result = false;
         ImTextureID myTexId = (ImTextureID)((size_t)texId);
         ImGui::PushID(lableId.c_str());
-        result = ImGui::ImageButton(myTexId, size, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
+        result = ImGui::ImageButton(myTexId, size, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), padding, bgColor);
         ImGui::PopID();
 
         return result;
@@ -524,12 +525,12 @@ namespace iKan {
     // ******************************************************************************
     // Image button
     // ******************************************************************************
-    bool PropertyGrid::ImageButton(int32_t lableId, uint32_t texId, ImVec2 size)
+    bool PropertyGrid::ImageButton(int32_t lableId, uint32_t texId, ImVec2 size, ImVec4 bgColor, int32_t padding)
     {
         bool result = false;
         ImTextureID myTexId = (ImTextureID)((size_t)texId);
         ImGui::PushID(lableId);
-        result = ImGui::ImageButton(myTexId, size, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
+        result = ImGui::ImageButton(myTexId, size, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), padding, bgColor);
         ImGui::PopID();
 
         return result;
