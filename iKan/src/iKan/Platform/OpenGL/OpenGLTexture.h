@@ -49,6 +49,7 @@ namespace iKan {
         uint32_t m_Channel;
         uint32_t m_Size;
 
+        void*  m_TextureData;
         Buffer m_WhiteTextureData;
         GLenum m_InternalFormat = GL_RGBA8, m_DataFormat = GL_RGBA;
         

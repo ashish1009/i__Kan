@@ -282,8 +282,8 @@
             filePath = "iKan/src/iKan/Platform/OpenGL/OpenGLTexture.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
             landmarkName = "OpenGLTexture::OpenGLTexture(width, height, data, size)"
             landmarkType = "7">
          </BreakpointContent>
@@ -298,9 +298,25 @@
             filePath = "iKan/src/iKan/Platform/OpenGL/OpenGLTexture.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
             landmarkName = "OpenGLTexture::OpenGLTexture(width, height, data, size)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "46DEC52E-0574-4536-AB7D-CBA7DD03FA20"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iKan/src/iKan/Editor/ContetBrowserPannel.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
+            landmarkName = "ContentBrowserPannel::MainArea()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

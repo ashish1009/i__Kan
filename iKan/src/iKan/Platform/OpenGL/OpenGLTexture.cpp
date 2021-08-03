@@ -24,9 +24,9 @@ namespace iKan {
         stbi_set_flip_vertically_on_load(1);
 
         int32_t height, width, channel;
-        stbi_uc* data = stbi_load(m_Filepath.c_str(), &width, &height, &channel, 0);
+        m_TextureData = stbi_load(m_Filepath.c_str(), &width, &height, &channel, 0);
 
-        if (!data)
+        if (!m_TextureData)
             IK_CORE_CRITICAL("Failed to load stbi Image {0}", m_Filepath.c_str());
 
         else
@@ -52,7 +52,7 @@ namespace iKan {
                 IK_CORE_ASSERT(false, "Invalid Format ");
             }
 
-            Renderer::Submit([this, data]()
+            Renderer::Submit([this]()
                                  {
                 glGenTextures(1, &m_RendererId);
                 glBindTexture(GL_TEXTURE_2D, m_RendererId);
@@ -62,14 +62,10 @@ namespace iKan {
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-                glTexImage2D(GL_TEXTURE_2D, 0, m_InternalFormat, m_Width, m_Height, 0, m_DataFormat, GL_UNSIGNED_BYTE, data);
+                glTexImage2D(GL_TEXTURE_2D, 0, m_InternalFormat, m_Width, m_Height, 0, m_DataFormat, GL_UNSIGNED_BYTE, m_TextureData);
 
             });
-
-            if (data)
-                stbi_image_free(data);
         }
-            
     }
     
     // ******************************************************************************
@@ -102,8 +98,13 @@ namespace iKan {
     // ******************************************************************************
     OpenGLTexture::~OpenGLTexture()
     {
-        IK_CORE_WARN("Destroying Open GL Texture");
-        glDeleteTextures(1, &m_RendererId);
+        Renderer::Submit([this]()
+                         {
+            IK_CORE_WARN("Destroying Open GL Texture");
+            glDeleteTextures(1, &m_RendererId);
+            if (m_TextureData)
+                stbi_image_free(m_TextureData);
+        });
     }
     
     // ******************************************************************************
