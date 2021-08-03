@@ -96,13 +96,9 @@ namespace iKan {
     // ******************************************************************************
     void OpenGlRendererAPI::DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t count)
     {
-        vertexArray->Bind();
         uint32_t numIndices = count == 0 ? vertexArray->GetIndexBuffer()->GetCount() : count;
-        
         glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, nullptr);
         glBindTexture(GL_TEXTURE_2D, 0);
-        
-        vertexArray->Unbind();
     }
 
     // ******************************************************************************
