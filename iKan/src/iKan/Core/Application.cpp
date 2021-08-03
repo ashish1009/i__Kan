@@ -113,7 +113,6 @@ namespace iKan {
     bool Application::OnWindowClose(WindowCloseEvent& event)
     {
         IK_CORE_WARN("Application is closing");
-        
         m_IsRunning = false;
         return false;
     }
@@ -124,7 +123,6 @@ namespace iKan {
     bool Application::OnWindowResize(WindowResizeEvent& event)
     {
         IK_CORE_INFO("Window is resized to {0} x {1}", event.GetWidth(), event.GetHeight());
-
         Renderer::SetViewport(event.GetWidth(),  event.GetHeight());
         return false;
     }

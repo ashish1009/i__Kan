@@ -9,6 +9,7 @@
 
 #include "ImguiLayer.h"
 #include <iKan/Core/Application.h>
+#include <iKan/Renderer/Renderer.h>
 #include <examples/imgui_impl_opengl3.h>
 #include <examples/imgui_impl_glfw.h>
 #include <GLFW/glfw3.h>
@@ -47,7 +48,8 @@ namespace iKan {
 
         /* Setup Platform/Renderer bindings */
         ImGui_ImplGlfw_InitForOpenGL(window, true);
-        ImGui_ImplOpenGL3_Init("#version 410");
+
+        Renderer::Submit([]() { ImGui_ImplOpenGL3_Init("#version 410"); });
     }
 
     // ******************************************************************************

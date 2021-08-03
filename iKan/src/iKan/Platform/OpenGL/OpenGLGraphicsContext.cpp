@@ -9,6 +9,7 @@
 
 #include <glad/glad.h>
 #include "OpenGLGraphicsContext.h"
+#include <iKan/Renderer/Renderer.h>
 
 namespace iKan {
     
@@ -34,23 +35,25 @@ namespace iKan {
     {
         IK_CORE_INFO("Initialize Open GL Graohics context ");
 
-        // make GLFW Window Context
-        glfwMakeContextCurrent(m_Window);
+        Renderer::Submit([this]()
+                         {
+            // make GLFW Window Context
+            glfwMakeContextCurrent(m_Window);
+            // ******************************************************************************
+            // We pass GLAD the function to load the address of the OpenGL function
+            // pointers which is OS-specific. GLFW gives us glfwGetProcAddress that
+            // defines the correct function based on which OS we're compiling for
+            // ******************************************************************************
+            bool success = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+            IK_CORE_ASSERT(success, "Can not initialize the Glad");
 
-        // ******************************************************************************
-        // We pass GLAD the function to load the address of the OpenGL function
-        // pointers which is OS-specific. GLFW gives us glfwGetProcAddress that
-        // defines the correct function based on which OS we're compiling for
-        // ******************************************************************************
-        bool success = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-        IK_CORE_ASSERT(success, "Can not initialize the Glad");
-        
-        IK_CORE_INFO("Created Context of OpenGl :");
-        IK_CORE_INFO("--------------------------------------------------");
-        IK_CORE_INFO("  Vendor   : {0} ", glGetString(GL_VENDOR));
-        IK_CORE_INFO("  Renderer : {0} ", glGetString(GL_RENDERER));
-        IK_CORE_INFO("  Version  : {0} ", glGetString(GL_VERSION));
-        IK_CORE_INFO("--------------------------------------------------");
+            IK_CORE_INFO("Created Context of OpenGl :");
+            IK_CORE_INFO("--------------------------------------------------");
+            IK_CORE_INFO("  Vendor   : {0} ", glGetString(GL_VENDOR));
+            IK_CORE_INFO("  Renderer : {0} ", glGetString(GL_RENDERER));
+            IK_CORE_INFO("  Version  : {0} ", glGetString(GL_VERSION));
+            IK_CORE_INFO("--------------------------------------------------");
+        });
     }
     
     // ******************************************************************************
@@ -58,8 +61,7 @@ namespace iKan {
     // ******************************************************************************
     void OpenGLGraphicsContext::SwapBuffers()
     {
-        glfwSwapBuffers(m_Window);
+        Renderer::Submit([this]() { glfwSwapBuffers(m_Window); });
     }
 
-    
 }
