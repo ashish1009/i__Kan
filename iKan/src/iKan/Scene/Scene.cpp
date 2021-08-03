@@ -50,14 +50,9 @@ namespace iKan {
     // ******************************************************************************
     Ref<Texture> Scene::AddTextureToScene(const std::string& texturePath)
     {
-        Ref<Texture> texture;
-        if (m_Data.TextureMap.find(texturePath) != m_Data.TextureMap.end())
-            texture = m_Data.TextureMap[texturePath];
-        else
-            texture = Texture::Create(texturePath);
-
-        m_Data.TextureMap[texturePath] = texture;
-        return texture;
+        if (m_Data.TextureMap.find(texturePath) == m_Data.TextureMap.end())
+            m_Data.TextureMap[texturePath] = Texture::Create(texturePath);;
+        return m_Data.TextureMap[texturePath];
     }
 
     // ******************************************************************************

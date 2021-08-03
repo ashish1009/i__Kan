@@ -45,8 +45,7 @@ namespace iKan {
         Ref<VertexArray>  QuadVertexArray;
         Ref<VertexBuffer> QuadVertexBuffer;
         Ref<Shader>       TextureShader;
-        Ref<Texture>      WhiteTexture;
-        
+
         uint32_t QuadIndexCount = 0;
         
         // Pointer attribute of vertexes
@@ -116,10 +115,7 @@ namespace iKan {
 
         // Creating white texture for colorful quads witout any texture or sprite
         uint32_t whiteTextureData = 0xffffffff;
-        s_Data->WhiteTexture      = Texture::Create(1, 1, &whiteTextureData, sizeof(uint32_t));
-
-        // Set the Texture slot 0 as White Texture
-        s_Data->TextureSlots[0] = s_Data->WhiteTexture;
+        s_Data->TextureSlots[0]   = Texture::Create(1, 1, &whiteTextureData, sizeof(uint32_t));
 
         // Setting basic Vertex point of quad
         s_Data->QuadVertexPositions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
