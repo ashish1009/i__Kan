@@ -45,7 +45,12 @@ namespace iKan {
         bool m_Uploaded = false;
 
         uint32_t m_RendererId;
-        uint32_t m_Width, m_Height, m_Channel;
+        uint32_t m_Width, m_Height;
+        uint32_t m_Channel;
+        uint32_t m_Size;
+
+        void* m_Data;
+
         GLenum m_InternalFormat = GL_RGBA8, m_DataFormat = GL_RGBA;
         
         std::string m_Filepath;
