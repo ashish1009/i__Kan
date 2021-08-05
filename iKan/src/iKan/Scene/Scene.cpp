@@ -12,6 +12,7 @@
 #include <iKan/Scene/Component.h>
 #include <iKan/Scene/Viewport.h>
 #include <iKan/Renderer/SceneRenderer.h>
+#include <iKan/Renderer/Renderer2D.h>
 
 #include <glad/glad.h>
 
@@ -211,11 +212,11 @@ namespace iKan {
         {
             const auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
             if (sprite.Texture.Use)
-                SceneRenderer::DrawQuad(transform.GetTransform(), sprite.Texture.Component, (int32_t)entity, sprite.TilingFactor, sprite.ColorComp);
+                Renderer2D::DrawQuad(transform.GetTransform(), sprite.Texture.Component, (int32_t)entity, sprite.TilingFactor, sprite.ColorComp);
             else if (sprite.SubTexComp)
-                SceneRenderer::DrawQuad(transform.GetTransform(), sprite.SubTexComp, (int32_t)entity, sprite.TilingFactor, sprite.ColorComp);
+                Renderer2D::DrawQuad(transform.GetTransform(), sprite.SubTexComp, (int32_t)entity, sprite.TilingFactor, sprite.ColorComp);
             else
-                SceneRenderer::DrawQuad(transform.GetTransform(), sprite.ColorComp, (int32_t)entity);
+                Renderer2D::DrawQuad(transform.GetTransform(), sprite.ColorComp, (int32_t)entity);
         }
     }
 

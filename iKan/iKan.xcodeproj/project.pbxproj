@@ -12,6 +12,8 @@
 		75158EB726B5A1BD00F938E5 /* RenderCommandQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 75158EB526B5A1BD00F938E5 /* RenderCommandQueue.cpp */; };
 		75158EB826B5A1BD00F938E5 /* RenderCommandQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 75158EB626B5A1BD00F938E5 /* RenderCommandQueue.h */; };
 		75158EBF26B5A3AE00F938E5 /* Buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 75158EBE26B5A3AE00F938E5 /* Buffer.h */; };
+		755C105D26BC2519001BE251 /* Renderer2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 755C105B26BC2519001BE251 /* Renderer2D.cpp */; };
+		755C105E26BC2519001BE251 /* Renderer2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 755C105C26BC2519001BE251 /* Renderer2D.h */; };
 		758265DB2679F6DF0080169A /* ContetBrowserPannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 758265D92679F6DF0080169A /* ContetBrowserPannel.cpp */; };
 		758265DC2679F6DF0080169A /* ContetBrowserPannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 758265DA2679F6DF0080169A /* ContetBrowserPannel.h */; };
 		7589D501267758DD00EB43D9 /* SceneSerializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7589D4FF267758DD00EB43D9 /* SceneSerializer.cpp */; };
@@ -136,6 +138,8 @@
 		75158EB526B5A1BD00F938E5 /* RenderCommandQueue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RenderCommandQueue.cpp; sourceTree = "<group>"; };
 		75158EB626B5A1BD00F938E5 /* RenderCommandQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RenderCommandQueue.h; sourceTree = "<group>"; };
 		75158EBE26B5A3AE00F938E5 /* Buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Buffer.h; sourceTree = "<group>"; };
+		755C105B26BC2519001BE251 /* Renderer2D.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Renderer2D.cpp; sourceTree = "<group>"; };
+		755C105C26BC2519001BE251 /* Renderer2D.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Renderer2D.h; sourceTree = "<group>"; };
 		758265D92679F6DF0080169A /* ContetBrowserPannel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ContetBrowserPannel.cpp; sourceTree = "<group>"; };
 		758265DA2679F6DF0080169A /* ContetBrowserPannel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContetBrowserPannel.h; sourceTree = "<group>"; };
 		7589D23B2677574200EB43D9 /* yaml.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = yaml.xcodeproj; path = vendor/yaml/yaml.xcodeproj; sourceTree = "<group>"; };
@@ -541,6 +545,8 @@
 			children = (
 				B2496F112639AA690091C915 /* SceneRenderer.cpp */,
 				B2496F122639AA690091C915 /* SceneRenderer.h */,
+				755C105B26BC2519001BE251 /* Renderer2D.cpp */,
+				755C105C26BC2519001BE251 /* Renderer2D.h */,
 				B249622926397EE80091C915 /* RendererAPI.cpp */,
 				B249622826397EE80091C915 /* RendererAPI.h */,
 				B27FE3192629E474000FD32D /* Renderer.cpp */,
@@ -734,6 +740,7 @@
 				B2496CB92639A8AF0091C915 /* stb_image.h in Headers */,
 				B20280662625F99A00BC7F39 /* Window.h in Headers */,
 				B2EAB342262B265B003D7FE6 /* KeyCode.h in Headers */,
+				755C105E26BC2519001BE251 /* Renderer2D.h in Headers */,
 				B2FE351226249ECB00AFC236 /* PrefixHeader.pch in Headers */,
 				B2A1C110263E78C200606017 /* ImguiAPI.h in Headers */,
 				B22FE6EB2638428000C1640B /* VertexArray.h in Headers */,
@@ -866,6 +873,7 @@
 				B2A1C115263E82E700606017 /* RendererStats.cpp in Sources */,
 				B2F0CBC5263EEDC100A289AA /* ScenePropertyGrid.cpp in Sources */,
 				B22FE6EA2638428000C1640B /* VertexArray.cpp in Sources */,
+				755C105D26BC2519001BE251 /* Renderer2D.cpp in Sources */,
 				B2FE351C2624B67B00AFC236 /* Application.cpp in Sources */,
 				B27FE3172629E1D2000FD32D /* GraphicsContext.cpp in Sources */,
 				B249623726399AA50091C915 /* EditorCamera.cpp in Sources */,

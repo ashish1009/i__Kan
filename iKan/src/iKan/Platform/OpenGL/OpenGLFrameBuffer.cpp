@@ -161,11 +161,14 @@ namespace iKan {
     // ******************************************************************************
     OpenGLFrameBuffer::~OpenGLFrameBuffer()
     {
-        IK_CORE_WARN("Open GL Framebuffer Destroyed ");
+        Renderer::Submit([this]()
+                         {
+            IK_CORE_WARN("Open GL Framebuffer Destroyed ");
 
-        glDeleteFramebuffers(1, &m_RendererId);
-        glDeleteTextures((GLsizei)m_ColorAttachments.size(), m_ColorAttachments.data());
-        glDeleteTextures(1, &m_DepthAttachment);
+            glDeleteFramebuffers(1, &m_RendererId);
+            glDeleteTextures((GLsizei)m_ColorAttachments.size(), m_ColorAttachments.data());
+            glDeleteTextures(1, &m_DepthAttachment);
+        });
     }
     
     // ******************************************************************************
@@ -173,82 +176,84 @@ namespace iKan {
     // ******************************************************************************
     void OpenGLFrameBuffer::Invalidate()
     {
-        IK_CORE_INFO("Invalidate Open GL Framebuffer");
-
-        if (m_RendererId)
-        {
-            glDeleteFramebuffers(1, &m_RendererId);
-            glDeleteTextures((GLsizei)m_ColorAttachments.size(), m_ColorAttachments.data());
-            glDeleteTextures(1, &m_DepthAttachment);
-
-            m_ColorAttachments.clear();
-            m_DepthAttachment = 0;
-        }
-        
-        glGenFramebuffers(1, &m_RendererId);
-        glBindFramebuffer(GL_FRAMEBUFFER, m_RendererId);
-
-        bool multisample = m_Specifications.Samples > 1;
-
-        // Attachments
-        if (m_ColorAttachmentSpecifications.size())
-        {
-            m_ColorAttachments.resize(m_ColorAttachmentSpecifications.size());
-            FbUtils::CreateTextures(m_ColorAttachments.data(), (uint32_t)m_ColorAttachments.size());
-
-            for (size_t i = 0; i < m_ColorAttachments.size(); i++)
+        Renderer::Submit([this]()
+                         {
+            IK_CORE_INFO("Invalidate Open GL Framebuffer");
+            if (m_RendererId)
             {
-                FbUtils::BindTexture(multisample, m_ColorAttachments[i]);
-                switch (m_ColorAttachmentSpecifications[i].Format)
+                glDeleteFramebuffers(1, &m_RendererId);
+                glDeleteTextures((GLsizei)m_ColorAttachments.size(), m_ColorAttachments.data());
+                glDeleteTextures(1, &m_DepthAttachment);
+
+                m_ColorAttachments.clear();
+                m_DepthAttachment = 0;
+            }
+
+            glGenFramebuffers(1, &m_RendererId);
+            glBindFramebuffer(GL_FRAMEBUFFER, m_RendererId);
+
+            bool multisample = m_Specifications.Samples > 1;
+
+            // Attachments
+            if (m_ColorAttachmentSpecifications.size())
+            {
+                m_ColorAttachments.resize(m_ColorAttachmentSpecifications.size());
+                FbUtils::CreateTextures(m_ColorAttachments.data(), (uint32_t)m_ColorAttachments.size());
+
+                for (size_t i = 0; i < m_ColorAttachments.size(); i++)
+                {
+                    FbUtils::BindTexture(multisample, m_ColorAttachments[i]);
+                    switch (m_ColorAttachmentSpecifications[i].Format)
+                    {
+                        case Framebuffer::TextureSpecification::TextureFormat::None:
+                        case Framebuffer::TextureSpecification::TextureFormat::DEPTH24STENCIL8:
+                            break;
+
+                        case Framebuffer::TextureSpecification::TextureFormat::RGBA8:
+                            FbUtils::AttachColorTexture(m_ColorAttachments[i], m_Specifications.Samples, GL_RGBA8, m_Specifications.Width, m_Specifications.Height, (uint32_t)i);
+                            break;
+
+                        case Framebuffer::TextureSpecification::TextureFormat::R32I:
+                            FbUtils::AttachIDTexture(m_ColorAttachments[i], m_Specifications.Samples, GL_R32I, GL_COLOR_ATTACHMENT1, m_Specifications.Width, m_Specifications.Height);
+                            break;
+                    }
+                }
+            }
+
+            if (m_DepthAttachmentSpecification.Format != Framebuffer::TextureSpecification::TextureFormat::None)
+            {
+                FbUtils::CreateTextures(&m_DepthAttachment, 1);
+                FbUtils::BindTexture(multisample, m_DepthAttachment);
+                switch (m_DepthAttachmentSpecification.Format)
                 {
                     case Framebuffer::TextureSpecification::TextureFormat::None:
-                    case Framebuffer::TextureSpecification::TextureFormat::DEPTH24STENCIL8:
-                        break;
-
                     case Framebuffer::TextureSpecification::TextureFormat::RGBA8:
-                        FbUtils::AttachColorTexture(m_ColorAttachments[i], m_Specifications.Samples, GL_RGBA8, m_Specifications.Width, m_Specifications.Height, (uint32_t)i);
+                    case Framebuffer::TextureSpecification::TextureFormat::R32I:
                         break;
 
-                    case Framebuffer::TextureSpecification::TextureFormat::R32I:
-                        FbUtils::AttachIDTexture(m_ColorAttachments[i], m_Specifications.Samples, GL_R32I, GL_COLOR_ATTACHMENT1, m_Specifications.Width, m_Specifications.Height);
+                    case Framebuffer::TextureSpecification::TextureFormat::DEPTH24STENCIL8:
+                        // TODO: IT WAS "GL_DEPTH_STENCIL_ATTACHMENT" but was not working
+                        FbUtils::AttachDepthTexture(m_DepthAttachment, m_Specifications.Samples, GL_DEPTH24_STENCIL8, GL_DEPTH_ATTACHMENT, m_Specifications.Width, m_Specifications.Height);
                         break;
                 }
             }
-        }
 
-        if (m_DepthAttachmentSpecification.Format != Framebuffer::TextureSpecification::TextureFormat::None)
-        {
-            FbUtils::CreateTextures(&m_DepthAttachment, 1);
-            FbUtils::BindTexture(multisample, m_DepthAttachment);
-            switch (m_DepthAttachmentSpecification.Format)
+            if (m_ColorAttachments.size() > 1)
             {
-                case Framebuffer::TextureSpecification::TextureFormat::None:
-                case Framebuffer::TextureSpecification::TextureFormat::RGBA8:
-                case Framebuffer::TextureSpecification::TextureFormat::R32I:
-                    break;
-
-                case Framebuffer::TextureSpecification::TextureFormat::DEPTH24STENCIL8:
-                    // TODO: IT WAS "GL_DEPTH_STENCIL_ATTACHMENT" but was not working
-                    FbUtils::AttachDepthTexture(m_DepthAttachment, m_Specifications.Samples, GL_DEPTH24_STENCIL8, GL_DEPTH_ATTACHMENT, m_Specifications.Width, m_Specifications.Height);
-                    break;
+                IK_CORE_ASSERT((m_ColorAttachments.size() <= 4), "Inalid Attachment");
+                GLenum buffers[4] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3 };
+                glDrawBuffers((GLsizei)m_ColorAttachments.size(), buffers);
             }
-        }
+            else if (m_ColorAttachments.empty())
+            {
+                // Only depth-pass
+                glDrawBuffer(GL_NONE);
+            }
 
-        if (m_ColorAttachments.size() > 1)
-        {
-            IK_CORE_ASSERT((m_ColorAttachments.size() <= 4), "Inalid Attachment");
-            GLenum buffers[4] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3 };
-            glDrawBuffers((GLsizei)m_ColorAttachments.size(), buffers);
-        }
-        else if (m_ColorAttachments.empty())
-        {
-            // Only depth-pass
-            glDrawBuffer(GL_NONE);
-        }
+            IK_CORE_ASSERT((glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE), "FrameBuffer is Incomplete ");
 
-        IK_CORE_ASSERT((glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE), "FrameBuffer is Incomplete ");
-        
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+            glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        });
     }
     
     // ******************************************************************************
