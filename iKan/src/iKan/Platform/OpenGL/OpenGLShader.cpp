@@ -14,120 +14,6 @@
 namespace iKan {
 
     // ******************************************************************************
-    // Return the pointer of first occurance of token, token should be alone
-    // (space or nothing on left and right side)
-    // NOTE: it is assumed that struct and uniform in the shader code should be alone
-    // eg. struct { } or uniform ...
-    // str   : base string
-    // token : to be searched
-    // ******************************************************************************
-    static const char* FindToken(const char* str, const std::string& token)
-    {
-        const char* t = str;
-        while ((t = strstr(t, token.c_str())))
-        {
-            // Check if left character of token is empty
-            // TODO: '/' might chnage if wont work for some scenario, using '/' as indicator
-            // of first character of line
-            IK_INFO("{0}, {1}, {2}, {3}", t[-1], str == t, isspace(t[-1]), t[-1] == '/');
-            bool left = str == t || isspace(t[-1]) || t[-1] == '/';
-
-            // Check if right character of token is empty
-            bool right = !t[token.size()] || isspace(t[token.size()]);
-
-            if (left && right)
-                return t;
-
-            t += token.size();
-        }
-        return nullptr;
-    }
-
-    // ******************************************************************************
-    // Extract the struct code from the shader string "struct { ... }"
-    // return the pointer to 's' in "struct { ... }"
-    // src         : token
-    // outPosition : string pointer of the shader code, that will move to some offset
-    //               offset is the "}" of the strcut
-    // ******************************************************************************
-    static std::string GetBlock(const char* str, const char** outPosition)
-    {
-        const char* end = strstr(str, "}");
-        if (!end)
-            return str;
-
-        // offset the shader string to the end of current strcut
-        if (outPosition)
-            *outPosition = end;
-
-        uint32_t length = (uint32_t)(end - str + 1);
-        return std::string(str, length);
-    }
-
-    // ******************************************************************************
-    // Extract the Code statement before ";"
-    // ******************************************************************************
-    std::string GetStatement(const char* str, const char** outPosition)
-    {
-        const char* end = strstr(str, ";");
-        if (!end)
-            return str;
-
-        if (outPosition)
-            *outPosition = end;
-        uint32_t length = (uint32_t)(end - str + 1);
-        return std::string(str, length);
-    }
-
-    // ******************************************************************************
-    // Break the string. Break points are stored in delimiter, any character in the
-    // delimeter will be cosnider as break points
-    // ******************************************************************************
-    std::vector<std::string> SplitString(const std::string& string, const std::string& delimiters)
-    {
-        size_t start = 0;
-        size_t end = string.find_first_of(delimiters);
-
-        std::vector<std::string> result;
-
-        while (end <= std::string::npos)
-        {
-            std::string token = string.substr(start, end - start);
-            if (!token.empty())
-                result.push_back(token);
-
-            if (end == std::string::npos)
-                break;
-
-            start = end + 1;
-            end = string.find_first_of(delimiters, start);
-        }
-
-        return result;
-    }
-
-    // ******************************************************************************
-    // ******************************************************************************
-    std::vector<std::string> SplitString(const std::string& string, const char delimiter)
-    {
-        return SplitString(string, std::string(1, delimiter));
-    }
-
-    // ******************************************************************************
-    // ******************************************************************************
-    std::vector<std::string> Tokenize(const std::string& string)
-    {
-        return SplitString(string, " \t\n");
-    }
-
-    // ******************************************************************************
-    // ******************************************************************************
-    std::vector<std::string> GetLines(const std::string& string)
-    {
-        return SplitString(string, "\n");
-    }
-
-    // ******************************************************************************
     // get the type of uniform is premitive or not
     // ******************************************************************************
     static bool IsTypeStringResource(const std::string& type)
@@ -137,13 +23,6 @@ namespace iKan {
         if (type == "samplerCube")        return true;
         if (type == "sampler2DShadow")    return true;
         return false;
-    }
-
-    // ******************************************************************************
-    // ******************************************************************************
-    bool StartsWith(const std::string& string, const std::string& start)
-    {
-        return string.find(start) == 0;
     }
     
     // ******************************************************************************
@@ -241,21 +120,21 @@ namespace iKan {
 
         // Vertex Shader
         vstr = vertexSource.c_str();
-        while ((token = FindToken(vstr, "struct")))
-            ParseUniformStruct(GetBlock(token, &vstr), ShaderDomain::Vertex);
+        while ((token = Utils::FindToken(vstr, "struct")))
+            ParseUniformStruct(Utils::GetBlock(token, &vstr), ShaderDomain::Vertex);
 
         vstr = vertexSource.c_str();
-        while ((token = FindToken(vstr, "uniform")))
-            ParseUniform(GetStatement(token, &vstr), ShaderDomain::Vertex);
+        while ((token = Utils::FindToken(vstr, "uniform")))
+            ParseUniform(Utils::GetStatement(token, &vstr), ShaderDomain::Vertex);
 
         // Fragment Shader
         fstr = fragmentSource.c_str();
-        while ((token = FindToken(fstr, "struct")))
-            ParseUniformStruct(GetBlock(token, &fstr), ShaderDomain::Pixel);
+        while ((token = Utils::FindToken(fstr, "struct")))
+            ParseUniformStruct(Utils::GetBlock(token, &fstr), ShaderDomain::Pixel);
 
         fstr = fragmentSource.c_str();
-        while ((token = FindToken(fstr, "uniform")))
-            ParseUniform(GetStatement(token, &fstr), ShaderDomain::Pixel);
+        while ((token = Utils::FindToken(fstr, "uniform")))
+            ParseUniform(Utils::GetStatement(token, &fstr), ShaderDomain::Pixel);
     }
 
     // ******************************************************************************
@@ -263,7 +142,7 @@ namespace iKan {
     // ******************************************************************************
     void OpenGLShader::ParseUniform(const std::string& statement, ShaderDomain domain)
     {
-        std::vector<std::string> tokens = Tokenize(statement);
+        std::vector<std::string> tokens = Utils::Tokenize(statement);
         uint32_t index = 1; // 0th is for keyword unifrom
 
         std::string typeString = tokens[index++];
@@ -307,7 +186,7 @@ namespace iKan {
                 declaration = new OpenGLShaderUniformDeclaration(domain, t, name, count);
             }
 
-            if (StartsWith(name, "r_"))
+            if (Utils::StartsWith(name, "r_"))
             {
                 if (domain == ShaderDomain::Vertex)
                     ((OpenGLShaderUniformBufferDeclaration*)m_VSRendererUniformBuffers.front())->PushUniform(declaration);
@@ -341,7 +220,7 @@ namespace iKan {
     void OpenGLShader::ParseUniformStruct(const std::string& block, ShaderDomain domain)
     {
         // get each word from the block and store them in vector
-        std::vector<std::string> tokens = Tokenize(block);
+        std::vector<std::string> tokens = Utils::Tokenize(block);
 
         uint32_t index = 0;
         index++;  // "struct"
