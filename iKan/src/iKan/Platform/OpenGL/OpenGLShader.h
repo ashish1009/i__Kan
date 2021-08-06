@@ -10,6 +10,7 @@
 #pragma once
 
 #include <iKan/Renderer/Shader.h>
+#include <iKan/Platform/OpenGL/OpenGLShaderUniform.h>
 #include <glad/glad.h>
 
 namespace iKan {
@@ -46,14 +47,25 @@ namespace iKan {
         virtual uint32_t GetRendererID() const override { return m_RendererId; }
 
     private:
+        void Parse();
         void Compile();
+        void ResolveUniforms();
+        void ParseUniformStruct(const std::string& block, ShaderDomain domain);
+        void ParseUniform(const std::string& statement, ShaderDomain domain);
+
         int32_t GetUniformLocation(const std::string& name);
         std::unordered_map<GLenum, std::string> PreprocessFile(const std::string& path);
+        ShaderStruct* FindStruct(const std::string& name);
         std::string ReadFromFile(const std::string& path);
 
+        static GLenum ShaderTypeFromString(const std::string& type);
+
     private:
+        bool m_Loaded    = false;
+        bool m_IsCompute = false;
+
         uint32_t    m_RendererId;
-        std::string m_Name;
+        std::string m_Name, m_AssetPath;
 
         std::unordered_map<std::string, int32_t> m_LocationMap;
         std::unordered_map<GLenum, std::string>  m_Source;
@@ -61,6 +73,15 @@ namespace iKan {
 
         // to store the texture slot array from local argument so that it can be passed to Lambda
         int32_t* m_TextureArraySlotData;
+
+        ShaderUniformBufferList m_VSRendererUniformBuffers;
+        ShaderUniformBufferList m_PSRendererUniformBuffers;
+
+        Ref<OpenGLShaderUniformBufferDeclaration> m_VSMaterialUniformBuffer;
+        Ref<OpenGLShaderUniformBufferDeclaration> m_PSMaterialUniformBuffer;
+
+        ShaderResourceList m_Resources;
+        ShaderStructList   m_Structs;
     };
     
 }
