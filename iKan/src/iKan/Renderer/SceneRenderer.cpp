@@ -40,7 +40,7 @@ namespace iKan {
     // ******************************************************************************
     void SceneRenderer::BeginScene(const SceneRenderer::Data::CameraInfo& camera)
     {
-        s_Data.Camera = camera
+        s_Data.Camera = camera;
         Renderer2D::BeginScene(s_Data.Camera.ViewMatrix);
         MeshScene::BeginScene();
     }

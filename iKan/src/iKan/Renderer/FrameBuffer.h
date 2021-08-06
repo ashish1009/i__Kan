@@ -35,10 +35,7 @@ namespace iKan {
         public:
             TextureSpecification() = default;
             TextureSpecification(TextureSpecification::TextureFormat format)
-            : Format(format)
-            {
-                
-            }
+            : Format(format) { }
 
             TextureSpecification::TextureFormat Format = TextureSpecification::TextureFormat::None;
         };
@@ -50,10 +47,7 @@ namespace iKan {
         {
             Attachments() = default;
             Attachments(std::initializer_list<Framebuffer::TextureSpecification> attachments)
-            : TextureFormats(attachments)
-            {
-                
-            }
+            : TextureFormats(attachments) { }
 
             std::vector<Framebuffer::TextureSpecification> TextureFormats;
         };
@@ -80,11 +74,13 @@ namespace iKan {
         
         virtual void Bind() = 0;
         virtual void Unbind() = 0;
-        
         virtual void Resize(uint32_t width, uint32_t height) = 0;
-        virtual uint32_t GetColorAttachmentRendererID(uint32_t index = 0) const = 0;
+
         virtual const Specification& GetSpecification() const = 0;
-        
+
+        virtual uint32_t GetColorAttachmentRendererID(uint32_t index = 0) const = 0;
+        virtual uint32_t GetRendererId() const = 0;
+
         static Ref<Framebuffer> Create(const Specification& spec);
     };
     

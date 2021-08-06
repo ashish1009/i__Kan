@@ -33,7 +33,8 @@ namespace iKan {
         }
 
         virtual void Resize(uint32_t width, uint32_t height) override;
-
+        virtual uint32_t GetRendererId() const override { return m_RendererId; };
+        
     private:
         void Invalidate();
         

@@ -8,6 +8,7 @@
 // ******************************************************************************
 
 #include <iKan/Platform/OpenGL/OpenGlRendererAPI.h>
+#include <iKan/Renderer/Renderer.h>
 #include <glad/glad.h>
 
 namespace iKan {
@@ -108,6 +109,21 @@ namespace iKan {
     {
         glDrawArrays(GL_TRIANGLES, 0, count);
         glBindTexture(GL_TEXTURE_2D, 0);
+    }
+
+    // ******************************************************************************
+    // Get the pixel from scene
+    // mx -> Mouse position X
+    // my -> Mouse position Y
+    // pixeldata -> get the pixel value
+    // ******************************************************************************
+    void OpenGlRendererAPI::GetEntityIdFromPixels(int32_t mx, int32_t my, int32_t& pixelData)
+    {
+        Renderer::Submit([mx, my, &pixelData]()
+                         {
+            glReadBuffer(GL_COLOR_ATTACHMENT1);
+            glReadPixels(mx, my, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
+        });
     }
 
 }

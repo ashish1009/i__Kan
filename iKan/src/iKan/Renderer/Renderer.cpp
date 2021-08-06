@@ -93,6 +93,18 @@ namespace iKan {
     {
         s_Data.m_CommandQueue.Execute();
     }
+
+
+    // ******************************************************************************
+    // Get the pixel from scene
+    // mx -> Mouse position X
+    // my -> Mouse position Y
+    // pixeldata -> get the pixel value
+    // ******************************************************************************
+    void Renderer::GetEntityIdFromPixels(int32_t mx, int32_t my, int32_t& pixelData)
+    {
+        s_RendererAPI->GetEntityIdFromPixels(mx, my, pixelData);
+    }
     
 }
     

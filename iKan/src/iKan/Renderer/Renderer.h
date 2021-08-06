@@ -28,6 +28,8 @@ namespace iKan {
         static void Shutdown();
         static void WaitAndRender();
 
+        static void GetEntityIdFromPixels(int32_t mx, int32_t my, int32_t& pixelData);
+
         static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 
         // NOTE: This API should be set before creating Windown instance as

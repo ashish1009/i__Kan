@@ -74,7 +74,7 @@ namespace iKan {
         void DeleteEditorCamera();
         void SetEditorCamera(float fov = glm::radians(45.0f), float aspectRatio = 1800.0f/800.0f, float near = 0.01f, float far = 10000.0f);
 
-        int32_t GetEntityIdFromPixels(int32_t mx, int32_t my);
+        void GetEntityIdFromPixels(int32_t mx, int32_t my, int32_t& pixelData);
         int32_t OnBoxColloider(Entity& currEntity, float speed);
         uint32_t GetNumEntities() const { return m_Data.NumEntities; }
 

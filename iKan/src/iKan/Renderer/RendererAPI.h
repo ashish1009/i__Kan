@@ -46,6 +46,7 @@ namespace iKan {
         virtual void SetViewPort(uint32_t widht, uint32_t height) = 0;
         virtual void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t count = 0) = 0;
         virtual void DrawIndexed(uint32_t count) = 0;
+        virtual void GetEntityIdFromPixels(int32_t mx, int32_t my, int32_t& pixelData) = 0;
         
         // NOTE: This API should be set before creating Windown instance as
         // Window creates context acc to the API

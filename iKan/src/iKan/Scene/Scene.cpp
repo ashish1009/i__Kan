@@ -13,6 +13,7 @@
 #include <iKan/Scene/Viewport.h>
 #include <iKan/Renderer/SceneRenderer.h>
 #include <iKan/Renderer/Renderer2D.h>
+#include <iKan/Renderer/Renderer.h>
 
 #include <glad/glad.h>
 
@@ -134,16 +135,11 @@ namespace iKan {
     // Get the pixel from scene
     // mx -> Mouse position X
     // my -> Mouse position Y
+    // pixeldata -> get the pixel value
     // ******************************************************************************
-    int32_t Scene::GetEntityIdFromPixels(int32_t mx, int32_t my)
+    void Scene::GetEntityIdFromPixels(int32_t mx, int32_t my, int32_t& pixelData)
     {
-        // TODO: move this to Open GL FIles
-        glReadBuffer(GL_COLOR_ATTACHMENT1);
-
-        int32_t pixelData = -1;
-        glReadPixels(mx, my, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
-
-        return pixelData;
+        Renderer::GetEntityIdFromPixels(mx, my, pixelData);
     }
 
     // ******************************************************************************

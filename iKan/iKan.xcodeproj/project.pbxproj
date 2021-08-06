@@ -22,6 +22,9 @@
 		75CDC6FF26B461B600A804CB /* Asserts.h in Headers */ = {isa = PBXBuildFile; fileRef = 75CDC6FE26B461B600A804CB /* Asserts.h */; };
 		75FDFAA426BD1517008320D5 /* MeshScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 75FDFAA226BD1517008320D5 /* MeshScene.cpp */; };
 		75FDFAA526BD1517008320D5 /* MeshScene.h in Headers */ = {isa = PBXBuildFile; fileRef = 75FDFAA326BD1517008320D5 /* MeshScene.h */; };
+		75FDFAAC26BD2333008320D5 /* ShaderUniform.h in Headers */ = {isa = PBXBuildFile; fileRef = 75FDFAAA26BD2333008320D5 /* ShaderUniform.h */; };
+		75FDFAB126BD244A008320D5 /* OpenGLShaderUniform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 75FDFAAF26BD244A008320D5 /* OpenGLShaderUniform.cpp */; };
+		75FDFAB226BD244A008320D5 /* OpenGLShaderUniform.h in Headers */ = {isa = PBXBuildFile; fileRef = 75FDFAB026BD244A008320D5 /* OpenGLShaderUniform.h */; };
 		B2028051262590D300BC7F39 /* Core.h in Headers */ = {isa = PBXBuildFile; fileRef = B2028050262590D300BC7F39 /* Core.h */; };
 		B2028053262592DD00BC7F39 /* Log.h in Headers */ = {isa = PBXBuildFile; fileRef = B2028052262592DD00BC7F39 /* Log.h */; };
 		B20280562625934700BC7F39 /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B20280542625934700BC7F39 /* Log.cpp */; };
@@ -184,6 +187,9 @@
 		75CDC6FE26B461B600A804CB /* Asserts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Asserts.h; sourceTree = "<group>"; };
 		75FDFAA226BD1517008320D5 /* MeshScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MeshScene.cpp; sourceTree = "<group>"; };
 		75FDFAA326BD1517008320D5 /* MeshScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeshScene.h; sourceTree = "<group>"; };
+		75FDFAAA26BD2333008320D5 /* ShaderUniform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderUniform.h; sourceTree = "<group>"; };
+		75FDFAAF26BD244A008320D5 /* OpenGLShaderUniform.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLShaderUniform.cpp; sourceTree = "<group>"; };
+		75FDFAB026BD244A008320D5 /* OpenGLShaderUniform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGLShaderUniform.h; sourceTree = "<group>"; };
 		B2028050262590D300BC7F39 /* Core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
 		B2028052262592DD00BC7F39 /* Log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
 		B20280542625934700BC7F39 /* Log.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Log.cpp; sourceTree = "<group>"; };
@@ -568,6 +574,7 @@
 				B22FE6F62638473500C1640B /* Texture.cpp */,
 				B22FE6F72638473500C1640B /* Texture.h */,
 				B22FE6FF26385C3B00C1640B /* Shader.cpp */,
+				75FDFAAA26BD2333008320D5 /* ShaderUniform.h */,
 				B22FE6FE26385C3B00C1640B /* Shader.h */,
 				B22FE70A26385EE600C1640B /* FrameBuffer.cpp */,
 				B22FE70B26385EE600C1640B /* FrameBuffer.h */,
@@ -593,6 +600,8 @@
 				B22FE6FB2638482400C1640B /* OpenGLTexture.h */,
 				B22FE70326385C8A00C1640B /* OpenGLShader.cpp */,
 				B22FE70226385C8A00C1640B /* OpenGLShader.h */,
+				75FDFAAF26BD244A008320D5 /* OpenGLShaderUniform.cpp */,
+				75FDFAB026BD244A008320D5 /* OpenGLShaderUniform.h */,
 				B22FE70626385ECE00C1640B /* OpenGLFrameBuffer.cpp */,
 				B22FE70726385ECE00C1640B /* OpenGLFrameBuffer.h */,
 			);
@@ -721,6 +730,7 @@
 				B24010A3263450200051B868 /* ImguiLayer.h in Headers */,
 				B2028051262590D300BC7F39 /* Core.h in Headers */,
 				B249622A26397EE80091C915 /* RendererAPI.h in Headers */,
+				75FDFAAC26BD2333008320D5 /* ShaderUniform.h in Headers */,
 				B22FE6F12638431200C1640B /* OpenGLVertexArray.h in Headers */,
 				B2FE35152624B34000AFC236 /* Entrypoint.h in Headers */,
 				B2EAB33F262B23F2003D7FE6 /* MouseEvent.h in Headers */,
@@ -728,6 +738,7 @@
 				B22FE70D26385EE600C1640B /* FrameBuffer.h in Headers */,
 				B28FE5BF262C87A500DC5E20 /* Input.h in Headers */,
 				750AA8E2265D52140031A3E0 /* Utils.h in Headers */,
+				75FDFAB226BD244A008320D5 /* OpenGLShaderUniform.h in Headers */,
 				B2496F142639AA690091C915 /* SceneRenderer.h in Headers */,
 				B2A1C120263EE4CA00606017 /* ScenePropertyGrid.h in Headers */,
 				B27FE3182629E1D2000FD32D /* GraphicsContext.h in Headers */,
@@ -889,6 +900,7 @@
 				750AA8E1265D52140031A3E0 /* Utils.cpp in Sources */,
 				B22FE70826385ECE00C1640B /* OpenGLFrameBuffer.cpp in Sources */,
 				B2A1C10F263E78C200606017 /* ImguiAPI.cpp in Sources */,
+				75FDFAB126BD244A008320D5 /* OpenGLShaderUniform.cpp in Sources */,
 				B2496CBA2639A8AF0091C915 /* stb_image.cpp in Sources */,
 				B249622E26397FAC0091C915 /* OpenGlRendererAPI.cpp in Sources */,
 				B2A1C11D263EAE6800606017 /* SceneHierarchyPannel.cpp in Sources */,

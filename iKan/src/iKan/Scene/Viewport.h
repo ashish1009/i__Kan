@@ -62,8 +62,9 @@ namespace iKan {
             // Frame buffer to render scene
             Ref<Framebuffer> FrameBuffer;
 
-            // Entity hovered by mouse position
-            Entity HoveredEntity;
+            // Entity and ID hovered by mouse position
+            int32_t HoveredEntityID;
+            Entity  HoveredEntity;
 
             // Selected entity in the viewport
             Entity SelectedEntity;
