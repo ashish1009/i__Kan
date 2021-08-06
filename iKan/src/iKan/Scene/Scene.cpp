@@ -164,7 +164,9 @@ namespace iKan {
         {
             m_Data.EditorCamera->OnUpdate(ts);
 
-            SceneRenderer::BeginScene(*m_Data.EditorCamera.get());
+            const auto camera = *m_Data.EditorCamera.get();
+
+            SceneRenderer::BeginScene({ camera, camera.GetViewProjection() });
             RenderSpriteComponent();
             SceneRenderer::EndScene();
 
@@ -189,7 +191,9 @@ namespace iKan {
             mainCamera      = &cameraEntity.GetComponent<CameraComponent>().Camera;
             cameraTransform = cameraEntity.GetComponent<TransformComponent>().GetTransform();
 
-            SceneRenderer::BeginScene(*mainCamera, cameraTransform);
+            glm::mat4 viewProj = mainCamera->GetProjection() * glm::inverse(cameraTransform);
+
+            SceneRenderer::BeginScene({ *mainCamera, viewProj });
             RenderSpriteComponent();
             SceneRenderer::EndScene();
 

@@ -20,6 +20,8 @@
 		7589D502267758DD00EB43D9 /* SceneSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7589D500267758DD00EB43D9 /* SceneSerializer.h */; };
 		7589D5032677622500EB43D9 /* libyaml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7589D2402677574300EB43D9 /* libyaml.a */; };
 		75CDC6FF26B461B600A804CB /* Asserts.h in Headers */ = {isa = PBXBuildFile; fileRef = 75CDC6FE26B461B600A804CB /* Asserts.h */; };
+		75FDFAA426BD1517008320D5 /* MeshScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 75FDFAA226BD1517008320D5 /* MeshScene.cpp */; };
+		75FDFAA526BD1517008320D5 /* MeshScene.h in Headers */ = {isa = PBXBuildFile; fileRef = 75FDFAA326BD1517008320D5 /* MeshScene.h */; };
 		B2028051262590D300BC7F39 /* Core.h in Headers */ = {isa = PBXBuildFile; fileRef = B2028050262590D300BC7F39 /* Core.h */; };
 		B2028053262592DD00BC7F39 /* Log.h in Headers */ = {isa = PBXBuildFile; fileRef = B2028052262592DD00BC7F39 /* Log.h */; };
 		B20280562625934700BC7F39 /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B20280542625934700BC7F39 /* Log.cpp */; };
@@ -180,6 +182,8 @@
 		75AF8F0626B708CD000E352F /* OpenSans-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
 		75AF8F0726B708CD000E352F /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		75CDC6FE26B461B600A804CB /* Asserts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Asserts.h; sourceTree = "<group>"; };
+		75FDFAA226BD1517008320D5 /* MeshScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MeshScene.cpp; sourceTree = "<group>"; };
+		75FDFAA326BD1517008320D5 /* MeshScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeshScene.h; sourceTree = "<group>"; };
 		B2028050262590D300BC7F39 /* Core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
 		B2028052262592DD00BC7F39 /* Log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
 		B20280542625934700BC7F39 /* Log.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Log.cpp; sourceTree = "<group>"; };
@@ -545,6 +549,8 @@
 			children = (
 				B2496F112639AA690091C915 /* SceneRenderer.cpp */,
 				B2496F122639AA690091C915 /* SceneRenderer.h */,
+				75FDFAA226BD1517008320D5 /* MeshScene.cpp */,
+				75FDFAA326BD1517008320D5 /* MeshScene.h */,
 				755C105B26BC2519001BE251 /* Renderer2D.cpp */,
 				755C105C26BC2519001BE251 /* Renderer2D.h */,
 				B249622926397EE80091C915 /* RendererAPI.cpp */,
@@ -700,6 +706,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B27B4DA1263AF8AA000AC7B5 /* Component.h in Headers */,
+				75FDFAA526BD1517008320D5 /* MeshScene.h in Headers */,
 				B202806C2625FF1900BC7F39 /* MacWindow.h in Headers */,
 				B27D609D263D6B1A00954BB6 /* SceneCamera.h in Headers */,
 				B227E5AA2636F22B00DC3DFA /* OpenGLBuffers.h in Headers */,
@@ -866,6 +873,7 @@
 				B249622B26397EE80091C915 /* RendererAPI.cpp in Sources */,
 				75158EB726B5A1BD00F938E5 /* RenderCommandQueue.cpp in Sources */,
 				B27FE3132629E153000FD32D /* OpenGLGraphicsContext.cpp in Sources */,
+				75FDFAA426BD1517008320D5 /* MeshScene.cpp in Sources */,
 				B22FE70126385C3B00C1640B /* Shader.cpp in Sources */,
 				B27D6098263D3A3000954BB6 /* UUID.cpp in Sources */,
 				B27FE31B2629E474000FD32D /* Renderer.cpp in Sources */,

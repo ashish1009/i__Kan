@@ -1,62 +1,47 @@
 // ******************************************************************************
-// File         : SceneRenderer.cpp
-// Description  : API Wrapper for rendering at Client
+// File         : MeshScene.CPP
+// Description  : API Wrapper for rendering Mesh at Client
 // Project      : iKan : Renderer
 //
-// Created by Ashish on 28/04/21.
+// Created by Ashish on 06/08/21.
 // Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
-#include "SceneRenderer.h"
-#include <iKan/Renderer/Renderer2D.h>
-#include <iKan/Renderer/MeshScene.h>
+#include "MeshScene.h"
 
 namespace iKan {
-
-    static SceneRenderer::Data s_Data;
 
     // ******************************************************************************
     // Initialise the Scene Renderer
     // ******************************************************************************
-    void SceneRenderer::Init()
+    void MeshScene::Init()
     {
-        IK_CORE_INFO("Initialising the Scene RendererS");
-        Renderer2D::Init();
-        MeshScene::Init();
+        IK_CORE_INFO("Initialising the Renderer 3D");
+
     }
 
     // ******************************************************************************
     // Shut down the Scene Renderer
     // ******************************************************************************
-    void SceneRenderer::Shutdown()
+    void MeshScene::Shutdown()
     {
-        IK_CORE_WARN("Shutting down the Scene Renderer");
-        Renderer2D::Shutdown();
-        MeshScene::Shutdown();
-    }
-    
-    // ******************************************************************************
-    // Begin the Scene
-    // ******************************************************************************
-    void SceneRenderer::BeginScene(const SceneRenderer::Data::CameraInfo& camera)
-    {
-        s_Data.Camera = camera
-        Renderer2D::BeginScene(s_Data.Camera.ViewMatrix);
-        MeshScene::BeginScene();
-    }
-    
-    // ******************************************************************************
-    // End the Scene
-    // ******************************************************************************
-    void SceneRenderer::EndScene()
-    {
-        Renderer2D::EndScene();
-        MeshScene::EndScene();
+        IK_CORE_WARN("Shutting down the Renderer 3D");
     }
 
-    const SceneRenderer::Data& SceneRenderer::GetData()
+    // ******************************************************************************
+    // Begin the 3D Scene
+    // ******************************************************************************
+    void MeshScene::BeginScene()
     {
-        return s_Data;
+
+    }
+
+    // ******************************************************************************
+    // End the 3D Scene
+    // ******************************************************************************
+    void MeshScene::EndScene()
+    {
+
     }
 
 }
