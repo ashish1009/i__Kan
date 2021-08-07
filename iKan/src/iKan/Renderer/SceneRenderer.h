@@ -14,42 +14,60 @@
 
 namespace iKan {
 
-    struct SceneRendererData;
-
-    class SceneRenderer
+    // ******************************************************************************
+    // Stores the Scene Renderer information.
+    // ******************************************************************************
+    struct SceneRendererData
     {
     public:
         // ******************************************************************************
-        // Stores the Scene Renderer information.
+        // Stores the Camera information bind to the active Scene
         // ******************************************************************************
-        struct Data
+        struct SceneCamera
         {
-        public:
-            // ******************************************************************************
-            // Stores the Camera information bind to the active Scene
-            // ******************************************************************************
-            struct CameraInfo
-            {
-                iKan::Camera Camera;
-                glm::mat4    ViewMatrix;
+            iKan::Camera Camera;
+            glm::mat4    ViewMatrix;
 
-                CameraInfo() = default;
-                ~CameraInfo() = default;
-            };
-
-        public:
-            CameraInfo Camera;
-            Ref<Scene> ActiveScene;
+            SceneCamera() = default;
+            ~SceneCamera() = default;
         };
 
+    public:
+        SceneCamera  Camera;
+        const Scene* ActiveScene;
+
+    public:
+        SceneRendererData(const SceneRendererData&) = delete;
+        SceneRendererData(SceneRendererData&&) = delete;
+
+        SceneRendererData& operator=(const SceneRendererData&) = delete;
+        SceneRendererData& operator=(SceneRendererData&&) = delete;
+
+        ~SceneRendererData() = default;
+
+        static SceneRendererData& Get()
+        {
+            static SceneRendererData data;
+            return data;
+        }
+
+    private:
+        SceneRendererData() = default;
+    };
+
+    // ******************************************************************************
+    // Scene Renderer API
+    // ******************************************************************************
+    class SceneRenderer
+    {
     public:
         static void Init();
         static void Shutdown();
         
-        static void BeginScene(const SceneRenderer::Data::CameraInfo& camera);
+        static void BeginScene(const Scene* scene, const SceneRendererData::SceneCamera& camera);
         static void EndScene();
 
-        static const Data& GetData();
+        static const SceneRendererData& GetData();
     };
     
 }

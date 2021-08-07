@@ -17,7 +17,6 @@ namespace iKan {
     void MeshScene::Init()
     {
         IK_CORE_INFO("Initialising the Renderer 3D");
-
     }
 
     // ******************************************************************************
