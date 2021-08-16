@@ -14,6 +14,7 @@
 #include <iKan/Editor/ScenePropertyGrid.h>
 #include <iKan/Imgui/ImguiAPI.h>
 #include <iKan/Renderer/RendererStats.h>
+#include <iKan/Renderer/SceneRenderer.h>
 
 namespace iKan {
 
@@ -179,6 +180,15 @@ namespace iKan {
             else
                 m_Data.SelectedEntity = {};
         }
+        return false;
+    }
+    
+    // ******************************************************************************
+    // Window Resize event
+    // ******************************************************************************
+    bool Viewport::OnMouseWindowResize(WindowResizeEvent& e)
+    {
+        SceneRenderer::SetViewportSize(e.GetWidth(), e.GetHeight());
         return false;
     }
 

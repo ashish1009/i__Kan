@@ -126,10 +126,13 @@ namespace iKan {
         {
             switch (format)
             {
-                case Framebuffer::TextureSpecification::TextureFormat::None:   return false;
-                case Framebuffer::TextureSpecification::TextureFormat::RGBA8:  return false;
-                case Framebuffer::TextureSpecification::TextureFormat::R32I:   return false;
-                case Framebuffer::TextureSpecification::TextureFormat::DEPTH24STENCIL8:  return true;
+                case Framebuffer::TextureSpecification::TextureFormat::None:
+                case Framebuffer::TextureSpecification::TextureFormat::RGBA8:
+                case Framebuffer::TextureSpecification::TextureFormat::R32I:
+                case Framebuffer::TextureSpecification::TextureFormat::RGBA16F:
+                    return false;
+                case Framebuffer::TextureSpecification::TextureFormat::DEPTH24STENCIL8:
+                    return true;
             }
 
             return false;
@@ -209,6 +212,10 @@ namespace iKan {
                         case Framebuffer::TextureSpecification::TextureFormat::DEPTH24STENCIL8:
                             break;
 
+                        case Framebuffer::TextureSpecification::TextureFormat::RGBA16F:
+                            FbUtils::AttachColorTexture(m_ColorAttachments[i], m_Specifications.Samples, GL_RGBA16F, m_Specifications.Width, m_Specifications.Height, (uint32_t)i);
+                            break;
+
                         case Framebuffer::TextureSpecification::TextureFormat::RGBA8:
                             FbUtils::AttachColorTexture(m_ColorAttachments[i], m_Specifications.Samples, GL_RGBA8, m_Specifications.Width, m_Specifications.Height, (uint32_t)i);
                             break;
@@ -229,6 +236,7 @@ namespace iKan {
                     case Framebuffer::TextureSpecification::TextureFormat::None:
                     case Framebuffer::TextureSpecification::TextureFormat::RGBA8:
                     case Framebuffer::TextureSpecification::TextureFormat::R32I:
+                    case Framebuffer::TextureSpecification::TextureFormat::RGBA16F:
                         break;
 
                     case Framebuffer::TextureSpecification::TextureFormat::DEPTH24STENCIL8:

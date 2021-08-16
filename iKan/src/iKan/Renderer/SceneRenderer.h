@@ -9,50 +9,18 @@
 
 #pragma once
 
-#include <iKan/Editor/EditorCamera.h>
+#include <iKan/Renderer/Camera.h>
 #include <iKan/Scene/Scene.h>
 
 namespace iKan {
-
+    
     // ******************************************************************************
-    // Stores the Scene Renderer information.
+    // Stores the Camera information bind to the active Scene
     // ******************************************************************************
-    struct SceneRendererData
+    struct SceneRendererCamera
     {
-    public:
-        // ******************************************************************************
-        // Stores the Camera information bind to the active Scene
-        // ******************************************************************************
-        struct SceneCamera
-        {
-            iKan::Camera Camera;
-            glm::mat4    ViewMatrix;
-
-            SceneCamera() = default;
-            ~SceneCamera() = default;
-        };
-
-    public:
-        SceneCamera  Camera;
-        const Scene* ActiveScene;
-
-    public:
-        SceneRendererData(const SceneRendererData&) = delete;
-        SceneRendererData(SceneRendererData&&) = delete;
-
-        SceneRendererData& operator=(const SceneRendererData&) = delete;
-        SceneRendererData& operator=(SceneRendererData&&) = delete;
-
-        ~SceneRendererData() = default;
-
-        static SceneRendererData& Get()
-        {
-            static SceneRendererData data;
-            return data;
-        }
-
-    private:
-        SceneRendererData() = default;
+        iKan::Camera Camera;
+        glm::mat4    ViewMatrix;
     };
 
     // ******************************************************************************
@@ -64,10 +32,10 @@ namespace iKan {
         static void Init();
         static void Shutdown();
         
-        static void BeginScene(const Scene* scene, const SceneRendererData::SceneCamera& camera);
+        static void BeginScene(const Scene* scene, const SceneRendererCamera& camera);
         static void EndScene();
-
-        static const SceneRendererData& GetData();
+        
+        static void SetViewportSize(uint32_t width, uint32_t height);
     };
     
 }

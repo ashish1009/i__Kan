@@ -13,9 +13,7 @@
 
 extern iKan::Scope<iKan::Application> iKan::CreateApplication();
 
-// ******************************************************************************
-// Core Entry point (Main Function for the Core). Game loop calls from here
-// ******************************************************************************
+/// Core Entry point (Main Function for the Core). Game loop calls from here
 int main()
 {
     // initializing spd logger

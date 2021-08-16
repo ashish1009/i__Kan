@@ -17,6 +17,9 @@ virtual const char* GetName() const override { return #type; }
 
 #define EVENT_CLASS_CATEGORY(category) virtual int32_t GetCategoryFlags() const override { return category; }
 
+    // ******************************************************************************
+    // event categories
+    // ******************************************************************************
     enum class EventType
     {
         // Invalid type

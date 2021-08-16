@@ -22,6 +22,8 @@ namespace iKan {
 
         static void BeginScene();
         static void EndScene();
+        
+        static void SetViewportSize(uint32_t width, uint32_t height);
     };
 
 }

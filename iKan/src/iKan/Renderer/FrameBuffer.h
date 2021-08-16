@@ -29,7 +29,7 @@ namespace iKan {
             // ******************************************************************************
             enum class TextureFormat
             {
-                None = 0, RGBA8, DEPTH24STENCIL8, R32I
+                None = 0, RGBA8, DEPTH24STENCIL8, R32I, RGBA16F
             };
 
         public:
@@ -62,6 +62,8 @@ namespace iKan {
             uint32_t Width   = Window::Property::DefaultWidth;
             uint32_t Height  = Window::Property::DefaultHeight;
             uint32_t Samples = 1;
+            
+            glm::vec4 ClearColor = { 0.1f, 0.1f, 0.1f, 1.0f };
 
             Framebuffer::Attachments Attachments;
             

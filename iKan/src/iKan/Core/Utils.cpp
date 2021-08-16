@@ -52,7 +52,6 @@ namespace iKan {
             // Check if left character of token is empty
             // TODO: '/' might chnage if wont work for some scenario, using '/' as indicator
             // of first character of line
-            IK_INFO("{0}, {1}, {2}, {3}", t[-1], str == t, isspace(t[-1]), t[-1] == '/');
             bool left = str == t || isspace(t[-1]) || t[-1] == '/';
 
             // Check if right character of token is empty

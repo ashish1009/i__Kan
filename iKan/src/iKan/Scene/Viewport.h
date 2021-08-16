@@ -14,6 +14,7 @@
 #include <iKan/Scene/SceneSerializer.h>
 #include <iKan/Core/TimeStep.h>
 #include <iKan/Core/Events/KeyEvent.h>
+#include <iKan/Core/Events/ApplicationEvent.h>
 #include <iKan/Editor/SceneHierarchyPannel.h>
 #include <iKan/Editor/ContetBrowserPannel.h>
 
@@ -73,6 +74,7 @@ namespace iKan {
     private:
         Viewport(const std::string& contentBrowserPath);
         bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
+        bool OnMouseWindowResize(WindowResizeEvent& e);
         bool OnKeyPressed(KeyPressedEvent& e);
 
         void OnUpdateImGui();

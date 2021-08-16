@@ -13,8 +13,6 @@
 
 namespace iKan {
 
-    static SceneRendererData& s_Data = SceneRendererData::Get();
-
     // ******************************************************************************
     // Initialise the Scene Renderer
     // ******************************************************************************
@@ -38,12 +36,9 @@ namespace iKan {
     // ******************************************************************************
     // Begin the Scene
     // ******************************************************************************
-    void SceneRenderer::BeginScene(const Scene* scene, const SceneRendererData::SceneCamera& camera)
+    void SceneRenderer::BeginScene(const Scene* scene, const SceneRendererCamera& camera)
     {
-        s_Data.Camera      = camera;
-        s_Data.ActiveScene = scene;
-
-        Renderer2D::BeginScene(s_Data.Camera.ViewMatrix);
+        Renderer2D::BeginScene(camera.ViewMatrix);
         MeshScene::BeginScene();
     }
     
@@ -55,13 +50,13 @@ namespace iKan {
         Renderer2D::EndScene();
         MeshScene::EndScene();
     }
-
+    
     // ******************************************************************************
-    // Get the scene data
+    // Update Scene on resize
     // ******************************************************************************
-    const SceneRendererData& SceneRenderer::GetData()
+    void SceneRenderer::SetViewportSize(uint32_t width, uint32_t height)
     {
-        return s_Data;
+        MeshScene::SetViewportSize(width, height);
     }
 
 }
