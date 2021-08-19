@@ -15,9 +15,9 @@ namespace Mario {
     // Player Constructor
     // ******************************************************************************
     Player::Player(Ref<Scene> scene)
+    : m_ActiveScene(scene)
     {
         IK_INFO("Mario Player Constructor called");
-
         Init(scene);
     }
 
@@ -37,6 +37,47 @@ namespace Mario {
         m_Entity = scene->CreateEntity("Player 1");
         m_Entity.GetComponent<BoxCollider2DComponent>().IsRigid = true;
         m_Entity.AddComponent<SpriteRendererComponent>();
+        
+        auto& position = m_Entity.GetComponent<TransformComponent>().Translation;
+        position.x = -10;
+    }
+    
+    // ******************************************************************************
+    // Update the player each frame
+    // ******************************************************************************
+    void Player::OnUpdate(Timestep ts)
+    {
+        auto& position = m_Entity.GetComponent<TransformComponent>().Translation;
+        auto& size     = m_Entity.GetComponent<TransformComponent>().Scale;
+
+        {
+            if (Input::IsKeyPressed(KeyCode::Right) && !m_ActiveScene->IsRightCollision(m_Entity, m_RunningSpeed))
+                position.x += m_RunningSpeed;
+            if (Input::IsKeyPressed(KeyCode::Left) && !m_ActiveScene->IsLeftCollision(m_Entity, m_RunningSpeed))
+                position.x -= m_RunningSpeed;
+            
+            if (Input::IsKeyPressed(KeyCode::Up) && !m_ActiveScene->IsTopCollision(m_Entity, m_RunningSpeed))
+                position.y += m_RunningSpeed;
+            if (Input::IsKeyPressed(KeyCode::Down) && !m_ActiveScene->IsBottomCollision(m_Entity, m_RunningSpeed))
+                position.y -= m_RunningSpeed;
+            
+        }
+        
+        // Get the Position and size of Player entity each frame
+        m_Position = position;
+        m_Size     = size;
+    }
+    
+    void Player::ImguiRenderer()
+    {
+        static ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_Selected | ImGuiTreeNodeFlags_SpanAvailWidth;
+        static UUID uuid;
+        bool tileOpened = ImGui::TreeNodeEx((void*)(uint64_t)uuid, flags, "Player");
+        if (tileOpened)
+        {
+            ImGui::Text("Player");
+            ImGui::TreePop();
+        }
     }
 
 }

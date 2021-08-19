@@ -14,30 +14,32 @@
 
 using namespace iKan;
 
-// ******************************************************************************
-// Client layer for Mario (Main layer) derived from iKan Layer
-// ******************************************************************************
-class MarioLayer : public Layer
-{
-public:
-    MarioLayer();
-    virtual ~MarioLayer();
+namespace Mario {
     
-    virtual void OnAttach() override;
-    virtual void OnDetach() override;
-    virtual void OnEvent(Event& event) override;
-    virtual void OnUpdate(Timestep ts) override;
-    virtual void OnImguiRender(Timestep ts) override;
+    // ******************************************************************************
+    // Client layer for Mario (Main layer) derived from iKan Layer
+    // ******************************************************************************
+    class MarioLayer : public Layer
+    {
+    public:
+        MarioLayer();
+        virtual ~MarioLayer();
+        
+        virtual void OnAttach() override;
+        virtual void OnDetach() override;
+        virtual void OnEvent(Event& event) override;
+        virtual void OnUpdate(Timestep ts) override;
+        virtual void OnImguiRender(Timestep ts) override;
 
-private:
-    void ShowMenu();
-    
-private:
-    bool m_IsSetting = true;
+    private:
+        void ShowMenu();
+        
+    private:
+        bool m_IsSetting = true;
 
-    Viewport& m_Viewport = Viewport::Create("../../../../../../../iKan.");
-    Entity m_CameraEntity;
-    Ref<Mario::Player> m_Player;
+        Viewport& m_Viewport = Viewport::Create("../../../../../../../iKan.");
+        Entity m_CameraEntity;
+        Ref<Mario::Player> m_Player;
+    };
 
-};
-
+}

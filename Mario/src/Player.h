@@ -15,6 +15,7 @@ using namespace iKan;
 
 namespace Mario {
 
+    class MarioLayer;
     class Player
     {
     public:
@@ -22,9 +23,20 @@ namespace Mario {
         Player(Ref<Scene> scene);
 
         void Init(Ref<Scene> scene);
-
+        void OnUpdate(Timestep ts);
+        void ImguiRenderer();
+        
     private:
+        Ref<Scene> m_ActiveScene;
         Entity m_Entity;
+        
+        bool m_IsSetting = true;
+        float m_RunningSpeed = 0.11;
+        
+        glm::vec3 m_Position;
+        glm::vec3 m_Size;
+        
+        friend class MarioLayer;
     };
 
 }

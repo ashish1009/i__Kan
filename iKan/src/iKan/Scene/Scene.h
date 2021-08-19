@@ -26,8 +26,8 @@ namespace iKan {
         {
             Right   = BIT(0),
             Left    = BIT(1),
-            Up      = BIT(2),
-            Down    = BIT(3)
+            Top     = BIT(2),
+            Bottom  = BIT(3)
         };
 
         struct Data
@@ -63,19 +63,17 @@ namespace iKan {
         ~Scene();
         
         Entity CreateEntity(const std::string& name = "Unknown Entity", UUID uuid = UUID());
+        
         void DestroyEntity(Entity entity);
-
         void OnEvent(Event& event);
         void OnUpdateEditor(Timestep ts);
         void OnViewportResize(uint32_t width, uint32_t height);
         void OnUpdateRuntime(Timestep ts);
         void OnImguiRenderer();
-
         void DeleteEditorCamera();
         void SetEditorCamera(float fov = glm::radians(45.0f), float aspectRatio = 1800.0f/800.0f, float near = 0.01f, float far = 10000.0f);
-
         void GetEntityIdFromPixels(int32_t mx, int32_t my, int32_t& pixelData);
-        int32_t OnBoxColloider(Entity& currEntity, float speed);
+        
         uint32_t GetNumEntities() const { return m_Data.NumEntities; }
 
         const std::string& GetFileName() const { return m_Data.FileName; }
@@ -83,11 +81,32 @@ namespace iKan {
 
         void SetFilePath(const std::string& path);
 
-        Ref<EditorCamera> GetEditorCamera() { return m_Data.EditorCamera; }
-
         Data& GetDataRef() { return m_Data; }
 
+        Ref<EditorCamera> GetEditorCamera() { return m_Data.EditorCamera; }
         Ref<Texture> AddTextureToScene(const std::string& texturePath);
+        
+        int32_t OnBoxColloider(Entity& currEntity, float speed);
+        
+        bool IsRightCollision(Entity& currEntity, float speed)
+        {
+            return (int32_t)Scene::BoxCollisionSide::Right == OnBoxColloider(currEntity, speed);
+        }
+        
+        bool IsLeftCollision(Entity& currEntity, float speed)
+        {
+            return (int32_t)Scene::BoxCollisionSide::Left == OnBoxColloider(currEntity, -speed);
+        }
+        
+        bool IsTopCollision(Entity& currEntity, float speed)
+        {
+            return (int32_t)Scene::BoxCollisionSide::Top == OnBoxColloider(currEntity, speed);
+        }
+        
+        bool IsBottomCollision(Entity& currEntity, float speed)
+        {
+            return (int32_t)Scene::BoxCollisionSide::Bottom == OnBoxColloider(currEntity, -speed);
+        }
 
     private:
         Entity GetMainCameraEntity();

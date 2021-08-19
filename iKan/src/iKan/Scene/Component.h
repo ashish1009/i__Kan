@@ -27,10 +27,7 @@ namespace iKan {
         IDComponent() = default;
         IDComponent(const IDComponent&) = default;
         IDComponent(const UUID& Id)
-        : ID(Id)
-        {
-             
-        }
+        : ID(Id) { }
     };
     
     // ******************************************************************************
@@ -45,10 +42,7 @@ namespace iKan {
         TagComponent() = default;
         TagComponent(const TagComponent&) = default;
         TagComponent(const std::string& tag)
-        : Tag(tag)
-        {
-            
-        }
+        : Tag(tag) { }
     };
     
     // ******************************************************************************
@@ -65,10 +59,7 @@ namespace iKan {
         TransformComponent() = default;
         TransformComponent(const TransformComponent&) = default;
         TransformComponent(const glm::vec3& translation)
-        : Translation(translation)
-        {
-            
-        }
+        : Translation(translation) { }
         
         // ******************************************************************************
         // Gets the transform Matrix from translation , scale and rotation
@@ -224,22 +215,13 @@ namespace iKan {
         SpriteRendererComponent(const SpriteRendererComponent&) = default;
         
         SpriteRendererComponent(const glm::vec4& color)
-        : ColorComp(color), SubTexComp(nullptr)
-        {
-            
-        }
+        : ColorComp(color), SubTexComp(nullptr) { }
         
         SpriteRendererComponent(const Ref<SubTexture>& subtexture)
-        : ColorComp(glm::vec4(1.0f)), SubTexComp(subtexture)
-        {
-            
-        }
+        : ColorComp(glm::vec4(1.0f)), SubTexComp(subtexture) { }
         
         SpriteRendererComponent(const Ref<iKan::Texture>& texture)
-        : ColorComp(glm::vec4(1.0f)), SubTexComp(nullptr)
-        {
-            
-        }
+        : ColorComp(glm::vec4(1.0f)), SubTexComp(nullptr) { }
     };
     
     // ******************************************************************************
@@ -256,10 +238,7 @@ namespace iKan {
         SceneHierarchyPannelProp(const SceneHierarchyPannelProp& other) = default;
         
         SceneHierarchyPannelProp(bool flag)
-        : IsProp(flag)
-        {
-            
-        }
+        : IsProp(flag) { }
     };
 
     // ******************************************************************************
@@ -275,10 +254,7 @@ namespace iKan {
         BoxCollider2DComponent(const BoxCollider2DComponent& other) = default;
 
         BoxCollider2DComponent(bool flag)
-        : IsRigid(flag)
-        {
-
-        }
+        : IsRigid(flag) { }
     };
 
 }

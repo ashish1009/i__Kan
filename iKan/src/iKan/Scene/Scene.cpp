@@ -259,6 +259,8 @@ namespace iKan {
 
     // ******************************************************************************
     // Resize scene view port
+    // currEntity : Movaing entity
+    // speed : Amount of movemet in 1 frame along with direction
     // ******************************************************************************
     int32_t Scene::OnBoxColloider(Entity& currEntity, float speed)
     {
@@ -318,7 +320,7 @@ namespace iKan {
                     if (cePos.y + speed < entPos.y + entSize.y &&
                         cePos.y + speed + ceSize.y > entPos.y)
                     {
-                        result |= ((speed > 0) ? (int32_t)BoxCollisionSide::Up : (int32_t)BoxCollisionSide::Down);
+                        result |= ((speed > 0) ? (int32_t)BoxCollisionSide::Top : (int32_t)BoxCollisionSide::Bottom);
                     }
                 }
             }

@@ -421,7 +421,7 @@ namespace iKan {
         RendererStats(ts);
 
         // Render Content browser pannel
-        m_ContentBrowserPannel.OnImguiender();
+        m_ContentBrowserPannel.OnImguiender(&m_ContentBrowserPannel.IsContentBrowserPannel);
 
         if (!m_ActiveScene)
         {
@@ -567,19 +567,13 @@ namespace iKan {
     void Viewport::RendererStats(Timestep ts)
     {
         if (m_Flags.IsFrameRate)
-        {
             ImGuiAPI::FrameRate(ts, &m_Flags.IsFrameRate);
-        }
 
         if (m_Flags.IsRendererStats)
-        {
             ImGuiAPI::RendererStats(&m_Flags.IsRendererStats);
-        }
 
         if (m_Flags.IsVendorType)
-        {
             ImGuiAPI::RendererVersion(&m_Flags.IsVendorType);
-        }
     }
 
 }

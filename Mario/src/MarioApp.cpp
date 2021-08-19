@@ -26,7 +26,7 @@ public:
     : iKan::Application(props)
     {
         IK_INFO("Constructing Mario Application");
-        iKan::Ref<MarioLayer> marioLayer = iKan::CreateRef<MarioLayer>();
+        iKan::Ref<Mario::MarioLayer> marioLayer = iKan::CreateRef<Mario::MarioLayer>();
         PushLayer(marioLayer);
     }
     
