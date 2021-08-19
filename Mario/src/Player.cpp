@@ -34,9 +34,13 @@ namespace Mario {
     // ******************************************************************************
     void Player::Init(Ref<Scene> scene)
     {
+        m_Texture = scene->AddTextureToScene("../../../Mario/assets/Resources/Graphics/Player.png");
+        
+        m_StandingSubtexComp = SubTexture::CreateFromCoords(m_Texture, { 0.0f, 0.0f });
+        
         m_Entity = scene->CreateEntity("Player 1");
         m_Entity.GetComponent<BoxCollider2DComponent>().IsRigid = true;
-        m_Entity.AddComponent<SpriteRendererComponent>();
+        m_Entity.AddComponent<SpriteRendererComponent>(m_StandingSubtexComp);
         
         auto& position = m_Entity.GetComponent<TransformComponent>().Translation;
         position.x = -10;
@@ -60,12 +64,11 @@ namespace Mario {
                 position.y += m_RunningSpeed;
             if (Input::IsKeyPressed(KeyCode::Down) && !m_ActiveScene->IsBottomCollision(m_Entity, m_RunningSpeed))
                 position.y -= m_RunningSpeed;
-            
         }
         
         // Get the Position and size of Player entity each frame
-        m_Position = position;
-        m_Size     = size;
+        m_EntityPosition = position;
+        m_EntitySize     = size;
     }
     
     void Player::ImguiRenderer()

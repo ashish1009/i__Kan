@@ -116,15 +116,11 @@ namespace iKan {
             // If texture is already created then delete the texture
             // (if shared with other entity then reduce the counter)
             if (Texture.Component)
-            {
                 Texture.Component.reset();
-            }
 
             // If component is subtexture then overrite it with texture
             if (SubTexComp)
-            {
                 SubTexComp.reset();
-            }
 
             SubTexComp  = nullptr;
 
@@ -134,9 +130,7 @@ namespace iKan {
 
             // If texture is uploaded with invalid path So delete the texture
             if (!Texture.Component->Uploaded())
-            {
                 Texture.Component.reset();
-            }
 
             return Texture.Component;
         }
@@ -160,9 +154,8 @@ namespace iKan {
             // If texture is already created then delete the texture
             // (if shared with other entity then reduce the counter)
             if (Texture.Component)
-            {
                 Texture.Component.reset();
-            }
+
             Texture.Component = nullptr;
             Texture.Use = false;
 
@@ -180,9 +173,8 @@ namespace iKan {
             // If texture is already created then delete the texture
             // (if shared with other entity then reduce the counter)
             if (SubTexComp)
-            {
                 SubTexComp.reset();
-            }
+
             SubTexComp = nullptr;
         }
 
@@ -194,9 +186,8 @@ namespace iKan {
             // If texture is already created then delete the texture
             // (if shared with other entity then reduce the counter)
             if (Texture.Component)
-            {
                 Texture.Component.reset();
-            }
+
             Texture.Component = nullptr;
             Texture.Use = false;
 

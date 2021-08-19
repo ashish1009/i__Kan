@@ -82,6 +82,8 @@ void main()
         case 14: texColor *= texture(u_Textures[14], fs_in.TexCoord * fs_in.TilingFactor); break;
         case 15: texColor *= texture(u_Textures[15], fs_in.TexCoord * fs_in.TilingFactor); break;
     }
+    if(texColor.a < 0.1)
+        discard;
     o_Color = texColor;
     o_IDBuffer = int(fs_in.ObjectID);
 }

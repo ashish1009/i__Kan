@@ -114,12 +114,8 @@ namespace Mario {
     static void ChangeEntitiesSubtex(const std::vector<Entity>& entityVector, const Ref<SubTexture>& subTex)
     {
         for (auto entity : entityVector)
-        {
             if (auto &subTexComp = entity.GetComponent<SpriteRendererComponent>().SubTexComp)
-            {
                 subTexComp = subTex;
-            }
-        }
     }
 
     // ******************************************************************************
