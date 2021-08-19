@@ -96,7 +96,7 @@ namespace Mario {
             // Mario Setting pannel
             if (m_IsSetting)
             {
-                ImGui::Begin("Mario Setting", &m_IsSetting);
+                ImGui::Begin("Mario Setting", &m_IsSetting, ImGuiWindowFlags_HorizontalScrollbar);
                 
                 // Background Imgui Rendeer
                 Background::ImGuiRenderer();

@@ -269,8 +269,8 @@ namespace iKan {
 
         // Current (Moving) Entity Property (Position and Size)
         const auto& ceTc   = currEntity.GetComponent<TransformComponent>();
-        const auto& cePos  = ceTc.Translation;
         const auto& ceSize = ceTc.Scale;
+        const auto& cePos  = ceTc.Translation - (ceSize - 1.0f) / 2.0f;
 
         // Traverse entire Entities to get Box colloider entity one by one
         auto view = m_Registry.view<BoxCollider2DComponent>();

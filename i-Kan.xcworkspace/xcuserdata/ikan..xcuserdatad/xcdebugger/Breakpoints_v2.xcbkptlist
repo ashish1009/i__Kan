@@ -46,8 +46,8 @@
             filePath = "Mario/src/Player.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
             landmarkName = "Player::ImguiRenderer()"
             landmarkType = "7">
          </BreakpointContent>

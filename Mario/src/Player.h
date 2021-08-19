@@ -45,11 +45,11 @@ namespace Mario {
 //        // State of Mario Player
 //        // ******************************************************************************
 //        enum class State { Jumping = 4, Standing = 6, Firing, Dying, Sitting, Running };
-//
-//        // ******************************************************************************
-//        // Size of Mario Player
-//        // ******************************************************************************
-//        enum Size { Short, Tall };
+
+        // ******************************************************************************
+        // Size of Mario Player
+        // ******************************************************************************
+        enum class Size { Short, Tall };
 
     public:
         ~Player();
@@ -58,19 +58,23 @@ namespace Mario {
         void Init(Ref<Scene> scene);
         void OnUpdate(Timestep ts);
         void ImguiRenderer();
+        void ChangeSize(Size size);
+        
+    private:
+        void SetCurrentTexture(Color color);
         
     private:
         Ref<Scene> m_ActiveScene;
 
-        Entity    m_Entity;
-        glm::vec3 m_EntityPosition;
-        glm::vec3 m_EntitySize;
+        Entity     m_Entity;
+        glm::vec3* m_EntityPosition;
+        glm::vec3* m_EntitySize;
         
         bool  m_IsSetting = true;
         float m_RunningSpeed = 0.11;
         
         Color m_Color = Color::Classic;
-//        Size  m_Size;
+        Size  m_Size  = Size::Short;
         
         // Texture to store tile sprite sheet
         Ref<Texture>    m_Texture;
