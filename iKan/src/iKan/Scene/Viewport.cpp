@@ -60,12 +60,9 @@ namespace iKan {
         if (!m_Flags.Present)
             return;
 
-        if (m_SaveFile)
+        if (m_SaveFile || m_SaveFileAs)
             SaveScene();
 
-        if (m_SaveFileAs)
-            SaveSceneAs();
-        
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         ImGui::Begin("Viewport", &m_Flags.Present, ImGuiWindowFlags_NoTitleBar);
         {
@@ -217,11 +214,11 @@ namespace iKan {
     // ******************************************************************************
     // Create new active scene to the Viewport
     // ******************************************************************************
-    void Viewport::NewScene()
+    void Viewport::NewScene(const std::string& path)
     {
         CloseScene();
         
-        m_ActiveScene = CreateRef<Scene>();
+        m_ActiveScene = CreateRef<Scene>(path);
         m_ActiveScene->OnViewportResize((uint32_t)m_Data.Size.x, (uint32_t)m_Data.Size.y);
         
         // Set the current Scene to scene hierarchy pannel
@@ -252,7 +249,11 @@ namespace iKan {
     // ******************************************************************************
     void Viewport::SaveSceneAs()
     {
+        if (!m_SaveFileAs && !m_SaveFile)
+            return;
+        
         ImGui::Begin("Save File", &m_SaveFileAs);
+        m_SaveFile = m_SaveFileAs;
 
         const auto& relativePath    = (std::filesystem::relative(m_ContentBrowserPannel.GetCurrentDir(), m_ContentBrowserPannel.GetRootDir())).string();
         PropertyGrid::String("Save Directory", relativePath, "File will be saved at the Current directory in the active scene", 150.0f);
@@ -280,8 +281,9 @@ namespace iKan {
     // ******************************************************************************
     void Viewport::SaveScene()
     {
-        if (m_ActiveScene->GetFileName() == "")
+        if (m_ActiveScene->GetFileName() == "" || m_SaveFileAs)
         {
+            m_SaveFileAs = m_SaveFile;
             SaveSceneAs();
         }
         else
@@ -412,16 +414,8 @@ namespace iKan {
     // ******************************************************************************
     void Viewport::OnImguiRenderer(Timestep ts)
     {
-        ShowMenu();
-
-        // Renderer Viewport Properties
-        RendereViewportProp();
-
         // Show Renderer Stats
         RendererStats(ts);
-
-        // Render Content browser pannel
-        m_ContentBrowserPannel.OnImguiender(&m_ContentBrowserPannel.IsContentBrowserPannel);
 
         if (!m_ActiveScene)
         {
@@ -436,12 +430,75 @@ namespace iKan {
             ImGui::End();
             return;
         }
+        else
+        {
+            bool &isSceneEdititng = m_ActiveScene->GetDataRef().Editing;
 
-        // Render Scene Hierarchy pannel in imgui
-        m_SceneHierarchyPannel.OnImguiender();
+            // Update the Viewport Data
+            OnUpdateImGui();
 
-        // Update the Viewport Data
-        OnUpdateImGui();
+            // Select the type of Scene
+            {
+                ImGui::Begin(m_ActiveScene->GetFileName().c_str());
+                ImGui::Columns(3);
+                ImGui::SetColumnWidth(0, 80);
+                ImGui::Text("Scene Type");
+                
+                ImGui::NextColumn();
+                ImGui::SetColumnWidth(1, 200);
+                ImGui::PushItemWidth(-1);
+                const std::vector <const char*> sceneTypeString = { "2D", "3D" };
+                const char* currentSceneType = sceneTypeString[(int32_t)m_ActiveScene->GetSceneType()];
+                if (ImGui::BeginCombo("##SceneType", currentSceneType))
+                {
+                    for (int32_t i = 0; i < sceneTypeString.size(); i++)
+                    {
+                        bool bIsSelected = currentSceneType == sceneTypeString[i];
+                        if (ImGui::Selectable(sceneTypeString[i], bIsSelected))
+                        {
+                            currentSceneType = sceneTypeString[i];
+                            m_ActiveScene->SetSceneType((Scene::Data::Type)i);
+                        }
+                        
+                        if (bIsSelected)
+                            ImGui::SetItemDefaultFocus();
+                    }
+                    ImGui::EndCombo();
+                }
+                ImGui::PopItemWidth();
+                
+                // Play Pause Icon
+                ImGui::NextColumn();
+                ImGui::SetColumnWidth(2, 50);
+                uint32_t pauseTexId = m_PauseTexture->GetRendererID(), playTexId = m_PlayeTexture->GetRendererID();
+                
+                if (isSceneEdititng)
+                {
+                    if (PropertyGrid::ImageButton("Pause", playTexId, ImVec2(16.0f, 16.0f)))
+                        isSceneEdititng = false;
+                }
+                else
+                {
+                    if (PropertyGrid::ImageButton("Pause", pauseTexId, ImVec2(16.0f, 16.0f)))
+                        isSceneEdititng = true;
+                }
+                
+                ImGui::Columns(1);
+                ImGui::End();
+            }
+            
+            if (isSceneEdititng)
+            {
+                ShowMenu();
+                m_ContentBrowserPannel.OnImguiender(&m_ContentBrowserPannel.IsContentBrowserPannel);
+                
+                // Renderer Viewport Properties
+                RendereViewportProp();
+                
+                // Render Scene Hierarchy pannel in imgui
+                m_SceneHierarchyPannel.OnImguiender();
+            }
+        }
     }
 
     // ******************************************************************************
@@ -566,14 +623,20 @@ namespace iKan {
     // ******************************************************************************
     void Viewport::RendererStats(Timestep ts)
     {
-        if (m_Flags.IsFrameRate)
-            ImGuiAPI::FrameRate(ts, &m_Flags.IsFrameRate);
+        if (m_ActiveScene->IsEditing())
+        {
+            if (m_Flags.IsRendererStats)
+                ImGuiAPI::RendererStats(&m_Flags.IsRendererStats);
+            
+            if (m_Flags.IsVendorType)
+                ImGuiAPI::RendererVersion(&m_Flags.IsVendorType);
+        }
 
-        if (m_Flags.IsRendererStats)
-            ImGuiAPI::RendererStats(&m_Flags.IsRendererStats);
-
-        if (m_Flags.IsVendorType)
-            ImGuiAPI::RendererVersion(&m_Flags.IsVendorType);
+        else
+        {
+            if (m_Flags.IsFrameRate)
+                ImGuiAPI::FrameRate(ts, &m_Flags.IsFrameRate);
+        }
     }
 
 }

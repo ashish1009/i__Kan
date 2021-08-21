@@ -260,7 +260,7 @@
 		B2A1C10E263E78C200606017 /* ImguiAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImguiAPI.h; sourceTree = "<group>"; };
 		B2A1C113263E82E700606017 /* RendererStats.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RendererStats.cpp; sourceTree = "<group>"; };
 		B2A1C114263E82E700606017 /* RendererStats.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RendererStats.h; sourceTree = "<group>"; };
-		B2A1C117263E87DD00606017 /* Viewport.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Viewport.cpp; sourceTree = "<group>"; };
+		B2A1C117263E87DD00606017 /* Viewport.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Viewport.cpp; sourceTree = "<group>"; wrapsLines = 0; };
 		B2A1C118263E87DD00606017 /* Viewport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Viewport.h; sourceTree = "<group>"; };
 		B2A1C11B263EAE6800606017 /* SceneHierarchyPannel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneHierarchyPannel.cpp; sourceTree = "<group>"; wrapsLines = 0; };
 		B2A1C11C263EAE6800606017 /* SceneHierarchyPannel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneHierarchyPannel.h; sourceTree = "<group>"; };

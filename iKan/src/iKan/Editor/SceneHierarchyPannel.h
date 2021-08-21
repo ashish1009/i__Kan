@@ -20,8 +20,6 @@ namespace iKan {
     {
     private:
         const Ref<Texture> m_DefaultTexture = Texture::Create("../../../iKan/src/iKan/Editor/assets/resources/Default/NoTexture.png");
-        const Ref<Texture> m_PauseTexture   = Texture::Create("../../../iKan/src/iKan/Editor/assets/resources/Icons/Pause.png");
-        const Ref<Texture> m_PlayeTexture   = Texture::Create("../../../iKan/src/iKan/Editor/assets/resources/Icons/Play.png");
 
     public:
         SceneHeirarchyPannel();

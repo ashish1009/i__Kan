@@ -108,30 +108,13 @@ namespace iKan {
         pIsOpen = &isSceneHeirarchypanel;
 
         // no rendering if flag is false
-        if (!isSceneHeirarchypanel || !m_Context)
+        if (!isSceneHeirarchypanel)
             return;
 
         m_Context->OnImguiRenderer();
 
         ImGui::Begin("Scene Hierarchy", pIsOpen);
         {
-            bool &isSceneEdititng = m_Context->GetDataRef().Editing;
-            uint32_t pauseTexId = m_PauseTexture->GetRendererID(), playTexId = m_PlayeTexture->GetRendererID();
-            ImGui::Indent(ImGui::GetWindowContentRegionWidth() / 2.0f);
-
-            if (isSceneEdititng)
-            {
-                if (PropertyGrid::ImageButton("Pause", playTexId, ImVec2(16.0f, 16.0f)))
-                    isSceneEdititng = false;
-            }
-            else
-            {
-                if (PropertyGrid::ImageButton("Pause", pauseTexId, ImVec2(16.0f, 16.0f)))
-                    isSceneEdititng = true;
-            }
-            ImGui::Unindent(ImGui::GetWindowContentRegionWidth() / 2.0f);
-            ImGui::Separator();
-
             PropertyGrid::String("Active Scene", m_Context->GetFileName(), "To Open a scene Drop the file here fron content browser pannel", 200);
             PropertyGrid::DropConent([](const std::string& path)
                                      {

@@ -22,6 +22,10 @@ namespace iKan {
     
     class Viewport
     {
+    private:
+        const Ref<Texture> m_PauseTexture   = Texture::Create("../../../iKan/src/iKan/Editor/assets/resources/Icons/Pause.png");
+        const Ref<Texture> m_PlayeTexture   = Texture::Create("../../../iKan/src/iKan/Editor/assets/resources/Icons/Play.png");
+
     public:
         struct PropFlag
         {
@@ -100,7 +104,7 @@ namespace iKan {
         void ShowMenu();
         void OnEvent(Event& event);
 
-        void NewScene();
+        void NewScene(const std::string& path = "Untitled");
         void OpenScene(const std::string& path);
         void SaveScene();
         void SaveSceneAs();

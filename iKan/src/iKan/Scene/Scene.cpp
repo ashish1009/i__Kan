@@ -96,7 +96,7 @@ namespace iKan {
             ImGui::End();
         }
         // Editor Camera Imgui Renderer
-        if (m_Data.EditorCamera && m_Data.EditorCamera->IsImguiPannel)
+        if (m_Data.EditorCamera && m_Data.EditorCamera->IsImguiPannel && m_Data.Editing)
             m_Data.EditorCamera->OnImguiRenderer();
     }
     

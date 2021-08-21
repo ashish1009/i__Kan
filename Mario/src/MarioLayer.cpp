@@ -38,7 +38,7 @@ namespace Mario {
 
     //    ImguiLayer::SetFont("/Users/ashish/iKan/Github/iKan/Mario/assets/Resources/Fonts/Mario.ttf");
 
-        m_Viewport.NewScene();
+        m_Viewport.NewScene("Mario");
 
         auto scene  = m_Viewport.GetScene();
         // Setup the Camera Entity
@@ -75,7 +75,8 @@ namespace Mario {
     void MarioLayer::OnUpdate(Timestep ts)
     {
         m_Viewport.OnUpdate(ts);
-        m_Player->OnUpdate(ts);
+        if (m_Player)
+            m_Player->OnUpdate(ts);
     }
 
     // ******************************************************************************
@@ -85,8 +86,6 @@ namespace Mario {
     {
         ImGuiAPI::StartDcocking();
 
-        ImGui::ShowDemoWindow();
-
         // Viewport Imgui Renderer
         m_Viewport.OnImguiRenderer(ts);
 
@@ -94,7 +93,7 @@ namespace Mario {
         {
             ShowMenu();
             // Mario Setting pannel
-            if (m_IsSetting)
+            if (m_IsSetting && m_Viewport.GetScene()->IsEditing())
             {
                 ImGui::Begin("Mario Setting", &m_IsSetting, ImGuiWindowFlags_HorizontalScrollbar);
                 
@@ -102,7 +101,8 @@ namespace Mario {
                 Background::ImGuiRenderer();
 
                 // Imgui rendering for Player
-                m_Player->ImguiRenderer();
+                if (m_Player)
+                    m_Player->ImguiRenderer();
                 
                 ImGui::End();
             }
@@ -124,6 +124,9 @@ namespace Mario {
     // ******************************************************************************
     void MarioLayer::ShowMenu()
     {
+        if (!m_Viewport.GetScene()->IsEditing())
+            return;
+            
         if (ImGui::BeginMenuBar())
         {
             if (ImGui::BeginMenu("Mario"))
