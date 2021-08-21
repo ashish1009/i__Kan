@@ -38,11 +38,11 @@ namespace Mario {
 
     //    ImguiLayer::SetFont("/Users/ashish/iKan/Github/iKan/Mario/assets/Resources/Fonts/Mario.ttf");
 
-        m_Viewport.NewScene("Mario");
+        m_Viewport.NewScene();
 
         auto scene  = m_Viewport.GetScene();
         // Setup the Camera Entity
-        m_CameraEntity        = scene->CreateEntity("Camera");
+        m_CameraEntity        = scene->CreateEntity("Primary Camera");
         auto& cameraComponent = m_CameraEntity.AddComponent<CameraComponent>();
         cameraComponent.Camera.SetProjectionType(SceneCamera::ProjectionType::Orthographic);
         cameraComponent.Camera.SetOrthographicSize(18.0f);

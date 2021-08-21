@@ -20,6 +20,7 @@ namespace iKan {
     {
     public:
         SceneSerializer(const Ref<Scene>& scene);
+        ~SceneSerializer();
 
         void Serialize(const std::string& filepath);
         void SerializeRuntime(const std::string& filepath);

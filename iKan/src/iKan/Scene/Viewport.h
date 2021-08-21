@@ -104,7 +104,7 @@ namespace iKan {
         void ShowMenu();
         void OnEvent(Event& event);
 
-        void NewScene(const std::string& path = "Untitled");
+        void NewScene();
         void OpenScene(const std::string& path);
         void SaveScene();
         void SaveSceneAs();

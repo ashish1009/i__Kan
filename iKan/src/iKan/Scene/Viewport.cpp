@@ -214,11 +214,11 @@ namespace iKan {
     // ******************************************************************************
     // Create new active scene to the Viewport
     // ******************************************************************************
-    void Viewport::NewScene(const std::string& path)
+    void Viewport::NewScene()
     {
         CloseScene();
         
-        m_ActiveScene = CreateRef<Scene>(path);
+        m_ActiveScene = CreateRef<Scene>();
         m_ActiveScene->OnViewportResize((uint32_t)m_Data.Size.x, (uint32_t)m_Data.Size.y);
         
         // Set the current Scene to scene hierarchy pannel
@@ -252,6 +252,7 @@ namespace iKan {
         if (!m_SaveFileAs && !m_SaveFile)
             return;
         
+        m_SaveFileAs = true;
         ImGui::Begin("Save File", &m_SaveFileAs);
         m_SaveFile = m_SaveFileAs;
 
@@ -283,7 +284,7 @@ namespace iKan {
     {
         if (m_ActiveScene->GetFileName() == "" || m_SaveFileAs)
         {
-            m_SaveFileAs = m_SaveFile;
+//            m_SaveFileAs = m_SaveFile;
             SaveSceneAs();
         }
         else
@@ -419,6 +420,9 @@ namespace iKan {
 
         if (!m_ActiveScene)
         {
+            ShowMenu();
+            m_ContentBrowserPannel.OnImguiender(&m_ContentBrowserPannel.IsContentBrowserPannel);
+            
             ImGui::Begin("Warning");
             ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "No Scene is created yet. Scene can be created from 'File->Scene->New' or 'Cmd+N'. Already open scene can be uploaded by dragging the scene file (.iKan) from content browser pannel to this area" );
             ImGui::SameLine(); ImGui::Button("Drop Scene file Here");
@@ -439,7 +443,7 @@ namespace iKan {
 
             // Select the type of Scene
             {
-                ImGui::Begin(m_ActiveScene->GetFileName().c_str());
+                ImGui::Begin("Scene Controler");
                 ImGui::Columns(3);
                 ImGui::SetColumnWidth(0, 80);
                 ImGui::Text("Scene Type");
@@ -623,6 +627,9 @@ namespace iKan {
     // ******************************************************************************
     void Viewport::RendererStats(Timestep ts)
     {
+        if (!m_ActiveScene)
+            return;
+        
         if (m_ActiveScene->IsEditing())
         {
             if (m_Flags.IsRendererStats)
@@ -632,11 +639,8 @@ namespace iKan {
                 ImGuiAPI::RendererVersion(&m_Flags.IsVendorType);
         }
 
-        else
-        {
-            if (m_Flags.IsFrameRate)
-                ImGuiAPI::FrameRate(ts, &m_Flags.IsFrameRate);
-        }
+        if (m_Flags.IsFrameRate)
+            ImGuiAPI::FrameRate(ts, &m_Flags.IsFrameRate);
     }
 
 }

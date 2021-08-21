@@ -143,6 +143,14 @@ namespace iKan {
     {
         IK_CORE_INFO("Serialising a scene ...");
     }
+    
+    // ******************************************************************************
+    // SceneSerializer destructor
+    // ******************************************************************************
+    SceneSerializer::~SceneSerializer()
+    {
+        IK_CORE_INFO("Scene Serialised ...");
+    }
 
     // ******************************************************************************
     // Serialize the entity. Extract the entity componenets from serialiser
@@ -198,6 +206,7 @@ namespace iKan {
             out << YAML::EndMap; // Camera
 
             out << YAML::Key << "Primary" << YAML::Value << cameraComponent.Primary;
+            out << YAML::Key << "Editor" << YAML::Value << cameraComponent.Editor;
             out << YAML::Key << "FixedAspectRatio" << YAML::Value << cameraComponent.FixedAspectRatio;
 
             out << YAML::EndMap; // CameraComponent
@@ -367,10 +376,12 @@ namespace iKan {
                     cc.Camera.SetOrthographicFarClip(cameraProps["OrthographicFar"].as<float>());
 
                     cc.Primary = cameraComponent["Primary"].as<bool>();
+                    cc.Editor = cameraComponent["Editor"].as<bool>();
                     cc.FixedAspectRatio = cameraComponent["FixedAspectRatio"].as<bool>();
 
                     IK_CORE_INFO("  Entity Camera:");
                     IK_CORE_INFO("      Primary: {0}", cc.Primary);
+                    IK_CORE_INFO("      Editor: {0}", cc.Editor);
                     IK_CORE_INFO("      FixedAspectRatio: {0}", cc.FixedAspectRatio);
                     IK_CORE_INFO("          Projection Type: {0}", cc.Camera.GetProjectionType());
 
