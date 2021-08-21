@@ -79,6 +79,7 @@ namespace iKan {
         SceneCamera Camera;
 
         bool Primary = true;
+        bool Editor  = false;
         bool FixedAspectRatio = false;
 
         ~CameraComponent() = default;

@@ -156,21 +156,49 @@ namespace iKan {
     // ******************************************************************************
     void Scene::OnUpdateEditor(Timestep ts)
     {
-        if (m_Data.EditorCamera)
+        if (m_Data.SceneType == Scene::Data::Type::Scene3D)
         {
-            m_Data.EditorCamera->OnUpdate(ts);
+            if (m_Data.EditorCamera)
+            {
+                m_Data.EditorCamera->OnUpdate(ts);
 
-            const auto camera = *m_Data.EditorCamera.get();
+                const auto camera = *m_Data.EditorCamera.get();
 
-            SceneRenderer::BeginScene(this, { camera, camera.GetViewProjection() });
-            RenderSpriteComponent();
-            SceneRenderer::EndScene();
+                SceneRenderer::BeginScene(this, { camera, camera.GetViewProjection() });
+                RenderSpriteComponent();
+                SceneRenderer::EndScene();
 
-            m_Data.CameraWarning = false;
+                m_Data.CameraWarning = false;
+            }
+            else
+            {
+                m_Data.CameraWarning = true;
+            }
         }
-        else
+        // TODO: Change logic in future
+        else // Scene 2D
         {
-            m_Data.CameraWarning = true;
+            Camera* editorCamera = nullptr;
+            glm::mat4 cameraTransform;
+            if (Entity cameraEntity = GetEditorCameraEntity();
+                cameraEntity!= Entity(entt::null, nullptr))
+            {
+                editorCamera    = &cameraEntity.GetComponent<CameraComponent>().Camera;
+                cameraTransform = cameraEntity.GetComponent<TransformComponent>().GetTransform();
+                
+                glm::mat4 viewProj = editorCamera->GetProjection() * glm::inverse(cameraTransform);
+                
+                SceneRenderer::BeginScene(this, { *editorCamera, viewProj });
+                RenderSpriteComponent();
+                SceneRenderer::EndScene();
+                
+                m_Data.CameraWarning = false;
+            }
+            else
+            {
+                m_Data.CameraWarning = true;
+            }
+
         }
     }
 
@@ -230,6 +258,21 @@ namespace iKan {
         {
             auto& comp = view.get<CameraComponent>(entity);
             if (comp.Primary)
+                return { entity, this };
+        }
+        return {};
+    }
+    
+    // ******************************************************************************
+    // get the canera component. First camera component which is found to be Primary
+    // ******************************************************************************
+    Entity Scene::GetEditorCameraEntity()
+    {
+        auto view = m_Registry.view<CameraComponent>();
+        for (auto entity : view)
+        {
+            auto& comp = view.get<CameraComponent>(entity);
+            if (comp.Editor)
                 return { entity, this };
         }
         return {};

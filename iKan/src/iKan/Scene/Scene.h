@@ -117,6 +117,7 @@ namespace iKan {
 
     private:
         Entity GetMainCameraEntity();
+        Entity GetEditorCameraEntity();
         void RenderSpriteComponent();
 
     private:

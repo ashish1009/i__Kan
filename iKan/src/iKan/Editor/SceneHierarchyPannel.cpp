@@ -255,11 +255,25 @@ namespace iKan {
         
         DrawComponent<CameraComponent>("Camera", entity, [](auto& cc)
                                        {
-            auto& camera = cc.Camera;
-            
-            PropertyGrid::CheckBox("Primary", cc.Primary, 100);
+            enum CameraType { Primary, Editor };
+            static int32_t type = (int32_t)CameraType::Primary;
+            ImGui::RadioButton("Primary", &type, (int32_t)CameraType::Primary); ImGui::SameLine();
+            ImGui::RadioButton("Editor", &type, (int32_t)CameraType::Editor);
             ImGui::Separator();
+            
+            if (type == (int32_t)CameraType::Primary)
+            {
+                cc.Primary = true;
+                cc.Editor  = false;
+            }
+            else
+            {
+                cc.Primary = false;
+                cc.Editor  = true;
+            }
 
+
+            auto& camera = cc.Camera;
             {
                 ImGui::Columns(2);
                 ImGui::Text("Projection Type");
