@@ -90,6 +90,8 @@ namespace iKan {
         Ref<Texture> AddTextureToScene(const std::string& texturePath);
         
         bool IsEditing() const { return m_Data.Editing; }
+        void SetEditingFlag(bool flag) { m_Data.Editing = flag; }
+        
         Data::Type GetSceneType() const { return m_Data.SceneType; }
         void SetSceneType(Data::Type type) { m_Data.SceneType = type; }
         

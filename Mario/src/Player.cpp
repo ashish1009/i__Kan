@@ -10,15 +10,32 @@
 #include "Player.h"
 
 namespace Mario {
+    
+    Ref<Scene>      Player::s_ActiveScene        = nullptr;
+    Ref<Texture>    Player::s_Texture            = nullptr;
+    Ref<SubTexture> Player::s_StandingSubtexComp = nullptr;
+        
+    float Player::s_RunningSpeed = 0.10;
+    float Player::s_FallingSpeed = 0.50;
+
+    std::function <void(Player*)> Player::s_StateFunc[(int32_t)State::None];
 
     // ******************************************************************************
     // Player Constructor
     // ******************************************************************************
     Player::Player(Ref<Scene> scene)
-    : m_ActiveScene(scene)
     {
+        Init(scene, (m_Size == Size::Short), m_Color);
+    
         IK_INFO("Mario Player Constructor called");
-        Init(scene);
+        m_Entity = s_ActiveScene->CreateEntity("Player 1");
+        m_Entity.GetComponent<BoxCollider2DComponent>().IsRigid = true;
+        m_Entity.AddComponent<SpriteRendererComponent>(s_StandingSubtexComp);
+        
+        SetCurrentTexture(Color::Classic);
+        
+        auto& position = m_Entity.GetComponent<TransformComponent>().Translation;
+        position.x = 16.0f;
     }
 
     // ******************************************************************************
@@ -32,18 +49,30 @@ namespace Mario {
     // ******************************************************************************
     // Initialize the player
     // ******************************************************************************
-    void Player::Init(Ref<Scene> scene)
+    void Player::Init(Ref<Scene> scene, bool isShort, Color color)
     {
-        m_Texture = scene->AddTextureToScene("../../../Mario/assets/Resources/Graphics/Player.png");
-                
-        m_Entity = scene->CreateEntity("Player 1");
-        m_Entity.GetComponent<BoxCollider2DComponent>().IsRigid = true;
-        m_Entity.AddComponent<SpriteRendererComponent>(m_StandingSubtexComp);
+        s_ActiveScene = scene;
+        s_ActiveScene->SetEditingFlag(false);
         
-        SetCurrentTexture(Color::Classic);
+        s_Texture = scene->AddTextureToScene("../../../Mario/assets/Resources/Graphics/Player.png");
         
-        auto& position = m_Entity.GetComponent<TransformComponent>().Translation;
-        position.x = -10;
+        s_StateFunc[(int32_t)State::Falling]  = Player::Falling;
+        s_StateFunc[(int32_t)State::Jumping]  = Player::Jumping;
+        s_StateFunc[(int32_t)State::Standing] = Player::Standing;
+        s_StateFunc[(int32_t)State::Firing]   = Player::Firing;
+        s_StateFunc[(int32_t)State::Dying]    = Player::Dying;
+        s_StateFunc[(int32_t)State::Sitting]  = Player::Sitting;
+        s_StateFunc[(int32_t)State::Running]  = Player::Running;
+        
+        SetPlayerTextureForAllStates(isShort, color);
+    }
+    
+    // ******************************************************************************
+    // Update the texture for all state
+    // ******************************************************************************
+    void Player::SetPlayerTextureForAllStates(bool isShort, Color color)
+    {
+        s_StandingSubtexComp = SubTexture::CreateFromCoords(s_Texture, { 6.0f, (float)color + (isShort ? 0.0f : 1.0f) }, { 1.0f, (isShort ? 1.0f : 2.0f) } );
     }
     
     // ******************************************************************************
@@ -55,18 +84,13 @@ namespace Mario {
         m_EntitySize     = &m_Entity.GetComponent<TransformComponent>().Scale;
 
         {
-            IK_ASSERT(m_EntityPosition, "Entity Posiiton not pointing to any memory");
-            if (Input::IsKeyPressed(KeyCode::Right) && !m_ActiveScene->IsRightCollision(m_Entity, m_RunningSpeed))
-                m_EntityPosition->x += m_RunningSpeed;
-            if (Input::IsKeyPressed(KeyCode::Left) && !m_ActiveScene->IsLeftCollision(m_Entity, m_RunningSpeed))
-                m_EntityPosition->x -= m_RunningSpeed;
-            
-            // TODO: Temp
-            if (Input::IsKeyPressed(KeyCode::Up) && !m_ActiveScene->IsTopCollision(m_Entity, m_RunningSpeed))
-                m_EntityPosition->y += m_RunningSpeed;
-            if (Input::IsKeyPressed(KeyCode::Down) && !m_ActiveScene->IsBottomCollision(m_Entity, m_RunningSpeed))
-                m_EntityPosition->y -= m_RunningSpeed;
+            if (Input::IsKeyPressed(KeyCode::Right) && !s_ActiveScene->IsRightCollision(m_Entity, s_RunningSpeed))
+                m_EntityPosition->x += s_RunningSpeed;
+            if (Input::IsKeyPressed(KeyCode::Left) && !s_ActiveScene->IsLeftCollision(m_Entity, s_RunningSpeed))
+                m_EntityPosition->x -= s_RunningSpeed;
         }
+        
+        s_StateFunc[(int32_t)m_State](this);
     }
     
     // ******************************************************************************
@@ -82,9 +106,9 @@ namespace Mario {
             static UUID uuid;
             if (ImGui::TreeNodeEx((void*)(uint64_t)uuid, flags, "Color"))
             {
-                ImTextureID myTexId = (ImTextureID)((size_t)m_Texture->GetRendererID());
-                float myTexW = (float)m_Texture->GetWidth();
-                float myTexH = (float)m_Texture->GetHeight();
+                ImTextureID myTexId = (ImTextureID)((size_t)s_Texture->GetRendererID());
+                float myTexW = (float)s_Texture->GetWidth();
+                float myTexH = (float)s_Texture->GetHeight();
                 
                 for (int32_t color = (int32_t)Color::Black_Grey; color < (int32_t)Color::Classic; color += 3)
                 {
@@ -95,7 +119,10 @@ namespace Mario {
                     glm::vec2 uv0 = { coords.x * 16.0f, (coords.y + 1) * 16.0f };
                     
                     if (ImGui::ImageButton(myTexId, ImVec2(32.0f, 32.0f), ImVec2(uv0.x / myTexW, uv0.y / myTexH), ImVec2(uv1.x / myTexW, uv1.y / myTexH), 0))
+                    {
+                        SetPlayerTextureForAllStates((m_Size == Size::Short), (Color)color);
                         SetCurrentTexture((Color)color);
+                    }
 
                     ImGui::PopID();
                     ImGui::SameLine();
@@ -118,8 +145,19 @@ namespace Mario {
     void Player::SetCurrentTexture(Color color)
     {
         m_Color = Color(color);
-        bool isShort = m_Size == Size::Short;
-        m_Entity.GetComponent<SpriteRendererComponent>().SubTexComp = SubTexture::CreateFromCoords(m_Texture, { 0.0f, (float)color + (isShort ? 0.0f : 1.0f) }, { 1.0f, (isShort ? 1.0f : 2.0f) } );
+        
+        Ref<SubTexture> currSubtexture;
+        switch (m_State)
+        {
+            case State::Falling:
+                currSubtexture = s_StandingSubtexComp;
+                break;
+                
+            default:
+                break;
+        }
+
+        m_Entity.GetComponent<SpriteRendererComponent>().SubTexComp = currSubtexture;
     }
     
     // ******************************************************************************
@@ -133,5 +171,62 @@ namespace Mario {
         
         SetCurrentTexture(m_Color);
     }
+    
+    // ******************************************************************************
+    // Player function for falling
+    // ******************************************************************************
+    void Player::Falling(Player* player)
+    {
+        if (!s_ActiveScene->IsBottomCollision(player->m_Entity, s_FallingSpeed))
+            player->m_EntityPosition->y -= s_FallingSpeed;
+    }
+    
+    // ******************************************************************************
+    // Player function for falling
+    // ******************************************************************************
+    void Player::Jumping(Player* player)
+    {
+        
+    }
 
+    // ******************************************************************************
+    // Player function for falling
+    // ******************************************************************************
+    void Player::Standing(Player* player)
+    {
+        
+    }
+
+    // ******************************************************************************
+    // Player function for falling
+    // ******************************************************************************
+    void Player::Firing(Player* player)
+    {
+        
+    }
+
+    // ******************************************************************************
+    // Player function for falling
+    // ******************************************************************************
+    void Player::Dying(Player* player)
+    {
+        
+    }
+
+    // ******************************************************************************
+    // Player function for falling
+    // ******************************************************************************
+    void Player::Sitting(Player* player)
+    {
+        
+    }
+
+    // ******************************************************************************
+    // Player function for falling
+    // ******************************************************************************
+    void Player::Running(Player* player)
+    {
+        
+    }
+    
 }

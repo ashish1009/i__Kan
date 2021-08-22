@@ -32,10 +32,7 @@ namespace iKan {
             uint32_t Width = DefaultWidth, Height = DefaultHeight;
             
             Property(const std::string& title = "iKan", uint32_t width = DefaultWidth, uint32_t height = DefaultHeight)
-            : Title(title), Width(width), Height(height)
-            {
-                
-            }
+            : Title(title), Width(width), Height(height) {}
             
             ~Property() = default;
         };

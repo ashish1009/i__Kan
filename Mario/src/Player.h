@@ -41,10 +41,11 @@ namespace Mario {
             Classic     = 30
         };
         
-//        // ******************************************************************************
-//        // State of Mario Player
-//        // ******************************************************************************
-//        enum class State { Jumping = 4, Standing = 6, Firing, Dying, Sitting, Running };
+        // ******************************************************************************
+        // State of Mario Player
+        // Note, last entry should be None as it is the range of Array of state machine
+        // ******************************************************************************
+        enum class State { Falling = 0, Jumping = 1, Standing = 2, Firing = 3, Dying = 4, Sitting = 5, Running = 6, None = 7 };
 
         // ******************************************************************************
         // Size of Mario Player
@@ -55,7 +56,6 @@ namespace Mario {
         ~Player();
         Player(Ref<Scene> scene);
 
-        void Init(Ref<Scene> scene);
         void OnUpdate(Timestep ts);
         void ImguiRenderer();
         void ChangeSize(Size size);
@@ -63,23 +63,40 @@ namespace Mario {
     private:
         void SetCurrentTexture(Color color);
         
+        static void Init(Ref<Scene> scene, bool isShort, Color color);
+        static void SetPlayerTextureForAllStates(bool isShort, Color color);
+        
+        // Functions for player state machine
+        static void Falling(Player* player);
+        static void Jumping(Player* player);
+        static void Standing(Player* player);
+        static void Firing(Player* player);
+        static void Dying(Player* player);
+        static void Sitting(Player* player);
+        static void Running(Player* player);
+        
     private:
-        Ref<Scene> m_ActiveScene;
+        static Ref<Scene> s_ActiveScene;
 
+        // Function pointer to store the functionality of states
+        static std::function <void(Player*)> s_StateFunc[(int32_t)State::None];
+        
+        // Texture to store tile sprite sheet
+        static Ref<Texture>    s_Texture;
+        static Ref<SubTexture> s_StandingSubtexComp;
+        
+        static float s_RunningSpeed;
+        static float s_FallingSpeed;
+        
+        // Non Static members
         Entity     m_Entity;
         glm::vec3* m_EntityPosition;
         glm::vec3* m_EntitySize;
         
-        bool  m_IsSetting = true;
-        float m_RunningSpeed = 0.11;
-        
         Color m_Color = Color::Classic;
         Size  m_Size  = Size::Short;
-        
-        // Texture to store tile sprite sheet
-        Ref<Texture>    m_Texture;
-        Ref<SubTexture> m_StandingSubtexComp;
-        
+        State m_State = State::Falling;
+                
         friend class MarioLayer;
     };
 
