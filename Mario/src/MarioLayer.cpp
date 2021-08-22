@@ -36,8 +36,6 @@ namespace Mario {
     {
         IK_INFO("Attaching {0} Layer to Application", GetName().c_str());
 
-    //    ImguiLayer::SetFont("/Users/ashish/iKan/Github/iKan/Mario/assets/Resources/Fonts/Mario.ttf");
-
         m_Viewport.NewScene();
 
         auto scene  = m_Viewport.GetScene();
@@ -75,8 +73,7 @@ namespace Mario {
     void MarioLayer::OnUpdate(Timestep ts)
     {
         m_Viewport.OnUpdate(ts);
-        if (m_Player)
-            m_Player->OnUpdate(ts);
+        m_Player->OnUpdate(ts);
     }
 
     // ******************************************************************************
@@ -89,23 +86,20 @@ namespace Mario {
         // Viewport Imgui Renderer
         m_Viewport.OnImguiRenderer(ts);
 
-        if (m_Viewport.GetScene())
+        // Mario Setting pannel
+        if (m_Viewport.GetScene()->IsEditing() && m_IsSetting)
         {
             ShowMenu();
-            // Mario Setting pannel
-            if (m_IsSetting && m_Viewport.GetScene()->IsEditing())
-            {
-                ImGui::Begin("Mario Setting", &m_IsSetting, ImGuiWindowFlags_HorizontalScrollbar);
-                
-                // Background Imgui Rendeer
-                Background::ImGuiRenderer();
 
-                // Imgui rendering for Player
-                if (m_Player)
-                    m_Player->ImguiRenderer();
-                
-                ImGui::End();
-            }
+            ImGui::Begin("Mario Setting", &m_IsSetting, ImGuiWindowFlags_HorizontalScrollbar);
+
+            // Background Imgui Rendeer
+            Background::ImGuiRenderer();
+
+            // Imgui rendering for Player
+            m_Player->ImguiRenderer();
+
+            ImGui::End();
         }
 
         ImGuiAPI::EndDcocking();

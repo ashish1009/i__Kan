@@ -114,13 +114,16 @@ namespace iKan {
             else
                 m_ActiveScene->OnUpdateRuntime(ts);
 
-            // Update selected entity
-            if (m_Data.SelectedEntity != Entity(entt::null, nullptr))
-                m_SceneHierarchyPannel.SetSelectedEntity(m_Data.SelectedEntity);
-
-            // Update Viewprt entities
-            UpdateMousePos();
-            UpdateHoveredEntity();
+            if (m_ActiveScene->IsEditing())
+            {
+                // Update selected entity
+                if (m_Data.SelectedEntity != Entity(entt::null, nullptr))
+                    m_SceneHierarchyPannel.SetSelectedEntity(m_Data.SelectedEntity);
+                
+                // Update Viewprt entities
+                UpdateMousePos();
+                UpdateHoveredEntity();
+            }
         }
         m_Data.FrameBuffer->Unbind();
     }
@@ -284,7 +287,6 @@ namespace iKan {
     {
         if (m_ActiveScene->GetFileName() == "" || m_SaveFileAs)
         {
-//            m_SaveFileAs = m_SaveFile;
             SaveSceneAs();
         }
         else
@@ -422,7 +424,7 @@ namespace iKan {
         {
             ShowMenu();
             m_ContentBrowserPannel.OnImguiender(&m_ContentBrowserPannel.IsContentBrowserPannel);
-            
+
             ImGui::Begin("Warning");
             ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "No Scene is created yet. Scene can be created from 'File->Scene->New' or 'Cmd+N'. Already open scene can be uploaded by dragging the scene file (.iKan) from content browser pannel to this area" );
             ImGui::SameLine(); ImGui::Button("Drop Scene file Here");
@@ -447,7 +449,7 @@ namespace iKan {
                 ImGui::Columns(3);
                 ImGui::SetColumnWidth(0, 80);
                 ImGui::Text("Scene Type");
-                
+
                 ImGui::NextColumn();
                 ImGui::SetColumnWidth(1, 200);
                 ImGui::PushItemWidth(-1);
@@ -463,19 +465,19 @@ namespace iKan {
                             currentSceneType = sceneTypeString[i];
                             m_ActiveScene->SetSceneType((Scene::Data::Type)i);
                         }
-                        
+
                         if (bIsSelected)
                             ImGui::SetItemDefaultFocus();
                     }
                     ImGui::EndCombo();
                 }
                 ImGui::PopItemWidth();
-                
+
                 // Play Pause Icon
                 ImGui::NextColumn();
                 ImGui::SetColumnWidth(2, 50);
                 uint32_t pauseTexId = m_PauseTexture->GetRendererID(), playTexId = m_PlayeTexture->GetRendererID();
-                
+
                 if (isSceneEdititng)
                 {
                     if (PropertyGrid::ImageButton("Pause", playTexId, ImVec2(16.0f, 16.0f)))
@@ -486,7 +488,7 @@ namespace iKan {
                     if (PropertyGrid::ImageButton("Pause", pauseTexId, ImVec2(16.0f, 16.0f)))
                         isSceneEdititng = true;
                 }
-                
+
                 ImGui::Columns(1);
                 ImGui::End();
             }
@@ -495,10 +497,10 @@ namespace iKan {
             {
                 ShowMenu();
                 m_ContentBrowserPannel.OnImguiender(&m_ContentBrowserPannel.IsContentBrowserPannel);
-                
+
                 // Renderer Viewport Properties
                 RendereViewportProp();
-                
+
                 // Render Scene Hierarchy pannel in imgui
                 m_SceneHierarchyPannel.OnImguiender();
             }
