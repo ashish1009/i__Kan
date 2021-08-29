@@ -87,7 +87,7 @@ namespace Mario {
         m_Viewport.OnImguiRenderer(ts);
 
         // Mario Setting pannel
-        if (m_Viewport.GetScene()->IsEditing() && m_IsSetting)
+//        if (m_Viewport.GetScene()->IsEditing() && m_IsSetting)
         {
             ShowMenu();
 
@@ -111,6 +111,7 @@ namespace Mario {
     void MarioLayer::OnEvent(Event& event)
     {
         m_Viewport.OnEvent(event);
+        m_Player->OnEvent(event);
     }
 
     // ******************************************************************************

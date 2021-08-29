@@ -27,6 +27,9 @@ namespace iKan {
         static std::vector<std::string> GetLines(const std::string& string);
         
         static bool StartsWith(const std::string& string, const std::string& start);
+        
+        static int32_t GetFirstSetBit(uint32_t value);
+
     };
 
 }

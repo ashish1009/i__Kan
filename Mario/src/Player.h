@@ -23,6 +23,9 @@ namespace Mario {
     class Player
     {
     public:
+        static constexpr uint32_t MAX_STATES = 7;
+        
+    public:
         // ******************************************************************************
         // Mario Player Image Color
         // ******************************************************************************
@@ -45,7 +48,17 @@ namespace Mario {
         // State of Mario Player
         // Note, last entry should be None as it is the range of Array of state machine
         // ******************************************************************************
-        enum class State { Falling = 0, Jumping = 1, Standing = 2, Firing = 3, Dying = 4, Sitting = 5, Running = 6, None = 7 };
+        enum class State
+        {
+            Falling   = BIT(0),
+            Jumping   = BIT(1),
+            Standing  = BIT(2),
+            Firing    = BIT(3),
+            Dying     = BIT(4),
+            Sitting   = BIT(5),
+            Running   = BIT(6),
+            None      = BIT(MAX_STATES)
+        };
 
         // ******************************************************************************
         // Size of Mario Player
@@ -60,9 +73,21 @@ namespace Mario {
         void ImguiRenderer();
         void ChangeSize(Size size);
         
+        void OnEvent(Event& event);
+
     private:
-        void SetCurrentTexture(Color color);
+        bool OnkeyPressed(KeyPressedEvent& event);
+        bool OnKeyReleased(KeyReleasedEvent& event);
         
+        void SetState(State state)
+        {
+            uint32_t val = (1 << (Utils::GetFirstSetBit((uint32_t)state) - 1));
+            m_State = m_State | val;
+        }
+        void ClearState(State state)  { m_State = m_State & (~(1 << (Utils::GetFirstSetBit((uint32_t)state) - 1))); }
+        void ToggleState(State state) { m_State ^= (1 << (Utils::GetFirstSetBit((uint32_t)state) - 1)); }
+        
+    private:
         static void Init(Ref<Scene> scene, bool isShort, Color color);
         static void SetPlayerTextureForAllStates(bool isShort, Color color);
         
@@ -79,7 +104,7 @@ namespace Mario {
         static Ref<Scene> s_ActiveScene;
 
         // Function pointer to store the functionality of states
-        static std::function <void(Player*)> s_StateFunc[(int32_t)State::None];
+        static std::function <void(Player*)> s_StateFunc[MAX_STATES];
         
         // Texture to store tile sprite sheet
         static Ref<Texture>    s_Texture;
@@ -95,7 +120,8 @@ namespace Mario {
         
         Color m_Color = Color::Classic;
         Size  m_Size  = Size::Short;
-        State m_State = State::Falling;
+        
+        uint32_t m_State = (uint32_t)State::Falling;
                 
         friend class MarioLayer;
     };

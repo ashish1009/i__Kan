@@ -151,5 +151,20 @@ namespace iKan {
         return string.find(start) == 0;
     }
 
+    // ******************************************************************************
+    // get the fist set bit returns -1 if value is 0
+    // 1 means Most LSB and So on...
+    // ******************************************************************************
+    int32_t Utils::GetFirstSetBit(uint32_t value)
+    {
+        if (!value)
+            return 0;
+        
+        for (int32_t pos = 0; value >> pos; pos++)
+            if (value & BIT(pos))
+                return pos + 1;
+        
+        return -1;
+    }
 
 }
