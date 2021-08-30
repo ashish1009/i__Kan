@@ -31,6 +31,15 @@ namespace iKan {
             memcpy(buffer.Data, data, size);
             return buffer;
         }
+        
+        void Clear()
+        {
+            if (Data)
+                delete[] Data;
+            
+            Size = 0;
+            Data = nullptr;
+        }
 
         void Allocate(uint32_t size)
         {

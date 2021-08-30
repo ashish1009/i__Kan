@@ -74,6 +74,7 @@ namespace iKan {
     OpenGLTexture::OpenGLTexture(uint32_t width, uint32_t height, void* data, uint32_t size)
     : m_Width(width), m_Height(height), m_InternalFormat(GL_RGBA8), m_DataFormat(GL_RGBA), m_Size(size)
     {
+        m_WhiteTextureData.Clear();
         m_WhiteTextureData = Buffer::Copy(data, size);
         Renderer::Submit([this]()
                          {

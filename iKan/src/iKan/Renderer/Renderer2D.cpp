@@ -245,14 +245,12 @@ namespace iKan {
     // ******************************************************************************
     void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<SubTexture>& subTexture, int32_t entID, float tilingFactor, const glm::vec4& tintColor)
     {
-        const glm::vec2* textureCoords   = subTexture->GetTexCoord();
+        const glm::vec2* textureCoords = subTexture->GetTexCoord();
         DrawTextureQuad(transform, subTexture->GetTexture(), entID, textureCoords, tilingFactor, tintColor);
     }
 
     void Renderer2D::DrawTextureQuad(const glm::mat4& transform, const Ref<Texture>& texture, int32_t entID, const glm::vec2* textureCoords, float tilingFactor, const glm::vec4& tintColor)
     {
-        constexpr size_t quadVertexCount = 4;
-
         // If number of indices increase in batch then start new batch
         if (s_Data->QuadIndexCount >= RendererQuadData::MaxIndices)
         {
@@ -291,6 +289,7 @@ namespace iKan {
             }
         }
 
+        constexpr size_t quadVertexCount = 4;
         for (size_t i = 0; i < quadVertexCount; i++)
         {
             s_Data->QuadVertexBufferPtr->Position     = transform * s_Data->QuadVertexPositions[i];

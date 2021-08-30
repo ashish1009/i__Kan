@@ -35,6 +35,7 @@ namespace iKan {
     OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t size, float* data)
     : m_Size(size)
     {
+        m_Data.Clear();
         m_Data = Buffer::Copy(data, m_Size);
         Renderer::Submit([this]()
                          {
@@ -79,6 +80,7 @@ namespace iKan {
     // ******************************************************************************
     void OpenGLVertexBuffer::SetData(void* data, uint32_t size)
     {
+        m_Data.Clear();
         m_Data = Buffer::Copy(data, size);
         m_Size = size;
         Renderer::Submit([this]()
@@ -94,6 +96,7 @@ namespace iKan {
     OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t count, uint32_t* data)
     : m_Count(count)
     {
+        m_Data.Clear();
         m_Data = Buffer::Copy(data, count * sizeof(uint32_t));
         Renderer::Submit([this]()
                          {
