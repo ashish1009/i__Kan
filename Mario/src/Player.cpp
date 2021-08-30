@@ -167,8 +167,12 @@ namespace Mario {
     // ******************************************************************************
     void Player::ChangeSize(Size size)
     {
+        // TODO: Add Animation/
         IK_ASSERT(m_EntitySize, "Entity Size is not pointing to any memory");
         m_Size = size;
+        
+        // TODO: 1 is just random to avoid overlap. Need to fix this later
+        m_EntityPosition->y += 1.0f;
         m_EntitySize->y = (m_Size == Size::Tall ? 2.0f : 1.0f);
 
         SetPlayerTextureForAllStates((m_Size == Size::Short), m_Color);
@@ -280,8 +284,8 @@ namespace Mario {
             
             ImGui::Separator();
             static bool tall = false;
-            PropertyGrid::CheckBox("Tall", tall, 100.0f);
-            tall == true ? ChangeSize(Size::Tall) : ChangeSize(Size::Short);
+            if (PropertyGrid::CheckBox("Tall", tall, 100.0f))
+                tall == true ? ChangeSize(Size::Tall) : ChangeSize(Size::Short);
             
             ImGui::Text("State: %d \n Falling :%d \n Jumping: %d \n Standing: %d \n Firing: %d \n Dying: %d \n Sitting: %d \n Running: %d",
                         m_State,
