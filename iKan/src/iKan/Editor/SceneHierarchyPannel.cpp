@@ -483,9 +483,8 @@ namespace iKan {
                     bool modCellSize   = PropertyGrid::Float2("Cell Size", cellSize, nullptr);
 
                     if (modCoord || modSpriteSize || modCellSize)
-                    {
                         src.SubTexComp = SubTexture::CreateFromCoords(src.SubTexComp->GetTexture(), coords, spriteSize, cellSize);
-                    }
+
                     ImGui::Separator();
                     ImGui::TreePop();
                 } // if (opened)

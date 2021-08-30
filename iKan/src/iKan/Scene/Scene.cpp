@@ -312,18 +312,16 @@ namespace iKan {
 
         // Current (Moving) Entity Property (Position and Size)
         const auto& ceTc   = currEntity.GetComponent<TransformComponent>();
-        const auto& ceSize = ceTc.Scale;
+        const auto& ceSize = glm::vec3(abs(ceTc.Scale.x), abs(ceTc.Scale.y), abs(ceTc.Scale.z));
         const auto& cePos  = ceTc.Translation - (ceSize - 1.0f) / 2.0f;
 
         // Traverse entire Entities to get Box colloider entity one by one
         auto view = m_Registry.view<BoxCollider2DComponent>();
         for (auto entity : view)
         {
+            // no operation for same enitity
             if (currEntity == entity)
-            {
-                // no operation for same enitity
                 continue;
-            }
 
             // Extract iKan Entity from entt::entity
             Entity e = { entity, this };

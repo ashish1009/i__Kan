@@ -24,6 +24,7 @@ namespace Mario {
     {
     public:
         static constexpr uint32_t MAX_STATES = 7;
+        static constexpr uint32_t MAX_RUNNING_IMG = 3;
         
     public:
         // ******************************************************************************
@@ -65,6 +66,11 @@ namespace Mario {
         // ******************************************************************************
         enum class Size { Short, Tall };
 
+        // ******************************************************************************
+        // Direction of Running
+        // ******************************************************************************
+        enum class Direction { Left, Right };
+
     public:
         ~Player();
         Player(Ref<Scene> scene);
@@ -79,15 +85,18 @@ namespace Mario {
         bool OnkeyPressed(KeyPressedEvent& event);
         bool OnKeyReleased(KeyReleasedEvent& event);
         
+        void ClearState(State state)  { m_State = m_State & (~(1 << (Utils::GetFirstSetBit((uint32_t)state) - 1))); }
+        void ToggleState(State state) { m_State ^= (1 << (Utils::GetFirstSetBit((uint32_t)state) - 1)); }
+        
         void SetState(State state)
         {
             uint32_t val = (1 << (Utils::GetFirstSetBit((uint32_t)state) - 1));
             m_State = m_State | val;
         }
-        void ClearState(State state)  { m_State = m_State & (~(1 << (Utils::GetFirstSetBit((uint32_t)state) - 1))); }
-        void ToggleState(State state) { m_State ^= (1 << (Utils::GetFirstSetBit((uint32_t)state) - 1)); }
-        
+
     private:
+        static int32_t GetFirstSetBit(uint32_t value);
+        
         static void Init(Ref<Scene> scene, bool isShort, Color color);
         static void SetPlayerTextureForAllStates(bool isShort, Color color);
         
@@ -109,6 +118,7 @@ namespace Mario {
         // Texture to store tile sprite sheet
         static Ref<Texture>    s_Texture;
         static Ref<SubTexture> s_StandingSubtexComp;
+        static Ref<SubTexture> s_RunningSubtexComp[MAX_RUNNING_IMG];
         
         static float s_RunningSpeed;
         static float s_FallingSpeed;
@@ -118,10 +128,14 @@ namespace Mario {
         glm::vec3* m_EntityPosition;
         glm::vec3* m_EntitySize;
         
-        Color m_Color = Color::Classic;
-        Size  m_Size  = Size::Short;
+        Ref<SubTexture>* m_EntitySubtexture;
+
+        Color     m_Color     = Color::Classic;
+        Size      m_Size      = Size::Short;
+        Direction m_Direction = Direction::Right;
         
         uint32_t m_State = (uint32_t)State::Falling;
+        uint32_t m_RunningImgIdx = 0;
                 
         friend class MarioLayer;
     };

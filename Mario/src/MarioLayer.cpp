@@ -39,11 +39,20 @@ namespace Mario {
         m_Viewport.NewScene();
 
         auto scene  = m_Viewport.GetScene();
+        
         // Setup the Camera Entity
         m_CameraEntity        = scene->CreateEntity("Primary Camera");
         auto& cameraComponent = m_CameraEntity.AddComponent<CameraComponent>();
         cameraComponent.Camera.SetProjectionType(SceneCamera::ProjectionType::Orthographic);
         cameraComponent.Camera.SetOrthographicSize(18.0f);
+
+        // Setup the Camera Entity
+        Entity editorCamera         = scene->CreateEntity("Editor Primary Camera");
+        auto& editorCameraComponent = editorCamera.AddComponent<CameraComponent>();
+        editorCameraComponent.Camera.SetProjectionType(SceneCamera::ProjectionType::Orthographic);
+        editorCameraComponent.Camera.SetOrthographicSize(18.0f);
+        editorCameraComponent.Editor  = true;
+        editorCameraComponent.Primary = false;
 
         auto& cameraPositionX = m_CameraEntity.GetComponent<TransformComponent>().Translation.x;
         cameraPositionX = 18.0f;

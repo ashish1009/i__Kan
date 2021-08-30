@@ -14,6 +14,8 @@ namespace Mario {
     Ref<Scene>      Player::s_ActiveScene        = nullptr;
     Ref<Texture>    Player::s_Texture            = nullptr;
     Ref<SubTexture> Player::s_StandingSubtexComp = nullptr;
+    
+    Ref<SubTexture> Player::s_RunningSubtexComp[Player::MAX_RUNNING_IMG];
         
     float Player::s_RunningSpeed = 0.10;
     float Player::s_FallingSpeed = 0.50;
@@ -54,15 +56,28 @@ namespace Mario {
         
         s_Texture = scene->AddTextureToScene("../../../Mario/assets/Resources/Graphics/Player.png");
         
-        s_StateFunc[Utils::GetFirstSetBit((int32_t)State::Falling) - 1]  = Player::Falling;
-        s_StateFunc[Utils::GetFirstSetBit((int32_t)State::Jumping) - 1]  = Player::Jumping;
-        s_StateFunc[Utils::GetFirstSetBit((int32_t)State::Standing) - 1] = Player::Standing;
-        s_StateFunc[Utils::GetFirstSetBit((int32_t)State::Firing) - 1]   = Player::Firing;
-        s_StateFunc[Utils::GetFirstSetBit((int32_t)State::Dying) - 1]    = Player::Dying;
-        s_StateFunc[Utils::GetFirstSetBit((int32_t)State::Sitting) - 1]  = Player::Sitting;
-        s_StateFunc[Utils::GetFirstSetBit((int32_t)State::Running) - 1]  = Player::Running;
+        s_StateFunc[Player::GetFirstSetBit((int32_t)State::Falling)]  = Player::Falling;
+        s_StateFunc[Player::GetFirstSetBit((int32_t)State::Jumping)]  = Player::Jumping;
+        s_StateFunc[Player::GetFirstSetBit((int32_t)State::Standing)] = Player::Standing;
+        s_StateFunc[Player::GetFirstSetBit((int32_t)State::Firing)]   = Player::Firing;
+        s_StateFunc[Player::GetFirstSetBit((int32_t)State::Dying)]    = Player::Dying;
+        s_StateFunc[Player::GetFirstSetBit((int32_t)State::Sitting)]  = Player::Sitting;
+        s_StateFunc[Player::GetFirstSetBit((int32_t)State::Running)]  = Player::Running;
         
         SetPlayerTextureForAllStates(isShort, color);
+    }
+    
+    // ******************************************************************************
+    // Spaercial function to get the fist set bit returns -1 if value is 0
+    // 0 means Most LSB and So on...
+    // ******************************************************************************
+    int32_t Player::GetFirstSetBit(uint32_t value)
+    {
+        for (int32_t pos = 0; value >> pos; pos++)
+            if (value & BIT(pos))
+                return pos;
+        
+        return -1;
     }
     
     // ******************************************************************************
@@ -71,6 +86,9 @@ namespace Mario {
     void Player::SetPlayerTextureForAllStates(bool isShort, Color color)
     {
         s_StandingSubtexComp = SubTexture::CreateFromCoords(s_Texture, { 6.0f, (float)color + (isShort ? 0.0f : 1.0f) }, { 1.0f, (isShort ? 1.0f : 2.0f) } );
+        
+        for (uint32_t imgIdx = 0; imgIdx < Player::MAX_RUNNING_IMG; imgIdx++)
+            s_RunningSubtexComp[imgIdx] = SubTexture::CreateFromCoords(s_Texture, { imgIdx, (float)color + (isShort ? 0.0f : 1.0f) }, { 1.0f, (isShort ? 1.0f : 2.0f) } );
     }
     
     // ******************************************************************************
@@ -81,26 +99,33 @@ namespace Mario {
         // By default player should be falling until it colloid with obstacle
         SetState(State::Falling);
         
-        m_EntityPosition = &m_Entity.GetComponent<TransformComponent>().Translation;
-        m_EntitySize     = &m_Entity.GetComponent<TransformComponent>().Scale;
+        // TODO: Move them to Init : Some issues found
+        m_EntityPosition   = &m_Entity.GetComponent<TransformComponent>().Translation;
+        m_EntitySize       = &m_Entity.GetComponent<TransformComponent>().Scale;
+        m_EntitySubtexture = &m_Entity.GetComponent<SpriteRendererComponent>().SubTexComp;
     
         {
             if (Input::IsKeyPressed(KeyCode::Right) && !s_ActiveScene->IsRightCollision(m_Entity, s_RunningSpeed))
             {
                 SetState(State::Running);
+                m_EntitySize->x = 1.0f;
                 m_EntityPosition->x += s_RunningSpeed;
+                m_Direction = Direction::Right;
             }
             if (Input::IsKeyPressed(KeyCode::Left) && !s_ActiveScene->IsLeftCollision(m_Entity, s_RunningSpeed))
             {
                 SetState(State::Running);
+                m_EntitySize->x = -1.0f;
                 m_EntityPosition->x -= s_RunningSpeed;
+                m_Direction = Direction::Left;
             }
         }
         
         for (int32_t stateIds = 0; stateIds < MAX_STATES; stateIds++)
         {
-            uint32_t fncIdx = Utils::GetFirstSetBit((m_State & BIT(stateIds)) - 1);
-            s_StateFunc[fncIdx](this);
+            int32_t fncIdx = Player::GetFirstSetBit(m_State & BIT(stateIds));
+            if (fncIdx >= 0)
+                s_StateFunc[fncIdx](this);
         }
     }
     
@@ -129,7 +154,10 @@ namespace Mario {
     bool Player::OnKeyReleased(KeyReleasedEvent& event)
     {
         if (event.GetKeyCode() == KeyCode::Left || event.GetKeyCode() == KeyCode::Right)
+        {
             ClearState(State::Running);
+            m_RunningImgIdx = 0;
+        }
 
         return false;
     }
@@ -152,9 +180,14 @@ namespace Mario {
     void Player::Falling(Player* player)
     {
         if (!s_ActiveScene->IsBottomCollision(player->m_Entity, s_FallingSpeed))
+        {
             player->m_EntityPosition->y -= s_FallingSpeed;
+        }
         else
+        {
             player->ClearState(State::Falling);
+            player->SetState(State::Standing);
+        }
     }
     
     // ******************************************************************************
@@ -170,7 +203,7 @@ namespace Mario {
     // ******************************************************************************
     void Player::Standing(Player* player)
     {
-        
+        *player->m_EntitySubtexture = s_StandingSubtexComp;
     }
 
     // ******************************************************************************
@@ -202,7 +235,8 @@ namespace Mario {
     // ******************************************************************************
     void Player::Running(Player* player)
     {
-        
+        player->ClearState(State::Standing);
+        *player->m_EntitySubtexture = s_RunningSubtexComp[(player->m_RunningImgIdx++ / 4) % MAX_RUNNING_IMG];
     }
     
     // ******************************************************************************
