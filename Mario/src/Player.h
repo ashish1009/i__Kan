@@ -23,8 +23,9 @@ namespace Mario {
     class Player
     {
     public:
-        static constexpr uint32_t MAX_STATES = 7;
-        static constexpr uint32_t MAX_RUNNING_IMG = 3;
+        static constexpr uint32_t MAX_STATES         = 7;
+        static constexpr uint32_t MAX_RUNNING_IMG    = 3;
+        static constexpr uint32_t MAX_JUMPING_HEIGHT = 5;
         
     public:
         // ******************************************************************************
@@ -87,11 +88,11 @@ namespace Mario {
         
         void ClearState(State state)  { m_State = m_State & (~(1 << (Utils::GetFirstSetBit((uint32_t)state) - 1))); }
         void ToggleState(State state) { m_State ^= (1 << (Utils::GetFirstSetBit((uint32_t)state) - 1)); }
+        void SetState(State state)    { m_State = m_State | (1 << (Utils::GetFirstSetBit((uint32_t)state) - 1)); }
         
-        void SetState(State state)
+        bool IsState(State state)
         {
-            uint32_t val = (1 << (Utils::GetFirstSetBit((uint32_t)state) - 1));
-            m_State = m_State | val;
+            return ((m_State & (uint32_t)state) != 0);
         }
 
     private:
@@ -122,6 +123,7 @@ namespace Mario {
         
         static float s_RunningSpeed;
         static float s_FallingSpeed;
+        static float s_JumpingSpeed;
         
         // Non Static members
         Entity     m_Entity;
@@ -136,6 +138,8 @@ namespace Mario {
         
         uint32_t m_State = (uint32_t)State::Falling;
         uint32_t m_RunningImgIdx = 0;
+        
+        float m_StartingJumpingPosing = 0;
                 
         friend class MarioLayer;
     };

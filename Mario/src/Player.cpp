@@ -19,6 +19,7 @@ namespace Mario {
         
     float Player::s_RunningSpeed = 0.10;
     float Player::s_FallingSpeed = 0.50;
+    float Player::s_JumpingSpeed = 0.25;
 
     std::function <void(Player*)> Player::s_StateFunc[Player::MAX_STATES];
 
@@ -96,14 +97,15 @@ namespace Mario {
     // ******************************************************************************
     void Player::OnUpdate(Timestep ts)
     {
-        // By default player should be falling until it colloid with obstacle
-        SetState(State::Falling);
+        // By default player should be falling until it colloid with obstacle. If it is jumping then avoid the state of Falling
+        (IsState(State::Jumping)) ? ClearState(State::Falling) : SetState(State::Falling);
         
         // TODO: Move them to Init : Some issues found
         m_EntityPosition   = &m_Entity.GetComponent<TransformComponent>().Translation;
         m_EntitySize       = &m_Entity.GetComponent<TransformComponent>().Scale;
         m_EntitySubtexture = &m_Entity.GetComponent<SpriteRendererComponent>().SubTexComp;
     
+        // TODO: Move to Some other function or may be Scrip Component
         {
             if (Input::IsKeyPressed(KeyCode::Right) && !s_ActiveScene->IsRightCollision(m_Entity, s_RunningSpeed))
             {
@@ -145,6 +147,15 @@ namespace Mario {
     // ******************************************************************************
     bool Player::OnkeyPressed(KeyPressedEvent& event)
     {
+        if (event.GetKeyCode() == KeyCode::Z && (!IsState(State::Falling) && !IsState(State::Jumping)))
+        {
+            m_StartingJumpingPosing = m_EntityPosition->y;
+            
+            ClearState(State::Standing);
+            ClearState(State::Falling);
+            SetState(State::Jumping);
+        }
+            
         return false;
     }
 
@@ -199,7 +210,10 @@ namespace Mario {
     // ******************************************************************************
     void Player::Jumping(Player* player)
     {
-        
+        if (!s_ActiveScene->IsTopCollision(player->m_Entity, s_JumpingSpeed) && (player->m_EntityPosition->y - player->m_StartingJumpingPosing < MAX_JUMPING_HEIGHT))
+            player->m_EntityPosition->y += s_JumpingSpeed;
+        else
+            player->ClearState(State::Jumping);
     }
 
     // ******************************************************************************
@@ -240,7 +254,9 @@ namespace Mario {
     void Player::Running(Player* player)
     {
         player->ClearState(State::Standing);
-        *player->m_EntitySubtexture = s_RunningSubtexComp[(player->m_RunningImgIdx++ / 4) % MAX_RUNNING_IMG];
+        
+        if (!(player->IsState(State::Jumping)))
+            *player->m_EntitySubtexture = s_RunningSubtexComp[(player->m_RunningImgIdx++ / 4) % MAX_RUNNING_IMG];
     }
     
     // ******************************************************************************
@@ -291,6 +307,8 @@ namespace Mario {
                         m_State,
                         m_State & (uint32_t)State::Falling, m_State & (uint32_t)State::Jumping, m_State & (uint32_t)State::Standing, m_State & (uint32_t)State::Firing,
                         m_State & (uint32_t)State::Dying, m_State & (uint32_t)State::Sitting, m_State & (uint32_t)State::Running);
+            
+            ImGui::Text("%f", m_StartingJumpingPosing);
         }
     }
 
