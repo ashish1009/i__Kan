@@ -30,6 +30,7 @@ namespace Mario {
     {
         Player::Init(scene, (m_Size == Size::Short), m_Color);
     
+        // Creating Player Entity
         IK_INFO("Mario Player Constructor called");
         m_Entity = s_ActiveScene->CreateEntity("Player 1");
         m_Entity.GetComponent<BoxCollider2DComponent>().IsRigid = true;
@@ -52,11 +53,14 @@ namespace Mario {
     // ******************************************************************************
     void Player::Init(Ref<Scene> scene, bool isShort, Color color)
     {
+        // Setting Scene
         s_ActiveScene = scene;
         s_ActiveScene->SetEditingFlag(false);
         
+        // Setting base texture
         s_Texture = scene->AddTextureToScene("../../../Mario/assets/Resources/Graphics/Player.png");
         
+        // Setting all state callback function
         s_StateFunc[Player::GetFirstSetBit((int32_t)State::Falling)]  = Player::Falling;
         s_StateFunc[Player::GetFirstSetBit((int32_t)State::Jumping)]  = Player::Jumping;
         s_StateFunc[Player::GetFirstSetBit((int32_t)State::Standing)] = Player::Standing;
@@ -65,6 +69,7 @@ namespace Mario {
         s_StateFunc[Player::GetFirstSetBit((int32_t)State::Sitting)]  = Player::Sitting;
         s_StateFunc[Player::GetFirstSetBit((int32_t)State::Running)]  = Player::Running;
         
+        // Set all the textures absed on size and color
         SetPlayerTextureForAllStates(isShort, color);
     }
     
@@ -100,10 +105,19 @@ namespace Mario {
         // By default player should be falling until it colloid with obstacle. If it is jumping then avoid the state of Falling
         (IsState(State::Jumping)) ? ClearState(State::Falling) : SetState(State::Falling);
         
-        // TODO: Move them to Init : Some issues found
-        m_EntityPosition   = &m_Entity.GetComponent<TransformComponent>().Translation;
-        m_EntitySize       = &m_Entity.GetComponent<TransformComponent>().Scale;
-        m_EntitySubtexture = &m_Entity.GetComponent<SpriteRendererComponent>().SubTexComp;
+        // TODO: Move them to Init : Some issues found so adding if statement to hit this for just once
+        static bool temp = true;
+        if (temp)
+        {
+            m_EntityPosition   = &m_Entity.GetComponent<TransformComponent>().Translation;
+            m_EntitySize       = &m_Entity.GetComponent<TransformComponent>().Scale;
+            m_EntitySubtexture = &m_Entity.GetComponent<SpriteRendererComponent>().SubTexComp;
+            
+            auto cameraEntity = s_ActiveScene->GetMainCameraEntity();
+            m_CameraRefPos = &cameraEntity.GetComponent<TransformComponent>().Translation.x;
+            
+            temp = true;
+        }
     
         // TODO: Move to Some other function or may be Scrip Component
         {
@@ -112,6 +126,7 @@ namespace Mario {
                 SetState(State::Running);
                 m_EntitySize->x = 1.0f;
                 m_EntityPosition->x += s_RunningSpeed;
+                *m_CameraRefPos += s_RunningSpeed;
                 m_Direction = Direction::Right;
             }
             if (Input::IsKeyPressed(KeyCode::Left) && !s_ActiveScene->IsLeftCollision(m_Entity, s_RunningSpeed))
@@ -119,6 +134,7 @@ namespace Mario {
                 SetState(State::Running);
                 m_EntitySize->x = -1.0f;
                 m_EntityPosition->x -= s_RunningSpeed;
+                *m_CameraRefPos -= s_RunningSpeed;
                 m_Direction = Direction::Left;
             }
         }

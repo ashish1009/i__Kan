@@ -99,27 +99,28 @@ namespace iKan {
         
         bool IsRightCollision(Entity& currEntity, float speed)
         {
-            return (int32_t)Scene::BoxCollisionSide::Right == OnBoxColloider(currEntity, speed);
+            return (int32_t)Scene::BoxCollisionSide::Right & OnBoxColloider(currEntity, speed);
         }
         
         bool IsLeftCollision(Entity& currEntity, float speed)
         {
-            return (int32_t)Scene::BoxCollisionSide::Left == OnBoxColloider(currEntity, -speed);
+            return (int32_t)Scene::BoxCollisionSide::Left & OnBoxColloider(currEntity, -speed);
         }
         
         bool IsTopCollision(Entity& currEntity, float speed)
         {
-            return (int32_t)Scene::BoxCollisionSide::Top == OnBoxColloider(currEntity, speed);
+            return (int32_t)Scene::BoxCollisionSide::Top & OnBoxColloider(currEntity, speed);
         }
         
         bool IsBottomCollision(Entity& currEntity, float speed)
         {
-            return (int32_t)Scene::BoxCollisionSide::Bottom == OnBoxColloider(currEntity, -speed);
+            return (int32_t)Scene::BoxCollisionSide::Bottom & OnBoxColloider(currEntity, -speed);
         }
 
-    private:
         Entity GetMainCameraEntity();
         Entity GetEditorCameraEntity();
+        
+    private:
         void RenderSpriteComponent();
 
     private:

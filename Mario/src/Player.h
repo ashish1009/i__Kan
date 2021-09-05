@@ -140,7 +140,9 @@ namespace Mario {
         uint32_t m_RunningImgIdx = 0;
         
         float m_StartingJumpingPosing = 0;
-                
+        
+        float* m_CameraRefPos;
+        
         friend class MarioLayer;
     };
 

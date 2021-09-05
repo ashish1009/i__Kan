@@ -46,7 +46,8 @@ namespace Mario {
         cameraComponent.Camera.SetProjectionType(SceneCamera::ProjectionType::Orthographic);
         cameraComponent.Camera.SetOrthographicSize(18.0f);
 
-        // Setup the Camera Entity
+        // Setup the Temporary Editor 2D Camera Entity
+        // TODO: delete later
         Entity editorCamera         = scene->CreateEntity("Editor Primary Camera");
         auto& editorCameraComponent = editorCamera.AddComponent<CameraComponent>();
         editorCameraComponent.Camera.SetProjectionType(SceneCamera::ProjectionType::Orthographic);
@@ -65,6 +66,7 @@ namespace Mario {
 
         // Create Player Instance
         // TODO: Add multi player Concept here
+        // TODO: better solution to bind camera top player
         m_Player = CreateRef<Mario::Player>(scene);
     }
 
