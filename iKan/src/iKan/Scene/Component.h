@@ -248,5 +248,18 @@ namespace iKan {
         BoxCollider2DComponent(bool flag)
         : IsRigid(flag) { }
     };
+    
+    // ******************************************************************************
+    // Stores the Script component
+    // ******************************************************************************
+    struct ScriptComponent
+    {
+        std::string ModuleName;
+        
+        ScriptComponent() = default;
+        ScriptComponent(const ScriptComponent& other) = default;
+        ScriptComponent(const std::string& moduleName)
+        : ModuleName(moduleName) {}
+    };
 
 }
