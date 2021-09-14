@@ -1,7 +1,7 @@
 // ******************************************************************************
 // File         : Viewport.cpp
 // Description  : stores all the information of Viewport
-// Project      : iKan : Scene
+// Project      : iKan
 //
 // Created by Ashish on 02/05/21.
 // Copyright © 2021 Ashish. All rights reserved.
