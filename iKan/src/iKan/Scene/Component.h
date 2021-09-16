@@ -11,6 +11,7 @@
 
 #include <iKan/Core/UUID.h>
 #include <iKan/Scene/SceneCamera.h>
+#include <iKan/Scene/ScriptableEntity.h>
 #include <iKan/Renderer/Texture.h>
 
 namespace iKan {
@@ -250,16 +251,21 @@ namespace iKan {
     };
     
     // ******************************************************************************
-    // Stores the Script component
+    // Native Script component
     // ******************************************************************************
-    struct ScriptComponent
+    struct NativeScriptComponent
     {
-        std::string ModuleName;
+    public:
+        std::vector<ScriptableEntity*> Scripts;
         
-        ScriptComponent() = default;
-        ScriptComponent(const ScriptComponent& other) = default;
-        ScriptComponent(const std::string& moduleName)
-        : ModuleName(moduleName) {}
+        template<typename T>
+        void Bind()
+        {
+            Instance = static_cast<ScriptableEntity*>(new T());
+            Scripts.emplace_back(Instance);
+        }
+        
+    private:
+        ScriptableEntity* Instance = nullptr;
     };
-
 }

@@ -207,6 +207,8 @@ namespace iKan {
     // ******************************************************************************
     void Scene::OnUpdateRuntime(Timestep ts)
     {
+        InstantiateScripts(ts);
+
         Camera* mainCamera = nullptr;
         glm::mat4 cameraTransform;
         if (Entity cameraEntity = GetMainCameraEntity();
@@ -298,6 +300,27 @@ namespace iKan {
 
         if (m_Data.EditorCamera)
             m_Data.EditorCamera->SetViewportSize(width, height);
+    }
+    
+    // ******************************************************************************
+    // Instantiate the native script component of each entity
+    // ******************************************************************************
+    void Scene::InstantiateScripts(Timestep ts)
+    {
+        m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
+                                                      {
+            // nsc.Scripts is the Vector to store multiple Scripts for 1 entity
+            for (auto script : nsc.Scripts)
+            {
+                // If a script is not created before then create the script and update the function
+                if (!script->m_Created)
+                {
+                    script->m_Entity = { entity, this };
+                    script->OnCreate();
+                }
+                script->OnUpdate(ts);
+            }
+        });
     }
 
     // ******************************************************************************

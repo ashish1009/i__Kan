@@ -1,4 +1,3 @@
-@@ -0,0 +1,42 @@
 // ******************************************************************************
 // File         : ScriptableEntity.h
 // Description  : Base class for each stribtable entity or native sctipt
@@ -30,7 +29,7 @@ namespace iKan {
         
     protected:
         virtual void OnCreate() { m_Created = true; }
-        virtual void OnUpdate(TimeStep ts) {}
+        virtual void OnUpdate(Timestep ts) {}
         virtual void OnDestroy() {}
         
     protected:

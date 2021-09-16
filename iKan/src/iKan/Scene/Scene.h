@@ -121,6 +121,7 @@ namespace iKan {
         Entity GetEditorCameraEntity();
         
     private:
+        void InstantiateScripts(Timestep ts);
         void RenderSpriteComponent();
 
     private:
