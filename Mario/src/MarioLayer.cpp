@@ -62,7 +62,7 @@ namespace Mario {
         Mario::Background::CreateEntities(scene);
 
         // Creating Entities for background tiles
-//        Mario::StartScreen::CreateEntities(scene);
+        Mario::StartScreen::CreateEntities(scene);
 
         // Create Player Instance
         // TODO: Add multi player Concept here
@@ -130,6 +130,9 @@ namespace Mario {
     // ******************************************************************************
     void MarioLayer::ShowMenu()
     {
+        if (!m_Viewport.GetScene())
+            return;
+        
         if (!m_Viewport.GetScene()->IsEditing())
             return;
             

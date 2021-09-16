@@ -142,6 +142,10 @@ namespace Mario {
         float m_StartingJumpingPosing = 0;
         
         float* m_CameraRefPos;
+        float* m_EditorCameraRefPos; // TODO: Temp for now Remove after finalize
+        
+        // Actual Player Info
+        int32_t m_Life = 3;
         
         friend class MarioLayer;
     };

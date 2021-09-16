@@ -55,7 +55,6 @@ namespace Mario {
     {
         // Setting Scene
         s_ActiveScene = scene;
-        s_ActiveScene->SetEditingFlag(false);
         
         // Setting base texture
         s_Texture = scene->AddTextureToScene("../../../Mario/assets/Resources/Graphics/Player.png");
@@ -114,7 +113,10 @@ namespace Mario {
             m_EntitySubtexture = &m_Entity.GetComponent<SpriteRendererComponent>().SubTexComp;
             
             auto cameraEntity = s_ActiveScene->GetMainCameraEntity();
-            m_CameraRefPos = &cameraEntity.GetComponent<TransformComponent>().Translation.x;
+            m_CameraRefPos    = &cameraEntity.GetComponent<TransformComponent>().Translation.x;
+            
+            // TODO: Temp Delete later
+            m_EditorCameraRefPos = &s_ActiveScene->GetEditorCameraEntity().GetComponent<TransformComponent>().Translation.x;
             
             temp = true;
         }
@@ -127,6 +129,7 @@ namespace Mario {
                 m_EntitySize->x = 1.0f;
                 m_EntityPosition->x += s_RunningSpeed;
                 *m_CameraRefPos += s_RunningSpeed;
+                *m_EditorCameraRefPos += s_RunningSpeed;
                 m_Direction = Direction::Right;
             }
             if (Input::IsKeyPressed(KeyCode::Left) && !s_ActiveScene->IsLeftCollision(m_Entity, s_RunningSpeed))
@@ -135,7 +138,17 @@ namespace Mario {
                 m_EntitySize->x = -1.0f;
                 m_EntityPosition->x -= s_RunningSpeed;
                 *m_CameraRefPos -= s_RunningSpeed;
+                *m_EditorCameraRefPos -= s_RunningSpeed;
                 m_Direction = Direction::Left;
+            }
+        }
+        
+        // Check if player fallen to death
+        {
+            if (m_EntityPosition->y <= -9.0f)
+            {
+                m_Life--;
+                Viewport::Get().CloseScene();
             }
         }
         
@@ -227,9 +240,14 @@ namespace Mario {
     void Player::Jumping(Player* player)
     {
         if (!s_ActiveScene->IsTopCollision(player->m_Entity, s_JumpingSpeed) && (player->m_EntityPosition->y - player->m_StartingJumpingPosing < MAX_JUMPING_HEIGHT))
+        {
             player->m_EntityPosition->y += s_JumpingSpeed;
+        }
         else
+        {
             player->ClearState(State::Jumping);
+            player->SetState(State::Falling);
+        }
     }
 
     // ******************************************************************************

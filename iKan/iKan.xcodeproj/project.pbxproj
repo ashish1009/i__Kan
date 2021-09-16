@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3ED416C926F38DB90037CF6D /* ScriptableEntity.h in Headers */ = {isa = PBXBuildFile; fileRef = 3ED416C826F38DB90037CF6D /* ScriptableEntity.h */; };
 		750AA8E1265D52140031A3E0 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 750AA8DF265D52140031A3E0 /* Utils.cpp */; };
 		750AA8E2265D52140031A3E0 /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 750AA8E0265D52140031A3E0 /* Utils.h */; };
 		75158EB726B5A1BD00F938E5 /* RenderCommandQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 75158EB526B5A1BD00F938E5 /* RenderCommandQueue.cpp */; };
@@ -138,6 +139,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3ED416C826F38DB90037CF6D /* ScriptableEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScriptableEntity.h; sourceTree = "<group>"; };
 		750AA8DF265D52140031A3E0 /* Utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
 		750AA8E0265D52140031A3E0 /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		75158EB526B5A1BD00F938E5 /* RenderCommandQueue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RenderCommandQueue.cpp; sourceTree = "<group>"; };
@@ -485,6 +487,7 @@
 				B2A1C118263E87DD00606017 /* Viewport.h */,
 				7589D4FF267758DD00EB43D9 /* SceneSerializer.cpp */,
 				7589D500267758DD00EB43D9 /* SceneSerializer.h */,
+				3ED416C826F38DB90037CF6D /* ScriptableEntity.h */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -756,6 +759,7 @@
 				B202805B2625DCD200BC7F39 /* Layer.h in Headers */,
 				B2028053262592DD00BC7F39 /* Log.h in Headers */,
 				B2496CB92639A8AF0091C915 /* stb_image.h in Headers */,
+				3ED416C926F38DB90037CF6D /* ScriptableEntity.h in Headers */,
 				B20280662625F99A00BC7F39 /* Window.h in Headers */,
 				B2EAB342262B265B003D7FE6 /* KeyCode.h in Headers */,
 				755C105E26BC2519001BE251 /* Renderer2D.h in Headers */,

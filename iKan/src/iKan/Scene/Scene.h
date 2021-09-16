@@ -36,7 +36,7 @@ namespace iKan {
             ~Data() = default;
             
             enum Type { Scene2D, Scene3D };
-            Type SceneType = Scene3D;
+            Type SceneType = Scene2D;
 
             bool CameraWarning = false;
 

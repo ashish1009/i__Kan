@@ -1,7 +1,7 @@
 // ******************************************************************************
 // File         : SceneSerializer.cpp
 // Description  : Saves and stores the scene data
-// Project      : iKan
+// Project      : iKan : Scene
 //
 // Created by Ashish on 14/06/21.
 // Copyright © 2021 Ashish. All rights reserved.
