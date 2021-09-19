@@ -7,43 +7,38 @@
 // Copyright © 2021 Ashish. All rights reserved.
 // ******************************************************************************
 
-#include "Player.h"
+#include "PlayerController.h"
 
 namespace Mario {
     
-    Ref<Scene>      Player::s_ActiveScene        = nullptr;
-    Ref<Texture>    Player::s_Texture            = nullptr;
-    Ref<SubTexture> Player::s_StandingSubtexComp = nullptr;
+    Ref<Scene>      PlayerController::s_ActiveScene        = nullptr;
+    Ref<Texture>    PlayerController::s_Texture            = nullptr;
+    Ref<SubTexture> PlayerController::s_StandingSubtexComp = nullptr;
     
-    Ref<SubTexture> Player::s_RunningSubtexComp[Player::MAX_RUNNING_IMG];
+    Ref<SubTexture> PlayerController::s_RunningSubtexComp[PlayerController::MAX_RUNNING_IMG];
         
-    float Player::s_RunningSpeed = 0.10;
-    float Player::s_FallingSpeed = 0.50;
-    float Player::s_JumpingSpeed = 0.25;
+    float PlayerController::s_RunningSpeed = 0.10;
+    float PlayerController::s_FallingSpeed = 0.50;
+    float PlayerController::s_JumpingSpeed = 0.25;
 
-    std::function <void(Player*)> Player::s_StateFunc[Player::MAX_STATES];
+    std::function <void(PlayerController*)> PlayerController::s_StateFunc[PlayerController::MAX_STATES];
 
     // ******************************************************************************
     // Player Constructor
     // ******************************************************************************
-    Player::Player(Ref<Scene> scene)
+    PlayerController::PlayerController(Ref<Scene>& scene)
+    : ScriptableEntity(scene)
     {
-        Player::Init(scene, (m_Size == Size::Short), m_Color);
+        PlayerController::Init(scene, (m_Size == Size::Short), m_Color);
     
         // Creating Player Entity
         IK_INFO("Mario Player Constructor called");
-        m_Entity = s_ActiveScene->CreateEntity("Player 1");
-        m_Entity.GetComponent<BoxCollider2DComponent>().IsRigid = true;
-        m_Entity.AddComponent<SpriteRendererComponent>(s_StandingSubtexComp);
-        
-        auto& position = m_Entity.GetComponent<TransformComponent>().Translation;
-        position.x = 16.0f;
     }
 
     // ******************************************************************************
     // Player Destructor
     // ******************************************************************************
-    Player::~Player()
+    PlayerController::~PlayerController()
     {
         IK_WARN("Mario Player Destructor called");
     }
@@ -51,7 +46,7 @@ namespace Mario {
     // ******************************************************************************
     // Initialize the player
     // ******************************************************************************
-    void Player::Init(Ref<Scene> scene, bool isShort, Color color)
+    void PlayerController::Init(Ref<Scene> scene, bool isShort, Color color)
     {
         // Setting Scene
         s_ActiveScene = scene;
@@ -60,13 +55,13 @@ namespace Mario {
         s_Texture = scene->AddTextureToScene("../../../Mario/assets/Resources/Graphics/Player.png");
         
         // Setting all state callback function
-        s_StateFunc[Player::GetFirstSetBit((int32_t)State::Falling)]  = Player::Falling;
-        s_StateFunc[Player::GetFirstSetBit((int32_t)State::Jumping)]  = Player::Jumping;
-        s_StateFunc[Player::GetFirstSetBit((int32_t)State::Standing)] = Player::Standing;
-        s_StateFunc[Player::GetFirstSetBit((int32_t)State::Firing)]   = Player::Firing;
-        s_StateFunc[Player::GetFirstSetBit((int32_t)State::Dying)]    = Player::Dying;
-        s_StateFunc[Player::GetFirstSetBit((int32_t)State::Sitting)]  = Player::Sitting;
-        s_StateFunc[Player::GetFirstSetBit((int32_t)State::Running)]  = Player::Running;
+        s_StateFunc[PlayerController::GetFirstSetBit((int32_t)State::Falling)]  = PlayerController::Falling;
+        s_StateFunc[PlayerController::GetFirstSetBit((int32_t)State::Jumping)]  = PlayerController::Jumping;
+        s_StateFunc[PlayerController::GetFirstSetBit((int32_t)State::Standing)] = PlayerController::Standing;
+        s_StateFunc[PlayerController::GetFirstSetBit((int32_t)State::Firing)]   = PlayerController::Firing;
+        s_StateFunc[PlayerController::GetFirstSetBit((int32_t)State::Dying)]    = PlayerController::Dying;
+        s_StateFunc[PlayerController::GetFirstSetBit((int32_t)State::Sitting)]  = PlayerController::Sitting;
+        s_StateFunc[PlayerController::GetFirstSetBit((int32_t)State::Running)]  = PlayerController::Running;
         
         // Set all the textures absed on size and color
         SetPlayerTextureForAllStates(isShort, color);
@@ -76,7 +71,7 @@ namespace Mario {
     // Spaercial function to get the fist set bit returns -1 if value is 0
     // 0 means Most LSB and So on...
     // ******************************************************************************
-    int32_t Player::GetFirstSetBit(uint32_t value)
+    int32_t PlayerController::GetFirstSetBit(uint32_t value)
     {
         for (int32_t pos = 0; value >> pos; pos++)
             if (value & BIT(pos))
@@ -88,18 +83,18 @@ namespace Mario {
     // ******************************************************************************
     // Update the texture for all state
     // ******************************************************************************
-    void Player::SetPlayerTextureForAllStates(bool isShort, Color color)
+    void PlayerController::SetPlayerTextureForAllStates(bool isShort, Color color)
     {
         s_StandingSubtexComp = SubTexture::CreateFromCoords(s_Texture, { 6.0f, (float)color + (isShort ? 0.0f : 1.0f) }, { 1.0f, (isShort ? 1.0f : 2.0f) } );
         
-        for (uint32_t imgIdx = 0; imgIdx < Player::MAX_RUNNING_IMG; imgIdx++)
+        for (uint32_t imgIdx = 0; imgIdx < PlayerController::MAX_RUNNING_IMG; imgIdx++)
             s_RunningSubtexComp[imgIdx] = SubTexture::CreateFromCoords(s_Texture, { imgIdx, (float)color + (isShort ? 0.0f : 1.0f) }, { 1.0f, (isShort ? 1.0f : 2.0f) } );
     }
     
     // ******************************************************************************
     // Update the player each frame
     // ******************************************************************************
-    void Player::OnUpdate(Timestep ts)
+    void PlayerController::OnUpdate(Timestep ts)
     {
         // By default player should be falling until it colloid with obstacle. If it is jumping then avoid the state of Falling
         (IsState(State::Jumping)) ? ClearState(State::Falling) : SetState(State::Falling);
@@ -120,7 +115,7 @@ namespace Mario {
             
             temp = true;
         }
-    
+        
         // TODO: Move to Some other function or may be Scrip Component
         {
             if (Input::IsKeyPressed(KeyCode::Right) && !s_ActiveScene->IsRightCollision(m_Entity, s_RunningSpeed))
@@ -154,7 +149,7 @@ namespace Mario {
         
         for (int32_t stateIds = 0; stateIds < MAX_STATES; stateIds++)
         {
-            int32_t fncIdx = Player::GetFirstSetBit(m_State & BIT(stateIds));
+            int32_t fncIdx = PlayerController::GetFirstSetBit(m_State & BIT(stateIds));
             if (fncIdx >= 0)
                 s_StateFunc[fncIdx](this);
         }
@@ -164,17 +159,17 @@ namespace Mario {
     // ******************************************************************************
     // Player Event handler
     // ******************************************************************************
-    void Player::OnEvent(iKan::Event &event)
+    void PlayerController::OnEvent(iKan::Event &event)
     {
         EventDispatcher dispather(event);
-        dispather.Dispatch<KeyPressedEvent>(IK_BIND_EVENT_FN(Player::OnkeyPressed));
-        dispather.Dispatch<KeyReleasedEvent>(IK_BIND_EVENT_FN(Player::OnKeyReleased));
+        dispather.Dispatch<KeyPressedEvent>(IK_BIND_EVENT_FN(PlayerController::OnkeyPressed));
+        dispather.Dispatch<KeyReleasedEvent>(IK_BIND_EVENT_FN(PlayerController::OnKeyReleased));
     }
     
     // ******************************************************************************
     // Player Key pressed event handler
     // ******************************************************************************
-    bool Player::OnkeyPressed(KeyPressedEvent& event)
+    bool PlayerController::OnkeyPressed(KeyPressedEvent& event)
     {
         if (event.GetKeyCode() == KeyCode::Z && (!IsState(State::Falling) && !IsState(State::Jumping)))
         {
@@ -184,33 +179,31 @@ namespace Mario {
             ClearState(State::Falling);
             SetState(State::Jumping);
         }
-            
         return false;
     }
 
     // ******************************************************************************
     // Player Key released event handler
     // ******************************************************************************
-    bool Player::OnKeyReleased(KeyReleasedEvent& event)
+    bool PlayerController::OnKeyReleased(KeyReleasedEvent& event)
     {
         if (event.GetKeyCode() == KeyCode::Left || event.GetKeyCode() == KeyCode::Right)
         {
             ClearState(State::Running);
             m_RunningImgIdx = 0;
         }
-
         return false;
     }
     
     // ******************************************************************************
     // Change the size of Player
     // ******************************************************************************
-    void Player::ChangeSize(Size size)
+    void PlayerController::ChangeSize(Size size)
     {
         // TODO: Add Animation/
         IK_ASSERT(m_EntitySize, "Entity Size is not pointing to any memory");
         m_Size = size;
-        
+
         // TODO: 1 is just random to avoid overlap. Need to fix this later
         m_EntityPosition->y += 1.0f;
         m_EntitySize->y = (m_Size == Size::Tall ? 2.0f : 1.0f);
@@ -221,7 +214,7 @@ namespace Mario {
     // ******************************************************************************
     // Player function for falling
     // ******************************************************************************
-    void Player::Falling(Player* player)
+    void PlayerController::Falling(PlayerController* player)
     {
         if (!s_ActiveScene->IsBottomCollision(player->m_Entity, s_FallingSpeed))
         {
@@ -237,7 +230,7 @@ namespace Mario {
     // ******************************************************************************
     // Player function for falling
     // ******************************************************************************
-    void Player::Jumping(Player* player)
+    void PlayerController::Jumping(PlayerController* player)
     {
         if (!s_ActiveScene->IsTopCollision(player->m_Entity, s_JumpingSpeed) && (player->m_EntityPosition->y - player->m_StartingJumpingPosing < MAX_JUMPING_HEIGHT))
         {
@@ -253,7 +246,7 @@ namespace Mario {
     // ******************************************************************************
     // Player function for falling
     // ******************************************************************************
-    void Player::Standing(Player* player)
+    void PlayerController::Standing(PlayerController* player)
     {
         *player->m_EntitySubtexture = s_StandingSubtexComp;
     }
@@ -261,7 +254,7 @@ namespace Mario {
     // ******************************************************************************
     // Player function for falling
     // ******************************************************************************
-    void Player::Firing(Player* player)
+    void PlayerController::Firing(PlayerController* player)
     {
         
     }
@@ -269,7 +262,7 @@ namespace Mario {
     // ******************************************************************************
     // Player function for falling
     // ******************************************************************************
-    void Player::Dying(Player* player)
+    void PlayerController::Dying(PlayerController* player)
     {
         
     }
@@ -277,7 +270,7 @@ namespace Mario {
     // ******************************************************************************
     // Player function for falling
     // ******************************************************************************
-    void Player::Sitting(Player* player)
+    void PlayerController::Sitting(PlayerController* player)
     {
         
     }
@@ -285,7 +278,7 @@ namespace Mario {
     // ******************************************************************************
     // Player function for falling
     // ******************************************************************************
-    void Player::Running(Player* player)
+    void PlayerController::Running(PlayerController* player)
     {
         player->ClearState(State::Standing);
         
@@ -296,7 +289,7 @@ namespace Mario {
     // ******************************************************************************
     // Imgui renderer for Imgui
     // ******************************************************************************
-    void Player::ImguiRenderer()
+    void PlayerController::ImguiRenderer()
     {
         static ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_SpanFullWidth;
         const auto& playerId = m_Entity.GetComponent<IDComponent>().ID;

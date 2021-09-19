@@ -10,8 +10,11 @@
 #pragma once
 
 #include <iKan/Scene/Entity.h>
+#include <iKan/Core/Events/Event.h>
 
 namespace iKan {
+    
+    class Scene;
     
     // ******************************************************************************
     // Base class for each stribtable entity or native sctipt
@@ -19,6 +22,9 @@ namespace iKan {
     class ScriptableEntity
     {
     public:
+        ScriptableEntity(Ref<Scene>& scene)
+        : m_ActiveScene(scene) { }
+        
         virtual ~ScriptableEntity() = default;
         
         template<typename T>
@@ -28,12 +34,17 @@ namespace iKan {
         T& GetComponent() { return m_Entity.GetComponent<T>(); }
         
     protected:
-        virtual void OnCreate() { m_Created = true; }
+        virtual void OnCreate() {}
         virtual void OnUpdate(Timestep ts) {}
         virtual void OnDestroy() {}
+        virtual void ImguiRenderer() {}
+        virtual void OnEvent(Event& event) {}
         
     protected:
-        bool m_Created = false;
+        bool m_Created   = false;
+        bool m_Activated = false;
+        
+        Ref<Scene> m_ActiveScene;
         Entity m_Entity;
         
         friend class Scene;

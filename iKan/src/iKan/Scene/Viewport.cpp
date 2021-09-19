@@ -163,6 +163,8 @@ namespace iKan {
     // ******************************************************************************
     void Viewport::OnEvent(Event& event)
     {
+        m_ActiveScene->OnEvent(event);
+
         EventDispatcher dispatcher(event);
         dispatcher.Dispatch<MouseButtonPressedEvent>(IK_BIND_EVENT_FN(Viewport::OnMouseButtonPressed));
         dispatcher.Dispatch<KeyPressedEvent>(IK_BIND_EVENT_FN(Viewport::OnKeyPressed));
@@ -217,7 +219,7 @@ namespace iKan {
     // ******************************************************************************
     // Create new active scene to the Viewport
     // ******************************************************************************
-    void Viewport::NewScene()
+    Ref<Scene> Viewport::NewScene()
     {
         CloseScene();
         
@@ -228,12 +230,14 @@ namespace iKan {
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
 
         IK_INFO("New scene is created");
+        
+        return m_ActiveScene;
     }
 
     // ******************************************************************************
     // Open saved scene
     // ******************************************************************************
-    void Viewport::OpenScene(const std::string& path)
+    Ref<Scene> Viewport::OpenScene(const std::string& path)
     {
         IK_INFO("Opening saved scene from {0}", path.c_str());
         if (!path.empty())
@@ -245,15 +249,17 @@ namespace iKan {
             SceneSerializer serializer(m_ActiveScene);
             serializer.Deserialize(path);
         }
+        
+        return m_ActiveScene;
     }
 
     // ******************************************************************************
     // Saving Scene to new file
     // ******************************************************************************
-    void Viewport::SaveSceneAs()
+    Ref<Scene> Viewport::SaveSceneAs()
     {
         if (!m_SaveFileAs && !m_SaveFile)
-            return;
+            return nullptr;
         
         m_SaveFileAs = true;
         ImGui::Begin("Save File", &m_SaveFileAs);
@@ -278,12 +284,14 @@ namespace iKan {
             m_SaveFileAs = false;
         }
         ImGui::End();
+        
+        return m_ActiveScene;
     }
 
     // ******************************************************************************
     // Saving Scene
     // ******************************************************************************
-    void Viewport::SaveScene()
+    Ref<Scene> Viewport::SaveScene()
     {
         if (m_ActiveScene->GetFileName() == "" || m_SaveFileAs)
         {
@@ -300,6 +308,8 @@ namespace iKan {
                 m_SaveFile = false;
             }
         }
+        
+        return m_ActiveScene;
     }
 
     // ******************************************************************************

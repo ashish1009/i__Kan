@@ -98,6 +98,17 @@ namespace iKan {
         // Editor Camera Imgui Renderer
         if (m_Data.EditorCamera && m_Data.EditorCamera->IsImguiPannel && m_Data.Editing)
             m_Data.EditorCamera->OnImguiRenderer();
+
+        // Rendere Entity Scrip ImuGui
+        m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
+                                                      {
+            // nsc.Scripts is the Vector to store multiple Scripts for 1 entity
+            for (auto script : nsc.Scripts)
+            {
+                script->ImguiRenderer();
+            }
+        });
+
     }
     
     // ******************************************************************************
@@ -147,6 +158,16 @@ namespace iKan {
     // ******************************************************************************
     void Scene::OnEvent(Event& event)
     {
+        // Handlel Event for all Entity Scrip
+        m_Registry.view<NativeScriptComponent>().each([=, &event](auto entity, auto& nsc)
+                                                      {
+            // nsc.Scripts is the Vector to store multiple Scripts for 1 entity
+            for (auto script : nsc.Scripts)
+            {
+                script->OnEvent(event);
+            }
+        });
+        
         if (m_Data.EditorCamera)
             m_Data.EditorCamera->OnEvent(event);
     }
@@ -156,6 +177,8 @@ namespace iKan {
     // ******************************************************************************
     void Scene::OnUpdateEditor(Timestep ts)
     {
+        InstantiateScripts(ts);
+        
         if (m_Data.SceneType == Scene::Data::Type::Scene3D)
         {
             if (m_Data.EditorCamera)
@@ -316,6 +339,7 @@ namespace iKan {
                 if (!script->m_Created)
                 {
                     script->m_Entity = { entity, this };
+                    script->m_Created = true;
                     script->OnCreate();
                 }
                 script->OnUpdate(ts);

@@ -10,6 +10,7 @@
 #include "MarioLayer.h"
 #include "Background.h"
 #include "StartScreen.h"
+#include "PlayerController.h"
 
 namespace Mario {
     // ******************************************************************************
@@ -36,38 +37,47 @@ namespace Mario {
     {
         IK_INFO("Attaching {0} Layer to Application", GetName().c_str());
 
-        m_Viewport.NewScene();
-
-        auto scene  = m_Viewport.GetScene();
+        m_ActiveScene = m_Viewport.NewScene();
         
-        // Setup the Camera Entity
-        m_CameraEntity        = scene->CreateEntity("Primary Camera");
-        auto& cameraComponent = m_CameraEntity.AddComponent<CameraComponent>();
-        cameraComponent.Camera.SetProjectionType(SceneCamera::ProjectionType::Orthographic);
-        cameraComponent.Camera.SetOrthographicSize(18.0f);
-
-        // Setup the Temporary Editor 2D Camera Entity
-        // TODO: delete later
-        Entity editorCamera         = scene->CreateEntity("Editor Primary Camera");
-        auto& editorCameraComponent = editorCamera.AddComponent<CameraComponent>();
-        editorCameraComponent.Camera.SetProjectionType(SceneCamera::ProjectionType::Orthographic);
-        editorCameraComponent.Camera.SetOrthographicSize(18.0f);
-        editorCameraComponent.Editor  = true;
-        editorCameraComponent.Primary = false;
-
-        auto& cameraPositionX = m_CameraEntity.GetComponent<TransformComponent>().Translation.x;
-        cameraPositionX = 18.0f;
-
         // Creating Entities for background tiles
-        Mario::Background::CreateEntities(scene);
-
+        Mario::Background::CreateEntities(m_ActiveScene);
+        
         // Creating Entities for background tiles
-        Mario::StartScreen::CreateEntities(scene);
-
-        // Create Player Instance
-        // TODO: Add multi player Concept here
-        // TODO: better solution to bind camera top player
-        m_Player = CreateRef<Mario::Player>(scene);
+        Mario::StartScreen::CreateEntities(m_ActiveScene);
+        
+        {
+            // Setup the Camera Entity
+            m_CameraEntity        = m_ActiveScene->CreateEntity("Primary Camera");
+            auto& cameraComponent = m_CameraEntity.AddComponent<CameraComponent>();
+            cameraComponent.Camera.SetProjectionType(SceneCamera::ProjectionType::Orthographic);
+            cameraComponent.Camera.SetOrthographicSize(18.0f);
+    
+            auto& cameraPositionX = m_CameraEntity.GetComponent<TransformComponent>().Translation.x;
+            cameraPositionX = 18.0f;
+        }
+        
+        {
+            // Setup the Temporary Editor 2D Camera Entity
+            // TODO: delete later
+            Entity editorCamera         = m_ActiveScene->CreateEntity("Editor Primary Camera");
+            auto& editorCameraComponent = editorCamera.AddComponent<CameraComponent>();
+            editorCameraComponent.Camera.SetProjectionType(SceneCamera::ProjectionType::Orthographic);
+            editorCameraComponent.Camera.SetOrthographicSize(18.0f);
+            editorCameraComponent.Editor  = true;
+            editorCameraComponent.Primary = false;
+        }
+        
+        {
+            m_PlayerEntity = m_ActiveScene->CreateEntity("Player 1");
+            
+            m_PlayerEntity.GetComponent<BoxCollider2DComponent>().IsRigid = true;
+            m_PlayerEntity.AddComponent<SpriteRendererComponent>();
+            
+            m_PlayerEntity.AddComponent<NativeScriptComponent>().Bind<PlayerController>(m_ActiveScene);
+            
+            auto& position = m_PlayerEntity.GetComponent<TransformComponent>().Translation;
+            position.x = 16.0f;
+        }
     }
 
     // ******************************************************************************
@@ -84,7 +94,6 @@ namespace Mario {
     void MarioLayer::OnUpdate(Timestep ts)
     {
         m_Viewport.OnUpdate(ts);
-        m_Player->OnUpdate(ts);
     }
 
     // ******************************************************************************
@@ -98,7 +107,7 @@ namespace Mario {
         m_Viewport.OnImguiRenderer(ts);
 
         // Mario Setting pannel
-//        if (m_Viewport.GetScene()->IsEditing() && m_IsSetting)
+        if (m_Viewport.GetScene()->IsEditing() && m_IsSetting)
         {
             ShowMenu();
 
@@ -106,9 +115,6 @@ namespace Mario {
 
             // Background Imgui Rendeer
             Background::ImGuiRenderer();
-
-            // Imgui rendering for Player
-            m_Player->ImguiRenderer();
 
             ImGui::End();
         }
@@ -122,7 +128,6 @@ namespace Mario {
     void MarioLayer::OnEvent(Event& event)
     {
         m_Viewport.OnEvent(event);
-        m_Player->OnEvent(event);
     }
 
     // ******************************************************************************

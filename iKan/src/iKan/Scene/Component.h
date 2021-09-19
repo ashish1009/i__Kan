@@ -259,9 +259,9 @@ namespace iKan {
         std::vector<ScriptableEntity*> Scripts;
         
         template<typename T>
-        void Bind()
+        void Bind(Ref<Scene>& scene)
         {
-            Instance = static_cast<ScriptableEntity*>(new T());
+            Instance = static_cast<ScriptableEntity*>(new T(scene));
             Scripts.emplace_back(Instance);
         }
         

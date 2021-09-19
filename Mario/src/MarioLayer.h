@@ -10,7 +10,6 @@
 #pragma once
 
 #include <iKan.h>
-#include "Player.h"
 
 using namespace iKan;
 
@@ -38,8 +37,11 @@ namespace Mario {
         bool m_IsSetting = true;
 
         Viewport& m_Viewport = Viewport::Create("../../../../../../../iKan.");
+        
         Entity m_CameraEntity;
-        Ref<Mario::Player> m_Player;
+        Entity m_PlayerEntity;
+        
+        Ref<Scene> m_ActiveScene;
     };
 
 }

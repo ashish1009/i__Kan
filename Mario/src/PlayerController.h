@@ -20,7 +20,7 @@ namespace Mario {
     // ******************************************************************************
     // Mario Player Class
     // ******************************************************************************
-    class Player
+    class PlayerController : public ScriptableEntity
     {
     public:
         static constexpr uint32_t MAX_STATES         = 7;
@@ -73,16 +73,19 @@ namespace Mario {
         enum class Direction { Left, Right };
 
     public:
-        ~Player();
-        Player(Ref<Scene> scene);
-
-        void OnUpdate(Timestep ts);
-        void ImguiRenderer();
+        ~PlayerController();
+        PlayerController(Ref<Scene>& scene);
+        
+        virtual void OnCreate() override { m_Created = true; }
+        virtual void OnUpdate(Timestep ts) override;
+        virtual void OnDestroy() override {}
+        virtual void ImguiRenderer() override;
+        virtual void OnEvent(Event& event) override;
+        
+    private:
+        
         void ChangeSize(Size size);
         
-        void OnEvent(Event& event);
-
-    private:
         bool OnkeyPressed(KeyPressedEvent& event);
         bool OnKeyReleased(KeyReleasedEvent& event);
         
@@ -90,10 +93,7 @@ namespace Mario {
         void ToggleState(State state) { m_State ^= (1 << (Utils::GetFirstSetBit((uint32_t)state) - 1)); }
         void SetState(State state)    { m_State = m_State | (1 << (Utils::GetFirstSetBit((uint32_t)state) - 1)); }
         
-        bool IsState(State state)
-        {
-            return ((m_State & (uint32_t)state) != 0);
-        }
+        bool IsState(State state) { return ((m_State & (uint32_t)state) != 0); }
 
     private:
         static int32_t GetFirstSetBit(uint32_t value);
@@ -102,19 +102,19 @@ namespace Mario {
         static void SetPlayerTextureForAllStates(bool isShort, Color color);
         
         // Functions for player state machine
-        static void Falling(Player* player);
-        static void Jumping(Player* player);
-        static void Standing(Player* player);
-        static void Firing(Player* player);
-        static void Dying(Player* player);
-        static void Sitting(Player* player);
-        static void Running(Player* player);
+        static void Falling(PlayerController* player);
+        static void Jumping(PlayerController* player);
+        static void Standing(PlayerController* player);
+        static void Firing(PlayerController* player);
+        static void Dying(PlayerController* player);
+        static void Sitting(PlayerController* player);
+        static void Running(PlayerController* player);
         
     private:
         static Ref<Scene> s_ActiveScene;
 
         // Function pointer to store the functionality of states
-        static std::function <void(Player*)> s_StateFunc[MAX_STATES];
+        static std::function <void(PlayerController*)> s_StateFunc[MAX_STATES];
         
         // Texture to store tile sprite sheet
         static Ref<Texture>    s_Texture;
@@ -126,7 +126,7 @@ namespace Mario {
         static float s_JumpingSpeed;
         
         // Non Static members
-        Entity     m_Entity;
+//        Entity     m_Entity;
         glm::vec3* m_EntityPosition;
         glm::vec3* m_EntitySize;
         
