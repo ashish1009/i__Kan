@@ -96,7 +96,8 @@ namespace iKan {
         void SetSceneType(Data::Type type) { m_Data.SceneType = type; }
         
         int32_t OnBoxColloider(Entity& currEntity, float speed);
-        
+        void OnActivateEntity(Entity& currEntity);
+
         bool IsRightCollision(Entity& currEntity, float speed)
         {
             return (int32_t)Scene::BoxCollisionSide::Right & OnBoxColloider(currEntity, speed);

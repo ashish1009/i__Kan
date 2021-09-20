@@ -342,9 +342,33 @@ namespace iKan {
                     script->m_Created = true;
                     script->OnCreate();
                 }
-                script->OnUpdate(ts);
+                
+                OnActivateEntity(script->m_Entity);
+                
+                if (script->m_Entity.template GetComponent<AliveComponent>().Activated)
+                    script->OnUpdate(ts);
             }
         });
+    }
+    
+    // ******************************************************************************
+    // Activate the Alive Entity
+    // ******************************************************************************
+    void Scene::OnActivateEntity(Entity& currEntity)
+    {
+        if (!currEntity.HasComponent<AliveComponent>())
+            return;
+        
+        // Traverse entire Entities to get Box colloider entity one by one
+        auto view = m_Registry.view<AliveComponent>();
+        for (auto entity : view)
+        {
+            // no operation for same enitity
+            if (currEntity == entity)
+                continue;
+            
+            // DO Operation and Activate the Entity
+        }
     }
 
     // ******************************************************************************

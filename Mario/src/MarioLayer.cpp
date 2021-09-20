@@ -57,8 +57,7 @@ namespace Mario {
         }
         
         {
-            // Setup the Temporary Editor 2D Camera Entity
-            // TODO: delete later
+            // TODO: delete later. Setup the Temporary Editor 2D Camera Entity
             Entity editorCamera         = m_ActiveScene->CreateEntity("Editor Primary Camera");
             auto& editorCameraComponent = editorCamera.AddComponent<CameraComponent>();
             editorCameraComponent.Camera.SetProjectionType(SceneCamera::ProjectionType::Orthographic);
@@ -72,8 +71,8 @@ namespace Mario {
             
             m_PlayerEntity.GetComponent<BoxCollider2DComponent>().IsRigid = true;
             m_PlayerEntity.AddComponent<SpriteRendererComponent>();
-            
             m_PlayerEntity.AddComponent<NativeScriptComponent>().Bind<PlayerController>(m_ActiveScene);
+            m_PlayerEntity.AddComponent<AliveComponent>().Init(true, AliveComponent::ComponentType::Player);
             
             auto& position = m_PlayerEntity.GetComponent<TransformComponent>().Translation;
             position.x = 16.0f;

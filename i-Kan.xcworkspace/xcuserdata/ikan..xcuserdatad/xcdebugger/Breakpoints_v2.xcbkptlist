@@ -7,144 +7,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "828CB2ED-E4B6-4BCA-9874-E60D3D52E6D9"
+            uuid = "4B2013BC-B66A-4EF9-9CB4-28B3A9D5C597"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "iKan/src/iKan/Scene/Viewport.cpp"
+            filePath = "iKan/src/iKan/Scene/Component.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "467"
-            endingLineNumber = "467"
-            landmarkName = "Viewport::OnImguiRenderer(ts)"
-            landmarkType = "7">
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "CameraComponent"
+            landmarkType = "14">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "09F9E8E5-2D62-4859-9DF9-23872BA740A4"
+            uuid = "95FE2A93-EC0B-44E0-98C5-C9199826034C"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iKan/src/iKan/Scene/Scene.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "341"
-            endingLineNumber = "341"
-            landmarkName = "Scene::InstantiateScripts(ts)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "F1BF26B5-0F54-44FD-8705-A0582124404C"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "iKan/src/iKan/Scene/Scene.cpp"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "339"
-            endingLineNumber = "339"
-            landmarkName = "Scene::InstantiateScripts(ts)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "657D0458-C341-4BEC-816D-4FE73EFD6E85"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "iKan/src/iKan/Scene/Scene.cpp"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "167"
-            endingLineNumber = "167"
-            landmarkName = "Scene::OnEvent(event)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "17040B5B-2B31-411B-9029-1F1E338CA017"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "iKan/src/iKan/Scene/Scene.cpp"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "163"
-            endingLineNumber = "163"
-            landmarkName = "Scene::OnEvent(event)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "16825EC6-BBDE-46B7-9C87-A38FF863477C"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "iKan/src/iKan/Scene/Scene.cpp"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
-            landmarkName = "Scene::OnEvent(event)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "16825EC6-BBDE-46B7-9C87-A38FF863477C - 463abb601cdd31f0"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "auto iKan::Scene::OnEvent(iKan::Event&amp;)::$_1::operator()&lt;entt::entity, iKan::NativeScriptComponent&gt;(entt::entity, iKan::NativeScriptComponent&amp;) const"
-                  moduleName = "Mario"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ikan./iKan/Github/iKan/iKan/src/iKan/Scene/Scene.cpp"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "165"
-                  endingLineNumber = "165"
-                  offsetFromSymbolStart = "23">
-               </Location>
-               <Location
-                  uuid = "16825EC6-BBDE-46B7-9C87-A38FF863477C - 463abb601cdd31f0"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "auto iKan::Scene::OnEvent(iKan::Event&amp;)::$_1::operator()&lt;entt::entity, iKan::NativeScriptComponent&gt;(entt::entity, iKan::NativeScriptComponent&amp;) const"
-                  moduleName = "Mario"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ikan./iKan/Github/iKan/iKan/src/iKan/Scene/Scene.cpp"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "165"
-                  endingLineNumber = "165"
-                  offsetFromSymbolStart = "87">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "1EC84C53-5FAF-4C29-AEE5-C5F325D26A71"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "iKan/src/iKan/Scene/Scene.cpp"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
-            landmarkName = "Scene::OnEvent(event)"
+            startingLineNumber = "370"
+            endingLineNumber = "370"
+            landmarkName = "Scene::OnActivateEntity(currEntity)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -268,4 +268,25 @@ namespace iKan {
     private:
         ScriptableEntity* Instance = nullptr;
     };
+    
+    // ******************************************************************************
+    // Native Script component
+    // ******************************************************************************
+    struct AliveComponent
+    {
+    public:
+        enum class ComponentType { Player, Enemy };
+        ComponentType Type;
+        bool Activated = false;
+        
+        AliveComponent(bool activated = false)
+        : Activated(activated) {}
+        
+        void Init(bool activated, ComponentType type)
+        {
+            Activated = activated;
+            Type = type;
+        }
+    };
+        
 }
