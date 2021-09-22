@@ -16,6 +16,62 @@ using namespace iKan;
 namespace Mario {
     
     // ******************************************************************************
+    // Component for Mario Item in BG
+    // ******************************************************************************
+    struct ItemPropertyComponent
+    {
+        enum class Property
+        {
+            SingleCoin, MultipleCoin, FireFlower, Mushroom, Star, Nothing, GoInside
+        };
+        
+        Property ItemProeprty;
+        
+        // Onlty for muliple coins // TODO: may be moved later to some other place
+        int32_t Count = 0;
+        
+        ItemPropertyComponent(Property property = Property::Nothing)
+        : ItemProeprty(property), Count(10) {}
+        
+        // ******************************************************************************
+        // Get the property type from char tile
+        // ******************************************************************************
+        static Property GetPropertyFromChar(char ch)
+        {
+            switch(ch)
+            {
+                case 'c' : return Property::SingleCoin;
+                case 'C' : return Property::MultipleCoin;
+                case 'F' : return Property::FireFlower;
+                case 'M' : return Property::Mushroom;
+                case 'S' : return Property::Star;
+                case '-' : return Property::Nothing;
+                case '|' : return Property::GoInside;
+            }
+            return Property::Nothing;
+        }
+        
+        // ******************************************************************************
+        // get proeprty in string
+        // ******************************************************************************
+        std::string GetPropertyString()
+        {
+            switch(ItemProeprty)
+            {
+                case Property::SingleCoin      : return "SingleCoin";
+                case Property::MultipleCoin    : return "MultipleCoin";
+                case Property::FireFlower      : return "FireFlower";
+                case Property::Mushroom        : return "Mushroom";
+                case Property::Star            : return "Star";
+                case Property::Nothing         : return "Nothing";
+                case Property::GoInside        : return "GoInside";
+            }
+            return "Property::Nothing";
+        }
+
+    };
+    
+    // ******************************************************************************
     // Client layer for Mario (Main layer) derived from iKan Layer
     // ******************************************************************************
     class MarioLayer : public Layer

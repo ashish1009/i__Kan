@@ -8,6 +8,7 @@
 // ******************************************************************************
 
 #include "Background.h"
+#include "MarioLayer.h"
 
 namespace Mario {
 
@@ -65,6 +66,43 @@ namespace Mario {
     "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG--------------------GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGG--------------------------GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG0"
     "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG                    GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGG                          GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG0"
     ;
+    
+    // ******************************************************************************
+    // Copy the tile Scene and replace the following for their behaviour
+    // ******************************************************************************
+    /********************************************************************************
+     c : Single Coin
+     C : Multiple Coin
+     F : Fire Flower
+     M : Mushroom
+     S : Star
+     - : Nothing
+     | : Go inside
+     
+     ********************************************************************************/
+    static std::string s_MapTilesBehaviour =
+    "                                                                                                                                                                                                                                                                                                                            0"
+    "                                                                                                                                                                                                                                                                                                                            0"
+    "                                  (^)                                                                  (^)                                                                                           (^^^)                                                                         (^^)                                     0"
+    "       (^)                                              (^^^)                                                                                  (^^)                                                                                           (^)                                                                  .        0"
+    "                                                                                                                                                                                                                                                                                                                  ...       0"
+    "                                                                                                                                                                                                                                                                                                                  |u|       0"
+    "                                                                                                                                                                                                                                                                                                                  |o|       0"
+    "                                                                                                                                                                                                                                                                                                                .......     0"
+    "                                               F                  --S-                             c            -C-                                                                 F                                                                 c                                                         |u|r|u|     0"
+    "                                                                                                                                                                                                                                                                                                                |o|||o|     0"
+    "                                                                                                                                                                                                                                                                                                              ...........   0"
+    "                                                                                                                                                                                                                                                                                                              |||||||||||   0"
+    "                                                                                                                                                                                                                                                                                                              |l|u|r|u|l|   0"
+    "      -M-c-                                  -c-c-              -c----c-                           S           XXXXX               c                                           c    c    c                                                          -c-c-                                                     |||o|||o|||   0"
+    "                                                                                Y                 SS                                                                                                                          S  S                                                       S                  ............... 0"
+    "                                                                                !                SSS                                                   S                                                 Y                   SS  SS                                                     SS                  ||||||||||||||| 0"
+    "                                                          Y                     !               SSSS                               Y                  SS        *                                        !                  SSS  SSS       *          Y                                SSS                  |u||u||u||u||u| 0"
+    "  <v>          S                           <v>      S     !       S  S          !     <vv>     SSSSS                    <vvv>      !          <v>    SSS       {1}                                       !                 SSSS  SSSS     {1}         !         <v>                   SSSS         <v>      |o||o||o||o||0| 0"
+    "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG--------------------GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGG--------------------------GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG0"
+    "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG                    GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGG                          GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG0"
+    ;
+
 
     // ******************************************************************************
     // Get entity name from Char code
@@ -116,6 +154,14 @@ namespace Mario {
         for (auto entity : entityVector)
             if (auto &subTexComp = entity.GetComponent<SpriteRendererComponent>().SubTexComp)
                 subTexComp = subTex;
+    }
+    
+    // ******************************************************************************
+    // Check it tile is having property
+    // ******************************************************************************
+    static bool IsPropertyTyle(char ch)
+    {
+        return ch == 'X' || ch == 'B' || ch == 'Y';
     }
 
     // ******************************************************************************
@@ -195,6 +241,12 @@ namespace Mario {
 
                     tc.Translation = { x, (mapHeight / 2.0f) - y, 0.0f };
                     tc.Scale       = { spriteSize.x, spriteSize.y , 0.0f};
+                    
+                    // Add Behavious component
+                    {
+                        if (IsPropertyTyle(tileType))
+                            entity.AddComponent<ItemPropertyComponent>(ItemPropertyComponent::GetPropertyFromChar(tileType));
+                    }
                 } //if (char tileType = s_MapTiles[x + y * mapWidth]; s_TextureMap.find(tileType) != s_TextureMap.end())
             } // for (uint32_t x = 0; x < mapWidth; x++)
         } // for (uint32_t y = 0; y < mapHeight; y++)
