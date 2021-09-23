@@ -20,6 +20,20 @@
 namespace iKan {
     
     // ******************************************************************************
+    // Entity Collision callbacks ater collision
+    // ******************************************************************************
+    void Scene::CollisionCallbacks(Entity& colloidedEntity1, Entity& colloidedEntity2)
+    {
+        auto currEntityScripts = colloidedEntity1.GetComponent<NativeScriptComponent>().Scripts;
+        for (auto script : currEntityScripts)
+            script->OnCollision(colloidedEntity2);
+        
+        auto colloidedEntityScripts = colloidedEntity2.GetComponent<NativeScriptComponent>().Scripts;
+        for (auto script : colloidedEntityScripts)
+            script->OnCollision(colloidedEntity1);
+    }
+    
+    // ******************************************************************************
     // Scene Constructor
     // ******************************************************************************
     Scene::Scene(const std::string& path)
@@ -139,6 +153,8 @@ namespace iKan {
     void Scene::DestroyEntity(Entity entity)
     {
         IK_CORE_WARN("Destrying Entity '{0}' with ID {0} from the scene", entity.GetComponent<TagComponent>().Tag.c_str(), entity.GetComponent<IDComponent>().ID);
+        IK_CORE_TRACE("Number of entities Left in Scene : {0}", m_Data.NumEntities--);
+
         m_Registry.destroy(entity);
     }
 
@@ -345,7 +361,7 @@ namespace iKan {
                 
                 OnActivateEntity(script->m_Entity);
                 
-                if (script->m_Entity.template GetComponent<AliveComponent>().Activated)
+                if (script->m_Entity.template HasComponent<AliveComponent>() && script->m_Entity.template GetComponent<AliveComponent>().Activated)
                     script->OnUpdate(ts);
             }
         });
@@ -419,8 +435,11 @@ namespace iKan {
                     // If alligned in same x - A  xis
                     if (cePos.x + speed < entPos.x + entSize.x &&
                         cePos.x + speed + ceSize.x > entPos.x)
+                        
+                    // Collision Callbacks
                     {
                         result |= ((speed > 0) ? (int32_t)BoxCollisionSide::Right : (int32_t)BoxCollisionSide::Left);
+                        Scene::CollisionCallbacks(currEntity, e);
                     }
                 }
 
@@ -433,6 +452,7 @@ namespace iKan {
                         cePos.y + speed + ceSize.y > entPos.y)
                     {
                         result |= ((speed > 0) ? (int32_t)BoxCollisionSide::Top : (int32_t)BoxCollisionSide::Bottom);
+                        Scene::CollisionCallbacks(currEntity, e);
                     }
                 }
             }

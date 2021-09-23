@@ -121,6 +121,8 @@ namespace iKan {
         Entity GetMainCameraEntity();
         Entity GetEditorCameraEntity();
         
+        static void CollisionCallbacks(Entity& colloidedEntity1, Entity& colloidedEntity2);
+        
     private:
         void InstantiateScripts(Timestep ts);
         void RenderSpriteComponent();

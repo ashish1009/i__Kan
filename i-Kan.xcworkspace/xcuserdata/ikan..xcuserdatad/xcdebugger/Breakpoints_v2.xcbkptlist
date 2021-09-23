@@ -30,9 +30,25 @@
             filePath = "iKan/src/iKan/Scene/Scene.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "370"
-            endingLineNumber = "370"
+            startingLineNumber = "386"
+            endingLineNumber = "386"
             landmarkName = "Scene::OnActivateEntity(currEntity)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B701DE8F-B7C5-41EC-AEA3-A23CB1A81FE7"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Mario/src/PlayerController.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "348"
+            endingLineNumber = "348"
+            landmarkName = "PlayerController::OnCollision(colloidedEntity)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

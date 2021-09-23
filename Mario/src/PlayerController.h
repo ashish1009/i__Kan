@@ -81,6 +81,7 @@ namespace Mario {
         virtual void OnDestroy() override {}
         virtual void ImguiRenderer() override;
         virtual void OnEvent(Event& event) override;
+        virtual void OnCollision(Entity& colloidedEntity) override;
         
     private:
         

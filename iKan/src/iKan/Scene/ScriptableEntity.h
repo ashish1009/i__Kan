@@ -39,6 +39,7 @@ namespace iKan {
         virtual void OnDestroy() {}
         virtual void ImguiRenderer() {}
         virtual void OnEvent(Event& event) {}
+        virtual void OnCollision(Entity& colloidedEntity) {}
         
     protected:
         bool m_Created   = false;

@@ -247,6 +247,10 @@ namespace Mario {
                         if (IsPropertyTyle(tileType))
                             entity.AddComponent<ItemPropertyComponent>(ItemPropertyComponent::GetPropertyFromChar(tileType));
                     }
+
+                    //
+                    entity.AddComponent<NativeScriptComponent>().Bind<ItemScript>(scene);
+
                 } //if (char tileType = s_MapTiles[x + y * mapWidth]; s_TextureMap.find(tileType) != s_TextureMap.end())
             } // for (uint32_t x = 0; x < mapWidth; x++)
         } // for (uint32_t y = 0; y < mapHeight; y++)
@@ -541,7 +545,13 @@ namespace Mario {
             s_Data.TileMap['r'].IsRigid = false;
         }
     }
-
-
+    
+    void ItemScript::OnCollision(Entity &colloidedEntity)
+    {
+        if (m_Entity.HasComponent<ItemPropertyComponent>())
+        {
+            m_ActiveScene->DestroyEntity(m_Entity);
+        }
+    }
 
 }

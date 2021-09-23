@@ -143,6 +143,7 @@ namespace Mario {
             if (m_EntityPosition->y <= -9.0f)
             {
                 m_Life--;
+                // Save scene automatically then open that sceen on death
                 Viewport::Get().CloseScene();
             }
         }
@@ -338,6 +339,13 @@ namespace Mario {
             ImGui::Text("%f", m_StartingJumpingPosing);
         }
     }
-
+    
+    // ******************************************************************************
+    // Collision Callback
+    // ******************************************************************************
+    void PlayerController::OnCollision(Entity& colloidedEntity)
+    {
+        
+    }
 
 }
