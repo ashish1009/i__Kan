@@ -107,7 +107,7 @@ namespace iKan {
         Ref<Scene> NewScene();
         Ref<Scene> OpenScene(const std::string& path);
         Ref<Scene> SaveScene();
-        Ref<Scene> SaveSceneAs();
+        Ref<Scene> SaveSceneAs(const std::string& path = "");
         void CloseScene();
 
         ViewportData& GetDataRef() { return m_Data; }

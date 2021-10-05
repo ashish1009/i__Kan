@@ -256,8 +256,16 @@ namespace iKan {
     // ******************************************************************************
     // Saving Scene to new file
     // ******************************************************************************
-    Ref<Scene> Viewport::SaveSceneAs()
+    Ref<Scene> Viewport::SaveSceneAs(const std::string& path)
     {
+        if (path != "")
+        {
+            m_ActiveScene->SetFilePath(path);
+            SceneSerializer serializer(m_ActiveScene);
+            serializer.Serialize(path);
+            return m_ActiveScene;
+        }
+        
         if (!m_SaveFileAs && !m_SaveFile)
             return nullptr;
         

@@ -32,6 +32,9 @@ namespace iKan {
         
         template<typename T>
         T& GetComponent() { return m_Entity.GetComponent<T>(); }
+
+        void UpdateScene(Ref<Scene>& scene) { m_ActiveScene = scene; }
+        void UpdateEntity(Entity entity) { m_Entity = entity; }
         
     protected:
         virtual void OnCreate() {}

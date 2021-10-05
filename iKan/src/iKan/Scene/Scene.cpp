@@ -24,13 +24,13 @@ namespace iKan {
     // ******************************************************************************
     void Scene::CollisionCallbacks(Entity& colloidedEntity1, Entity& colloidedEntity2)
     {
-        auto currEntityScripts = colloidedEntity1.GetComponent<NativeScriptComponent>().Scripts;
-        for (auto script : currEntityScripts)
-            script->OnCollision(colloidedEntity2);
-        
-        auto colloidedEntityScripts = colloidedEntity2.GetComponent<NativeScriptComponent>().Scripts;
-        for (auto script : colloidedEntityScripts)
-            script->OnCollision(colloidedEntity1);
+//        auto currEntityScripts = colloidedEntity1.GetComponent<NativeScriptComponent>().Scripts;
+//        for (auto script : currEntityScripts)
+//            script->OnCollision(colloidedEntity2);
+//
+//        auto colloidedEntityScripts = colloidedEntity2.GetComponent<NativeScriptComponent>().Scripts;
+//        for (auto script : colloidedEntityScripts)
+//            script->OnCollision(colloidedEntity1);
     }
     
     // ******************************************************************************

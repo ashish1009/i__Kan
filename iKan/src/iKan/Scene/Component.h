@@ -256,13 +256,19 @@ namespace iKan {
     struct NativeScriptComponent
     {
     public:
+        static std::unordered_map<std::string, ScriptableEntity*> ScriptsMap;
+        
+        std::vector<std::string> ScriptsName;
         std::vector<ScriptableEntity*> Scripts;
         
         template<typename T>
-        void Bind(Ref<Scene>& scene)
+        void Bind(Ref<Scene>& scene, const std::string& ScriptName)
         {
             Instance = static_cast<ScriptableEntity*>(new T(scene));
             Scripts.emplace_back(Instance);
+            ScriptsName.emplace_back(ScriptName);
+            
+            NativeScriptComponent::ScriptsMap[ScriptName] = Instance;
         }
         
     private:

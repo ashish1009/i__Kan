@@ -43,7 +43,7 @@ namespace Mario {
         Mario::Background::CreateEntities(m_ActiveScene);
         
         // Creating Entities for background tiles
-        Mario::StartScreen::CreateEntities(m_ActiveScene);
+//        Mario::StartScreen::CreateEntities(m_ActiveScene);
         
         {
             // Setup the Camera Entity
@@ -71,7 +71,7 @@ namespace Mario {
             
             m_PlayerEntity.GetComponent<BoxCollider2DComponent>().IsRigid = true;
             m_PlayerEntity.AddComponent<SpriteRendererComponent>();
-            m_PlayerEntity.AddComponent<NativeScriptComponent>().Bind<PlayerController>(m_ActiveScene);
+            m_PlayerEntity.AddComponent<NativeScriptComponent>().Bind<PlayerController>(m_ActiveScene, "PlayerController");
             m_PlayerEntity.AddComponent<AliveComponent>().Init(true, AliveComponent::ComponentType::Player);
             
             auto& position = m_PlayerEntity.GetComponent<TransformComponent>().Translation;

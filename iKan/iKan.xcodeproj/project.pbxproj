@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3EC70CC7270B53D600218449 /* Component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EC70CC6270B53D600218449 /* Component.cpp */; };
 		3ED416C926F38DB90037CF6D /* ScriptableEntity.h in Headers */ = {isa = PBXBuildFile; fileRef = 3ED416C826F38DB90037CF6D /* ScriptableEntity.h */; };
 		750AA8E1265D52140031A3E0 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 750AA8DF265D52140031A3E0 /* Utils.cpp */; };
 		750AA8E2265D52140031A3E0 /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 750AA8E0265D52140031A3E0 /* Utils.h */; };
@@ -139,6 +140,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3EC70CC6270B53D600218449 /* Component.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Component.cpp; sourceTree = "<group>"; };
 		3ED416C826F38DB90037CF6D /* ScriptableEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScriptableEntity.h; sourceTree = "<group>"; };
 		750AA8DF265D52140031A3E0 /* Utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
 		750AA8E0265D52140031A3E0 /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
@@ -480,6 +482,7 @@
 				B24962392639A7740091C915 /* Scene.cpp */,
 				B249623A2639A7740091C915 /* Scene.h */,
 				B27B4D9C263ACA0D000AC7B5 /* Entity.h */,
+				3EC70CC6270B53D600218449 /* Component.cpp */,
 				B27B4DA0263AF8AA000AC7B5 /* Component.h */,
 				B27D609A263D6B1A00954BB6 /* SceneCamera.cpp */,
 				B27D609B263D6B1A00954BB6 /* SceneCamera.h */,
@@ -912,6 +915,7 @@
 				758265DB2679F6DF0080169A /* ContetBrowserPannel.cpp in Sources */,
 				B28FE5C3262C881700DC5E20 /* MacInput.cpp in Sources */,
 				B2496F132639AA690091C915 /* SceneRenderer.cpp in Sources */,
+				3EC70CC7270B53D600218449 /* Component.cpp in Sources */,
 				7589D501267758DD00EB43D9 /* SceneSerializer.cpp in Sources */,
 				B2A1C119263E87DD00606017 /* Viewport.cpp in Sources */,
 				B249623B2639A7740091C915 /* Scene.cpp in Sources */,

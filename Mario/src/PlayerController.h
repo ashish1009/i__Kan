@@ -76,7 +76,7 @@ namespace Mario {
         ~PlayerController();
         PlayerController(Ref<Scene>& scene);
         
-        virtual void OnCreate() override { m_Created = true; }
+        virtual void OnCreate() override;
         virtual void OnUpdate(Timestep ts) override;
         virtual void OnDestroy() override {}
         virtual void ImguiRenderer() override;

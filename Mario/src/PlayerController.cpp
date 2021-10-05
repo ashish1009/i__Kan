@@ -44,6 +44,24 @@ namespace Mario {
     }
     
     // ******************************************************************************
+    // Create the Player Script Instance
+    // ******************************************************************************
+    void PlayerController::OnCreate()
+    {
+        m_Created = true;
+        
+        m_EntityPosition   = &m_Entity.GetComponent<TransformComponent>().Translation;
+        m_EntitySize       = &m_Entity.GetComponent<TransformComponent>().Scale;
+        m_EntitySubtexture = &m_Entity.GetComponent<SpriteRendererComponent>().SubTexComp;
+        
+        auto cameraEntity = s_ActiveScene->GetMainCameraEntity();
+        m_CameraRefPos    = &cameraEntity.GetComponent<TransformComponent>().Translation.x;
+        
+        // TODO: Temp Delete later
+        m_EditorCameraRefPos = &s_ActiveScene->GetEditorCameraEntity().GetComponent<TransformComponent>().Translation.x;
+    }
+    
+    // ******************************************************************************
     // Initialize the player
     // ******************************************************************************
     void PlayerController::Init(Ref<Scene> scene, bool isShort, Color color)
@@ -103,15 +121,15 @@ namespace Mario {
         static bool temp = true;
         if (temp)
         {
-            m_EntityPosition   = &m_Entity.GetComponent<TransformComponent>().Translation;
-            m_EntitySize       = &m_Entity.GetComponent<TransformComponent>().Scale;
-            m_EntitySubtexture = &m_Entity.GetComponent<SpriteRendererComponent>().SubTexComp;
-            
-            auto cameraEntity = s_ActiveScene->GetMainCameraEntity();
-            m_CameraRefPos    = &cameraEntity.GetComponent<TransformComponent>().Translation.x;
-            
-            // TODO: Temp Delete later
-            m_EditorCameraRefPos = &s_ActiveScene->GetEditorCameraEntity().GetComponent<TransformComponent>().Translation.x;
+//            m_EntityPosition   = &m_Entity.GetComponent<TransformComponent>().Translation;
+//            m_EntitySize       = &m_Entity.GetComponent<TransformComponent>().Scale;
+//            m_EntitySubtexture = &m_Entity.GetComponent<SpriteRendererComponent>().SubTexComp;
+//
+//            auto cameraEntity = s_ActiveScene->GetMainCameraEntity();
+//            m_CameraRefPos    = &cameraEntity.GetComponent<TransformComponent>().Translation.x;
+//
+//            // TODO: Temp Delete later
+//            m_EditorCameraRefPos = &s_ActiveScene->GetEditorCameraEntity().GetComponent<TransformComponent>().Translation.x;
             
             temp = true;
         }
@@ -144,7 +162,11 @@ namespace Mario {
             {
                 m_Life--;
                 // Save scene automatically then open that sceen on death
-                Viewport::Get().CloseScene();
+                
+                m_EntityPosition->x = 0.0f;
+                m_EntityPosition->y = 0.0f;
+                Viewport::Get().SaveSceneAs("../../../Mario/assets/Scene/Mario.iKan");
+                Viewport::Get().OpenScene("../../../Mario/assets/Scene/Mario.iKan");
             }
         }
         
