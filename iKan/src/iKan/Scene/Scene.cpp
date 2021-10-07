@@ -250,7 +250,7 @@ namespace iKan {
 
         Camera* mainCamera = nullptr;
         glm::mat4 cameraTransform;
-        if (Entity cameraEntity = GetMainCameraEntity();
+        if (Entity cameraEntity = GetPrimaryCameraEntity();
             cameraEntity!= Entity(entt::null, nullptr))
         {
             mainCamera      = &cameraEntity.GetComponent<CameraComponent>().Camera;
@@ -292,7 +292,7 @@ namespace iKan {
     // ******************************************************************************
     // get the canera component. First camera component which is found to be Primary
     // ******************************************************************************
-    Entity Scene::GetMainCameraEntity()
+    Entity Scene::GetPrimaryCameraEntity()
     {
         auto view = m_Registry.view<CameraComponent>();
         for (auto entity : view)

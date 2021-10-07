@@ -32,7 +32,7 @@
 
 /* Begin PBXFileReference section */
 		7533BDE826726CED000E91A7 /* PlayerController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PlayerController.cpp; sourceTree = "<group>"; wrapsLines = 0; };
-		7533BDE926726CED000E91A7 /* PlayerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerController.h; sourceTree = "<group>"; };
+		7533BDE926726CED000E91A7 /* PlayerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerController.h; sourceTree = "<group>"; wrapsLines = 0; };
 		755FC0572645A36100F670FA /* Background.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Background.cpp; sourceTree = "<group>"; wrapsLines = 0; };
 		755FC0582645A36100F670FA /* Background.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Background.h; sourceTree = "<group>"; };
 		755FC05D2645ACC400F670FA /* main_theme.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = main_theme.ogg; sourceTree = "<group>"; };

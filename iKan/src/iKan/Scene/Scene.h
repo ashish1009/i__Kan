@@ -118,7 +118,7 @@ namespace iKan {
             return (int32_t)Scene::BoxCollisionSide::Bottom & OnBoxColloider(currEntity, -speed);
         }
 
-        Entity GetMainCameraEntity();
+        Entity GetPrimaryCameraEntity();
         Entity GetEditorCameraEntity();
         
         static void CollisionCallbacks(Entity& colloidedEntity1, Entity& colloidedEntity2);

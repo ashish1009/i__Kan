@@ -45,8 +45,8 @@ namespace Mario {
         // Creating Entities for background tiles
 //        Mario::StartScreen::CreateEntities(m_ActiveScene);
         
+        // Setup the Camera Entity
         {
-            // Setup the Camera Entity
             m_PrimaryCameraEntity = m_ActiveScene->CreateEntity("Primary Camera");
             m_PrimaryCameraEntity.GetComponent<TransformComponent>().Translation.x = 18.0f;
 
@@ -55,6 +55,7 @@ namespace Mario {
             primaryCameraComponent.Camera.SetOrthographicSize(18.0f);
         }
         
+        // Editor Camera Component
         {
             m_EditorCameraEntity = m_ActiveScene->CreateEntity("Editor Camera");
             m_EditorCameraEntity.GetComponent<TransformComponent>().Translation.x = 18.0f;
@@ -65,6 +66,7 @@ namespace Mario {
             editorCameraComponent.MakeEditor();
         }
         
+        // Player 1 Component
         {
             m_PlayerEntity = m_ActiveScene->CreateEntity("Player 1");
             
@@ -73,8 +75,7 @@ namespace Mario {
             m_PlayerEntity.AddComponent<NativeScriptComponent>().Bind<PlayerController>(m_ActiveScene, "PlayerController");
             m_PlayerEntity.AddComponent<AliveComponent>().Init(true, AliveComponent::ComponentType::Player);
             
-            auto& position = m_PlayerEntity.GetComponent<TransformComponent>().Translation;
-            position.x = 16.0f;
+            m_PlayerEntity.GetComponent<TransformComponent>().Translation.x = 16.0f;
         }
     }
 
