@@ -22,7 +22,7 @@ namespace Mario {
     {
     public:
         ~ItemScript() = default;
-        ItemScript(Ref<Scene>& scene)
+        ItemScript(Ref<Scene> scene)
         : ScriptableEntity(scene) {}
         
         virtual void OnCreate() override { m_Created = true; }

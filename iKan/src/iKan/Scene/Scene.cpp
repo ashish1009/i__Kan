@@ -298,7 +298,7 @@ namespace iKan {
         for (auto entity : view)
         {
             auto& comp = view.get<CameraComponent>(entity);
-            if (comp.Primary)
+            if (comp.GetPrimary())
                 return { entity, this };
         }
         return {};
@@ -313,7 +313,7 @@ namespace iKan {
         for (auto entity : view)
         {
             auto& comp = view.get<CameraComponent>(entity);
-            if (comp.Editor)
+            if (comp.GetEditor())
                 return { entity, this };
         }
         return {};

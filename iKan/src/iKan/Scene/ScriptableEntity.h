@@ -22,7 +22,7 @@ namespace iKan {
     class ScriptableEntity
     {
     public:
-        ScriptableEntity(Ref<Scene>& scene)
+        ScriptableEntity(Ref<Scene> scene)
         : m_ActiveScene(scene) { }
         
         virtual ~ScriptableEntity() = default;

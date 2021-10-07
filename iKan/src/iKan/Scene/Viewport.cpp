@@ -163,7 +163,8 @@ namespace iKan {
     // ******************************************************************************
     void Viewport::OnEvent(Event& event)
     {
-        m_ActiveScene->OnEvent(event);
+        if (m_ActiveScene)
+            m_ActiveScene->OnEvent(event);
 
         EventDispatcher dispatcher(event);
         dispatcher.Dispatch<MouseButtonPressedEvent>(IK_BIND_EVENT_FN(Viewport::OnMouseButtonPressed));

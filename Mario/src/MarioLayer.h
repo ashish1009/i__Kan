@@ -94,7 +94,8 @@ namespace Mario {
 
         Viewport& m_Viewport = Viewport::Create("../../../../../../../iKan.");
         
-        Entity m_CameraEntity;
+        Entity m_PrimaryCameraEntity;
+        Entity m_EditorCameraEntity;
         Entity m_PlayerEntity;
         
         Ref<Scene> m_ActiveScene;

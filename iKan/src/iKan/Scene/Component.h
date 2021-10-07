@@ -78,15 +78,40 @@ namespace iKan {
     struct CameraComponent
     {
         SceneCamera Camera;
-
-        bool Primary = true;
-        bool Editor  = false;
         bool FixedAspectRatio = false;
 
         ~CameraComponent() = default;
         
         CameraComponent() = default;
         CameraComponent(const CameraComponent&) = default;
+        
+        // ******************************************************************************
+        // Make the Camera Primary
+        // ******************************************************************************
+        void MakePrimary()
+        {
+            mPrimary = true;
+            mEditor = false;
+        }
+        
+        // ******************************************************************************
+        // Make the Camera Editor
+        // ******************************************************************************
+        void MakeEditor()
+        {
+            mPrimary = false;
+            mEditor = true;
+        }
+        
+        // ******************************************************************************
+        // Return status of Primary and Editor
+        // ******************************************************************************
+        bool GetPrimary() const { return mPrimary; }
+        bool GetEditor() const { return mEditor; }
+        
+    private:
+        bool mPrimary = true;
+        bool mEditor  = false;
     };
     
     // ******************************************************************************

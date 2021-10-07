@@ -256,22 +256,15 @@ namespace iKan {
         DrawComponent<CameraComponent>("Camera", entity, [](auto& cc)
                                        {
             enum CameraType { Primary, Editor };
-            static int32_t type = (int32_t)CameraType::Primary;
+            int32_t type = (cc.GetPrimary()) ? (int32_t)CameraType::Primary : (int32_t)CameraType::Editor;
             ImGui::RadioButton("Primary", &type, (int32_t)CameraType::Primary); ImGui::SameLine();
             ImGui::RadioButton("Editor", &type, (int32_t)CameraType::Editor);
             ImGui::Separator();
             
             if (type == (int32_t)CameraType::Primary)
-            {
-                cc.Primary = true;
-                cc.Editor  = false;
-            }
+                cc.MakePrimary();
             else
-            {
-                cc.Primary = false;
-                cc.Editor  = true;
-            }
-
+                cc.MakeEditor();
 
             auto& camera = cc.Camera;
             {

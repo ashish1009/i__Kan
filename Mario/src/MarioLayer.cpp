@@ -47,23 +47,22 @@ namespace Mario {
         
         {
             // Setup the Camera Entity
-            m_CameraEntity        = m_ActiveScene->CreateEntity("Primary Camera");
-            auto& cameraComponent = m_CameraEntity.AddComponent<CameraComponent>();
-            cameraComponent.Camera.SetProjectionType(SceneCamera::ProjectionType::Orthographic);
-            cameraComponent.Camera.SetOrthographicSize(18.0f);
-    
-            auto& cameraPositionX = m_CameraEntity.GetComponent<TransformComponent>().Translation.x;
-            cameraPositionX = 18.0f;
+            m_PrimaryCameraEntity = m_ActiveScene->CreateEntity("Primary Camera");
+            m_PrimaryCameraEntity.GetComponent<TransformComponent>().Translation.x = 18.0f;
+
+            auto& primaryCameraComponent = m_PrimaryCameraEntity.AddComponent<CameraComponent>();
+            primaryCameraComponent.Camera.SetProjectionType(SceneCamera::ProjectionType::Orthographic);
+            primaryCameraComponent.Camera.SetOrthographicSize(18.0f);
         }
         
         {
-            // TODO: delete later. Setup the Temporary Editor 2D Camera Entity
-            Entity editorCamera         = m_ActiveScene->CreateEntity("Editor Primary Camera");
-            auto& editorCameraComponent = editorCamera.AddComponent<CameraComponent>();
+            m_EditorCameraEntity = m_ActiveScene->CreateEntity("Editor Camera");
+            m_EditorCameraEntity.GetComponent<TransformComponent>().Translation.x = 18.0f;
+            
+            auto& editorCameraComponent = m_EditorCameraEntity.AddComponent<CameraComponent>();
             editorCameraComponent.Camera.SetProjectionType(SceneCamera::ProjectionType::Orthographic);
             editorCameraComponent.Camera.SetOrthographicSize(18.0f);
-            editorCameraComponent.Editor  = true;
-            editorCameraComponent.Primary = false;
+            editorCameraComponent.MakeEditor();
         }
         
         {
@@ -106,7 +105,7 @@ namespace Mario {
         m_Viewport.OnImguiRenderer(ts);
 
         // Mario Setting pannel
-        if (m_Viewport.GetScene()->IsEditing() && m_IsSetting)
+        if (m_Viewport.GetScene() && m_Viewport.GetScene()->IsEditing() && m_IsSetting)
         {
             ShowMenu();
 
