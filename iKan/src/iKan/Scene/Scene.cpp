@@ -19,6 +19,20 @@
 
 namespace iKan {
     
+    Scene::NativeData Scene::s_NativeData;
+    
+    // ******************************************************************************
+    // Reset the static Native Data
+    // ******************************************************************************
+    void Scene::ResetNativeData()
+    {
+        s_NativeData.CameraWarning      = false;
+        s_NativeData.Editing            = true;;
+        s_NativeData.SceneType          = NativeData::Type::Scene2D;
+        s_NativeData.ViewportHeight     = 1280.0f;
+        s_NativeData.ViewportWidth      = 720.0f;
+    }
+    
     // ******************************************************************************
     // Entity Collision callbacks ater collision
     // ******************************************************************************
@@ -76,10 +90,10 @@ namespace iKan {
     // ******************************************************************************
     void Scene::DeleteEditorCamera()
     {
-        if (m_Data.EditorCamera)
+        if (s_NativeData.EditorCamera)
         {
-            m_Data.EditorCamera.reset();
-            m_Data.EditorCamera = nullptr;
+            s_NativeData.EditorCamera.reset();
+            s_NativeData.EditorCamera = nullptr;
         }
     }
 
@@ -88,8 +102,8 @@ namespace iKan {
     // ******************************************************************************
     void Scene::SetEditorCamera(float fov, float aspectRatio, float near, float far)
     {
-        if (!m_Data.EditorCamera)
-            m_Data.EditorCamera = CreateRef<iKan::EditorCamera>(fov, aspectRatio, near, far);
+        if (!s_NativeData.EditorCamera)
+            s_NativeData.EditorCamera = CreateRef<iKan::EditorCamera>(fov, aspectRatio, near, far);
         else
             IK_CORE_WARN("Editor camera already added to Active Scene");
     }
@@ -101,17 +115,17 @@ namespace iKan {
     // ******************************************************************************
     void Scene::OnImguiRenderer()
     {
-        if (m_Data.CameraWarning)
+        if (s_NativeData.CameraWarning)
         {
             ImGui::Begin("Scene Warning ");
 
-            std::string warningMsg = ((m_Data.Editing) ? "Editor Camera is not created." : "Run-Time Primary Cmaera component is not present");
+            std::string warningMsg = ((s_NativeData.Editing) ? "Editor Camera is not created." : "Run-Time Primary Cmaera component is not present");
             ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), warningMsg.c_str());
             ImGui::End();
         }
         // Editor Camera Imgui Renderer
-        if (m_Data.EditorCamera && m_Data.EditorCamera->IsImguiPannel && m_Data.Editing)
-            m_Data.EditorCamera->OnImguiRenderer();
+        if (s_NativeData.EditorCamera && s_NativeData.EditorCamera->IsImguiPannel && s_NativeData.Editing)
+            s_NativeData.EditorCamera->OnImguiRenderer();
 
         // Rendere Entity Scrip ImuGui
         m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
@@ -184,8 +198,8 @@ namespace iKan {
             }
         });
         
-        if (m_Data.EditorCamera)
-            m_Data.EditorCamera->OnEvent(event);
+        if (s_NativeData.EditorCamera)
+            s_NativeData.EditorCamera->OnEvent(event);
     }
 
     // ******************************************************************************
@@ -195,23 +209,23 @@ namespace iKan {
     {
         InstantiateScripts(ts);
         
-        if (m_Data.SceneType == Scene::Data::Type::Scene3D)
+        if (s_NativeData.SceneType == Scene::NativeData::Type::Scene3D)
         {
-            if (m_Data.EditorCamera)
+            if (s_NativeData.EditorCamera)
             {
-                m_Data.EditorCamera->OnUpdate(ts);
+                s_NativeData.EditorCamera->OnUpdate(ts);
 
-                const auto camera = *m_Data.EditorCamera.get();
+                const auto camera = *s_NativeData.EditorCamera.get();
 
                 SceneRenderer::BeginScene(this, { camera, camera.GetViewProjection() });
                 RenderSpriteComponent();
                 SceneRenderer::EndScene();
 
-                m_Data.CameraWarning = false;
+                s_NativeData.CameraWarning = false;
             }
             else
             {
-                m_Data.CameraWarning = true;
+                s_NativeData.CameraWarning = true;
             }
         }
         // TODO: Change logic in future
@@ -231,11 +245,11 @@ namespace iKan {
                 RenderSpriteComponent();
                 SceneRenderer::EndScene();
                 
-                m_Data.CameraWarning = false;
+                s_NativeData.CameraWarning = false;
             }
             else
             {
-                m_Data.CameraWarning = true;
+                s_NativeData.CameraWarning = true;
             }
 
         }
@@ -262,11 +276,11 @@ namespace iKan {
             RenderSpriteComponent();
             SceneRenderer::EndScene();
 
-            m_Data.CameraWarning = false;
+            s_NativeData.CameraWarning = false;
         }
         else
         {
-            m_Data.CameraWarning = true;
+            s_NativeData.CameraWarning = true;
         }
     }
 
@@ -325,8 +339,8 @@ namespace iKan {
     void Scene::OnViewportResize(uint32_t width, uint32_t height)
     {
         IK_CORE_INFO("Scene Viewport resized to {0} x {1}", width, height);
-        m_Data.ViewportWidth  = width;
-        m_Data.ViewportHeight = height;
+        s_NativeData.ViewportWidth  = width;
+        s_NativeData.ViewportHeight = height;
         
         // Resize our non-FixedAspectRatio cameras
         auto view = m_Registry.view<CameraComponent>();
@@ -337,8 +351,8 @@ namespace iKan {
                 cameraComponent.Camera.SetViewportSize(width, height);
         }
 
-        if (m_Data.EditorCamera)
-            m_Data.EditorCamera->SetViewportSize(width, height);
+        if (s_NativeData.EditorCamera)
+            s_NativeData.EditorCamera->SetViewportSize(width, height);
     }
     
     // ******************************************************************************
@@ -386,7 +400,7 @@ namespace iKan {
             // DO Operation and Activate the Entity
         }
     }
-
+    
     // ******************************************************************************
     // Resize scene view port
     // currEntity : Movaing entity

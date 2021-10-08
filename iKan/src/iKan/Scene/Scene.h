@@ -22,6 +22,9 @@ namespace iKan {
     class Scene
     {
     public:
+        // ******************************************************************************
+        // box Collision Side
+        // ******************************************************************************
         enum class BoxCollisionSide
         {
             Right   = BIT(0),
@@ -29,23 +32,36 @@ namespace iKan {
             Top     = BIT(2),
             Bottom  = BIT(3)
         };
+        
+        // ******************************************************************************
+        // Native Scene data that should be same every time we open a scene
+        // ******************************************************************************
+        struct NativeData
+        {
+            enum Type { Scene2D, Scene3D };
 
+            Type SceneType = Scene2D;
+            bool CameraWarning = false;
+            
+            // Flag to check is editor is under editing proces sor run time
+            // if "false" then editor is run time state
+            bool Editing = true;
+            
+            uint32_t ViewportWidth = 1280.0f, ViewportHeight = 720.0f;
+            
+            // Stores the Editor Camera
+            Ref<iKan::EditorCamera> EditorCamera;
+        };
+
+        // ******************************************************************************
+        // Instance Data Structure
+        // ******************************************************************************
         struct Data
         {
             Data() = default;
             ~Data() = default;
             
-            enum Type { Scene2D, Scene3D };
-            Type SceneType = Scene2D;
-
-            bool CameraWarning = false;
-
-            // Flag to check is editor is under editing proces sor run time
-            // if "false" then editor is run time state
-            bool Editing = true;
-
             uint32_t NumEntities = 0;
-            uint32_t ViewportWidth = 1280.0f, ViewportHeight = 720.0f;
 
             // Stores the file name and path
             std::string FileName, FilePath;
@@ -56,9 +72,6 @@ namespace iKan {
 
             // Store the map of Entityes present in the Scene with their UUID
             std::unordered_map<UUID, Entity> EntityIDMap;
-
-            // Stores the Editor Camera
-            Ref<iKan::EditorCamera> EditorCamera;
         };
 
     public:
@@ -83,45 +96,31 @@ namespace iKan {
         const std::string& GetFilePath() const { return m_Data.FilePath; }
 
         void SetFilePath(const std::string& path);
+        void SetEditingFlag(bool flag) { s_NativeData.Editing = flag; }
+        void SetSceneType(NativeData::Type type) { s_NativeData.SceneType = type; }
+        void OnActivateEntity(Entity& currEntity);
 
         Data& GetDataRef() { return m_Data; }
 
-        Ref<EditorCamera> GetEditorCamera() { return m_Data.EditorCamera; }
+        Ref<EditorCamera> GetEditorCamera() { return s_NativeData.EditorCamera; }
         Ref<Texture> AddTextureToScene(const std::string& texturePath);
-        
-        bool IsEditing() const { return m_Data.Editing; }
-        void SetEditingFlag(bool flag) { m_Data.Editing = flag; }
-        
-        Data::Type GetSceneType() const { return m_Data.SceneType; }
-        void SetSceneType(Data::Type type) { m_Data.SceneType = type; }
+                
+        NativeData::Type GetSceneType() const { return s_NativeData.SceneType; }
         
         int32_t OnBoxColloider(Entity& currEntity, float speed);
-        void OnActivateEntity(Entity& currEntity);
 
-        bool IsRightCollision(Entity& currEntity, float speed)
-        {
-            return (int32_t)Scene::BoxCollisionSide::Right & OnBoxColloider(currEntity, speed);
-        }
-        
-        bool IsLeftCollision(Entity& currEntity, float speed)
-        {
-            return (int32_t)Scene::BoxCollisionSide::Left & OnBoxColloider(currEntity, -speed);
-        }
-        
-        bool IsTopCollision(Entity& currEntity, float speed)
-        {
-            return (int32_t)Scene::BoxCollisionSide::Top & OnBoxColloider(currEntity, speed);
-        }
-        
-        bool IsBottomCollision(Entity& currEntity, float speed)
-        {
-            return (int32_t)Scene::BoxCollisionSide::Bottom & OnBoxColloider(currEntity, -speed);
-        }
+        bool IsEditing() const { return s_NativeData.Editing; }
+        bool IsRightCollision(Entity& currEntity, float speed)  { return (int32_t)Scene::BoxCollisionSide::Right & OnBoxColloider(currEntity, speed); }
+        bool IsLeftCollision(Entity& currEntity, float speed)   { return (int32_t)Scene::BoxCollisionSide::Left & OnBoxColloider(currEntity, -speed); }
+        bool IsTopCollision(Entity& currEntity, float speed)    { return (int32_t)Scene::BoxCollisionSide::Top & OnBoxColloider(currEntity, speed); }
+        bool IsBottomCollision(Entity& currEntity, float speed) { return (int32_t)Scene::BoxCollisionSide::Bottom & OnBoxColloider(currEntity, -speed); }
 
         Entity GetPrimaryCameraEntity();
         Entity GetEditorCameraEntity();
         
         static void CollisionCallbacks(Entity& colloidedEntity1, Entity& colloidedEntity2);
+        static void ResetNativeData();
+        static NativeData& GetNativeDataRef() { return s_NativeData; }
         
     private:
         void InstantiateScripts(Timestep ts);
@@ -133,6 +132,8 @@ namespace iKan {
 
         // Instacne for Scene Data
         Data m_Data;
+        
+        static NativeData s_NativeData;
         
         friend class Entity;
         friend class SceneHeirarchyPannel;

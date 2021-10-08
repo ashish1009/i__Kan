@@ -120,35 +120,40 @@ namespace Mario {
             if (Input::IsKeyPressed(KeyCode::Right) && !s_ActiveScene->IsRightCollision(m_Entity, s_RunningSpeed))
             {
                 SetState(State::Running);
-                m_EntitySize->x = 1.0f;
+                m_EntitySize->x     = 1.0f;
                 m_EntityPosition->x += s_RunningSpeed;
-                *m_CameraRefPos += s_RunningSpeed;
+                
+                *m_CameraRefPos       += s_RunningSpeed;
                 *m_EditorCameraRefPos += s_RunningSpeed;
+                
                 m_Direction = Direction::Right;
             }
             if (Input::IsKeyPressed(KeyCode::Left) && !s_ActiveScene->IsLeftCollision(m_Entity, s_RunningSpeed))
             {
                 SetState(State::Running);
-                m_EntitySize->x = -1.0f;
+                m_EntitySize->x     = -1.0f;
                 m_EntityPosition->x -= s_RunningSpeed;
-                *m_CameraRefPos -= s_RunningSpeed;
+                
+                *m_CameraRefPos       -= s_RunningSpeed;
                 *m_EditorCameraRefPos -= s_RunningSpeed;
+                
                 m_Direction = Direction::Left;
             }
         }
         
         // Check if player fallen to death
         {
-//            if (m_EntityPosition->y <= -9.0f)
-//            {
-//                m_Life--;
-//                // Save scene automatically then open that sceen on death
-//                
-//                m_EntityPosition->x = 0.0f;
-//                m_EntityPosition->y = 0.0f;
-//                Viewport::Get().SaveSceneAs("../../../Mario/assets/Scene/Mario.iKan");
-//                Viewport::Get().OpenScene("../../../Mario/assets/Scene/Mario.iKan");
-//            }
+            if (m_EntityPosition->y <= -9.0f)
+            {
+                m_Life--;
+                // Save scene automatically then open that sceen on death
+                
+                m_EntityPosition->x = 0.0f;
+                m_EntityPosition->y = 0.0f;
+                
+                Viewport::Get().SaveSceneAs("../../../Mario/assets/Scene/Mario.iKan");
+                Viewport::Get().OpenScene("../../../Mario/assets/Scene/Mario.iKan");
+            }
         }
         
         for (int32_t stateIds = 0; stateIds < MAX_STATES; stateIds++)

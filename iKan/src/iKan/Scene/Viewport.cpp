@@ -109,7 +109,7 @@ namespace iKan {
         {
             Renderer::Clear(m_Data.BgColor);
 
-            if (m_ActiveScene->GetDataRef().Editing)
+            if (m_ActiveScene->GetNativeDataRef().Editing)
                 m_ActiveScene->OnUpdateEditor(ts);
             else
                 m_ActiveScene->OnUpdateRuntime(ts);
@@ -225,6 +225,8 @@ namespace iKan {
         CloseScene();
         
         m_ActiveScene = CreateRef<Scene>();
+        Scene::ResetNativeData();
+        
         m_ActiveScene->OnViewportResize((uint32_t)m_Data.Size.x, (uint32_t)m_Data.Size.y);
         
         // Set the current Scene to scene hierarchy pannel
@@ -457,7 +459,7 @@ namespace iKan {
         }
         else
         {
-            bool &isSceneEdititng = m_ActiveScene->GetDataRef().Editing;
+            bool &isSceneEdititng = m_ActiveScene->GetNativeDataRef().Editing;
 
             // Update the Viewport Data
             OnUpdateImGui();
@@ -482,7 +484,7 @@ namespace iKan {
                         if (ImGui::Selectable(sceneTypeString[i], bIsSelected))
                         {
                             currentSceneType = sceneTypeString[i];
-                            m_ActiveScene->SetSceneType((Scene::Data::Type)i);
+                            m_ActiveScene->SetSceneType((Scene::NativeData::Type)i);
                         }
 
                         if (bIsSelected)
