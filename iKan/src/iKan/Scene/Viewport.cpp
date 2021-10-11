@@ -220,7 +220,7 @@ namespace iKan {
     // ******************************************************************************
     // Create new active scene to the Viewport
     // ******************************************************************************
-    Ref<Scene> Viewport::NewScene()
+    const Ref<Scene>& Viewport::NewScene()
     {
         CloseScene();
         
@@ -240,7 +240,7 @@ namespace iKan {
     // ******************************************************************************
     // Open saved scene
     // ******************************************************************************
-    Ref<Scene> Viewport::OpenScene(const std::string& path)
+    const Ref<Scene>& Viewport::OpenScene(const std::string& path)
     {
         IK_INFO("Opening saved scene from {0}", path.c_str());
         if (!path.empty())
@@ -261,7 +261,7 @@ namespace iKan {
     // ******************************************************************************
     // Saving Scene to new file
     // ******************************************************************************
-    Ref<Scene> Viewport::SaveSceneAs(const std::string& path)
+    const Ref<Scene>& Viewport::SaveSceneAs(const std::string& path)
     {
         if (path != "")
         {
@@ -272,7 +272,7 @@ namespace iKan {
         }
         
         if (!m_SaveFileAs && !m_SaveFile)
-            return nullptr;
+            return m_ActiveScene;
         
         m_SaveFileAs = true;
         ImGui::Begin("Save File", &m_SaveFileAs);
@@ -304,7 +304,7 @@ namespace iKan {
     // ******************************************************************************
     // Saving Scene
     // ******************************************************************************
-    Ref<Scene> Viewport::SaveScene()
+    const Ref<Scene>& Viewport::SaveScene()
     {
         if (m_ActiveScene->GetFileName() == "" || m_SaveFileAs)
         {

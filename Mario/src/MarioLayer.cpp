@@ -37,18 +37,43 @@ namespace Mario {
     {
         IK_INFO("Attaching {0} Layer to Application", GetName().c_str());
         m_ActiveScene = m_Viewport.NewScene();
-                
+
         // Creating Entities for background tiles
         Mario::Background::CreateEntities(m_ActiveScene);
-        
+
         // Setup the Camera Entity
         {
-            m_PrimaryCameraEntity = m_ActiveScene->CreateEntity("Primary Camera");
-            m_PrimaryCameraEntity.GetComponent<TransformComponent>().Translation.x = 18.0f;
-        
-            auto& primaryCameraComponent = m_PrimaryCameraEntity.AddComponent<CameraComponent>();
+            Entity primaryCameraEntity = m_ActiveScene->CreateEntity("Primary Camera");
+            primaryCameraEntity.GetComponent<TransformComponent>().Translation.x = 18.0f;
+
+            auto& primaryCameraComponent = primaryCameraEntity.AddComponent<CameraComponent>();
             primaryCameraComponent.Camera.SetProjectionType(SceneCamera::ProjectionType::Orthographic);
             primaryCameraComponent.Camera.SetOrthographicSize(18.0f);
+        }
+        
+        // Editor Camera Component
+        {
+            Entity editorCameraEntity = m_ActiveScene->CreateEntity("Editor Camera");
+            editorCameraEntity.GetComponent<TransformComponent>().Translation.x = 18.0f;
+            
+            auto& editorCameraComponent = editorCameraEntity.AddComponent<CameraComponent>();
+            editorCameraComponent.Camera.SetProjectionType(SceneCamera::ProjectionType::Orthographic);
+            editorCameraComponent.Camera.SetOrthographicSize(18.0f);
+            editorCameraComponent.MakeEditor();
+        }
+        
+        IK_CORE_INFO("{0}, {1}", m_ActiveScene.use_count(), m_Viewport.GetScene().use_count());
+        
+        // Player 1 Component
+        {
+            Entity playerEntity = m_ActiveScene->CreateEntity("Player 1");
+            
+            playerEntity.GetComponent<BoxCollider2DComponent>().IsRigid = true;
+            playerEntity.AddComponent<SpriteRendererComponent>();
+            playerEntity.AddComponent<AliveComponent>().Init(true, AliveComponent::ComponentType::Player);
+            playerEntity.AddComponent<NativeScriptComponent>().Bind<PlayerController>(m_ActiveScene, "PlayerController");
+
+            playerEntity.GetComponent<TransformComponent>().Translation.x = 16.0f;
         }
     }
 
@@ -66,6 +91,7 @@ namespace Mario {
     void MarioLayer::OnUpdate(Timestep ts)
     {
         m_Viewport.OnUpdate(ts);
+        IK_CORE_INFO("{0}", m_Viewport.GetScene().use_count());
     }
 
     // ******************************************************************************
@@ -109,10 +135,10 @@ namespace Mario {
     {
         if (!m_Viewport.GetScene())
             return;
-        
+
         if (!m_Viewport.GetScene()->IsEditing())
             return;
-        
+
         if (ImGui::BeginMenuBar())
         {
             if (ImGui::BeginMenu("Mario"))
@@ -121,11 +147,11 @@ namespace Mario {
                 {
                     if (ImGui::MenuItem("backgroud Setting", nullptr, m_IsSetting))
                         m_IsSetting = !m_IsSetting;
-                    
+
                     ImGui::EndMenu(); // if (ImGui::BeginMenu("Scene"))
                 }
                 ImGui::Separator();
-                
+
                 ImGui::EndMenu(); // ImGui::BeginMenu("File")
             } // if (ImGui::BeginMenuBar())
             ImGui::EndMenuBar(); // ImGui::BeginMenuBar()

@@ -104,10 +104,10 @@ namespace iKan {
         void ShowMenu();
         void OnEvent(Event& event);
 
-        Ref<Scene> NewScene();
-        Ref<Scene> OpenScene(const std::string& path);
-        Ref<Scene> SaveScene();
-        Ref<Scene> SaveSceneAs(const std::string& path = "");
+        const Ref<Scene>& NewScene();
+        const Ref<Scene>& OpenScene(const std::string& path);
+        const Ref<Scene>& SaveScene();
+        const Ref<Scene>& SaveSceneAs(const std::string& path = "");
         void CloseScene();
 
         ViewportData& GetDataRef() { return m_Data; }

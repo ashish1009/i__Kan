@@ -38,8 +38,6 @@ namespace Mario {
 
         Viewport& m_Viewport = Viewport::Create("../../../../../../../iKan.");
         Ref<Scene> m_ActiveScene;
-        
-        Entity m_PrimaryCameraEntity;
     };
 
 }
