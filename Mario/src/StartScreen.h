@@ -15,23 +15,5 @@ using namespace iKan;
 
 namespace Mario {
 
-    // ******************************************************************************
-    // Background Wrapper to store Entity to render background
-    // ******************************************************************************
-    class StartScreen
-    {
-    public:
-        static void CreateEntities(Ref<Scene>& scene);
-
-    private:
-        static void Init();
-
-    private:
-        // Texture to store tile sprite sheet
-        static Ref<Texture> s_Texture;
-
-        // Map of subtexture to character tile
-        static std::unordered_map<char, Ref<SubTexture>> s_TileMap;
-    };
 
 }

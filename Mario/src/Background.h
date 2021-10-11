@@ -16,38 +16,18 @@ using namespace iKan;
 namespace Mario {
     
     // ******************************************************************************
-    // Script for Each item
-    // ******************************************************************************
-    class ItemScript : public ScriptableEntity
-    {
-    public:
-        ~ItemScript() = default;
-        ItemScript(Ref<Scene> scene)
-        : ScriptableEntity(scene) {}
-        
-        virtual void OnCreate() override { m_Created = true; }
-        
-        virtual void OnUpdate(Timestep ts) override {}
-        virtual void OnDestroy() override {}
-        virtual void ImguiRenderer() override {}
-        virtual void OnEvent(Event& event) override {}
-        
-        virtual void OnCollision(Entity& colloidedEntity) override;
-    };
-
-    // ******************************************************************************
     // Background Wrapper to store Entity to render background
     // ******************************************************************************
     class Background
     {
     public:
-        static void CreateEntities(Ref<Scene>& scene);
+        static void CreateEntities(const Ref<Scene>& scene);
         static void ImGuiRenderer();
-
+        
     private:
         static void Init();
         static void ImgButtons(const char name);
-
+        
     public:
         static glm::vec4 s_BgColor;
     };

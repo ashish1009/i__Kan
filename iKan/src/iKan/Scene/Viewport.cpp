@@ -232,7 +232,7 @@ namespace iKan {
         // Set the current Scene to scene hierarchy pannel
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
 
-        IK_INFO("New scene is created");
+        IK_INFO("New scene is created (Reference count for Scene is {0} )", m_ActiveScene.use_count());
         
         return m_ActiveScene;
     }
@@ -245,6 +245,8 @@ namespace iKan {
         IK_INFO("Opening saved scene from {0}", path.c_str());
         if (!path.empty())
         {
+            CloseScene();
+            
             m_ActiveScene = CreateRef<Scene>(path);
             m_ActiveScene->OnViewportResize((uint32_t)m_Data.Size.x, (uint32_t)m_Data.Size.y);
             m_SceneHierarchyPannel.SetContext(m_ActiveScene);

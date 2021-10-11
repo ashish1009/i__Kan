@@ -111,7 +111,7 @@ namespace iKan {
         void CloseScene();
 
         ViewportData& GetDataRef() { return m_Data; }
-        Ref<Scene> GetScene() { return m_ActiveScene; }
+        const Ref<Scene>& GetScene() { return m_ActiveScene; }
 
         // ******************************************************************************
         // Create singleton instance of Viewport
