@@ -37,9 +37,17 @@ namespace Mario {
     // ******************************************************************************
     void PlayerController::OnCreate()
     {
+        Init();
+    }
+    
+    // ******************************************************************************
+    // Initialize the Script Run time
+    // ******************************************************************************
+    void PlayerController::Init()
+    {
         m_EntityPosition   = &m_Entity.GetComponent<TransformComponent>().Translation;
         m_EntitySize       = &m_Entity.GetComponent<TransformComponent>().Scale;
-            
+        
         m_CameraRefPos       = &m_ActiveScene->GetPrimaryCameraEntity().GetComponent<TransformComponent>().Translation.x;
         m_EditorCameraRefPos = &m_ActiveScene->GetEditorCameraEntity().GetComponent<TransformComponent>().Translation.x;
     }
@@ -49,25 +57,22 @@ namespace Mario {
     // ******************************************************************************
     void PlayerController::OnUpdate(Timestep ts)
     {
+        if (Input::IsKeyPressed(KeyCode::Right) && !m_ActiveScene->IsRightCollision(m_Entity, s_RunningSpeed))
         {
-            if (Input::IsKeyPressed(KeyCode::Right) && !m_ActiveScene->IsRightCollision(m_Entity, s_RunningSpeed))
-            {
-                m_EntitySize->x     = 1.0f;
-                m_EntityPosition->x += s_RunningSpeed;
-                
-                *m_CameraRefPos       += s_RunningSpeed;
-                *m_EditorCameraRefPos += s_RunningSpeed;
-            }
-            if (Input::IsKeyPressed(KeyCode::Left) && !m_ActiveScene->IsLeftCollision(m_Entity, s_RunningSpeed))
-            {
-                m_EntitySize->x     = -1.0f;
-                m_EntityPosition->x -= s_RunningSpeed;
-                
-                *m_CameraRefPos       -= s_RunningSpeed;
-                *m_EditorCameraRefPos -= s_RunningSpeed;
-            }
+            m_EntitySize->x     = 1.0f;
+            m_EntityPosition->x += s_RunningSpeed;
+            
+            *m_CameraRefPos       += s_RunningSpeed;
+            *m_EditorCameraRefPos += s_RunningSpeed;
         }
-
+        if (Input::IsKeyPressed(KeyCode::Left) && !m_ActiveScene->IsLeftCollision(m_Entity, s_RunningSpeed))
+        {
+            m_EntitySize->x     = -1.0f;
+            m_EntityPosition->x -= s_RunningSpeed;
+            
+            *m_CameraRefPos       -= s_RunningSpeed;
+            *m_EditorCameraRefPos -= s_RunningSpeed;
+        }
     }
     
     // ******************************************************************************

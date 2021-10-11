@@ -10,6 +10,7 @@
 #pragma once
 
 #include <iKan.h>
+#include "PlayerController.h"
 
 using namespace iKan;
 
@@ -34,10 +35,14 @@ namespace Mario {
         void ShowMenu();
         
     private:
+        const std::string m_PlayerControllerScriptName = "PlayerController";
+
         bool m_IsSetting = true;
 
         Viewport& m_Viewport = Viewport::Create("../../../../../../../iKan.");
         Ref<Scene> m_ActiveScene;
+        
+        PlayerController* m_PlayerController;
     };
 
 }

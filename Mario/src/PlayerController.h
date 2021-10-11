@@ -31,6 +31,12 @@ namespace Mario {
         virtual void OnEvent(Event& event) override;
         virtual void OnCollision(Entity& colloidedEntity) override;
         
+        float GetPositionX() const { return m_EntityPosition->x; }
+        float GetPositionY() const { return m_EntityPosition->x; }
+        
+        void Reset() { m_EntityPosition->x -= 5; }
+        void Init();
+        
     private:
         bool OnkeyPressed(KeyPressedEvent& event);
         bool OnKeyReleased(KeyReleasedEvent& event);

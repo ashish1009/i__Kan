@@ -71,9 +71,10 @@ namespace Mario {
             playerEntity.GetComponent<BoxCollider2DComponent>().IsRigid = true;
             playerEntity.AddComponent<SpriteRendererComponent>();
             playerEntity.AddComponent<AliveComponent>().Init(true, AliveComponent::ComponentType::Player);
-            playerEntity.AddComponent<NativeScriptComponent>().Bind<PlayerController>(m_ActiveScene, "PlayerController");
+            playerEntity.AddComponent<NativeScriptComponent>().Bind<PlayerController>(m_ActiveScene, m_PlayerControllerScriptName);
 
             playerEntity.GetComponent<TransformComponent>().Translation.x = 16.0f;
+            m_PlayerController = dynamic_cast<PlayerController*>(NativeScriptComponent::ScriptsMap[m_PlayerControllerScriptName]);
         }
     }
 
@@ -91,7 +92,16 @@ namespace Mario {
     void MarioLayer::OnUpdate(Timestep ts)
     {
         m_Viewport.OnUpdate(ts);
-        IK_CORE_INFO("{0}", m_Viewport.GetScene().use_count());
+        IK_CORE_INFO("{0}, {1}", m_Viewport.GetScene().use_count(), m_PlayerController->GetPositionX());
+        
+        if (m_PlayerController->GetPositionX() > 40)
+        {
+            m_PlayerController->Reset();
+            m_Viewport.SaveSceneAs("../../../Mario/assets/Scene/Mario.iKan");
+            m_ActiveScene = m_Viewport.OpenScene("../../../Mario/assets/Scene/Mario.iKan");
+            
+            m_PlayerController->Init();
+        }
     }
 
     // ******************************************************************************
