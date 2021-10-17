@@ -90,6 +90,8 @@ namespace iKan {
                 static float iconSizeWidth  = 48.0f;
 
                 ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPos().x + ((iconSizeWidth + 30.0f) * pushId), initPos.y + 30.0f));
+
+                ImGui::PushID(filenameString.c_str());
                 ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
                 bool pressed = PropertyGrid::ImageButton(pushId, iconTexture->GetRendererID(), ImVec2(iconSizeWidth, iconSizeHeight));
                 ImGui::PopStyleColor();
@@ -121,6 +123,7 @@ namespace iKan {
                 ImGui::PopTextWrapPos();
 
                 pushId++;
+                ImGui::PopID();
             }
         }
 

@@ -77,6 +77,11 @@ namespace iKan {
 
             size_t textureID = m_Data.FrameBuffer->GetColorAttachmentRendererID();
             ImGui::Image((void*)textureID, ImVec2{ m_Data.Size.x, m_Data.Size.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+            
+            PropertyGrid::DropConent([](const std::string& path)
+                                     {
+                Viewport::Get().OpenScene(path);
+            });
 
             UpdateBounds();
         }
@@ -248,11 +253,12 @@ namespace iKan {
             CloseScene();
             
             m_ActiveScene = CreateRef<Scene>(path);
-            m_ActiveScene->OnViewportResize((uint32_t)m_Data.Size.x, (uint32_t)m_Data.Size.y);
             m_SceneHierarchyPannel.SetContext(m_ActiveScene);
 
             SceneSerializer serializer(m_ActiveScene);
             serializer.Deserialize(path);
+            
+            m_ActiveScene->OnViewportResize((uint32_t)m_Data.Size.x, (uint32_t)m_Data.Size.y);
         }
         
         return m_ActiveScene;
