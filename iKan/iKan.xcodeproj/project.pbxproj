@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E4FC83C271C5FB400030E10 /* libbox2D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EAD1EB5271C580100A94874 /* libbox2D.a */; };
 		3EC70CC7270B53D600218449 /* Component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EC70CC6270B53D600218449 /* Component.cpp */; };
 		3ED416C926F38DB90037CF6D /* ScriptableEntity.h in Headers */ = {isa = PBXBuildFile; fileRef = 3ED416C826F38DB90037CF6D /* ScriptableEntity.h */; };
 		750AA8E1265D52140031A3E0 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 750AA8DF265D52140031A3E0 /* Utils.cpp */; };
@@ -298,6 +299,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E4FC83C271C5FB400030E10 /* libbox2D.a in Frameworks */,
 				7589D5032677622500EB43D9 /* libyaml.a in Frameworks */,
 				B240109E26343A8A0051B868 /* libImgui.a in Frameworks */,
 				B27FE30E2629E072000FD32D /* libGlad.a in Frameworks */,
@@ -1090,6 +1092,7 @@
 					"${PROJECT_DIR}/vendor/stbimage",
 					"${PROJECT_DIR}/vendor/EnTT/include",
 					"${PROJECT_DIR}/vendor/yaml/yaml/include",
+					"${PROJECT_DIR}/vendor/box2D/box2D/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1126,6 +1129,7 @@
 					"${PROJECT_DIR}/vendor/stbimage",
 					"${PROJECT_DIR}/vendor/EnTT/include",
 					"${PROJECT_DIR}/vendor/yaml/yaml/include",
+					"${PROJECT_DIR}/vendor/box2D/box2D/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
