@@ -215,7 +215,7 @@ namespace iKan {
             {
                 s_NativeData.EditorCamera->OnUpdate(ts);
 
-                const auto camera = *s_NativeData.EditorCamera.get();
+                const auto& camera = *s_NativeData.EditorCamera.get();
 
                 SceneRenderer::BeginScene(this, { camera, camera.GetViewProjection() });
                 RenderSpriteComponent();

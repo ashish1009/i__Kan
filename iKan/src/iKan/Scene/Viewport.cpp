@@ -478,8 +478,6 @@ namespace iKan {
         {
             bool isSceneEdititng = m_ActiveScene->GetNativeDataRef().SceneState == Scene::NativeData::State::Edit;
             
-            IK_INFO("{0}", isSceneEdititng);
-
             // Update the Viewport Data
             OnUpdateImGui();
 
