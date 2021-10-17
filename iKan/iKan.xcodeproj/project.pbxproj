@@ -116,6 +116,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		3EAD1EB4271C580100A94874 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3EAD1EB0271C580100A94874 /* box2D.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3EAD1EA9271C580100A94874;
+			remoteInfo = box2D;
+		};
 		7589D23F2677574300EB43D9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7589D23B2677574200EB43D9 /* yaml.xcodeproj */;
@@ -140,6 +147,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3EAD1EB0271C580100A94874 /* box2D.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = box2D.xcodeproj; path = vendor/box2D/box2D.xcodeproj; sourceTree = "<group>"; };
 		3EC70CC6270B53D600218449 /* Component.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Component.cpp; sourceTree = "<group>"; };
 		3ED416C826F38DB90037CF6D /* ScriptableEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScriptableEntity.h; sourceTree = "<group>"; };
 		750AA8DF265D52140031A3E0 /* Utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
@@ -300,6 +308,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3EAD1EB1271C580100A94874 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3EAD1EB5271C580100A94874 /* libbox2D.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		7589D23C2677574200EB43D9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -533,6 +549,7 @@
 		B25458C5262899580053BD47 /* Dependency */ = {
 			isa = PBXGroup;
 			children = (
+				3EAD1EB0271C580100A94874 /* box2D.xcodeproj */,
 				7589D23B2677574200EB43D9 /* yaml.xcodeproj */,
 				B2400F522634396C0051B868 /* Imgui.xcodeproj */,
 				B27FE3082629E04A000FD32D /* Glad.xcodeproj */,
@@ -830,6 +847,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 3EAD1EB1271C580100A94874 /* Products */;
+					ProjectRef = 3EAD1EB0271C580100A94874 /* box2D.xcodeproj */;
+				},
+				{
 					ProductGroup = B27FE3092629E04A000FD32D /* Products */;
 					ProjectRef = B27FE3082629E04A000FD32D /* Glad.xcodeproj */;
 				},
@@ -850,6 +871,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		3EAD1EB5271C580100A94874 /* libbox2D.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libbox2D.a;
+			remoteRef = 3EAD1EB4271C580100A94874 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		7589D2402677574300EB43D9 /* libyaml.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
