@@ -70,9 +70,6 @@ namespace iKan {
             // Entity and ID hovered by mouse position
             int32_t HoveredEntityID;
             Entity  HoveredEntity;
-
-            // Selected entity in the viewport
-            Entity SelectedEntity;
             
             int32_t GizmoType = -1;
         };

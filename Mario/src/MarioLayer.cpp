@@ -61,9 +61,7 @@ namespace Mario {
             editorCameraComponent.Camera.SetOrthographicSize(18.0f);
             editorCameraComponent.MakeEditor();
         }
-        
-        IK_CORE_INFO("{0}, {1}", m_ActiveScene.use_count(), m_Viewport.GetScene().use_count());
-        
+                
         // Player 1 Component
         {
             Entity playerEntity = m_ActiveScene->CreateEntity("Player 1");
@@ -91,7 +89,6 @@ namespace Mario {
     void MarioLayer::OnUpdate(Timestep ts)
     {
         m_Viewport.OnUpdate(ts);
-        IK_CORE_INFO("{0}, {1}", m_Viewport.GetScene().use_count(), m_PlayerController->GetPositionX());
         
         if (m_PlayerController->GetPositionX() > 40)
         {

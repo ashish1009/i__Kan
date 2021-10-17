@@ -104,6 +104,8 @@ namespace iKan {
         void SetEditingState(NativeData::State state) { s_NativeData.SceneState = state; }
         void SetSceneType(NativeData::Type type) { s_NativeData.SceneType = type; }
         void OnActivateEntity(Entity& currEntity);
+        
+        bool IsEditing() const { return s_NativeData.SceneState == NativeData::State::Edit; }
 
         Data& GetDataRef() { return m_Data; }
 

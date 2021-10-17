@@ -109,9 +109,23 @@ namespace iKan {
             ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
             
             // Camera
-            const Ref<EditorCamera>& editorCamera = m_ActiveScene->GetNativeDataRef().EditorCamera;
-            const glm::mat4& cameraProjection = editorCamera->GetProjection();
-            glm::mat4 cameraView = editorCamera->GetViewMatrix();
+            glm::mat4 cameraProjection;
+            glm::mat4 cameraView;
+            
+            if (m_ActiveScene->GetSceneType() == Scene::NativeData::Type::Scene3D)
+            {
+                const Ref<EditorCamera>& editorCamera = m_ActiveScene->GetNativeDataRef().EditorCamera;
+                cameraProjection = editorCamera->GetProjection();
+                cameraView = editorCamera->GetViewMatrix();
+            }
+            else
+            {
+                // TODO: Not working right now
+                auto cameraEntity = m_ActiveScene->GetEditorCameraEntity();
+                const auto& camera = cameraEntity.GetComponent<CameraComponent>().Camera;
+                cameraProjection = camera.GetProjection();
+                cameraView = glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
+            }
 
             // Entity transform
             auto& tc = selectedEntity.GetComponent<TransformComponent>();
@@ -175,11 +189,7 @@ namespace iKan {
                 case Scene::NativeData::State::Edit:
                 {
                     m_ActiveScene->OnUpdateEditor(ts);
-                
-                    // Update selected entity
-                    if (m_Data.SelectedEntity != Entity(entt::null, nullptr))
-                        m_SceneHierarchyPannel.SetSelectedEntity(m_Data.SelectedEntity);
-                    
+                                    
                     // Update Viewprt entities
                     UpdateMousePos();
                     UpdateHoveredEntity();
@@ -249,9 +259,9 @@ namespace iKan {
         if (e.GetMouseButton() == MouseCode::ButtonLeft && !Input::IsKeyPressed(KeyCode::LeftAlt))
         {
             if (m_Data.MousePosX >= 0 && m_Data.MousePosY >= 0 && m_Data.MousePosX <= m_Data.Width && m_Data.MousePosY <= m_Data.Height )
-                m_Data.SelectedEntity = m_Data.HoveredEntity;
+                m_SceneHierarchyPannel.SetSelectedEntity(m_Data.HoveredEntity);
             else
-                m_Data.SelectedEntity = {};
+                m_Data.GizmoType = -1;
         }
         return false;
     }
