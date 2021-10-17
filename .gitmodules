@@ -16,3 +16,6 @@
 [submodule "iKan/vendor/box2D/box2D"]
 	path = iKan/vendor/box2D/box2D
 	url = https://github.com/ashish1009/box2d
+[submodule "iKan/vendor/imguizmo"]
+	path = iKan/vendor/imguizmo
+	url = https://github.com/ashish1009/ImGuizmo

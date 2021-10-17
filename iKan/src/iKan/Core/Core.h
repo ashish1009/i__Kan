@@ -12,6 +12,7 @@
 #include <iKan/Core/Utils.h>
 #include <iKan/Core/Asserts.h>
 #include <iKan/Core/Buffer.h>
+#include <iKan/Core/Maths.h>
 #include <iKan/Core/Log.h>
 
 // API to get bit positioned value

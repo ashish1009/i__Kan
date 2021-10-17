@@ -15,6 +15,7 @@
 #include <iKan/Imgui/ImguiAPI.h>
 #include <iKan/Renderer/RendererStats.h>
 #include <iKan/Renderer/SceneRenderer.h>
+#include "ImGuizmo.h"
 
 namespace iKan {
 
@@ -82,12 +83,65 @@ namespace iKan {
                                      {
                 Viewport::Get().OpenScene(path);
             });
+            
+            OnImguizmoUpdate();
 
             UpdateBounds();
         }
 
         ImGui::End(); // ImGui::Begin("Viewport");
         ImGui::PopStyleVar(); // ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
+    }
+    
+    // ******************************************************************************
+    // Update Imguizmo for selected entity
+    // ******************************************************************************
+    void Viewport::OnImguizmoUpdate()
+    {
+        Entity selectedEntity = m_SceneHierarchyPannel.GetSelectedEntity();
+        if (selectedEntity && m_Data.GizmoType != -1)
+        {
+            ImGuizmo::SetOrthographic(false);
+            ImGuizmo::SetDrawlist();
+            
+            float windowWidth = (float)ImGui::GetWindowWidth();
+            float windowHeight = (float)ImGui::GetWindowHeight();
+            ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
+            
+            // Camera
+            const Ref<EditorCamera>& editorCamera = m_ActiveScene->GetNativeDataRef().EditorCamera;
+            const glm::mat4& cameraProjection = editorCamera->GetProjection();
+            glm::mat4 cameraView = editorCamera->GetViewMatrix();
+
+            // Entity transform
+            auto& tc = selectedEntity.GetComponent<TransformComponent>();
+            glm::mat4 transform = tc.GetTransform();
+            
+            // Snapping
+            bool snap = Input::IsKeyPressed(KeyCode::LeftControl);
+            float snapValue = 0.5f; // Snap to 0.5m for translation/scale
+            
+            // Snap to 45 degrees for rotation
+            if (m_Data.GizmoType == ImGuizmo::OPERATION::ROTATE)
+                snapValue = 45.0f;
+            
+            float snapValues[3] = { snapValue, snapValue, snapValue };
+            
+            ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection),
+                                 (ImGuizmo::OPERATION)m_Data.GizmoType, ImGuizmo::LOCAL, glm::value_ptr(transform),
+                                 nullptr, snap ? snapValues : nullptr);
+            
+            if (ImGuizmo::IsUsing())
+            {
+                glm::vec3 translation, rotation, scale;
+                Math::DecomposeTransform(transform, translation, rotation, scale);
+                
+                glm::vec3 deltaRotation = rotation - tc.Rotation;
+                tc.Translation = translation;
+                tc.Rotation += deltaRotation;
+                tc.Scale = scale;
+            }
+        }
     }
 
     // ******************************************************************************
@@ -230,6 +284,13 @@ namespace iKan {
             case KeyCode::X:    if (cmd)    CloseScene();   break;
                 
             case KeyCode::D:    if (cmd)    OnDuplicateEntity(); break;
+                                
+            // Gizmos
+            case KeyCode::Q:    m_Data.GizmoType = -1;                               break;
+            case KeyCode::W:    m_Data.GizmoType = ImGuizmo::OPERATION::TRANSLATE;   break;
+            case KeyCode::E:    m_Data.GizmoType = ImGuizmo::OPERATION::ROTATE;      break;
+            case KeyCode::R:    m_Data.GizmoType = ImGuizmo::OPERATION::SCALE;       break;
+                
             default:    break;
         }
         return false;

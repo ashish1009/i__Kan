@@ -73,6 +73,8 @@ namespace iKan {
 
             // Selected entity in the viewport
             Entity SelectedEntity;
+            
+            int32_t GizmoType = -1;
         };
 
     private:
@@ -92,6 +94,7 @@ namespace iKan {
         
         void OnSceneEdit();
         void OnScenePlay();
+        void OnImguizmoUpdate();
         
         void OnDuplicateEntity();
 

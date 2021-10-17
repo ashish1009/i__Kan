@@ -90,8 +90,8 @@
             filePath = "iKan/src/iKan/Scene/Viewport.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
+            startingLineNumber = "178"
+            endingLineNumber = "178"
             landmarkName = "Viewport::OnUpdate(ts)"
             landmarkType = "7">
          </BreakpointContent>
