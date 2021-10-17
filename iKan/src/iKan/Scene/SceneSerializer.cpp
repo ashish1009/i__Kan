@@ -11,6 +11,7 @@
 
 #include <iKan/Scene/Entity.h>
 #include <iKan/Scene/Component.h>
+#include <iKan/Scene/ScriptableEntity.h>
 
 #pragma clang diagnostic ignored "-Wdocumentation"
 #include <yaml-cpp/yaml.h>
@@ -185,10 +186,8 @@ namespace iKan {
     // ******************************************************************************
     static void SerializeEntity(YAML::Emitter& out, Entity entity)
     {
-        UUID uuid = entity.GetComponent<IDComponent>().ID;
-
         out << YAML::BeginMap; // Entity
-        out << YAML::Key << "Entity" << YAML::Value << uuid; // TODO: Entity ID goes here
+        out << YAML::Key << "Entity" << YAML::Value << entity.GetUUID();
 
         if (entity.HasComponent<TagComponent>())
         {

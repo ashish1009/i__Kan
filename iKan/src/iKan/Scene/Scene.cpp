@@ -11,6 +11,7 @@
 #include <iKan/Scene/Entity.h>
 #include <iKan/Scene/Component.h>
 #include <iKan/Scene/Viewport.h>
+#include <iKan/Scene/ScriptableEntity.h>
 #include <iKan/Renderer/SceneRenderer.h>
 #include <iKan/Renderer/Renderer2D.h>
 #include <iKan/Renderer/Renderer.h>

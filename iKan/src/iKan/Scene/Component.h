@@ -11,7 +11,7 @@
 
 #include <iKan/Core/UUID.h>
 #include <iKan/Scene/SceneCamera.h>
-#include <iKan/Scene/ScriptableEntity.h>
+#include <iKan/Scene/Scene.h>
 #include <iKan/Renderer/Texture.h>
 
 namespace iKan {
@@ -278,6 +278,7 @@ namespace iKan {
     // ******************************************************************************
     // Native Script component
     // ******************************************************************************
+    class ScriptableEntity;
     struct NativeScriptComponent
     {
     public:

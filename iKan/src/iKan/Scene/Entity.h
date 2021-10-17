@@ -10,6 +10,7 @@
 #pragma once
 
 #include <iKan/Scene/Scene.h>
+#include <iKan/Scene/Component.h>
 
 namespace iKan {
     
@@ -69,6 +70,8 @@ namespace iKan {
             IK_CORE_ASSERT(HasComponent<T>(), "Entity does not have component!");
             m_Scene->m_Registry.remove<T>(m_EntityHandle);
         }
+        
+        UUID GetUUID() { return GetComponent<IDComponent>().ID; }
         
         operator entt::entity() const { return m_EntityHandle; }
         operator bool() const { return m_EntityHandle != entt::null; }
