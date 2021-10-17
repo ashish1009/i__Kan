@@ -46,13 +46,14 @@ namespace iKan {
         {
             if (ImGui::BeginDragDropTarget() && !ImGui::IsMouseDragging(0) && ImGui::IsMouseReleased(0))
             {
-                const ImGuiPayload* data = ImGui::AcceptDragDropPayload("SelectedFile", ImGuiDragDropFlags_AcceptBeforeDelivery);
+                if (const ImGuiPayload* data = ImGui::AcceptDragDropPayload("SelectedFile", ImGuiDragDropFlags_AcceptBeforeDelivery))
+                {
+                    char* filePath = new char[data->DataSize + 1];
+                    memcpy(filePath, (char*)data->Data, data->DataSize);
+                    filePath[data->DataSize] = '\0';
 
-                char* filePath = new char[data->DataSize + 1];
-                memcpy(filePath, (char*)data->Data, data->DataSize);
-                filePath[data->DataSize] = '\0';
-
-                uiFunction(filePath);
+                    uiFunction(filePath);
+                }
                 ImGui::EndDragDropTarget();
             }
         }

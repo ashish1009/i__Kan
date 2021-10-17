@@ -42,7 +42,7 @@ namespace iKan {
         bool IsContentBrowserPannel = true;
 
     private:
-        static constexpr float s_SideChildWidth = 0.25;
+        static constexpr float s_SideChildWidth = 0.15;
         static constexpr float s_WindowYOffset  = 82.0f;
 
         std::filesystem::path m_CurrentDir;
