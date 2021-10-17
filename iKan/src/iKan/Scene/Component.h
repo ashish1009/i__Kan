@@ -262,16 +262,16 @@ namespace iKan {
     // ******************************************************************************
     // 2D Box colloider compoennt. If added them 2D box is Rigid
     // ******************************************************************************
-    struct BoxCollider2DComponent
+    struct BoxColliderComponentss
     {
         bool IsRigid = false;
 
-        ~BoxCollider2DComponent() = default;
+        ~BoxColliderComponentss() = default;
 
-        BoxCollider2DComponent() = default;
-        BoxCollider2DComponent(const BoxCollider2DComponent& other) = default;
+        BoxColliderComponentss() = default;
+        BoxColliderComponentss(const BoxColliderComponentss& other) = default;
 
-        BoxCollider2DComponent(bool flag)
+        BoxColliderComponentss(bool flag)
         : IsRigid(flag) { }
     };
     
@@ -318,6 +318,47 @@ namespace iKan {
             Activated = activated;
             Type = type;
         }
+    };
+    
+    // ******************************************************************************
+    // RigidBody2DComponent
+    // ******************************************************************************
+    struct RigidBody2DComponent
+    {
+        enum class BodyType { Static = 0, Dynamic = 1, Kinematic = 2 };
+        BodyType Type = BodyType::Static;
+        bool FixedRotation = false;
+        
+        // Storage
+        void* RuntimeBody = nullptr;
+        
+        ~RigidBody2DComponent() = default;
+        
+        RigidBody2DComponent() = default;
+        RigidBody2DComponent(const RigidBody2DComponent& other) = default;
+    };
+    
+    // ******************************************************************************
+    // BoxColloiderComponent
+    // ******************************************************************************
+    struct BoxColloider2DComponent
+    {
+        glm::vec2 Offset = { 0.0f, 0.0f };
+        glm::vec2 Size = { 0.5f, 0.5f };
+        
+        // TODO: Move to physics material
+        float Density  = 1.0f;
+        float Friction = 0.5f;
+        float Restitution = 0.0f;
+        float RestitutionThreshold = 0.5f;
+        
+        // Storage
+        void* RuntimeFixture = nullptr;
+        
+        ~BoxColloider2DComponent() = default;
+        
+        BoxColloider2DComponent() = default;
+        BoxColloider2DComponent(const BoxColloider2DComponent& other) = default;
     };
         
 }

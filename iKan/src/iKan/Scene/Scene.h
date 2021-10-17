@@ -15,6 +15,8 @@
 #include <iKan/Editor/EditorCamera.h>
 #include <iKan/Renderer/Texture.h>
 
+class b2World;
+
 namespace iKan {
     
     class Entity;
@@ -89,6 +91,9 @@ namespace iKan {
         void SetEditorCamera(float fov = glm::radians(45.0f), float aspectRatio = 1800.0f/800.0f, float near = 0.01f, float far = 10000.0f);
         void GetEntityIdFromPixels(int32_t mx, int32_t my, int32_t& pixelData);
         
+        void OnRuntimeStart();
+        void OnRuntimeStop();
+        
         uint32_t GetNumEntities() const { return m_Data.NumEntities; }
 
         const std::string& GetFileName() const { return m_Data.FileName; }
@@ -131,6 +136,8 @@ namespace iKan {
 
         // Instacne for Scene Data
         Data m_Data;
+        
+        b2World* m_PhysicsWorld = nullptr;
         
         static NativeData s_NativeData;
         
