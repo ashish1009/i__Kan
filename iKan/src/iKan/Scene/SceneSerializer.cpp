@@ -293,12 +293,12 @@ namespace iKan {
 
         }
 
-        if (entity.HasComponent<BoxColliderComponentss>())
+        if (entity.HasComponent<AABBColloiderComponent>())
         {
             out << YAML::Key << "BoxColliderComponentss";
             out << YAML::BeginMap; // BoxCollider2DComponent
 
-            auto& boxColComp = entity.GetComponent<BoxColliderComponentss>();
+            auto& boxColComp = entity.GetComponent<AABBColloiderComponent>();
             out << YAML::Key << "IsRigid" << YAML::Value << boxColComp.IsRigid;
 
             out << YAML::EndMap; // BoxCollider2DComponent
@@ -554,7 +554,7 @@ namespace iKan {
                 auto boxColComp = entity["BoxColliderComponentss"];
                 if (boxColComp)
                 {
-                    auto& bcc   = deserializedEntity.GetComponent<BoxColliderComponentss>();
+                    auto& bcc   = deserializedEntity.GetComponent<AABBColloiderComponent>();
                     bcc.IsRigid = boxColComp["IsRigid"].as<bool>();
 
                     IK_CORE_INFO("  BoxCollider 2D Component:");

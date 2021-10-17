@@ -224,9 +224,9 @@ namespace iKan {
             ImGui::Separator();
         }
 
-        if (entity.HasComponent<BoxColliderComponentss>())
+        if (entity.HasComponent<AABBColloiderComponent>())
         {
-            auto& isRigid = entity.GetComponent<BoxColliderComponentss>().IsRigid;
+            auto& isRigid = entity.GetComponent<AABBColloiderComponent>().IsRigid;
             PropertyGrid::CheckBox("Is Rigid", isRigid, 100.0f);
             ImGui::Separator();
         }

@@ -170,7 +170,6 @@ namespace iKan {
         entity.AddComponent<TagComponent>(name);
         entity.AddComponent<TransformComponent>();
         entity.AddComponent<SceneHierarchyPannelProp>(true);
-        entity.AddComponent<BoxColliderComponentss>(false);
 
         IK_CORE_ASSERT((m_Data.EntityIDMap.find(uuid) == m_Data.EntityIDMap.end()), "Entity Already Added");
         m_Data.EntityIDMap[uuid] = entity;
@@ -521,7 +520,7 @@ namespace iKan {
         const auto& cePos  = ceTc.Translation - (ceSize - 1.0f) / 2.0f;
 
         // Traverse entire Entities to get Box colloider entity one by one
-        auto view = m_Registry.view<BoxColliderComponentss>();
+        auto view = m_Registry.view<AABBColloiderComponent>();
         for (auto entity : view)
         {
             // no operation for same enitity
@@ -533,7 +532,7 @@ namespace iKan {
 
             // Coilloider entity (still or moving) property (Size and position)
             auto& transform = e.GetComponent<TransformComponent>();
-            auto& boxColl   = e.GetComponent<BoxColliderComponentss>();
+            auto& boxColl   = e.GetComponent<AABBColloiderComponent>();
 
             // If coilloider is rigid
             if (boxColl.IsRigid)

@@ -58,9 +58,9 @@
             filePath = "iKan/src/iKan/Scene/Scene.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "349"
-            endingLineNumber = "349"
-            landmarkName = "Scene::OnViewportResize(width, height)"
+            startingLineNumber = "348"
+            endingLineNumber = "348"
+            landmarkName = "Scene::OnRuntimeStart()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -74,9 +74,9 @@
             filePath = "iKan/src/iKan/Scene/Scene.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "346"
-            endingLineNumber = "346"
-            landmarkName = "Scene::OnViewportResize(width, height)"
+            startingLineNumber = "345"
+            endingLineNumber = "345"
+            landmarkName = "Scene::OnRuntimeStart()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
