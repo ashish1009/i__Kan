@@ -89,6 +89,9 @@ namespace iKan {
         void UpdateHoveredEntity();
         void UpdateMousePos();
         void UpdateBounds();
+        
+        void OnSceneEdit();
+        void OnScenePlay();
 
     public:
         ~Viewport() = default;

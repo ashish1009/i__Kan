@@ -27,7 +27,7 @@ namespace iKan {
     void Scene::ResetNativeData()
     {
         s_NativeData.CameraWarning      = false;
-        s_NativeData.Editing            = true;;
+        s_NativeData.SceneState         = NativeData::State::Edit;
         s_NativeData.SceneType          = NativeData::Type::Scene2D;
         s_NativeData.ViewportHeight     = 1280.0f;
         s_NativeData.ViewportWidth      = 720.0f;
@@ -119,12 +119,12 @@ namespace iKan {
         {
             ImGui::Begin("Scene Warning ");
 
-            std::string warningMsg = ((s_NativeData.Editing) ? "Editor Camera is not created." : "Run-Time Primary Cmaera component is not present");
+            std::string warningMsg = ((s_NativeData.SceneState == NativeData::State::Edit) ? "Editor Camera is not created." : "Run-Time Primary Cmaera component is not present");
             ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), warningMsg.c_str());
             ImGui::End();
         }
         // Editor Camera Imgui Renderer
-        if (s_NativeData.EditorCamera && s_NativeData.EditorCamera->IsImguiPannel && s_NativeData.Editing)
+        if (s_NativeData.EditorCamera && s_NativeData.EditorCamera->IsImguiPannel && (s_NativeData.SceneState == NativeData::State::Edit))
             s_NativeData.EditorCamera->OnImguiRenderer();
 
         // Rendere Entity Scrip ImuGui

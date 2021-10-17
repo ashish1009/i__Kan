@@ -113,21 +113,32 @@ namespace iKan {
         m_Data.FrameBuffer->Bind();
         {
             Renderer::Clear(m_Data.BgColor);
+            
+            Scene::NativeData::State state = m_ActiveScene->GetNativeDataRef().SceneState;
 
-            if (m_ActiveScene->GetNativeDataRef().Editing)
-                m_ActiveScene->OnUpdateEditor(ts);
-            else
-                m_ActiveScene->OnUpdateRuntime(ts);
-
-            if (m_ActiveScene->IsEditing())
+            switch (state)
             {
-                // Update selected entity
-                if (m_Data.SelectedEntity != Entity(entt::null, nullptr))
-                    m_SceneHierarchyPannel.SetSelectedEntity(m_Data.SelectedEntity);
+                case Scene::NativeData::State::Edit:
+                {
+                    m_ActiveScene->OnUpdateEditor(ts);
                 
-                // Update Viewprt entities
-                UpdateMousePos();
-                UpdateHoveredEntity();
+                    // Update selected entity
+                    if (m_Data.SelectedEntity != Entity(entt::null, nullptr))
+                        m_SceneHierarchyPannel.SetSelectedEntity(m_Data.SelectedEntity);
+                    
+                    // Update Viewprt entities
+                    UpdateMousePos();
+                    UpdateHoveredEntity();
+                    
+                    break;
+                }
+                case Scene::NativeData::State::Play:
+                {
+                    m_ActiveScene->OnUpdateRuntime(ts);
+                    break;
+                }
+                default:
+                    break;
             }
         }
         m_Data.FrameBuffer->Unbind();
@@ -465,7 +476,9 @@ namespace iKan {
         }
         else
         {
-            bool &isSceneEdititng = m_ActiveScene->GetNativeDataRef().Editing;
+            bool isSceneEdititng = m_ActiveScene->GetNativeDataRef().SceneState == Scene::NativeData::State::Edit;
+            
+            IK_INFO("{0}", isSceneEdititng);
 
             // Update the Viewport Data
             OnUpdateImGui();
@@ -500,23 +513,38 @@ namespace iKan {
                 }
                 ImGui::PopItemWidth();
 
-                // Play Pause Icon
-                ImGui::NextColumn();
-                ImGui::SetColumnWidth(2, 50);
-                uint32_t pauseTexId = m_PauseTexture->GetRendererID(), playTexId = m_PlayeTexture->GetRendererID();
-
-                if (isSceneEdititng)
-                {
-                    if (PropertyGrid::ImageButton("Pause", playTexId, ImVec2(16.0f, 16.0f)))
-                        isSceneEdititng = false;
-                }
-                else
-                {
-                    if (PropertyGrid::ImageButton("Pause", pauseTexId, ImVec2(16.0f, 16.0f)))
-                        isSceneEdititng = true;
-                }
-
                 ImGui::Columns(1);
+                ImGui::End();
+            }
+            
+            // Play Pause Buttons
+            {
+                ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 2));
+                ImGui::PushStyleVar(ImGuiStyleVar_ItemInnerSpacing, ImVec2(0, 0));
+                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+
+                auto& colors = ImGui::GetStyle().Colors;
+                const auto& buttonHovered = colors[ImGuiCol_ButtonHovered];
+
+                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(buttonHovered.x, buttonHovered.y, buttonHovered.z, 0.5f));
+                const auto& buttonActive = colors[ImGuiCol_ButtonActive];
+                ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(buttonActive.x, buttonActive.y, buttonActive.z, 0.5f));
+
+                ImGui::Begin("##toolbar", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+                
+                uint32_t texIdx = isSceneEdititng ? m_PlayeTexture->GetRendererID() : m_PauseTexture->GetRendererID();
+                float size = ImGui::GetWindowHeight() - 4.0f; // 4 just random number
+                ImGui::SetCursorPosX((ImGui::GetWindowContentRegionMax().x * 0.5f) - (size * 0.5f));
+                if (PropertyGrid::ImageButton("Pause", texIdx, ImVec2(size, size)))
+                {
+                    if (isSceneEdititng)
+                        OnScenePlay();
+                    else
+                        OnSceneEdit();
+                }
+                
+                ImGui::PopStyleVar(2);
+                ImGui::PopStyleColor(3);
                 ImGui::End();
             }
             
@@ -532,6 +560,22 @@ namespace iKan {
                 m_SceneHierarchyPannel.OnImguiender();
             }
         }
+    }
+    
+    // ******************************************************************************
+    // Edit the Scene
+    // ******************************************************************************
+    void Viewport::OnSceneEdit()
+    {
+        m_ActiveScene->SetEditingState(Scene::NativeData::State::Edit);
+    }
+    
+    // ******************************************************************************
+    // Play The Scene
+    // ******************************************************************************
+    void Viewport::OnScenePlay()
+    {
+        m_ActiveScene->SetEditingState(Scene::NativeData::State::Play);
     }
 
     // ******************************************************************************

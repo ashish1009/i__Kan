@@ -39,13 +39,12 @@ namespace iKan {
         struct NativeData
         {
             enum Type { Scene2D, Scene3D };
+            enum State { Edit, Play };
 
             Type SceneType = Scene2D;
             bool CameraWarning = false;
             
-            // Flag to check is editor is under editing proces sor run time
-            // if "false" then editor is run time state
-            bool Editing = true;
+            State SceneState = State::Edit;
             
             uint32_t ViewportWidth = 1280.0f, ViewportHeight = 720.0f;
             
@@ -96,7 +95,7 @@ namespace iKan {
         const std::string& GetFilePath() const { return m_Data.FilePath; }
 
         void SetFilePath(const std::string& path);
-        void SetEditingFlag(bool flag) { s_NativeData.Editing = flag; }
+        void SetEditingState(NativeData::State state) { s_NativeData.SceneState = state; }
         void SetSceneType(NativeData::Type type) { s_NativeData.SceneType = type; }
         void OnActivateEntity(Entity& currEntity);
 
@@ -106,10 +105,10 @@ namespace iKan {
         Ref<Texture> AddTextureToScene(const std::string& texturePath);
                 
         NativeData::Type GetSceneType() const { return s_NativeData.SceneType; }
+        NativeData::State IsEditing() const { return s_NativeData.SceneState; }
         
         int32_t OnBoxColloider(Entity& currEntity, float speed);
 
-        bool IsEditing() const { return s_NativeData.Editing; }
         bool IsRightCollision(Entity& currEntity, float speed)  { return (int32_t)Scene::BoxCollisionSide::Right & OnBoxColloider(currEntity, speed); }
         bool IsLeftCollision(Entity& currEntity, float speed)   { return (int32_t)Scene::BoxCollisionSide::Left & OnBoxColloider(currEntity, -speed); }
         bool IsTopCollision(Entity& currEntity, float speed)    { return (int32_t)Scene::BoxCollisionSide::Top & OnBoxColloider(currEntity, speed); }
