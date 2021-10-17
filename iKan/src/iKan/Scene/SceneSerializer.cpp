@@ -134,34 +134,6 @@ namespace iKan {
         out << YAML::BeginSeq << v.x << v.y << v.z << v.w << YAML::EndSeq;
         return out;
     }
-    
-    // ******************************************************************************
-    // Type Map
-    // ******************************************************************************
-    static std::string RigidBody2DTypeToString(RigidBody2DComponent::BodyType type)
-    {
-        switch (type)
-        {
-            case RigidBody2DComponent::BodyType::Static:    return "Static";
-            case RigidBody2DComponent::BodyType::Dynamic:   return "Dynamic";
-            case RigidBody2DComponent::BodyType::Kinematic: return "Kinematic";
-        }
-        IK_CORE_ASSERT(false, "invalid");
-        return "";
-    }
-    
-    // ******************************************************************************
-    // Typ eMAP
-    // ******************************************************************************
-    static RigidBody2DComponent::BodyType StringToRigidBody2DType(const std::string& type)
-    {
-        if ("Static" == type) return RigidBody2DComponent::BodyType::Static;
-        if ("Dynamic" == type) return RigidBody2DComponent::BodyType::Dynamic;
-        if ("Kinematic" == type) return RigidBody2DComponent::BodyType::Kinematic;
-        
-        IK_CORE_ASSERT(false, "invalid");
-        return RigidBody2DComponent::BodyType::Static;
-    }
 
     // ******************************************************************************
     // SceneSerializer constructor
@@ -293,12 +265,12 @@ namespace iKan {
 
         }
 
-        if (entity.HasComponent<BoxColliderComponentss>())
+        if (entity.HasComponent<BoxCollider2DComponent>())
         {
-            out << YAML::Key << "BoxColliderComponentss";
+            out << YAML::Key << "BoxCollider2DComponent";
             out << YAML::BeginMap; // BoxCollider2DComponent
 
-            auto& boxColComp = entity.GetComponent<BoxColliderComponentss>();
+            auto& boxColComp = entity.GetComponent<BoxCollider2DComponent>();
             out << YAML::Key << "IsRigid" << YAML::Value << boxColComp.IsRigid;
 
             out << YAML::EndMap; // BoxCollider2DComponent
@@ -332,35 +304,6 @@ namespace iKan {
             out << YAML::Key << "Activated" << YAML::Value << aliveComp.Activated;
             
             out << YAML::EndMap; // AliveComponent
-        }
-        
-        if (entity.HasComponent<RigidBody2DComponent>())
-        {
-            out << YAML::Key << "RigidBody2DComponent";
-            out << YAML::BeginMap; // RigidBody2DComponent
-            
-            auto& rigidComp = entity.GetComponent<RigidBody2DComponent>();
-            out << YAML::Key << "BodyType" << YAML::Value << RigidBody2DTypeToString(rigidComp.Type);
-            out << YAML::Key << "FixedRotation" << YAML::Value << rigidComp.FixedRotation;
-            
-            out << YAML::EndMap; // RigidBody2DComponent
-        }
-        
-        if (entity.HasComponent<BoxColloider2DComponent>())
-        {
-            out << YAML::Key << "BoxColloider2DComponent";
-            out << YAML::BeginMap; // BoxColloider2DComponent
-            
-            auto& boxColComp = entity.GetComponent<BoxColloider2DComponent>();
-            out << YAML::Key << "Offset" << YAML::Value << boxColComp.Offset;
-            out << YAML::Key << "Size" << YAML::Value << boxColComp.Size;
-            
-            out << YAML::Key << "Density" << YAML::Value << boxColComp.Density;
-            out << YAML::Key << "Friction" << YAML::Value << boxColComp.Friction;
-            out << YAML::Key << "Restitution" << YAML::Value << boxColComp.Restitution;
-            out << YAML::Key << "RestitutionThreshold" << YAML::Value << boxColComp.RestitutionThreshold;
-            
-            out << YAML::EndMap; // BoxColloider2DComponent
         }
 
         out << YAML::EndMap; // Entity
@@ -551,10 +494,10 @@ namespace iKan {
                     IK_CORE_INFO("      Is Property pannel present : {0}", schc.IsProp);
                 }
 
-                auto boxColComp = entity["BoxColliderComponentss"];
+                auto boxColComp = entity["BoxCollider2DComponent"];
                 if (boxColComp)
                 {
-                    auto& bcc   = deserializedEntity.GetComponent<BoxColliderComponentss>();
+                    auto& bcc   = deserializedEntity.GetComponent<BoxCollider2DComponent>();
                     bcc.IsRigid = boxColComp["IsRigid"].as<bool>();
 
                     IK_CORE_INFO("  BoxCollider 2D Component:");
@@ -593,41 +536,6 @@ namespace iKan {
                     acc.Type = (AliveComponent::ComponentType)aliveComp["Type"].as<uint32_t>();
                     
                     IK_CORE_INFO("      Type : {0}, Activated : {1}", acc.Type, acc.Activated);
-                }
-                
-                auto rigidComp = entity["RigidBody2DComponent"];
-                if (rigidComp)
-                {
-                    IK_CORE_INFO("  Rigid Body 2D Component:");
-                    auto& rcc   = deserializedEntity.AddComponent<RigidBody2DComponent>();
-                    
-                    rcc.Type = StringToRigidBody2DType(rigidComp["BodyType"].as<std::string>());
-                    rcc.FixedRotation = rigidComp["FixedRotation"].as<bool>();
-                    
-                    IK_CORE_INFO("      Type : {0}, Fixed Rotation : {1}", rigidComp["BodyType"].as<std::string>(), rcc.FixedRotation);
-                }
-                
-                auto boxCol2DComp = entity["BoxColloider2DComponent"];
-                if (rigidComp)
-                {
-                    IK_CORE_INFO("  Box Colloider 2D Component:");
-                    auto& bcc   = deserializedEntity.AddComponent<BoxColloider2DComponent>();
-                    
-                    bcc.Offset = boxCol2DComp["Offset"].as<glm::vec2>();
-                    bcc.Size = boxCol2DComp["Size"].as<glm::vec2>();
-                    
-                    bcc.Density = boxCol2DComp["Density"].as<float>();
-                    bcc.Friction = boxCol2DComp["Friction"].as<float>();
-                    bcc.Restitution = boxCol2DComp["Restitution"].as<float>();
-                    bcc.RestitutionThreshold = boxCol2DComp["RestitutionThreshold"].as<float>();
-                    
-                    IK_CORE_INFO("      Offset {0} x {1}", bcc.Offset.x, bcc.Offset.y);
-                    IK_CORE_INFO("      Size {0} x {1}", bcc.Size.x, bcc.Size.y);
-                    
-                    IK_CORE_INFO("      Density {0}", bcc.Density);
-                    IK_CORE_INFO("      Friction {0}", bcc.Friction);
-                    IK_CORE_INFO("      Restitution {0}", bcc.Restitution);
-                    IK_CORE_INFO("      RestitutionThreshold {0}", bcc.RestitutionThreshold);
                 }
             }
         }

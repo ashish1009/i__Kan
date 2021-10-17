@@ -15,31 +15,11 @@
 #include <iKan/Renderer/Renderer2D.h>
 #include <iKan/Renderer/Renderer.h>
 
-#include "box2d/b2_world.h"
-#include "box2d/b2_body.h"
-#include "box2d/b2_fixture.h"
-#include "box2d/b2_polygon_shape.h"
-
 #include <glad/glad.h>
 
 namespace iKan {
     
     Scene::NativeData Scene::s_NativeData;
-    
-    // ******************************************************************************
-    // body type Converstion
-    // ******************************************************************************
-    static b2BodyType RigidBody2DTypeToBox2D(RigidBody2DComponent::BodyType type)
-    {
-        switch (type)
-        {
-            case RigidBody2DComponent::BodyType::Static:  return b2BodyType::b2_staticBody;
-            case RigidBody2DComponent::BodyType::Dynamic: return b2BodyType::b2_dynamicBody;
-            case RigidBody2DComponent::BodyType::Kinematic: return b2BodyType::b2_kinematicBody;
-        }
-        IK_CORE_ASSERT(false, "Invalid");
-        return b2BodyType::b2_staticBody;
-    }
     
     // ******************************************************************************
     // Reset the static Native Data
@@ -170,7 +150,7 @@ namespace iKan {
         entity.AddComponent<TagComponent>(name);
         entity.AddComponent<TransformComponent>();
         entity.AddComponent<SceneHierarchyPannelProp>(true);
-        entity.AddComponent<BoxColliderComponentss>(false);
+        entity.AddComponent<BoxCollider2DComponent>(false);
 
         IK_CORE_ASSERT((m_Data.EntityIDMap.find(uuid) == m_Data.EntityIDMap.end()), "Entity Already Added");
         m_Data.EntityIDMap[uuid] = entity;
@@ -281,35 +261,6 @@ namespace iKan {
     void Scene::OnUpdateRuntime(Timestep ts)
     {
         InstantiateScripts(ts);
-        
-        // Physics
-        {
-            const int32_t velocityIteration = 6;
-            const int32_t positionIteration = 2;
-            
-            m_PhysicsWorld->Step(ts, velocityIteration, positionIteration);
-            
-            // Get Transform
-            auto view = m_Registry.view<RigidBody2DComponent>();
-            for (auto e : view)
-            {
-                Entity entity = { e, this };
-                auto& transform = entity.GetComponent<TransformComponent>();
-                auto& rb2d = entity.GetComponent<RigidBody2DComponent>();
-                
-                b2Body* body = (b2Body*)rb2d.RuntimeBody;
-                if (body != nullptr)
-                {
-                    const auto& position = body->GetPosition();
-                    
-                    IK_CORE_INFO("{0}, {1}", position.x, position.y);
-                    transform.Translation.x = position.x;
-                    transform.Translation.y = position.y;
-                    
-                    transform.Rotation.z = body->GetAngle();
-                }
-            }
-        }
 
         Camera* mainCamera = nullptr;
         glm::mat4 cameraTransform;
@@ -331,61 +282,6 @@ namespace iKan {
         {
             s_NativeData.CameraWarning = true;
         }
-    }
-    
-    // ******************************************************************************
-    // Runtime Starting the scene
-    // ******************************************************************************
-    void Scene::OnRuntimeStart()
-    {
-        s_NativeData.SceneState = NativeData::State::Play;
-        
-        m_PhysicsWorld = new b2World({ 0.0f, -9.8f });
-        auto view = m_Registry.view<RigidBody2DComponent>();
-        for (auto e : view)
-        {
-            Entity entity = { e, this };
-            auto& transform = entity.GetComponent<TransformComponent>();
-            auto& rb2d = entity.GetComponent<RigidBody2DComponent>();
-            
-            b2BodyDef bodyDef;
-            bodyDef.type = RigidBody2DTypeToBox2D(rb2d.Type);
-            bodyDef.position.Set(transform.Translation.x, transform.Translation.y);
-            bodyDef.angle = transform.Rotation.z;
-            
-            b2Body* body = m_PhysicsWorld->CreateBody(&bodyDef);
-            body->SetFixedRotation(rb2d.FixedRotation);
-            
-            rb2d.RuntimeBody = body;
-            
-            if (entity.HasComponent<BoxColloider2DComponent>())
-            {
-                auto& bc2d = entity.GetComponent<BoxColloider2DComponent>();
-                
-                b2PolygonShape polygonShape;
-                polygonShape.SetAsBox(bc2d.Size.x * transform.Scale.x, bc2d.Size.y * transform.Scale.y);
-                
-                b2FixtureDef fixtureDef;
-                fixtureDef.shape = & polygonShape;
-                fixtureDef.density = bc2d.Density;
-                fixtureDef.friction = bc2d.Friction;
-                fixtureDef.restitution = bc2d.Restitution;
-                fixtureDef.restitutionThreshold = bc2d.RestitutionThreshold;
-                
-                body->CreateFixture(&fixtureDef);
-            }
-        }
-    }
-
-    // ******************************************************************************
-    // Runtime Stoping the scene
-    // ******************************************************************************
-    void Scene::OnRuntimeStop()
-    {
-        s_NativeData.SceneState = NativeData::State::Edit;
-        
-        delete m_PhysicsWorld;
-        m_PhysicsWorld = nullptr;
     }
 
     // ******************************************************************************
@@ -521,7 +417,7 @@ namespace iKan {
         const auto& cePos  = ceTc.Translation - (ceSize - 1.0f) / 2.0f;
 
         // Traverse entire Entities to get Box colloider entity one by one
-        auto view = m_Registry.view<BoxColliderComponentss>();
+        auto view = m_Registry.view<BoxCollider2DComponent>();
         for (auto entity : view)
         {
             // no operation for same enitity
@@ -533,7 +429,7 @@ namespace iKan {
 
             // Coilloider entity (still or moving) property (Size and position)
             auto& transform = e.GetComponent<TransformComponent>();
-            auto& boxColl   = e.GetComponent<BoxColliderComponentss>();
+            auto& boxColl   = e.GetComponent<BoxCollider2DComponent>();
 
             // If coilloider is rigid
             if (boxColl.IsRigid)

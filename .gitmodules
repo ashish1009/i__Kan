@@ -13,6 +13,3 @@
 [submodule "iKan/vendor/yaml/yaml"]
 	path = iKan/vendor/yaml/yaml
 	url = https://github.com/ashish1009/yaml-cpp
-[submodule "iKan/vendor/box2D"]
-	path = iKan/vendor/box2D
-	url = https://github.com/ashish1009/box2d

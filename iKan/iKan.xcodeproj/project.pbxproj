@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		3EC70CC7270B53D600218449 /* Component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EC70CC6270B53D600218449 /* Component.cpp */; };
 		3ED416C926F38DB90037CF6D /* ScriptableEntity.h in Headers */ = {isa = PBXBuildFile; fileRef = 3ED416C826F38DB90037CF6D /* ScriptableEntity.h */; };
-		3EE65CA3271C287B009BD016 /* libBox2D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EE65BDE271C2753009BD016 /* libBox2D.a */; };
 		750AA8E1265D52140031A3E0 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 750AA8DF265D52140031A3E0 /* Utils.cpp */; };
 		750AA8E2265D52140031A3E0 /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 750AA8E0265D52140031A3E0 /* Utils.h */; };
 		75158EB726B5A1BD00F938E5 /* RenderCommandQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 75158EB526B5A1BD00F938E5 /* RenderCommandQueue.cpp */; };
@@ -117,13 +116,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		3EE65BDD271C2753009BD016 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3EE65BD9271C2752009BD016 /* Box2D.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3EE65BD2271C2752009BD016;
-			remoteInfo = Box2D;
-		};
 		7589D23F2677574300EB43D9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7589D23B2677574200EB43D9 /* yaml.xcodeproj */;
@@ -150,7 +142,6 @@
 /* Begin PBXFileReference section */
 		3EC70CC6270B53D600218449 /* Component.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Component.cpp; sourceTree = "<group>"; };
 		3ED416C826F38DB90037CF6D /* ScriptableEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScriptableEntity.h; sourceTree = "<group>"; };
-		3EE65BD9271C2752009BD016 /* Box2D.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Box2D.xcodeproj; path = vendor/box2D/Box2D/Box2D.xcodeproj; sourceTree = "<group>"; };
 		750AA8DF265D52140031A3E0 /* Utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
 		750AA8E0265D52140031A3E0 /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		75158EB526B5A1BD00F938E5 /* RenderCommandQueue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RenderCommandQueue.cpp; sourceTree = "<group>"; };
@@ -299,7 +290,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EE65CA3271C287B009BD016 /* libBox2D.a in Frameworks */,
 				7589D5032677622500EB43D9 /* libyaml.a in Frameworks */,
 				B240109E26343A8A0051B868 /* libImgui.a in Frameworks */,
 				B27FE30E2629E072000FD32D /* libGlad.a in Frameworks */,
@@ -310,14 +300,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3EE65BDA271C2752009BD016 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3EE65BDE271C2753009BD016 /* libBox2D.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		7589D23C2677574200EB43D9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -551,7 +533,6 @@
 		B25458C5262899580053BD47 /* Dependency */ = {
 			isa = PBXGroup;
 			children = (
-				3EE65BD9271C2752009BD016 /* Box2D.xcodeproj */,
 				7589D23B2677574200EB43D9 /* yaml.xcodeproj */,
 				B2400F522634396C0051B868 /* Imgui.xcodeproj */,
 				B27FE3082629E04A000FD32D /* Glad.xcodeproj */,
@@ -849,10 +830,6 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 3EE65BDA271C2752009BD016 /* Products */;
-					ProjectRef = 3EE65BD9271C2752009BD016 /* Box2D.xcodeproj */;
-				},
-				{
 					ProductGroup = B27FE3092629E04A000FD32D /* Products */;
 					ProjectRef = B27FE3082629E04A000FD32D /* Glad.xcodeproj */;
 				},
@@ -873,13 +850,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		3EE65BDE271C2753009BD016 /* libBox2D.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libBox2D.a;
-			remoteRef = 3EE65BDD271C2753009BD016 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		7589D2402677574300EB43D9 /* libyaml.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1092,8 +1062,6 @@
 					"${PROJECT_DIR}/vendor/stbimage",
 					"${PROJECT_DIR}/vendor/EnTT/include",
 					"${PROJECT_DIR}/vendor/yaml/yaml/include",
-					"${PROJECT_DIR}/vendor/box2D/src",
-					"${PROJECT_DIR}/vendor/box2D/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1130,8 +1098,6 @@
 					"${PROJECT_DIR}/vendor/stbimage",
 					"${PROJECT_DIR}/vendor/EnTT/include",
 					"${PROJECT_DIR}/vendor/yaml/yaml/include",
-					"${PROJECT_DIR}/vendor/box2D/src",
-					"${PROJECT_DIR}/vendor/box2D/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

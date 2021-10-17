@@ -546,7 +546,7 @@ namespace iKan {
                 ImGui::End();
             }
             
-//            if (isSceneEdititng)
+            if (isSceneEdititng)
             {
                 ShowMenu();
                 m_ContentBrowserPannel.OnImguiender(&m_ContentBrowserPannel.IsContentBrowserPannel);
@@ -565,7 +565,7 @@ namespace iKan {
     // ******************************************************************************
     void Viewport::OnSceneEdit()
     {
-        m_ActiveScene->OnRuntimeStop();
+        m_ActiveScene->SetEditingState(Scene::NativeData::State::Edit);
     }
     
     // ******************************************************************************
@@ -573,7 +573,7 @@ namespace iKan {
     // ******************************************************************************
     void Viewport::OnScenePlay()
     {
-        m_ActiveScene->OnRuntimeStart();
+        m_ActiveScene->SetEditingState(Scene::NativeData::State::Play);
     }
 
     // ******************************************************************************

@@ -68,7 +68,7 @@ namespace Mario {
         {
             Entity playerEntity = m_ActiveScene->CreateEntity("Player 1");
             
-            playerEntity.GetComponent<BoxColliderComponentss>().IsRigid = true;
+            playerEntity.GetComponent<BoxCollider2DComponent>().IsRigid = true;
             playerEntity.AddComponent<SpriteRendererComponent>();
             playerEntity.AddComponent<AliveComponent>().Init(true, AliveComponent::ComponentType::Player);
             playerEntity.AddComponent<NativeScriptComponent>().Bind<PlayerController>(m_ActiveScene, m_PlayerControllerScriptName);

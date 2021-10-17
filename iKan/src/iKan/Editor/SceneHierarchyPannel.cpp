@@ -224,9 +224,9 @@ namespace iKan {
             ImGui::Separator();
         }
 
-        if (entity.HasComponent<BoxColliderComponentss>())
+        if (entity.HasComponent<BoxCollider2DComponent>())
         {
-            auto& isRigid = entity.GetComponent<BoxColliderComponentss>().IsRigid;
+            auto& isRigid = entity.GetComponent<BoxCollider2DComponent>().IsRigid;
             PropertyGrid::CheckBox("Is Rigid", isRigid, 100.0f);
             ImGui::Separator();
         }
@@ -485,50 +485,6 @@ namespace iKan {
 
         });
         
-        DrawComponent<RigidBody2DComponent>("RigidBody", entity, [](auto& cc)
-                                       {
-            ImGui::Columns(2);
-            ImGui::Text("Body Type");
-            ImGui::NextColumn();
-            ImGui::PushItemWidth(-1);
-            
-            const std::vector <const char*> bodyTypeString = { "Static", "Dynamic", "Kinematic" };
-            const char* currentBodyType = bodyTypeString[(int32_t)cc.Type];
-            if (ImGui::BeginCombo("##BodyType", currentBodyType))
-            {
-                for (int32_t i = 0; i < bodyTypeString.size(); i++)
-                {
-                    bool bIsSelected = currentBodyType == bodyTypeString[i];
-                    if (ImGui::Selectable(bodyTypeString[i], bIsSelected))
-                    {
-                        currentBodyType = bodyTypeString[i];
-                        cc.Type = ((RigidBody2DComponent::BodyType)i);
-                    }
-                    
-                    if (bIsSelected)
-                        ImGui::SetItemDefaultFocus();
-                }
-                ImGui::EndCombo();
-            }
-            ImGui::PopItemWidth();
-            ImGui::NextColumn();
-            ImGui::Columns(1);
-
-            ImGui::Separator();
-
-            PropertyGrid::CheckBox("Fixed Rotation", cc.FixedRotation, 100.0f);
-        });
-        
-        DrawComponent<BoxColloider2DComponent>("Box2DComponent", entity, [](auto& cc)
-                                            {
-            PropertyGrid::Float2("Offser", cc.Offset, nullptr, 0.25f);
-            PropertyGrid::Float2("Size", cc.Size, nullptr, 0.25f);
-            PropertyGrid::Float("Density", cc.Density, nullptr, 0.01f);
-            PropertyGrid::Float("Friction", cc.Friction, nullptr, 0.01f);
-            PropertyGrid::Float("Restitution", cc.Restitution, nullptr, 0.01f);
-            PropertyGrid::Float("RestitutionThreshold", cc.RestitutionThreshold, nullptr, 0.01f);
-        });
-        
     }
     
     // ******************************************************************************
@@ -536,40 +492,30 @@ namespace iKan {
     // ******************************************************************************
     void SceneHeirarchyPannel::AddComponent()
     {
-        if (!m_SelectedEntity.HasComponent<CameraComponent>())
+        if (ImGui::MenuItem("Camera"))
         {
-            if (ImGui::MenuItem("Camera"))
+            if (!m_SelectedEntity.HasComponent<CameraComponent>())
             {
                 m_SelectedEntity.AddComponent<CameraComponent>();
-                ImGui::CloseCurrentPopup();
             }
+            else
+            {
+                IK_CORE_WARN("This entity already has the Camera Component!");
+            }
+            ImGui::CloseCurrentPopup();
         }
         
-        if (!m_SelectedEntity.HasComponent<SpriteRendererComponent>())
+        if (ImGui::MenuItem("Sprite Renderer"))
         {
-            if (ImGui::MenuItem("Sprite Renderer"))
+            if (!m_SelectedEntity.HasComponent<SpriteRendererComponent>())
             {
                 m_SelectedEntity.AddComponent<SpriteRendererComponent>();
-                ImGui::CloseCurrentPopup();
             }
-        }
-        
-        if (!m_SelectedEntity.HasComponent<RigidBody2DComponent>())
-        {
-            if (ImGui::MenuItem("Rigid Body 2D"))
+            else
             {
-                m_SelectedEntity.AddComponent<RigidBody2DComponent>();
-                ImGui::CloseCurrentPopup();
+                IK_CORE_WARN("This entity already has the Camera Component!");
             }
-        }
-        
-        if (!m_SelectedEntity.HasComponent<BoxColloider2DComponent>())
-        {
-            if (ImGui::MenuItem("Box Colloider"))
-            {
-                m_SelectedEntity.AddComponent<BoxColloider2DComponent>();
-                ImGui::CloseCurrentPopup();
-            }
+            ImGui::CloseCurrentPopup();
         }
         ImGui::EndPopup();
     }
