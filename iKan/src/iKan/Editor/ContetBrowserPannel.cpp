@@ -15,8 +15,6 @@ namespace iKan {
     // TODO: make this visible from outside
     static std::vector<std::filesystem::path> s_PinedPaths;
 
-    std::unordered_map<int32_t, ImVec4> ContentBrowserPannel::s_DirBgColor;
-
     // ******************************************************************************
     // ContentBrowserPannel constructor
     // ******************************************************************************
@@ -88,39 +86,13 @@ namespace iKan {
                     isDirectory = false;
                 }
 
-                // Add the BG base color for each content
-                if (s_DirBgColor.find(pushId) == s_DirBgColor.end())
-                    s_DirBgColor[pushId] = ImGuiAPI::GetBgColor();
-
                 static float iconSizeHeight = 64.0f;
                 static float iconSizeWidth  = 48.0f;
 
                 ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPos().x + ((iconSizeWidth + 30.0f) * pushId), initPos.y + 30.0f));
-                bool pressed = PropertyGrid::ImageButton(pushId, iconTexture->GetRendererID(), ImVec2(iconSizeWidth, iconSizeHeight), s_DirBgColor[pushId] );
-                // Change color if item is hovered
-                {
-                    static bool hovered = false;
-                    static int32_t hoveredId = -1;
-                    if (ImGui::IsItemHovered() && !hovered)
-                    {
-                        hovered = true;
-                        hoveredId = pushId;
-
-                        auto baseBgColor  = ImGuiAPI::GetBgColor();
-                        s_DirBgColor[hoveredId].x = baseBgColor.x + 0.1f;
-                        s_DirBgColor[hoveredId].y = baseBgColor.y + 0.1f;
-                        s_DirBgColor[hoveredId].z = baseBgColor.z + 0.1f;
-                    }
-                    else
-                    {
-                        hovered = false;
-                        if (hoveredId == pushId)
-                        {
-                            s_DirBgColor[hoveredId] = ImGuiAPI::GetBgColor();
-                            hoveredId = -1;
-                        }
-                    }
-                }
+                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+                bool pressed = PropertyGrid::ImageButton(pushId, iconTexture->GetRendererID(), ImVec2(iconSizeWidth, iconSizeHeight));
+                ImGui::PopStyleColor();
 
                 if (pressed)
                 {
@@ -138,7 +110,7 @@ namespace iKan {
                     std::string path = directoryEntry.path().string();
                     const char* ch = path.c_str();
                     ImGui::SetDragDropPayload("SelectedFile", (void*)ch, path.size(), ImGuiCond_Always);
-                    PropertyGrid::ImageButton(pushId, iconTexture->GetRendererID(), ImVec2(12.0f, 16.0f), s_DirBgColor[pushId] );
+                    PropertyGrid::ImageButton(pushId, iconTexture->GetRendererID(), ImVec2(12.0f, 16.0f));
                     ImGui::EndDragDropSource();
                 }
 

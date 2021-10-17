@@ -530,7 +530,7 @@ namespace iKan {
         bool result = false;
         ImTextureID myTexId = (ImTextureID)((size_t)texId);
         ImGui::PushID(lableId);
-        result = ImGui::ImageButton(myTexId, size, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), padding, bgColor);
+        result = ImGui::ImageButton(myTexId, size, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
         ImGui::PopID();
 
         return result;

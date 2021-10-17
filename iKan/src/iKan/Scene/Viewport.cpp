@@ -389,13 +389,11 @@ namespace iKan {
             {
                 m_Data.BgColor = {0.9f, 0.9f, 0.9f, 1.0f};
                 ImGuiAPI::SetLightThemeColors();
-                ContentBrowserPannel::UpdateTileBgColor();
             }
             if (ImGui::MenuItem("Dark Theme", nullptr))
             {
                 m_Data.BgColor = {0.1f, 0.1f, 0.1f, 1.0f};
                 ImGuiAPI::SetGreyThemeColors();
-                ContentBrowserPannel::UpdateTileBgColor();
             }
             ImGui::EndMenu(); // ImGui::BeginMenu("Theme")
         }

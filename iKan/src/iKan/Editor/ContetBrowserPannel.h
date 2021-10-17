@@ -27,12 +27,6 @@ namespace iKan {
         const std::filesystem::path& GetCurrentDir() const { return m_CurrentDir; }
         const std::filesystem::path& GetRootDir() const { return m_RootPath; }
 
-        static void UpdateTileBgColor()
-        {
-            for (auto& bgColor : s_DirBgColor)
-                bgColor.second = ImGuiAPI::GetBgColor();
-        }
-
     private:
         void TitleIcon();
         void MainArea();
@@ -79,9 +73,6 @@ namespace iKan {
             Ref<Texture> Home       = Texture::Create("../../../iKan/src/iKan/Editor/assets/resources/ContentBrowser/Home.png");
         };
         TileIconTexture m_TileIconTexture;
-
-        // Map to store the BG color of each content
-        static std::unordered_map<int32_t, ImVec4> s_DirBgColor;
     };
 
 }
