@@ -701,7 +701,7 @@ namespace iKan {
         if (!m_ActiveScene)
             return;
         
-        if (m_ActiveScene->IsEditing())
+        if (m_ActiveScene->GetSceneState() == Scene::NativeData::State::Edit)
         {
             if (m_Flags.IsRendererStats)
                 ImGuiAPI::RendererStats(&m_Flags.IsRendererStats);

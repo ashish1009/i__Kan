@@ -110,7 +110,7 @@ namespace iKan {
         Ref<Texture> AddTextureToScene(const std::string& texturePath);
                 
         NativeData::Type GetSceneType() const { return s_NativeData.SceneType; }
-        NativeData::State IsEditing() const { return s_NativeData.SceneState; }
+        NativeData::State GetSceneState() const { return s_NativeData.SceneState; }
         
         int32_t OnBoxColloider(Entity& currEntity, float speed);
 
