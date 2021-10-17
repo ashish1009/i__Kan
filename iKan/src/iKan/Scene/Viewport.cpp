@@ -228,6 +228,8 @@ namespace iKan {
 
             case KeyCode::N:    if (cmd)    NewScene();     break;
             case KeyCode::X:    if (cmd)    CloseScene();   break;
+                
+            case KeyCode::D:    if (cmd)    OnDuplicateEntity(); break;
             default:    break;
         }
         return false;
@@ -258,18 +260,23 @@ namespace iKan {
     // ******************************************************************************
     const Ref<Scene>& Viewport::OpenScene(const std::string& path)
     {
+        if (m_ActiveScene->GetSceneState() != Scene::NativeData::State::Edit)
+            OnSceneEdit();
+        
         IK_INFO("Opening saved scene from {0}", path.c_str());
         if (!path.empty())
         {
             CloseScene();
             
-            m_ActiveScene = CreateRef<Scene>(path);
-            m_SceneHierarchyPannel.SetContext(m_ActiveScene);
+            m_EditorScene = CreateRef<Scene>(path);
+            m_SceneHierarchyPannel.SetContext(m_EditorScene);
 
-            SceneSerializer serializer(m_ActiveScene);
+            SceneSerializer serializer(m_EditorScene);
             serializer.Deserialize(path);
             
-            m_ActiveScene->OnViewportResize((uint32_t)m_Data.Size.x, (uint32_t)m_Data.Size.y);
+            m_EditorScene->OnViewportResize((uint32_t)m_Data.Size.x, (uint32_t)m_Data.Size.y);
+            
+            m_ActiveScene = m_EditorScene;
         }
         
         return m_ActiveScene;
@@ -566,6 +573,7 @@ namespace iKan {
     void Viewport::OnSceneEdit()
     {
         m_ActiveScene->OnRuntimeStop();
+        m_ActiveScene = m_EditorScene;
     }
     
     // ******************************************************************************
@@ -573,7 +581,21 @@ namespace iKan {
     // ******************************************************************************
     void Viewport::OnScenePlay()
     {
+        m_ActiveScene = Scene::Copy(m_EditorScene);
         m_ActiveScene->OnRuntimeStart();
+    }
+    
+    // ******************************************************************************
+    // Duplicate the entity
+    // ******************************************************************************
+    void Viewport::OnDuplicateEntity()
+    {
+        if (m_ActiveScene->GetSceneState() != Scene::NativeData::State::Edit)
+            return;
+        
+        Entity entity = m_SceneHierarchyPannel.GetSelectedEntity();
+        if (entity)
+            m_EditorScene->DuplicateScene(entity);
     }
 
     // ******************************************************************************

@@ -41,6 +41,77 @@ namespace iKan {
         IK_CORE_ASSERT(false, "Invalid");
         return b2BodyType::b2_staticBody;
     }
+
+    // ******************************************************************************
+    // Copy the component
+    // ******************************************************************************
+    template<typename Component>
+    static void CopyComponent(entt::registry& dst, entt::registry& src, const std::unordered_map<UUID, entt::entity>& enttMap)
+    {
+        auto view = src.view<Component>();
+        for (auto e : view)
+        {
+            UUID uuid = src.get<IDComponent>(e).ID;
+            IK_CORE_ASSERT(enttMap.find(uuid) != enttMap.end(), "");
+            entt::entity dstEnttID = enttMap.at(uuid);
+            
+            auto& component = src.get<Component>(e);
+            dst.emplace_or_replace<Component>(dstEnttID, component);
+        }
+    }
+    
+    // ******************************************************************************
+    // Copy the component If exist
+    // ******************************************************************************
+    template<typename Component>
+    static void CopyComponentIfExist(Entity& dst, Entity& src)
+    {
+        if (src.HasComponent<Component>())
+            dst.AddOrReplaceComponent<Component>(src.GetComponent<Component>());
+    }
+    
+    // ******************************************************************************
+    // Copy the Scene Data
+    // ******************************************************************************
+    Ref<Scene> Scene::Copy(const Ref<Scene>& other)
+    {
+        IK_CORE_INFO("Copying Scene ...");
+        
+        Ref<Scene> newScene = CreateRef<Scene>();
+        
+        for (auto texMap : other->m_Data.TextureMap)
+            newScene->m_Data.TextureMap[texMap.first] = texMap.second;
+        
+        std::unordered_map<UUID, entt::entity> enttMap;
+        
+        auto& srcSceneRegistry = other->m_Registry;
+        auto& dstSceneRegistry = newScene->m_Registry;
+        
+        auto idView = srcSceneRegistry.view<IDComponent>();
+        
+        // Create Entities in new scene
+        for (auto e : idView)
+        {
+            UUID uuid = srcSceneRegistry.get<IDComponent>(e).ID;
+            const std::string name = srcSceneRegistry.get<TagComponent>(e).Tag;
+            
+            Entity entity = newScene->CreateEntity(name, uuid);
+            enttMap[uuid] = entity;
+        }
+        
+        // Copy Components
+        CopyComponent<TransformComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
+        CopyComponent<CameraComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
+        CopyComponent<SpriteRendererComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
+        CopyComponent<SceneHierarchyPannelProp>(dstSceneRegistry, srcSceneRegistry, enttMap);
+        CopyComponent<AABBColloiderComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
+        CopyComponent<NativeScriptComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
+        CopyComponent<AliveComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
+        CopyComponent<RigidBody2DComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
+        CopyComponent<BoxColloider2DComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
+        
+        return newScene;
+    }
     
     // ******************************************************************************
     // Reset the static Native Data
@@ -182,6 +253,29 @@ namespace iKan {
     }
     
     // ******************************************************************************
+    // Duplicate the entity
+    // ******************************************************************************
+    Entity Scene::DuplicateScene(Entity& entity)
+    {
+        Entity newEntity = CreateEntity(entity.GetName());
+
+        IK_CORE_INFO("Duplicating the Entity with ID {0}, name : {1}", newEntity.GetUUID(), newEntity.GetName());
+
+        // Copy Components
+        CopyComponentIfExist<TransformComponent>(newEntity, entity);
+        CopyComponentIfExist<CameraComponent>(newEntity, entity);
+        CopyComponentIfExist<SpriteRendererComponent>(newEntity, entity);
+        CopyComponentIfExist<SceneHierarchyPannelProp>(newEntity, entity);
+        CopyComponentIfExist<AABBColloiderComponent>(newEntity, entity);
+        CopyComponentIfExist<NativeScriptComponent>(newEntity, entity);
+        CopyComponentIfExist<AliveComponent>(newEntity, entity);
+        CopyComponentIfExist<RigidBody2DComponent>(newEntity, entity);
+        CopyComponentIfExist<BoxColloider2DComponent>(newEntity, entity);
+        
+        return newEntity;
+    }
+    
+    // ******************************************************************************
     // Destroy Entity from Scene
     // ******************************************************************************
     void Scene::DestroyEntity(Entity entity)
@@ -302,7 +396,6 @@ namespace iKan {
                 {
                     const auto& position = body->GetPosition();
                     
-                    IK_CORE_INFO("{0}, {1}", position.x, position.y);
                     transform.Translation.x = position.x;
                     transform.Translation.y = position.y;
                     

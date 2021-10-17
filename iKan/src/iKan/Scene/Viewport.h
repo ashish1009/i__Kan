@@ -92,6 +92,8 @@ namespace iKan {
         
         void OnSceneEdit();
         void OnScenePlay();
+        
+        void OnDuplicateEntity();
 
     public:
         ~Viewport() = default;
@@ -141,6 +143,7 @@ namespace iKan {
         bool m_SaveFileAs = false;
 
         Ref<Scene>                 m_ActiveScene;
+        Ref<Scene>                 m_EditorScene;
         PropFlag                   m_Flags;
         ViewportData               m_Data;
         iKan::SceneHeirarchyPannel m_SceneHierarchyPannel;

@@ -80,6 +80,7 @@ namespace iKan {
         ~Scene();
         
         Entity CreateEntity(const std::string& name = "Unknown Entity", UUID uuid = UUID());
+        Entity DuplicateScene(Entity& entity);
         
         void DestroyEntity(Entity entity);
         void OnEvent(Event& event);
@@ -121,6 +122,8 @@ namespace iKan {
 
         Entity GetPrimaryCameraEntity();
         Entity GetEditorCameraEntity();
+        
+        static Ref<Scene> Copy(const Ref<Scene>& other);
         
         static void CollisionCallbacks(Entity& colloidedEntity1, Entity& colloidedEntity2);
         static void ResetNativeData();

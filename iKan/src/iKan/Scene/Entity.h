@@ -26,10 +26,7 @@ namespace iKan {
         // Entity constructure that takes entt and Scene pointer
         // ******************************************************************************
         Entity(entt::entity handle, Scene* scene)
-        : m_EntityHandle(handle), m_Scene(scene)
-        {
-            
-        }
+        : m_EntityHandle(handle), m_Scene(scene) {}
         
         // ******************************************************************************
         // Add the component T if not added already to this entity
@@ -39,6 +36,16 @@ namespace iKan {
         {
             IK_CORE_ASSERT(!HasComponent<T>(), "Entity already has component!");
             T& component = m_Scene->m_Registry.emplace<T>(m_EntityHandle, std::forward<Args>(args)...);
+            return component;
+        }
+        
+        // ******************************************************************************
+        // Add or Replace the component T if not added already to this entity
+        // ******************************************************************************
+        template<typename T, typename... Args>
+        T& AddOrReplaceComponent(Args&&... args)
+        {
+             T& component = m_Scene->m_Registry.emplace_or_replace<T>(m_EntityHandle, std::forward<Args>(args)...);
             return component;
         }
 
@@ -72,6 +79,7 @@ namespace iKan {
         }
         
         UUID GetUUID() { return GetComponent<IDComponent>().ID; }
+        const std::string& GetName() { return GetComponent<TagComponent>().Tag; }
         
         operator entt::entity() const { return m_EntityHandle; }
         operator bool() const { return m_EntityHandle != entt::null; }
