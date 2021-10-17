@@ -62,14 +62,7 @@ namespace iKan {
         TransformComponent(const glm::vec3& translation)
         : Translation(translation) { }
         
-        // ******************************************************************************
-        // Gets the transform Matrix from translation , scale and rotation
-        // ******************************************************************************
-        glm::mat4 GetTransform() const
-        {
-            glm::mat4 rotation = glm::toMat4(glm::quat(Rotation));
-            return glm::translate(glm::mat4(1.0f), Translation) * rotation * glm::scale(glm::mat4(1.0f), Scale);
-        }
+        glm::mat4 GetTransform() const;
     };
     
     // ******************************************************************************
@@ -85,23 +78,8 @@ namespace iKan {
         CameraComponent() = default;
         CameraComponent(const CameraComponent&) = default;
         
-        // ******************************************************************************
-        // Make the Camera Primary
-        // ******************************************************************************
-        void MakePrimary()
-        {
-            mPrimary = true;
-            mEditor = false;
-        }
-        
-        // ******************************************************************************
-        // Make the Camera Editor
-        // ******************************************************************************
-        void MakeEditor()
-        {
-            mPrimary = false;
-            mEditor = true;
-        }
+        void MakePrimary();
+        void MakeEditor();
         
         // ******************************************************************************
         // Return status of Primary and Editor
@@ -135,97 +113,11 @@ namespace iKan {
 
         float TilingFactor = 1.0f;
 
-        // ******************************************************************************
-        // Upload new texture and reset the subtexture component
-        // ******************************************************************************
-        Ref<iKan::Texture> UploadTexture(const Ref<iKan::Texture>& texture)
-        {
-            // If texture is already created then delete the texture
-            // (if shared with other entity then reduce the counter)
-            if (Texture.Component)
-                Texture.Component.reset();
-
-            // If component is subtexture then overrite it with texture
-            if (SubTexComp)
-                SubTexComp.reset();
-
-            SubTexComp  = nullptr;
-
-            // Image Texture component
-            Texture.Component = texture;
-            Texture.Use = true;
-
-            // If texture is uploaded with invalid path So delete the texture
-            if (!Texture.Component->Uploaded())
-                Texture.Component.reset();
-
-            return Texture.Component;
-        }
-
-        // ******************************************************************************
-        // Upload new texture and reset the subtexture component
-        // ******************************************************************************
-        Ref<iKan::Texture> UploadTexture(const std::string& path)
-        {
-            UploadTexture(iKan::Texture::Create(path));
-            return Texture.Component;
-        }
-
-        // ******************************************************************************
-        // Addthe subtexture compnent to the current entity
-        // ******************************************************************************
-        Ref<SubTexture> AddSubTexture()
-        {
-            SubTexComp = SubTexture::CreateFromCoords(Texture.Component, glm::vec2(1.0f));
-
-            // If texture is already created then delete the texture
-            // (if shared with other entity then reduce the counter)
-            if (Texture.Component)
-                Texture.Component.reset();
-
-            Texture.Component = nullptr;
-            Texture.Use = false;
-
-            return SubTexComp;
-        }
-
-        // ******************************************************************************
-        // Remove subtexture compnent to the current entity
-        // ******************************************************************************
-        void RemoveSubTexture()
-        {
-            Texture.Component = SubTexComp->GetTexture();
-            Texture.Use = true;
-
-            // If texture is already created then delete the texture
-            // (if shared with other entity then reduce the counter)
-            if (SubTexComp)
-                SubTexComp.reset();
-
-            SubTexComp = nullptr;
-        }
-
-        // ******************************************************************************
-        // Upload new texture and reset the subtexture component
-        // ******************************************************************************
-        void ResetAllComponents()
-        {
-            // If texture is already created then delete the texture
-            // (if shared with other entity then reduce the counter)
-            if (Texture.Component)
-                Texture.Component.reset();
-
-            Texture.Component = nullptr;
-            Texture.Use = false;
-
-            // If texture is already created then delete the texture
-            // (if shared with other entity then reduce the counter)
-            if (SubTexComp)
-            {
-                SubTexComp.reset();
-            }
-            SubTexComp = nullptr;
-        }
+        Ref<iKan::Texture> UploadTexture(const Ref<iKan::Texture>& texture);
+        Ref<iKan::Texture> UploadTexture(const std::string& path);
+        Ref<SubTexture> AddSubTexture();
+        void RemoveSubTexture();
+        void ResetAllComponents();
 
         ~SpriteRendererComponent() = default;
 
