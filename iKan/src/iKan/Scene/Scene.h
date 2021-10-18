@@ -63,6 +63,7 @@ namespace iKan {
             ~Data() = default;
             
             uint32_t NumEntities = 0;
+            uint32_t MaxEntityId = 0;
 
             // Stores the file name and path
             std::string FileName, FilePath;
@@ -96,6 +97,7 @@ namespace iKan {
         void OnRuntimeStop();
         
         uint32_t GetNumEntities() const { return m_Data.NumEntities; }
+        uint32_t GetMaxEntityId() const { return m_Data.MaxEntityId; }
 
         const std::string& GetFileName() const { return m_Data.FileName; }
         const std::string& GetFilePath() const { return m_Data.FilePath; }

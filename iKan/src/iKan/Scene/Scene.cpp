@@ -247,7 +247,7 @@ namespace iKan {
         m_Data.EntityIDMap[uuid] = entity;
         
         IK_CORE_TRACE("Entity {0} with ID: {1} is created in the Active Scene", entity.GetComponent<TagComponent>().Tag.c_str(), entity.GetComponent<IDComponent>().ID);
-        IK_CORE_TRACE("Number of entities Added in Scene : {0}", m_Data.NumEntities++);
+        IK_CORE_TRACE("Number of entities Added in Scene : {0}, Maximum ID Given to Entity {0}", m_Data.NumEntities++, m_Data.MaxEntityId++);
         
         return entity;
     }
