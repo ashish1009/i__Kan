@@ -14,6 +14,8 @@
 
 namespace iKan {
     
+    static constexpr int32_t MAX_ENTITIES_SUPPORTED = 1036831940;
+    
     class Entity
     {
     public:

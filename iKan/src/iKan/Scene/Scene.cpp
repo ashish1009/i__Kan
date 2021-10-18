@@ -211,7 +211,7 @@ namespace iKan {
         {
             ImGui::Begin("Scene Warning ");
 
-            std::string warningMsg = ((s_NativeData.SceneState == NativeData::State::Edit) ? "Editor Camera is not created." : "Run-Time Primary Cmaera component is not present");
+            std::string warningMsg = ((s_NativeData.SceneState == NativeData::State::Edit) ? ( s_NativeData.SceneType == NativeData::Type::Scene3D ? "Editor Camera is not created." : "No Editor Camera Entity is present") : "Run-Time Primary Cmaera component is not present");
             ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), warningMsg.c_str());
             ImGui::End();
         }

@@ -233,7 +233,7 @@ namespace iKan {
         if (m_Data.MousePosX >= 0 && m_Data.MousePosY >= 0 && m_Data.MousePosX <= m_Data.Width && m_Data.MousePosY <= m_Data.Height )
         {
             m_ActiveScene->GetEntityIdFromPixels(m_Data.MousePosX, m_Data.MousePosY, m_Data.HoveredEntityID);
-            m_Data.HoveredEntity = (m_Data.HoveredEntityID >= m_ActiveScene->GetNumEntities()) ? Entity() : Entity((entt::entity)m_Data.HoveredEntityID, m_ActiveScene.get());
+            m_Data.HoveredEntity = (m_Data.HoveredEntityID >= MAX_ENTITIES_SUPPORTED) ? Entity() : Entity((entt::entity)m_Data.HoveredEntityID, m_ActiveScene.get());
         }
     }
 
