@@ -10,6 +10,7 @@
 #include "EditorCamera.h"
 #include <iKan/Core/Input.h>
 #include <iKan/Editor/ScenePropertyGrid.h>
+#include <iKan/Scene/Viewport.h>
 
 namespace iKan {
     
@@ -139,9 +140,16 @@ namespace iKan {
     // ******************************************************************************
     bool EditorCamera::OnMouseScroll(MouseScrolledEvent& e)
     {
-        float delta = e.GetYOffset() * 0.1f;
-        MouseZoom(delta);
-        UpdateCameraView();
+        Viewport& vp = Viewport::Get();
+        auto mouseCursorX = vp.GetDataRef().MousePosX;
+        auto mouseCursorY = vp.GetDataRef().MousePosY;
+        
+        if (mouseCursorX < m_ViewportWidth && mouseCursorY < m_ViewportHeight)
+        {
+            float delta = e.GetYOffset() * 0.1f;
+            MouseZoom(delta);
+            UpdateCameraView();
+        }
         return false;
     }
     

@@ -22,9 +22,11 @@ namespace iKan {
     : m_RootPath(rootPath), m_CurrentDir(rootPath)
     {
         m_PathHierarchy.emplace_back(m_CurrentDir);
-        s_PinedPaths.emplace_back("../../../../../../../ashish");
-        s_PinedPaths.emplace_back("../../../../../../../ashish/iKan");
-        s_PinedPaths.emplace_back("../../../../../../../ashish/Downloads");
+        s_PinedPaths.emplace_back("../../../../../../../iKan.");
+        s_PinedPaths.emplace_back("../../../../../../../iKan./iKan");
+        s_PinedPaths.emplace_back("../../../../../../../iKan./Downloads");
+        s_PinedPaths.emplace_back("../../../../../../../iKan./iKan/Github/iKan/iKan/scenes");
+        s_PinedPaths.emplace_back("../../../../../../../iKan./iKan/Github/iKan/iKan/src/iKan/Editor/assets/resources");
     }
 
     // ******************************************************************************
