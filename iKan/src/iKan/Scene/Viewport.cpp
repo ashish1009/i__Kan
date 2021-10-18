@@ -85,7 +85,6 @@ namespace iKan {
             });
             
             OnImguizmoUpdate();
-
             UpdateBounds();
         }
 
@@ -103,7 +102,7 @@ namespace iKan {
         {
             ImGuizmo::SetOrthographic(false);
             ImGuizmo::SetDrawlist();
-            
+	            
             float windowWidth = (float)ImGui::GetWindowWidth();
             float windowHeight = (float)ImGui::GetWindowHeight();
             ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
@@ -284,7 +283,8 @@ namespace iKan {
         if (event.GetRepeatCount() > 0)
             return false;
 
-        bool cmd   = Input::IsKeyPressed(KeyCode::LeftSuper) || Input::IsKeyPressed(KeyCode::RightSuper);
+        bool cmd    = Input::IsKeyPressed(KeyCode::LeftSuper) || Input::IsKeyPressed(KeyCode::RightSuper);
+        bool ctrl   = Input::IsKeyPressed(KeyCode::LeftControl) || Input::IsKeyPressed(KeyCode::RightControl);
         switch (event.GetKeyCode())
         {
             case KeyCode::S:    if (cmd && m_ActiveScene)   m_SaveFile   = true;    break;
@@ -296,10 +296,10 @@ namespace iKan {
             case KeyCode::D:    if (cmd)    OnDuplicateEntity(); break;
                                 
             // Gizmos
-            case KeyCode::Q:    m_Data.GizmoType = -1;                               break;
-            case KeyCode::W:    m_Data.GizmoType = ImGuizmo::OPERATION::TRANSLATE;   break;
-            case KeyCode::E:    m_Data.GizmoType = ImGuizmo::OPERATION::ROTATE;      break;
-            case KeyCode::R:    m_Data.GizmoType = ImGuizmo::OPERATION::SCALE;       break;
+            case KeyCode::Q:    if (ctrl)    m_Data.GizmoType = -1;                               break;
+            case KeyCode::W:    if (ctrl)    m_Data.GizmoType = ImGuizmo::OPERATION::TRANSLATE;   break;
+            case KeyCode::E:    if (ctrl)    m_Data.GizmoType = ImGuizmo::OPERATION::ROTATE;      break;
+            case KeyCode::R:    if (ctrl)    m_Data.GizmoType = ImGuizmo::OPERATION::SCALE;       break;
                 
             default:    break;
         }
@@ -313,16 +313,17 @@ namespace iKan {
     {
         CloseScene();
         
-        m_ActiveScene = CreateRef<Scene>();
+        m_EditorScene = CreateRef<Scene>();
         Scene::ResetNativeData();
         
-        m_ActiveScene->OnViewportResize((uint32_t)m_Data.Size.x, (uint32_t)m_Data.Size.y);
-        
-        // Set the current Scene to scene hierarchy pannel
-        m_SceneHierarchyPannel.SetContext(m_ActiveScene);
+        m_EditorScene->OnViewportResize((uint32_t)m_Data.Size.x, (uint32_t)m_Data.Size.y);
 
         IK_INFO("New scene is created (Reference count for Scene is {0} )", m_ActiveScene.use_count());
         
+        m_ActiveScene = m_EditorScene;
+        
+        // Set the current Scene to scene hierarchy pannel
+        m_SceneHierarchyPannel.SetContext(m_ActiveScene);
         return m_ActiveScene;
     }
 
@@ -337,10 +338,10 @@ namespace iKan {
         IK_INFO("Opening saved scene from {0}", path.c_str());
         if (!path.empty())
         {
+            m_SceneHierarchyPannel.SetSelectedEntity({});
             CloseScene();
             
             m_EditorScene = CreateRef<Scene>(path);
-            m_SceneHierarchyPannel.SetContext(m_EditorScene);
 
             SceneSerializer serializer(m_EditorScene);
             serializer.Deserialize(path);
@@ -348,6 +349,7 @@ namespace iKan {
             m_EditorScene->OnViewportResize((uint32_t)m_Data.Size.x, (uint32_t)m_Data.Size.y);
             
             m_ActiveScene = m_EditorScene;
+            m_SceneHierarchyPannel.SetContext(m_ActiveScene);
         }
         
         return m_ActiveScene;

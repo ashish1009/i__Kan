@@ -222,7 +222,8 @@ namespace Mario {
                     
                     if (s_Data.TileMap[tileType].IsRigid)
                     {
-
+                        entity.AddComponent<RigidBody2DComponent>();
+                        entity.AddComponent<BoxColloider2DComponent>();
                     }
                     entity.GetComponent<SceneHierarchyPannelProp>().IsProp = false;
                     

@@ -68,7 +68,6 @@ namespace Mario {
             
             playerEntity.AddComponent<SpriteRendererComponent>();
             playerEntity.AddComponent<AliveComponent>().Init(true, AliveComponent::ComponentType::Player);
-            playerEntity.AddComponent<NativeScriptComponent>().Bind<PlayerController>(m_ActiveScene, m_PlayerControllerScriptName);
 
             playerEntity.GetComponent<TransformComponent>().Translation.x = 16.0f;
             m_PlayerController = dynamic_cast<PlayerController*>(NativeScriptComponent::ScriptsMap[m_PlayerControllerScriptName]);
@@ -90,14 +89,14 @@ namespace Mario {
     {
         m_Viewport.OnUpdate(ts);
         
-        if (m_PlayerController->GetPositionX() > 40)
-        {
-            m_PlayerController->Reset();
-            m_Viewport.SaveSceneAs("../../../Mario/assets/Scene/Mario.iKan");
-            m_ActiveScene = m_Viewport.OpenScene("../../../Mario/assets/Scene/Mario.iKan");
-            
-            m_PlayerController->Init();
-        }
+//        if (m_PlayerController->GetPositionX() > 40)
+//        {
+//            m_PlayerController->Reset();
+//            m_Viewport.SaveSceneAs("../../../Mario/assets/Scene/Mario.iKan");
+//            m_ActiveScene = m_Viewport.OpenScene("../../../Mario/assets/Scene/Mario.iKan");
+//            
+//            m_PlayerController->Init();
+//        }
     }
 
     // ******************************************************************************

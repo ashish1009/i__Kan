@@ -358,26 +358,27 @@ namespace iKan {
                         }
                         ImGui::EndMenu();
                     }
-                    if (!src.SubTexComp)
+                }
+                if (!src.SubTexComp)
+                {
+                    if (ImGui::MenuItem("Add Sub Texture", nullptr, false, (src.Texture.Component != nullptr)))
                     {
-                        if (ImGui::MenuItem("Add Sub Texture", nullptr, false, (src.Texture.Component != nullptr)))
-                        {
-                            src.AddSubTexture();
-                        }
-                    }
-                    else
-                    {
-                        if (ImGui::MenuItem("Remove Sub Texture"))
-                        {
-                            src.RemoveSubTexture();
-                        }
-                    }
-
-                    if (ImGui::MenuItem("Remove Texture", nullptr, false, ((src.Texture.Component != nullptr) || (src.SubTexComp != nullptr))))
-                    {
-                        src.ResetAllComponents();
+                        src.AddSubTexture();
                     }
                 }
+                else
+                {
+                    if (ImGui::MenuItem("Remove Sub Texture"))
+                    {
+                        src.RemoveSubTexture();
+                    }
+                }
+
+                if (ImGui::MenuItem("Remove Texture", nullptr, false, ((src.Texture.Component != nullptr) || (src.SubTexComp != nullptr))))
+                {
+                    src.ResetAllComponents();
+                }
+            
                 ImGui::EndPopup();
             }
 
