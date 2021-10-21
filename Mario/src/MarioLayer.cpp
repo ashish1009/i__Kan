@@ -67,10 +67,8 @@ namespace Mario {
             Entity playerEntity = m_ActiveScene->CreateEntity("Player 1");
             
             playerEntity.AddComponent<SpriteRendererComponent>();
-            playerEntity.AddComponent<AliveComponent>().Init(true, AliveComponent::ComponentType::Player);
 
             playerEntity.GetComponent<TransformComponent>().Translation.x = 16.0f;
-            m_PlayerController = dynamic_cast<PlayerController*>(NativeScriptComponent::ScriptsMap[m_PlayerControllerScriptName]);
         }
     }
 

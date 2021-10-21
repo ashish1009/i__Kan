@@ -11,6 +11,7 @@
 
 #include <iKan/Scene/Entity.h>
 #include <iKan/Core/Events/Event.h>
+#include <iKan/Core/Input.h>
 
 namespace iKan {
     
@@ -21,9 +22,7 @@ namespace iKan {
     class ScriptableEntity
     {
     public:
-        ScriptableEntity(const Ref<Scene>& scene)
-        : m_ActiveScene(scene) { }
-        
+        ScriptableEntity() = default;
         virtual ~ScriptableEntity() = default;
         
         template<typename T>
@@ -51,6 +50,33 @@ namespace iKan {
         Entity m_Entity;
         
         friend class Scene;
+    };
+    
+    // ******************************************************************************
+    // Base class for each stribtable entity or native sctipt
+    // ******************************************************************************
+    class EntityController : public ScriptableEntity
+    {
+    public:
+        EntityController() = default;
+        virtual ~EntityController() = default;
+
+        virtual void OnCreate() {}
+        virtual void OnUpdate(Timestep ts)
+        {
+            if (Input::IsKeyPressed(KeyCode::Right))
+            {
+                m_Entity.GetComponent<TransformComponent>().Translation.x += 0.1;
+            }
+            if (Input::IsKeyPressed(KeyCode::Left))
+            {
+                m_Entity.GetComponent<TransformComponent>().Translation.x -= 0.1;
+            }
+        }
+        virtual void OnDestroy() {}
+        virtual void ImguiRenderer() {}
+        virtual void OnEvent(Event& event) {}
+        virtual void OnCollision(Entity& colloidedEntity) {}
     };
     
 }

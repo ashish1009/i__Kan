@@ -105,11 +105,19 @@ namespace iKan {
         CopyComponent<SpriteRendererComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
         CopyComponent<SceneHierarchyPannelProp>(dstSceneRegistry, srcSceneRegistry, enttMap);
         CopyComponent<AABBColloiderComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
-        CopyComponent<NativeScriptComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
-        CopyComponent<AliveComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
         CopyComponent<RigidBody2DComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
         CopyComponent<BoxColloider2DComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
+        CopyComponent<NativeScriptComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
         
+        dstSceneRegistry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
+                                                      {
+            // nsc.Scripts is the Vector to store multiple Scripts for 1 entity
+            for (auto script : nsc.Scripts)
+                if (script->m_Created)
+                    script->m_Created = false;
+        });
+
+
         return newScene;
     }
     
@@ -130,13 +138,7 @@ namespace iKan {
     // ******************************************************************************
     void Scene::CollisionCallbacks(Entity& colloidedEntity1, Entity& colloidedEntity2)
     {
-//        auto currEntityScripts = colloidedEntity1.GetComponent<NativeScriptComponent>().Scripts;
-//        for (auto script : currEntityScripts)
-//            script->OnCollision(colloidedEntity2);
-//
-//        auto colloidedEntityScripts = colloidedEntity2.GetComponent<NativeScriptComponent>().Scripts;
-//        for (auto script : colloidedEntityScripts)
-//            script->OnCollision(colloidedEntity1);
+
     }
     
     // ******************************************************************************
@@ -268,7 +270,6 @@ namespace iKan {
         CopyComponentIfExist<SceneHierarchyPannelProp>(newEntity, entity);
         CopyComponentIfExist<AABBColloiderComponent>(newEntity, entity);
         CopyComponentIfExist<NativeScriptComponent>(newEntity, entity);
-        CopyComponentIfExist<AliveComponent>(newEntity, entity);
         CopyComponentIfExist<RigidBody2DComponent>(newEntity, entity);
         CopyComponentIfExist<BoxColloider2DComponent>(newEntity, entity);
         
@@ -396,10 +397,10 @@ namespace iKan {
                 {
                     const auto& position = body->GetPosition();
                     
-                    transform.Translation.x = position.x;
-                    transform.Translation.y = position.y;
-                    
-                    transform.Rotation.z = body->GetAngle();
+//                    transform.Translation.x = position.x;
+//                    transform.Translation.y = position.y;
+//
+//                    transform.Rotation.z = body->GetAngle();
                 }
             }
         }
@@ -572,8 +573,7 @@ namespace iKan {
                 
                 OnActivateEntity(script->m_Entity);
                 
-                if (script->m_Entity.template HasComponent<AliveComponent>() && script->m_Entity.template GetComponent<AliveComponent>().Activated)
-                    script->OnUpdate(ts);
+                script->OnUpdate(ts);
             }
         });
     }
@@ -583,19 +583,7 @@ namespace iKan {
     // ******************************************************************************
     void Scene::OnActivateEntity(Entity& currEntity)
     {
-        if (!currEntity.HasComponent<AliveComponent>())
-            return;
-        
-        // Traverse entire Entities to get Box colloider entity one by one
-        auto view = m_Registry.view<AliveComponent>();
-        for (auto entity : view)
-        {
-            // no operation for same enitity
-            if (currEntity == entity)
-                continue;
-            
-            // DO Operation and Activate the Entity
-        }
+
     }
     
     // ******************************************************************************

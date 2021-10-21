@@ -10,6 +10,7 @@
 #include "SceneHierarchyPannel.h"
 #include <iKan/Scene/Component.h>
 #include <iKan/Scene/Viewport.h>
+#include <iKan/Scene/ScriptableEntity.h>
 #include <iKan/Editor/ScenePropertyGrid.h>
 
 namespace iKan {
@@ -569,6 +570,15 @@ namespace iKan {
             if (ImGui::MenuItem("Box Colloider"))
             {
                 m_SelectedEntity.AddComponent<BoxColloider2DComponent>();
+                ImGui::CloseCurrentPopup();
+            }
+        }
+        
+        if (!m_SelectedEntity.HasComponent<NativeScriptComponent>())
+        {
+            if (ImGui::MenuItem("Native Script"))
+            {
+                m_SelectedEntity.AddComponent<NativeScriptComponent>().Bind<EntityController>();
                 ImGui::CloseCurrentPopup();
             }
         }

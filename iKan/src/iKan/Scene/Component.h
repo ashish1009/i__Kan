@@ -174,45 +174,19 @@ namespace iKan {
     struct NativeScriptComponent
     {
     public:
-        static std::unordered_map<std::string, ScriptableEntity*> ScriptsMap;
-        
-        std::vector<std::string> ScriptsName;
         std::vector<ScriptableEntity*> Scripts;
         
         template<typename T>
-        void Bind(const Ref<Scene>& scene, const std::string& ScriptName)
+        void Bind()
         {
-            Instance = static_cast<ScriptableEntity*>(new T(scene));
+            Instance = static_cast<ScriptableEntity*>(new T());
             Scripts.emplace_back(Instance);
-            ScriptsName.emplace_back(ScriptName);
-            
-            NativeScriptComponent::ScriptsMap[ScriptName] = Instance;
         }
         
     private:
         ScriptableEntity* Instance = nullptr;
     };
-    
-    // ******************************************************************************
-    // Native Script component
-    // ******************************************************************************
-    struct AliveComponent
-    {
-    public:
-        enum class ComponentType { Player, Enemy };
-        ComponentType Type;
-        bool Activated = false;
-        
-        AliveComponent(bool activated = false)
-        : Activated(activated) {}
-        
-        void Init(bool activated, ComponentType type)
-        {
-            Activated = activated;
-            Type = type;
-        }
-    };
-    
+
     // ******************************************************************************
     // RigidBody2DComponent
     // ******************************************************************************

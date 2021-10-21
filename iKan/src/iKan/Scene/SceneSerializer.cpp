@@ -304,34 +304,22 @@ namespace iKan {
 
         }
         
-        if (entity.HasComponent<NativeScriptComponent>())
-        {
-            out << YAML::Key << "NativeScriptComponent";
-            out << YAML::BeginMap; // NativeScriptComponent
-            
-            auto& scriptComp = entity.GetComponent<NativeScriptComponent>();
-            int32_t numScripts = 0;
-            for (auto scripname : scriptComp.ScriptsName)
-            {
-                out << YAML::Key << "Name" << YAML::Value << scripname;
-                numScripts++;
-            }
-            out << YAML::Key << "NumScripts" << YAML::Value << numScripts;
-
-            out << YAML::EndMap; // NativeScriptComponent
-        }
-        
-        if (entity.HasComponent<AliveComponent>())
-        {
-            out << YAML::Key << "AliveComponent";
-            out << YAML::BeginMap; // AliveComponent
-            
-            auto& aliveComp = entity.GetComponent<AliveComponent>();
-            out << YAML::Key << "Type" << YAML::Value << (uint32_t)aliveComp.Type;
-            out << YAML::Key << "Activated" << YAML::Value << aliveComp.Activated;
-            
-            out << YAML::EndMap; // AliveComponent
-        }
+//        if (entity.HasComponent<NativeScriptComponent>())
+//        {
+//            out << YAML::Key << "NativeScriptComponent";
+//            out << YAML::BeginMap; // NativeScriptComponent
+//
+//            auto& scriptComp = entity.GetComponent<NativeScriptComponent>();
+//            int32_t numScripts = 0;
+//            for (auto scripname : scriptComp.ScriptsName)
+//            {
+//                out << YAML::Key << "Name" << YAML::Value << scripname;
+//                numScripts++;
+//            }
+//            out << YAML::Key << "NumScripts" << YAML::Value << numScripts;
+//
+//            out << YAML::EndMap; // NativeScriptComponent
+//        }
         
         if (entity.HasComponent<RigidBody2DComponent>())
         {
@@ -560,39 +548,27 @@ namespace iKan {
                     IK_CORE_INFO("      Is Rigid object : {0}", bcc.IsRigid);
                 }
                 
-                auto scriptComp = entity["NativeScriptComponent"];
-                if (scriptComp)
-                {
-                    IK_CORE_INFO("  Native Script Component:");
-                    auto& scc   = deserializedEntity.AddComponent<NativeScriptComponent>();
-                    
-                    uint32_t numScript = scriptComp["NumScripts"].as<uint32_t>();
-                    for (int32_t i = 0; i < numScript; i++)
-                    {
-                        const std::string& name = scriptComp["Name"].as<std::string>();
-                        scc.ScriptsName.emplace_back(name);
-                        
-                        auto instance = NativeScriptComponent::ScriptsMap[name];
-                        scc.Scripts.emplace_back(instance);
-                        
-                        instance->UpdateScene(m_Scene);
-                        instance->UpdateEntity(deserializedEntity);
-                        
-                        IK_CORE_INFO("      Script Added : {0}", name);
-                    }
-                }
-                
-                auto aliveComp = entity["AliveComponent"];
-                if (aliveComp)
-                {
-                    IK_CORE_INFO("  Alive Component:");
-                    auto& acc   = deserializedEntity.AddComponent<AliveComponent>();
-                    
-                    acc.Activated = aliveComp["Activated"].as<bool>();
-                    acc.Type = (AliveComponent::ComponentType)aliveComp["Type"].as<uint32_t>();
-                    
-                    IK_CORE_INFO("      Type : {0}, Activated : {1}", acc.Type, acc.Activated);
-                }
+//                auto scriptComp = entity["NativeScriptComponent"];
+//                if (scriptComp)
+//                {
+//                    IK_CORE_INFO("  Native Script Component:");
+//                    auto& scc   = deserializedEntity.AddComponent<NativeScriptComponent>();
+//                    
+//                    uint32_t numScript = scriptComp["NumScripts"].as<uint32_t>();
+//                    for (int32_t i = 0; i < numScript; i++)
+//                    {
+//                        const std::string& name = scriptComp["Name"].as<std::string>();
+//                        scc.ScriptsName.emplace_back(name);
+//                        
+//                        auto instance = NativeScriptComponent::ScriptsMap[name];
+//                        scc.Scripts.emplace_back(instance);
+//                        
+//                        instance->UpdateScene(m_Scene);
+//                        instance->UpdateEntity(deserializedEntity);
+//                        
+//                        IK_CORE_INFO("      Script Added : {0}", name);
+//                    }
+//                }
                 
                 auto rigidComp = entity["RigidBody2DComponent"];
                 if (rigidComp)

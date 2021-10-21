@@ -10,9 +10,7 @@
 #include "Component.h"
 
 namespace iKan {
-    
-    std::unordered_map<std::string, ScriptableEntity*> NativeScriptComponent::ScriptsMap;
-    
+        
     // ******************************************************************************
     // Gets the transform Matrix from translation , scale and rotation
     // ******************************************************************************

@@ -1,0 +1,135 @@
+Scene: Untitled
+Entities:
+  - Entity: 1126898883232496707
+    TagComponent:
+      Tag: Ground
+    TransformComponent:
+      Translation: [-30, -7, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+      TilingFactor: 1
+      IsTexture: false
+      IsSubTexture: true
+      TexAssetPath: ../../../../../../../iKan./iKan/Github/iKan/Mario/assets/Resources/Graphics/MarioTile.png
+      Coords: [0, 27]
+      SpriteSize: [1, 1]
+      CellSize: [16, 16]
+    SceneHierarchyPannelProp:
+      IsProp: true
+    RigidBody2DComponent:
+      BodyType: Static
+      FixedRotation: false
+    BoxColloider2DComponent:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Density: 1
+      Friction: 0.5
+      Restitution: 0.600000024
+      RestitutionThreshold: 0.5
+  - Entity: 7760822672594290596
+    TagComponent:
+      Tag: Primary Camera
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 1
+        PerspectiveFOV: 0.785398185
+        PerspectiveNear: 0.00999999978
+        PerspectiveFar: 1000
+        OrthographicSize: 50
+        OrthographicNear: -1
+        OrthographicFar: 1
+      Primary: true
+      Editor: false
+      FixedAspectRatio: false
+    SceneHierarchyPannelProp:
+      IsProp: true
+  - Entity: 7993980771367569662
+    TagComponent:
+      Tag: Ground
+    TransformComponent:
+      Translation: [-29, -7, 0.199642181]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+      TilingFactor: 1
+      IsTexture: false
+      IsSubTexture: true
+      TexAssetPath: ../../../../../../../iKan./iKan/Github/iKan/Mario/assets/Resources/Graphics/MarioTile.png
+      Coords: [0, 27]
+      SpriteSize: [1, 1]
+      CellSize: [16, 16]
+    SceneHierarchyPannelProp:
+      IsProp: true
+    RigidBody2DComponent:
+      BodyType: Static
+      FixedRotation: false
+    BoxColloider2DComponent:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Density: 1
+      Friction: 0.5
+      Restitution: 0.600000024
+      RestitutionThreshold: 0.5
+  - Entity: 15744465999904594351
+    TagComponent:
+      Tag: Ground
+    TransformComponent:
+      Translation: [-28, -7, 0.199642181]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+      TilingFactor: 1
+      IsTexture: false
+      IsSubTexture: true
+      TexAssetPath: ../../../../../../../iKan./iKan/Github/iKan/Mario/assets/Resources/Graphics/MarioTile.png
+      Coords: [0, 27]
+      SpriteSize: [1, 1]
+      CellSize: [16, 16]
+    SceneHierarchyPannelProp:
+      IsProp: true
+    RigidBody2DComponent:
+      BodyType: Static
+      FixedRotation: false
+    BoxColloider2DComponent:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Density: 1
+      Friction: 0.5
+      Restitution: 0.600000024
+      RestitutionThreshold: 0.5
+  - Entity: 8534172910270180496
+    TagComponent:
+      Tag: Player
+    TransformComponent:
+      Translation: [-29, -0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+      TilingFactor: 1
+      IsTexture: false
+      IsSubTexture: true
+      TexAssetPath: ../../../../../../../iKan./iKan/Github/iKan/Mario/assets/Resources/Graphics/Player.png
+      Coords: [6, 30]
+      SpriteSize: [1, 1]
+      CellSize: [16, 16]
+    SceneHierarchyPannelProp:
+      IsProp: true
+    RigidBody2DComponent:
+      BodyType: Dynamic
+      FixedRotation: false
+    BoxColloider2DComponent:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Density: 1
+      Friction: 0.5
+      Restitution: 0
+      RestitutionThreshold: 0.5
