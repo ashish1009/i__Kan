@@ -113,7 +113,7 @@ namespace iKan {
                                                       {
             // nsc.Scripts is the Vector to store multiple Scripts for 1 entity
             for (auto script : nsc.Scripts)
-                if (script->m_Created)
+                if (    script->m_Created)
                     script->m_Created = false;
         });
 
@@ -389,6 +389,7 @@ namespace iKan {
             for (auto e : view)
             {
                 Entity entity = { e, this };
+                
                 auto& transform = entity.GetComponent<TransformComponent>();
                 auto& rb2d = entity.GetComponent<RigidBody2DComponent>();
                 
@@ -397,10 +398,13 @@ namespace iKan {
                 {
                     const auto& position = body->GetPosition();
                     
-//                    transform.Translation.x = position.x;
-//                    transform.Translation.y = position.y;
-//
-//                    transform.Rotation.z = body->GetAngle();
+                    transform.Rotation.z = body->GetAngle();
+                    transform.Translation.y = position.y;
+                    
+                    // If Entity hav Nativ Script then no need to update the x position,
+                    // as it will be taken care in script
+                    if (!entity.HasComponent<NativeScriptComponent>())
+                        transform.Translation.x = position.x;
                 }
             }
         }

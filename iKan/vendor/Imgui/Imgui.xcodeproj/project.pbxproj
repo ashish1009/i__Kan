@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E30710E2721BB1F004323F9 /* ImGuizmo.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3070F22721BB1F004323F9 /* ImGuizmo.h */; };
+		3E30710F2721BB1F004323F9 /* ImCurveEdit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3070F32721BB1F004323F9 /* ImCurveEdit.cpp */; };
+		3E30711C2721BB1F004323F9 /* ImSequencer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3071052721BB1F004323F9 /* ImSequencer.cpp */; };
+		3E30711D2721BB1F004323F9 /* ImCurveEdit.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3071062721BB1F004323F9 /* ImCurveEdit.h */; };
+		3E30711E2721BB1F004323F9 /* ImZoomSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3071092721BB1F004323F9 /* ImZoomSlider.h */; };
+		3E30711F2721BB1F004323F9 /* ImGradient.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E30710A2721BB1F004323F9 /* ImGradient.h */; };
+		3E3071202721BB1F004323F9 /* ImGuizmo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E30710B2721BB1F004323F9 /* ImGuizmo.cpp */; };
+		3E3071212721BB1F004323F9 /* ImGradient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E30710C2721BB1F004323F9 /* ImGradient.cpp */; };
+		3E3071222721BB1F004323F9 /* ImSequencer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E30710D2721BB1F004323F9 /* ImSequencer.h */; };
 		7547DD0626413A0100232D12 /* imgui.h in Headers */ = {isa = PBXBuildFile; fileRef = 7547DB7F26413A0000232D12 /* imgui.h */; };
 		7547DD0726413A0100232D12 /* imstb_textedit.h in Headers */ = {isa = PBXBuildFile; fileRef = 7547DB8026413A0000232D12 /* imstb_textedit.h */; };
 		7547DD0826413A0100232D12 /* imconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 7547DB8126413A0000232D12 /* imconfig.h */; };
@@ -20,6 +29,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3E3070F22721BB1F004323F9 /* ImGuizmo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImGuizmo.h; sourceTree = "<group>"; };
+		3E3070F32721BB1F004323F9 /* ImCurveEdit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImCurveEdit.cpp; sourceTree = "<group>"; };
+		3E3071052721BB1F004323F9 /* ImSequencer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImSequencer.cpp; sourceTree = "<group>"; };
+		3E3071062721BB1F004323F9 /* ImCurveEdit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImCurveEdit.h; sourceTree = "<group>"; };
+		3E3071092721BB1F004323F9 /* ImZoomSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImZoomSlider.h; sourceTree = "<group>"; };
+		3E30710A2721BB1F004323F9 /* ImGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImGradient.h; sourceTree = "<group>"; };
+		3E30710B2721BB1F004323F9 /* ImGuizmo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImGuizmo.cpp; sourceTree = "<group>"; };
+		3E30710C2721BB1F004323F9 /* ImGradient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImGradient.cpp; sourceTree = "<group>"; };
+		3E30710D2721BB1F004323F9 /* ImSequencer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImSequencer.h; sourceTree = "<group>"; };
 		7547DB7F26413A0000232D12 /* imgui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imgui.h; sourceTree = "<group>"; };
 		7547DB8026413A0000232D12 /* imstb_textedit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imstb_textedit.h; sourceTree = "<group>"; };
 		7547DB8126413A0000232D12 /* imconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imconfig.h; sourceTree = "<group>"; };
@@ -44,6 +62,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E3070F12721BB1F004323F9 /* imguizmo */ = {
+			isa = PBXGroup;
+			children = (
+				3E3070F22721BB1F004323F9 /* ImGuizmo.h */,
+				3E3070F32721BB1F004323F9 /* ImCurveEdit.cpp */,
+				3E3071052721BB1F004323F9 /* ImSequencer.cpp */,
+				3E3071062721BB1F004323F9 /* ImCurveEdit.h */,
+				3E3071092721BB1F004323F9 /* ImZoomSlider.h */,
+				3E30710A2721BB1F004323F9 /* ImGradient.h */,
+				3E30710B2721BB1F004323F9 /* ImGuizmo.cpp */,
+				3E30710C2721BB1F004323F9 /* ImGradient.cpp */,
+				3E30710D2721BB1F004323F9 /* ImSequencer.h */,
+			);
+			name = imguizmo;
+			path = ../imguizmo;
+			sourceTree = "<group>";
+		};
 		7547DB6726413A0000232D12 /* Imgui */ = {
 			isa = PBXGroup;
 			children = (
@@ -64,6 +99,7 @@
 		B2400F422634396C0051B868 = {
 			isa = PBXGroup;
 			children = (
+				3E3070F12721BB1F004323F9 /* imguizmo */,
 				7547DB6726413A0000232D12 /* Imgui */,
 				B2400F4C2634396C0051B868 /* Products */,
 			);
@@ -84,7 +120,12 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E30711E2721BB1F004323F9 /* ImZoomSlider.h in Headers */,
+				3E30711F2721BB1F004323F9 /* ImGradient.h in Headers */,
+				3E3071222721BB1F004323F9 /* ImSequencer.h in Headers */,
 				7547DD0626413A0100232D12 /* imgui.h in Headers */,
+				3E30710E2721BB1F004323F9 /* ImGuizmo.h in Headers */,
+				3E30711D2721BB1F004323F9 /* ImCurveEdit.h in Headers */,
 				7547DDDB26413A0200232D12 /* imgui_internal.h in Headers */,
 				7547DD0726413A0100232D12 /* imstb_textedit.h in Headers */,
 				7547DDDC26413A0200232D12 /* imstb_rectpack.h in Headers */,
@@ -152,8 +193,12 @@
 			files = (
 				7547DDDE26413A0200232D12 /* imgui_draw.cpp in Sources */,
 				7547DD0926413A0100232D12 /* imgui_widgets.cpp in Sources */,
+				3E3071202721BB1F004323F9 /* ImGuizmo.cpp in Sources */,
 				7547DDDD26413A0200232D12 /* imgui_demo.cpp in Sources */,
 				7547DD4026413A0100232D12 /* imgui.cpp in Sources */,
+				3E30711C2721BB1F004323F9 /* ImSequencer.cpp in Sources */,
+				3E30710F2721BB1F004323F9 /* ImCurveEdit.cpp in Sources */,
+				3E3071212721BB1F004323F9 /* ImGradient.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,8 +319,35 @@
 		B2400F502634396C0051B868 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = NO;
+				CLANG_WARN_BOOL_CONVERSION = NO;
+				CLANG_WARN_COMMA = NO;
+				CLANG_WARN_CONSTANT_CONVERSION = NO;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				CLANG_WARN_EMPTY_BODY = NO;
+				CLANG_WARN_ENUM_CONVERSION = NO;
+				CLANG_WARN_INFINITE_RECURSION = NO;
+				CLANG_WARN_INT_CONVERSION = NO;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = NO;
+				CLANG_WARN_PRAGMA_PACK = NO;
+				CLANG_WARN_PRIVATE_MODULE = NO;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
+				CLANG_WARN_STRICT_PROTOTYPES = NO;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = NO;
+				CLANG_WARN_UNREACHABLE_CODE = NO;
 				CODE_SIGN_STYLE = Automatic;
 				EXECUTABLE_PREFIX = lib;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/src/examples/libs/glfw/lib-vc2010-64",
@@ -293,8 +365,35 @@
 		B2400F512634396C0051B868 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = NO;
+				CLANG_WARN_BOOL_CONVERSION = NO;
+				CLANG_WARN_COMMA = NO;
+				CLANG_WARN_CONSTANT_CONVERSION = NO;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				CLANG_WARN_EMPTY_BODY = NO;
+				CLANG_WARN_ENUM_CONVERSION = NO;
+				CLANG_WARN_INFINITE_RECURSION = NO;
+				CLANG_WARN_INT_CONVERSION = NO;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = NO;
+				CLANG_WARN_PRAGMA_PACK = NO;
+				CLANG_WARN_PRIVATE_MODULE = NO;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
+				CLANG_WARN_STRICT_PROTOTYPES = NO;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = NO;
+				CLANG_WARN_UNREACHABLE_CODE = NO;
 				CODE_SIGN_STYLE = Automatic;
 				EXECUTABLE_PREFIX = lib;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/src/examples/libs/glfw/lib-vc2010-64",
