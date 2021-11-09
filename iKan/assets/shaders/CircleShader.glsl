@@ -61,11 +61,11 @@ in VS_OUT
 void main()
 {
     float distance = 1.0 - length(fs_in.TexCoord);
-    vec3 color = vec3(smoothstep(0.0, fs_in.Fade, distance));
-    color *= vec3(smoothstep(fs_in.Thickness + fs_in.Fade, fs_in.Thickness, distance));
+    float color = smoothstep(0.0, fs_in.Fade, distance);
+    color *= smoothstep(fs_in.Thickness + fs_in.Fade, fs_in.Thickness, distance);
     
     o_Color = fs_in.Color;
-    o_Color.rgb *= color;
+    o_Color.a *= color;
     
     o_IDBuffer = int(fs_in.ObjectID);
 }
