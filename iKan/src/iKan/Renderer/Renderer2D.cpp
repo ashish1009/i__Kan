@@ -44,8 +44,8 @@ namespace iKan {
             glm::vec4 Color;
             glm::vec2 TexCoord;
             
-            float TexIndex;
-            float TilingFactor;
+            float Thickness;
+            float Fade;
             
             int32_t ObjectID;
         };
@@ -151,8 +151,8 @@ namespace iKan {
                 { ShaderDataType::Float3, "a_Position" },
                 { ShaderDataType::Float4, "a_Color" },
                 { ShaderDataType::Float2, "a_TexCoord" },
-                { ShaderDataType::Float,  "a_TexIndex" },
-                { ShaderDataType::Float,  "a_TilingFactor" },
+                { ShaderDataType::Float,  "a_Thickness" },
+                { ShaderDataType::Float,  "a_Fade" },
                 { ShaderDataType::Int,    "a_ObjectID" }
             });
             s_Data->CircleQuadVertexArray->AddVertexBuffer(s_Data->CircleQuadVertexBuffer);
@@ -268,6 +268,7 @@ namespace iKan {
             }
 
             // Render the Scene
+            s_Data->TextureShader->Bind();
             Renderer::DrawIndexed(s_Data->QuadVertexArray, s_Data->QuadIndexCount);
         }
         
@@ -278,6 +279,7 @@ namespace iKan {
             s_Data->CircleQuadVertexBuffer->SetData(s_Data->CircleQuadVertexBufferBase, dataSize);
             
             // Render the Scene
+            s_Data->CircleTextureShader->Bind();
             Renderer::DrawIndexed(s_Data->CircleQuadVertexArray, s_Data->CircleQuadIndexCount);
         }
     }
@@ -392,16 +394,15 @@ namespace iKan {
             IK_CORE_WARN("Starts the new batch as number of indices ({0}) increases in the previous batch", s_Data->QuadIndexCount);
             NextBatch();
         }
-        constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
 
         constexpr size_t quadVertexCount = 4;
         for (size_t i = 0; i < quadVertexCount; i++)
         {
             s_Data->CircleQuadVertexBufferPtr->Position     = transform * s_Data->QuadVertexPositions[i];
             s_Data->CircleQuadVertexBufferPtr->Color        = color;
-            s_Data->CircleQuadVertexBufferPtr->TexCoord     = textureCoords[i];
-            s_Data->CircleQuadVertexBufferPtr->TexIndex     = 0.1f;
-            s_Data->CircleQuadVertexBufferPtr->TilingFactor = 1.0f;
+            s_Data->CircleQuadVertexBufferPtr->TexCoord     = 2.0f * s_Data->QuadVertexPositions[i];
+            s_Data->CircleQuadVertexBufferPtr->Thickness    = thickness;
+            s_Data->CircleQuadVertexBufferPtr->Fade         = fade;
             s_Data->CircleQuadVertexBufferPtr->ObjectID     = entID;
             s_Data->CircleQuadVertexBufferPtr++;
         }

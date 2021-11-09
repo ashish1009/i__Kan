@@ -174,8 +174,8 @@
             filePath = "iKan/src/iKan/Renderer/Renderer2D.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "348"
-            endingLineNumber = "348"
+            startingLineNumber = "350"
+            endingLineNumber = "350"
             landmarkName = "Renderer2D::DrawTextureQuad(transform, texture, entID, textureCoords, tilingFactor, tintColor)"
             landmarkType = "7">
          </BreakpointContent>
