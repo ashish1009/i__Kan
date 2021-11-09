@@ -67,7 +67,10 @@ void main()
     o_Color = fs_in.Color;
     o_Color.a *= color;
     
-    o_IDBuffer = int(fs_in.ObjectID);
+    if (color > 0)
+    {
+        o_IDBuffer = int(fs_in.ObjectID);
+    }
 }
 
 

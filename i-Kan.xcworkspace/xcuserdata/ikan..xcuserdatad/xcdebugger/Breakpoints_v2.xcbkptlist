@@ -142,8 +142,8 @@
             filePath = "iKan/src/iKan/Scene/Scene.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
             landmarkName = "Scene::ResetNativeData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -158,8 +158,8 @@
             filePath = "iKan/src/iKan/Scene/Scene.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "439"
-            endingLineNumber = "439"
+            startingLineNumber = "441"
+            endingLineNumber = "441"
             landmarkName = "Scene::OnUpdateRuntime(ts)"
             landmarkType = "7">
          </BreakpointContent>
@@ -190,8 +190,8 @@
             filePath = "iKan/src/iKan/Scene/Scene.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "445"
-            endingLineNumber = "445"
+            startingLineNumber = "447"
+            endingLineNumber = "447"
             landmarkName = "Scene::OnUpdateRuntime(ts)"
             landmarkType = "7">
          </BreakpointContent>
@@ -206,8 +206,8 @@
             filePath = "iKan/src/iKan/Scene/Scene.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "438"
-            endingLineNumber = "438"
+            startingLineNumber = "440"
+            endingLineNumber = "440"
             landmarkName = "Scene::OnUpdateRuntime(ts)"
             landmarkType = "7">
          </BreakpointContent>
@@ -222,8 +222,8 @@
             filePath = "iKan/src/iKan/Scene/Scene.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "373"
-            endingLineNumber = "373"
+            startingLineNumber = "375"
+            endingLineNumber = "375"
             landmarkName = "Scene::OnUpdateEditor(ts)"
             landmarkType = "7">
          </BreakpointContent>

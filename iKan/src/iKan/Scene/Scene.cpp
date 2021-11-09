@@ -108,6 +108,7 @@ namespace iKan {
         CopyComponent<RigidBody2DComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
         CopyComponent<BoxColloider2DComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
         CopyComponent<NativeScriptComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
+        CopyComponent<CircleRendererComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
         
         dstSceneRegistry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
                                                       {
@@ -272,6 +273,7 @@ namespace iKan {
         CopyComponentIfExist<NativeScriptComponent>(newEntity, entity);
         CopyComponentIfExist<RigidBody2DComponent>(newEntity, entity);
         CopyComponentIfExist<BoxColloider2DComponent>(newEntity, entity);
+        CopyComponentIfExist<CircleRendererComponent>(newEntity, entity);
         
         return newEntity;
     }

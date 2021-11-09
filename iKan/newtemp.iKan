@@ -1,0 +1,51 @@
+Scene: Untitled
+Entities:
+  - Entity: 13904039563961778556
+    TagComponent:
+      Tag: Quad
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+      TilingFactor: 1
+      IsTexture: false
+      IsSubTexture: false
+      TexAssetPath: ""
+    SceneHierarchyPannelProp:
+      IsProp: true
+  - Entity: 13913968427544232318
+    TagComponent:
+      Tag: Camera
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 1
+        PerspectiveFOV: 0.785398185
+        PerspectiveNear: 0.00999999978
+        PerspectiveFar: 1000
+        OrthographicSize: 10
+        OrthographicNear: -1
+        OrthographicFar: 1
+      Primary: false
+      Editor: true
+      FixedAspectRatio: false
+    SceneHierarchyPannelProp:
+      IsProp: true
+  - Entity: 13130816994378506328
+    TagComponent:
+      Tag: Circle
+    TransformComponent:
+      Translation: [4.75, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SceneHierarchyPannelProp:
+      IsProp: true
+    CircleRendererComponent:
+      Color: [1, 1, 1, 1]
+      Thickness: 1
+      Fade: 0.00499999989

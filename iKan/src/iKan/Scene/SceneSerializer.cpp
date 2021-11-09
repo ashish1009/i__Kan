@@ -349,6 +349,18 @@ namespace iKan {
             
             out << YAML::EndMap; // BoxColloider2DComponent
         }
+        
+        if (entity.HasComponent<CircleRendererComponent>())
+        {
+            out << YAML::Key << "CircleRendererComponent";
+            out << YAML::BeginMap; // CircleRendererComponent
+            
+            auto& circleRendererComponent = entity.GetComponent<CircleRendererComponent>();
+            out << YAML::Key << "Color" << YAML::Value << circleRendererComponent.ColorComp;
+            
+            out << YAML::Key << "Thickness" << YAML::Value << circleRendererComponent.Thickness;
+            out << YAML::Key << "Fade" << YAML::Value << circleRendererComponent.Fade;
+        }
 
         out << YAML::EndMap; // Entity
     }
@@ -603,6 +615,22 @@ namespace iKan {
                     IK_CORE_INFO("      Friction {0}", bcc.Friction);
                     IK_CORE_INFO("      Restitution {0}", bcc.Restitution);
                     IK_CORE_INFO("      RestitutionThreshold {0}", bcc.RestitutionThreshold);
+                }
+                
+                auto circleComp = entity["CircleRendererComponent"];
+                if (circleComp)
+                {
+                    IK_CORE_INFO("  Circle Renderer Component:");
+                    auto& cc   = deserializedEntity.AddComponent<CircleRendererComponent>();
+                    
+                    cc.ColorComp = circleComp["Color"].as<glm::vec4>();
+                    
+                    cc.Thickness = circleComp["Thickness"].as<float>();
+                    cc.Fade = circleComp["Thickness"].as<float>();
+                    
+                    IK_CORE_INFO("      Color {0} x {1} x {2} x {3}", cc.ColorComp.x, cc.ColorComp.y, cc.ColorComp.z, cc.ColorComp.a);
+                    IK_CORE_INFO("      Thickness {0}", cc.Thickness);
+                    IK_CORE_INFO("      Fade {0}", cc.Fade);
                 }
             }
         }
