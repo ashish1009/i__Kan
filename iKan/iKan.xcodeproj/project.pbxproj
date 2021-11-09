@@ -152,6 +152,7 @@
 /* Begin PBXFileReference section */
 		3E4FC83D271C8DE000030E10 /* Maths.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Maths.cpp; sourceTree = "<group>"; };
 		3E4FC83E271C8DE000030E10 /* Maths.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Maths.h; sourceTree = "<group>"; };
+		3E99AD71273AC05000C6FD0C /* CircleShader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CircleShader.glsl; sourceTree = "<group>"; };
 		3EAD1EB0271C580100A94874 /* box2D.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = box2D.xcodeproj; path = vendor/box2D/box2D.xcodeproj; sourceTree = "<group>"; };
 		3EC70CC6270B53D600218449 /* Component.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Component.cpp; sourceTree = "<group>"; };
 		3ED416C826F38DB90037CF6D /* ScriptableEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScriptableEntity.h; sourceTree = "<group>"; };
@@ -648,6 +649,7 @@
 		B2E1A03A263AC3CF00889B3F /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				3E99AD71273AC05000C6FD0C /* CircleShader.glsl */,
 				B2E1A03B263AC3CF00889B3F /* BatchRenderer2DShader.glsl */,
 			);
 			path = shaders;

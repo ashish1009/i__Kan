@@ -135,6 +135,22 @@ namespace iKan {
     };
     
     // ******************************************************************************
+    // Stores the Circle Component for Texture, Sprite and color
+    // ******************************************************************************
+    struct CircleRendererComponent
+    {
+        // Variables
+        glm::vec4 ColorComp = glm::vec4(1.0f);
+        float     Thickness = 1.0f;
+        float     Fade = 0.005;
+        
+        ~CircleRendererComponent() = default;
+        
+        CircleRendererComponent() = default;
+        CircleRendererComponent(const CircleRendererComponent&) = default;
+    };
+     
+    // ******************************************************************************
     // Stores a flag to check if we want to show this entity on Scene Hierarchy
     // Pannel
     // ******************************************************************************

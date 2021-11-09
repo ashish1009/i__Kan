@@ -334,6 +334,14 @@ namespace iKan {
 
                 SceneRenderer::BeginScene(this, { camera, camera.GetViewProjection() });
                 RenderSpriteComponent();
+                {
+                    auto view = m_Registry.view<TransformComponent, CircleRendererComponent>();
+                    for (auto entity : view)
+                    {
+                        const auto [transform, circle] = view.get<TransformComponent, CircleRendererComponent>(entity);
+                        Renderer2D::DrawCircle(transform.GetTransform(), circle.ColorComp, circle.Thickness, circle.Fade, (int)entity);
+                    }
+                }
                 SceneRenderer::EndScene();
 
                 s_NativeData.CameraWarning = false;
@@ -358,6 +366,14 @@ namespace iKan {
                 
                 SceneRenderer::BeginScene(this, { *editorCamera, viewProj });
                 RenderSpriteComponent();
+                {
+                    auto view = m_Registry.view<TransformComponent, CircleRendererComponent>();
+                    for (auto entity : view)
+                    {
+                        const auto [transform, circle] = view.get<TransformComponent, CircleRendererComponent>(entity);
+                        Renderer2D::DrawCircle(transform.GetTransform(), circle.ColorComp, circle.Thickness, circle.Fade, (int)entity);
+                    }
+                }
                 SceneRenderer::EndScene();
                 
                 s_NativeData.CameraWarning = false;
@@ -421,6 +437,14 @@ namespace iKan {
 
             SceneRenderer::BeginScene(this, { *mainCamera, viewProj });
             RenderSpriteComponent();
+            {
+                auto view = m_Registry.view<TransformComponent, CircleRendererComponent>();
+                for (auto entity : view)
+                {
+                    const auto [transform, circle] = view.get<TransformComponent, CircleRendererComponent>(entity);
+                    Renderer2D::DrawCircle(transform.GetTransform(), circle.ColorComp, circle.Thickness, circle.Fade, (int)entity);
+                }
+            }
             SceneRenderer::EndScene();
 
             s_NativeData.CameraWarning = false;

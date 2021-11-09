@@ -531,6 +531,13 @@ namespace iKan {
             PropertyGrid::Float("RestitutionThreshold", cc.RestitutionThreshold, nullptr, 0.01f);
         });
         
+        DrawComponent<CircleRendererComponent>("Circle Renderer", entity, [](auto& cc)
+                                               {
+            ImGui::ColorEdit4("Color", glm::value_ptr(cc.ColorComp), ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
+            PropertyGrid::Float("Thickness", cc.Thickness, nullptr, 0.01f);
+            PropertyGrid::Float("Fade", cc.Fade, nullptr, 0.0001f);
+        });
+        
     }
     
     // ******************************************************************************
@@ -579,6 +586,15 @@ namespace iKan {
             if (ImGui::MenuItem("Native Script"))
             {
                 m_SelectedEntity.AddComponent<NativeScriptComponent>().Bind<EntityController>();
+                ImGui::CloseCurrentPopup();
+            }
+        }
+        
+        if (!m_SelectedEntity.HasComponent<CircleRendererComponent>())
+        {
+            if (ImGui::MenuItem("Circle Component Script"))
+            {
+                m_SelectedEntity.AddComponent<CircleRendererComponent>();
                 ImGui::CloseCurrentPopup();
             }
         }

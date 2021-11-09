@@ -34,6 +34,21 @@ namespace iKan {
 
             int32_t ObjectID;
         };
+        
+        // ******************************************************************************
+        // Stores the vertex information of a Quad
+        // ******************************************************************************
+        struct CircleVertex
+        {
+            glm::vec3 Position;
+            glm::vec4 Color;
+            glm::vec2 TexCoord;
+            
+            float TexIndex;
+            float TilingFactor;
+            
+            int32_t ObjectID;
+        };
 
         // Consts to store limits of renderer
         static const uint32_t MaxQuads        = 20000;
@@ -51,6 +66,19 @@ namespace iKan {
         // Pointer attribute of vertexes
         Vertex* QuadVertexBufferBase = nullptr;
         Vertex* QuadVertexBufferPtr  = nullptr;
+        
+        
+        // Data storage for Rendering
+        Ref<VertexArray>  CircleQuadVertexArray;
+        Ref<VertexBuffer> CircleQuadVertexBuffer;
+        Ref<Shader>       CircleTextureShader;
+        
+        uint32_t CircleQuadIndexCount = 0;
+        
+        // Pointer attribute of vertexes
+        CircleVertex* CircleQuadVertexBufferBase = nullptr;
+        CircleVertex* CircleQuadVertexBufferPtr  = nullptr;
+        
 
         // array of textures for now 16 slots are possible
         std::array<Ref<Texture>, MaxTextureSlots> TextureSlots;
@@ -112,6 +140,27 @@ namespace iKan {
         Ref<IndexBuffer> quadIB = IndexBuffer::Create(s_Data->MaxIndices, quadIndices);
         s_Data->QuadVertexArray->SetIndexBuffer(quadIB);
         delete[] quadIndices;
+        
+        /////////////////////////////////////////////////////////////////////////////
+        {
+            s_Data->CircleQuadVertexArray  = VertexArray::Create();
+            
+            // Vertex Buffer and adding the layput
+            s_Data->CircleQuadVertexBuffer = VertexBuffer::Create(s_Data->MaxVertices * sizeof(RendererQuadData::CircleVertex));
+            s_Data->CircleQuadVertexBuffer->AddLayout ({
+                { ShaderDataType::Float3, "a_Position" },
+                { ShaderDataType::Float4, "a_Color" },
+                { ShaderDataType::Float2, "a_TexCoord" },
+                { ShaderDataType::Float,  "a_TexIndex" },
+                { ShaderDataType::Float,  "a_TilingFactor" },
+                { ShaderDataType::Int,    "a_ObjectID" }
+            });
+            s_Data->CircleQuadVertexArray->AddVertexBuffer(s_Data->CircleQuadVertexBuffer);
+            
+            // Allocating the memory for vertex Buffer Pointer
+            s_Data->CircleQuadVertexBufferBase = new RendererQuadData::CircleVertex[s_Data->MaxVertices];
+        }
+        
 
         // Creating white texture for colorful quads witout any texture or sprite
         uint32_t whiteTextureData = 0xffffffff;
@@ -124,6 +173,10 @@ namespace iKan {
         s_Data->QuadVertexPositions[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
 
         SetShaader("../../../iKan/assets/shaders/BatchRenderer2DShader.glsl");
+        
+        s_Data->CircleTextureShader = Shader::Create("../../../iKan/assets/shaders/CircleShader.glsl");
+        s_Data->CircleTextureShader->Bind();
+
     }
 
     // ******************************************************************************
@@ -160,6 +213,9 @@ namespace iKan {
     {
         s_Data->TextureShader->Bind();
         s_Data->TextureShader->SetUniformMat4("u_ViewProjection", viewProj);
+        
+        s_Data->CircleTextureShader->Bind();
+        s_Data->CircleTextureShader->SetUniformMat4("u_ViewProjection", viewProj);
 
         StartBatch();
     }
@@ -171,6 +227,13 @@ namespace iKan {
     {
         s_Data->QuadIndexCount = 0;
         s_Data->QuadVertexBufferPtr = s_Data->QuadVertexBufferBase;
+        
+        
+        s_Data->CircleQuadIndexCount = 0;
+        s_Data->CircleQuadVertexBufferPtr = s_Data->CircleQuadVertexBufferBase;
+
+        
+        
         s_Data->TextureSlotIndex = 1;
     }
 
@@ -188,24 +251,35 @@ namespace iKan {
     void Renderer2D::Flush()
     {
         // Nothing to draw
-        if (s_Data->QuadIndexCount == 0)
-            return;
-
-        uint32_t dataSize = (uint32_t)((uint8_t*)s_Data->QuadVertexBufferPtr - (uint8_t*)s_Data->QuadVertexBufferBase);
-        s_Data->QuadVertexBuffer->SetData(s_Data->QuadVertexBufferBase, dataSize);
-
-        // Bind textures
-        for (uint32_t i = 0; i < s_Data->TextureSlotIndex; i++)
+        if (s_Data->QuadIndexCount)
         {
-            // Skipping i = 0 as 0 is slot for white texture
-            if (i > 0)
-                RendererStatistics::TextureCount++;
 
-            s_Data->TextureSlots[i]->Bind(i);
+            uint32_t dataSize = (uint32_t)((uint8_t*)s_Data->QuadVertexBufferPtr - (uint8_t*)s_Data->QuadVertexBufferBase);
+            s_Data->QuadVertexBuffer->SetData(s_Data->QuadVertexBufferBase, dataSize);
+
+            // Bind textures
+            for (uint32_t i = 0; i < s_Data->TextureSlotIndex; i++)
+            {
+                // Skipping i = 0 as 0 is slot for white texture
+                if (i > 0)
+                    RendererStatistics::TextureCount++;
+
+                s_Data->TextureSlots[i]->Bind(i);
+            }
+
+            // Render the Scene
+            Renderer::DrawIndexed(s_Data->QuadVertexArray, s_Data->QuadIndexCount);
         }
-
-        // Render the Scene
-        Renderer::DrawIndexed(s_Data->QuadVertexArray, s_Data->QuadIndexCount);
+        
+        if (s_Data->CircleQuadIndexCount)
+        {
+            
+            uint32_t dataSize = (uint32_t)((uint8_t*)s_Data->CircleQuadVertexBufferPtr - (uint8_t*)s_Data->CircleQuadVertexBufferBase);
+            s_Data->CircleQuadVertexBuffer->SetData(s_Data->CircleQuadVertexBufferBase, dataSize);
+            
+            // Render the Scene
+            Renderer::DrawIndexed(s_Data->CircleQuadVertexArray, s_Data->CircleQuadIndexCount);
+        }
     }
 
     // ******************************************************************************
@@ -218,6 +292,9 @@ namespace iKan {
 
         s_Data->QuadIndexCount = 0;
         s_Data->QuadVertexBufferPtr = s_Data->QuadVertexBufferBase;
+        
+        s_Data->CircleQuadIndexCount = 0;
+        s_Data->CircleQuadVertexBufferPtr = s_Data->CircleQuadVertexBufferBase;
 
         s_Data->TextureSlotIndex = 1;
     }
@@ -306,5 +383,34 @@ namespace iKan {
         RendererStatistics::VertexCount += 4;
         RendererStatistics::IndexCount += 6;
     }
+    
+    void Renderer2D::DrawCircle(const glm::mat4& transform, const glm::vec4& color, float thickness, float fade, int32_t entID)
+    {
+        // If number of indices increase in batch then start new batch
+        if (s_Data->CircleQuadIndexCount >= RendererQuadData::MaxIndices)
+        {
+            IK_CORE_WARN("Starts the new batch as number of indices ({0}) increases in the previous batch", s_Data->QuadIndexCount);
+            NextBatch();
+        }
+        constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
+
+        constexpr size_t quadVertexCount = 4;
+        for (size_t i = 0; i < quadVertexCount; i++)
+        {
+            s_Data->CircleQuadVertexBufferPtr->Position     = transform * s_Data->QuadVertexPositions[i];
+            s_Data->CircleQuadVertexBufferPtr->Color        = color;
+            s_Data->CircleQuadVertexBufferPtr->TexCoord     = textureCoords[i];
+            s_Data->CircleQuadVertexBufferPtr->TexIndex     = 0.1f;
+            s_Data->CircleQuadVertexBufferPtr->TilingFactor = 1.0f;
+            s_Data->CircleQuadVertexBufferPtr->ObjectID     = entID;
+            s_Data->CircleQuadVertexBufferPtr++;
+        }
+        
+        s_Data->CircleQuadIndexCount += 6;
+        
+        RendererStatistics::VertexCount += 4;
+        RendererStatistics::IndexCount += 6;
+    }
+
 
 }

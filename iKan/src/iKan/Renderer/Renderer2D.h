@@ -31,6 +31,8 @@ namespace iKan {
         static void DrawQuad(const glm::mat4& transform, const Ref<Texture>& texture, int32_t entID, float tilingFactor = 1.0f, const glm::vec4& tintColor = glm::vec4(1.0f));
         static void DrawQuad(const glm::mat4& transform, const Ref<SubTexture>& texture, int32_t entID, float tilingFactor = 1.0f, const glm::vec4& tintColor = glm::vec4(1.0f));
 
+        static void DrawCircle(const glm::mat4& transform, const glm::vec4& color, float thickness = 1.0f, float fade = 0.005, int32_t entID = -1);
+
     private:
         static void Flush();
         static void StartBatch();

@@ -39,6 +39,19 @@ namespace iKan {
     }
     
     // ******************************************************************************
+    // Get the Open GL Shader Type from string
+    // ******************************************************************************
+    static std::string ShaderTypeString(GLenum type)
+    {
+        if (GL_VERTEX_SHADER == type)   return "vertex";
+        if (GL_FRAGMENT_SHADER == type) return "fragment";
+        if (GL_GEOMETRY_SHADER == type) return "geometry";
+        
+        IK_CORE_ASSERT(false, "Unknown shader type!");
+        return 0;
+    }
+    
+    // ******************************************************************************
     // Open GL Constructor
     // ******************************************************************************
     OpenGLShader::OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc)
@@ -494,6 +507,7 @@ namespace iKan {
 
                     glDeleteShader(shader);
 
+                    IK_CORE_ERROR("Shader Compilation failure for {0}", ShaderTypeString(type));
                     IK_CORE_ERROR("{0}", infoLog.data());
                     IK_CORE_ASSERT(false, "Shader compilation failure!");
                 }
